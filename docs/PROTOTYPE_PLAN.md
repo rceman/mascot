@@ -1,6 +1,6 @@
-# Rust vs Zig Prototype Plan v0.1
+# Rust vs Zig Prototype Plan v0.2
 
-Status: **proposal for review before implementation**
+Status: **revised after architecture review; ready for second review before implementation**
 
 ## 1. Decision we are trying to make
 
@@ -8,11 +8,11 @@ Choose the primary implementation language and native UI approach for an eventua
 
 The comparison is between **Rust** and **Zig** implementations of the same narrow prototype.
 
-The winner is not the language with the smallest hello-world binary. The useful question is:
+The useful question is:
 
-> Which stack gives us the best combination of low steady-state memory, low latency, native desktop integration, correctness, implementation simplicity, and maintainability for the actual product we intend to build?
+> Which realistic stack gives us the best combination of low steady-state memory, low latency, native desktop integration, correctness, implementation simplicity, and long-term maintainability for the product we intend to build?
 
-The prototype must therefore exercise the parts most likely to invalidate a stack choice early.
+This is not a hello-world benchmark and not a theoretical language-runtime comparison.
 
 ## 2. Product principles
 
@@ -28,13 +28,23 @@ Hard principles:
 - no permanent 60/120 Hz redraw loop while idle
 - UI state must remain bounded
 - long histories and large attachments must not be retained in RAM by the shell
-- external agent processes are measured separately from the shell itself
+- external provider processes are accounted separately from the shell
 - platform-specific native shims are acceptable
 - correctness of text input and OS behavior matters more than framework purity
 
-## 3. Prototype scope
+## 3. Shared contracts
 
-Both implementations MUST provide the same visible behavior.
+Before candidate implementation starts, these documents are normative:
+
+- docs/ACCEPTANCE_MATRIX.md
+- docs/MOCK_PROVIDER_CONTRACT.md
+- docs/BENCHMARK_PROTOCOL.md
+
+A candidate whose required correctness cases are FAIL or UNTESTED is not eligible for the final performance comparison until corrected.
+
+## 4. Prototype scope
+
+Both implementations MUST provide equivalent observable behavior.
 
 ### P0. Floating mascot
 
@@ -43,12 +53,12 @@ A small transparent borderless mascot window:
 - per-pixel transparency
 - no visible rectangular background
 - always available above ordinary application windows where the OS supports it
-- draggable
-- correct hit testing: transparent pixels should not unnecessarily block the desktop
+- draggable through the shared mascot hit region
+- transparent exterior must not intercept clicks intended for a separate underlying app
 - no full-screen transparent backing window
 - no continuous redraw when stationary
 - support at least 1x and 2x display scale
-- use the same mascot asset and same target display dimensions in both implementations
+- use the same mascot source asset and logical dimensions
 
 The mascot asset is a benchmark placeholder, not the final product identity.
 
@@ -58,65 +68,64 @@ A global hotkey opens a small native chat/composer surface adjacent to or near t
 
 Minimum behavior:
 
-- editable text
+- real editable text path
 - caret
 - selection
 - copy/paste
 - keyboard navigation
 - multiline input
 - submit via keyboard
-- close/hide without terminating the process
+- close/hide without terminating the shell
 - preserve mascot after chat closes
+- satisfy the text/IME cases in docs/ACCEPTANCE_MATRIX.md
 
-Text must be implemented as a real input control/path, not a demo string painted on a canvas.
+Rendering sample strings is not sufficient. The candidate must support the required editing actions.
 
 ### P2. Streamed response
 
-Submitting text launches or talks to a tiny benchmark child process.
-
-The child process emits a deterministic streamed response in small chunks.
+Both candidates use the same persistent mock-provider fixture defined in docs/MOCK_PROVIDER_CONTRACT.md.
 
 The shell must:
 
+- parse the shared framed stream correctly
 - read output without blocking the UI
 - display chunks incrementally
-- support cancellation
+- support cooperative cancellation
+- handle one provider-initiated client request
 - detect child exit
-- drain stderr
-- remain responsive during streaming
+- continuously drain stderr
+- remain responsive under the shared backpressure case
+- enforce the shared frame-size limit
+- clean up the child correctly
 
-For this prototype, do NOT integrate Codex or Devin yet. The mock provider exists to compare shell/runtime behavior without network/model variance.
+Hide/show does not alter cancellation semantics: an active response continues while hidden and remains available when reopened. Explicit cancel is a separate action.
 
 ### P3. Lifecycle
 
 The prototype must demonstrate:
 
-- cold launch
+- fresh-process startup
+- first composer activation
 - warm global-hotkey activation
 - repeated show/hide
-- repeated submit/cancel cycles
+- repeated submit/complete cycles
+- repeated cancel cycles
 - clean shutdown
-- no steady memory growth from repeated interactions
+- no unexplained monotonic growth in application-owned resources
 
-### P4. Minimal persistence
+No persistence layer is required in this prototype.
 
-Persist only enough state to prove the intended direction:
+## 5. Explicit non-scope
 
-- last window position
-- last selected benchmark settings if any
-
-Do not implement chat history/database architecture yet unless required by the chosen text/UI stack.
-
-## 4. Explicit non-scope
-
-Do not add the following to either prototype:
+Do not add:
 
 - terminal
 - diff viewer
 - code viewer/editor
 - project tree
-- Markdown renderer beyond what is necessary for the test
+- Markdown rendering; plain text is enough
 - syntax highlighting
+- chat database/history architecture
 - cloud sync
 - accounts/auth
 - RepoSuite
@@ -126,8 +135,8 @@ Do not add the following to either prototype:
 - screenshots or screenshot annotation
 - microphone, STT, TTS
 - local AI models
-- Codex app-server
-- Devin ACP
+- full Codex product integration
+- Devin ACP integration
 - MCP
 - plugins
 - auto-update
@@ -138,227 +147,277 @@ Do not add the following to either prototype:
 
 Every extra subsystem makes the language comparison less useful.
 
-## 5. Platform order
+## 6. Platform decision gates
 
-### Stage A — Windows
+### Stage A — Windows screening
 
-Implement and benchmark both prototypes on Windows first.
+Implement and benchmark both prototypes as native Windows applications.
 
-Windows is the initial comparison platform because it lets us validate:
+Windows validates:
 
 - transparent native windows
+- hit testing and drag behavior
 - global hotkeys
-- drag behavior
-- text input
+- real text input / IME
 - process I/O
-- memory and handle behavior
+- startup/activation latency
+- memory, CPU, handles, USER/GDI objects, windows and child lifecycle
 
-Do not begin macOS/Linux implementation until the Windows comparison is complete enough to decide whether both candidates deserve continuation.
+Windows may eliminate a candidate with an unresolved structural problem.
 
-### Stage B — macOS validation
+A Windows result alone cannot establish the final cross-platform language choice.
 
-If both stacks remain viable, port the same slice to macOS and validate:
+### Stage B — mandatory macOS validation
 
-- transparent floating panel behavior
-- focus/activation
+Every candidate eligible for final selection must pass the macOS critical slice, including a sole Windows survivor.
+
+Validate:
+
+- floating/nonactivating window behavior
+- activation into a working composer
 - global shortcut strategy
-- text/IME path
-- startup and memory
+- text/IME composition
+- native resource lifetime
+- process I/O
+- basic startup and idle footprint
 
-### Stage C — Linux feasibility
+Use an actual macOS application bundle. An installer is not required.
 
-Linux comes after the language decision. Treat X11 and Wayland as different capability environments. Do not require fake parity where Wayland intentionally restricts behavior.
+### Stage C — Linux feasibility before final selection
 
-## 6. Fairness rules
+Full Linux implementation and benchmarking may follow the language decision.
 
-The benchmark must compare equivalent products.
+Before final selection, document for each surviving stack:
 
-Both implementations must use:
+- Linux dependency path
+- X11 support path
+- Wayland capability floor
+- accepted degraded behavior for positioning / always-on-top / shortcuts
+- any compositor-specific protocol requirement
+
+If a decision-threatening uncertainty remains, perform a narrow technical spike. Do not build a third complete prototype merely for symmetry.
+
+## 7. Fairness rules
+
+Both candidates must use:
 
 - the same mascot source asset
-- the same displayed mascot dimensions
-- the same default chat dimensions
-- the same visible text
-- the same mock-provider protocol and output
-- the same number of response chunks
-- the same benchmark scenario durations
-- release/optimized builds
-- no debugger attached
-- no intentionally preloaded heavy components in only one implementation
+- the same logical mascot dimensions
+- the same composer dimensions
+- the same shared correctness matrix
+- the same mock-provider executable and fixture manifest
+- the same visible fixture content
+- the same benchmark scenarios and durations
+- equivalent release/optimized build intent
+- no debugger attached during headline measurements
+
+Initialization/preloading strategies may differ when they are realistic shipping choices.
+
+Their costs must be exposed through:
+
+- startup measurement
+- first-use measurement
+- warm-state measurement
+- retained-memory measurement
+
+No benchmark-only prewarming or unmeasured preparatory work is allowed.
 
 If a stack requires a materially different architecture, document the difference rather than hiding it.
 
-Framework/library choice is part of the comparison. We are comparing realistic candidate stacks, not forcing identical low-level dependencies.
+## 8. Candidate-stack freedom
 
-## 7. Candidate-stack freedom
+We compare realistic product stacks, not artificially symmetric dependency graphs.
 
-The implementer may propose the smallest defensible stack for each language, but must document why.
+For both Rust and Zig:
 
-### Rust
+- CPU, GPU, native-widget and custom-rendered approaches are allowed
+- mature native/C/system libraries are allowed
+- platform-native shims are allowed
+- dependency symmetry is not required
+- allocator/threading/cache strategy may differ
+- correctness and accounting requirements do not differ
 
-Do not automatically use a large GUI framework.
+The implementation agent must justify the chosen stack by:
 
-Candidates may include:
+- correctness
+- measured resource cost
+- amount of project-owned infrastructure
+- long-term maintenance implications
 
-- native Windows APIs plus a small custom rendering/text layer
-- SDL3 where it materially reduces platform work
-- tiny-skia or equivalent CPU rendering
-- cosmic-text/swash or another serious text path
+A focused correction of an accidental busy loop, unsuitable first library choice, or obvious configuration mistake is permitted before treating the result as evidence against the language.
 
-GPU rendering is not required for the first prototype.
+## 9. Resource-discipline requirements
 
-### Zig
+Both prototypes must follow the same product-level constraints:
 
-Do not force an all-Zig dependency stack if a mature C/native component is the better engineering choice.
-
-Candidates may include:
-
-- Win32 directly
-- SDL3 where useful
-- a small custom renderer
-- native/C text libraries where necessary
-
-The Zig prototype must not obtain a benchmark advantage by omitting correct input behavior required from Rust.
-
-## 8. Memory architecture requirements
-
-Both prototypes must follow the same resource discipline:
-
-- no full-screen RGBA surface for a tiny mascot
+- no full-screen RGBA backing surface for a tiny mascot
 - no retained duplicate decoded image buffers without reason
 - bounded text/glyph/layout caches
-- release temporary image buffers after upload/presentation
-- event-driven redraw
+- release temporary image buffers after upload/presentation where practical
+- event-driven redraw while idle
 - avoid polling loops
 - bounded subprocess queues
-- no unbounded transcript accumulation
-- close/release chat resources when hidden where practical
+- fixed response/history retention policy from the mock contract
+- disclose application-owned helper processes
+- disclose retained renderer/text/native caches that materially affect steady state
 
-Peak memory and post-operation memory are both relevant.
+A stable one-time cache warm-up is not automatically a leak. Repeated equivalent workloads must plateau.
 
-## 9. Acceptance targets
+## 10. Acceptance targets
 
-These are engineering targets, not assumed outcomes.
+Targets are engineering guidance, not automatic language verdicts.
 
-For the application-owned process(es), excluding the benchmark child/provider process:
+On Windows, memory target bands refer to **aggregate application-owned private working set**, excluding only the common provider fixture and measurement tools.
+
+Also report private commit and peaks separately.
+
+Targets:
 
 - mascot-only steady state: target < 20 MiB, stretch < 15 MiB
 - small chat open: target < 50 MiB, hard concern above 80 MiB
-- idle CPU after settling: effectively zero; target < 0.1% of one core averaged over a meaningful interval
-- warm hotkey to visible composer: target p95 < 50 ms
-- received response chunk to visible update: target < 33 ms under normal load
-- no monotonic memory growth across repeated show/hide and submit/cancel cycles
+- idle CPU after settling: effectively zero; target < 0.1% of one core
+- warm hotkey to visibly presented and input-ready composer: target p95 < 50 ms
+- complete frame receipt to first presentation containing that content: target < 33 ms under normal load
+- no unexplained monotonic application-resource growth across repeated operation batches
 
-These thresholds are not pass/fail language verdicts by themselves. The final choice considers engineering complexity too.
-
-## 10. Required benchmark scenarios
+## 11. Required benchmark scenarios
 
 At minimum:
 
-1. cold start to first visible mascot
-2. 60 seconds mascot idle
-3. open/close composer 100 times
-4. type and edit representative Unicode text
-5. submit deterministic mock response
-6. cancel midway
-7. run 100 submit/complete cycles
-8. keep composer open and idle 10 minutes
-9. move mascot between monitors/scales where available
-10. final memory measurement after returning to mascot-only state
+1. fresh-process startup to first visible mascot
+2. post-reboot first-launch samples, reported separately
+3. 60 seconds mascot idle
+4. first composer activation
+5. warm composer activation
+6. open/close composer in repeated batches
+7. execute the shared Unicode/IME acceptance matrix
+8. submit deterministic mock response
+9. cancel at the shared cancellation point
+10. repeated submit/complete batches
+11. repeated cancellation batches
+12. backpressure/failure fixture cases
+13. composer-open idle
+14. move mascot between monitors/scales where available
+15. return to mascot-only warm state and measure retained footprint/resources
 
-The benchmark protocol defines exact collection details.
+Exact collection procedure lives in docs/BENCHMARK_PROTOCOL.md.
 
-## 11. Representative text correctness set
+## 12. Repository shape
 
-At minimum test:
+Expected structure:
 
-- ASCII English
-- Latvian diacritics
-- Cyrillic
-- combining marks
-- emoji including multi-codepoint sequences
-- mixed LTR/RTL sample
-- dead-key input
-- IME composition on a machine/input method where available
+    mascot/
+    ├── assets/
+    ├── benchmark/
+    ├── docs/
+    ├── rust/
+    └── zig/
 
-A language stack that saves a few MiB but requires us to build a fragile text editor from scratch should be treated accordingly.
+Candidate-owned application logic must be independently implemented.
 
-## 12. Repository shape after implementation begins
+Both candidates may reuse:
 
-Expected high-level layout:
-
-```text
-mascot/
-├── assets/
-├── docs/
-├── benchmark/
-├── rust/
-└── zig/
-```
-
-The two implementations should not share compiled code. They may share:
-
+- the same mature third-party/native libraries
+- system frameworks
 - static assets
-- protocol fixtures
-- benchmark scripts
+- the common mock-provider executable
+- fixture manifests
 - test vectors
+- benchmark tools
 - documentation
 
-## 13. Deliverables from each implementation
+Any new project-owned native infrastructure must be disclosed and counted where it is maintained.
+
+## 13. Deliverables from each candidate
 
 Each candidate must provide:
 
 - build instructions
-- release-build command
-- dependency list with purpose
+- exact release-build command
+- compiler/toolchain version
+- release-safety settings
+- allocator/runtime settings where relevant
+- LTO/stripping configuration
+- required DLL/framework/runtime files
+- direct dependency list with purpose
+- notable transitive/native dependencies
 - architecture note
 - executable prototype
+- correctness matrix results
 - automated or reproducible benchmark procedure
 - raw benchmark output
 - known platform limitations
-- implementation LOC summary excluding vendored/generated code
-- brief list of hacks/workarounds required
+- handwritten LOC summary excluding vendored/generated code
+- platform-specific LOC
+- unsafe/FFI/native bridge LOC where applicable
+- helper-process inventory
+- list of project-maintained patches/forks/workarounds
 
-No final language verdict should be written by the implementation agent.
+No implementation agent writes the final language verdict.
 
-## 14. Decision criteria
+## 14. Pre-final real-provider compatibility gate
 
-After measurements, compare:
+The deterministic mock remains the comparative benchmark workload.
 
-1. idle and active memory
-2. startup/hotkey latency
-3. idle wakeups/CPU
-4. correctness of native window behavior
-5. text/input correctness
-6. implementation complexity
-7. dependency surface
-8. OS-specific glue size
-9. debugging experience
-10. build/release complexity
-11. repeated-operation stability
-12. amount of infrastructure we would have to own long-term
+Before final language selection, every surviving candidate must also pass a small **untimed Codex app-server compatibility gate**:
+
+1. launch a pinned app-server version over stdio
+2. complete initialization
+3. start one read-only interaction
+4. receive streaming output
+5. interrupt a turn or complete normally
+6. clean up process and pipes
+
+Do not compare model/network response times.
+
+Devin ACP remains deferred unless review identifies an ACP-specific architectural obligation not covered by the structured mock plus Codex gate.
+
+## 15. Decision criteria
+
+Review the raw data and engineering evidence across:
+
+1. correctness eligibility
+2. idle and active private working set
+3. private commit and active peaks
+4. startup/first-use/warm activation latency
+5. idle CPU/redraw/wakeup behavior
+6. repeated-operation stability
+7. transparent-window/hit-test correctness
+8. text/input/IME correctness
+9. implementation complexity
+10. dependency surface
+11. platform-specific integration burden
+12. debugging/tooling friction
+13. build/release complexity
+14. amount of infrastructure the project would own long-term
+15. Windows-to-macOS portability of the chosen stack
+
+Do not reduce the decision to a weighted score before reviewing raw results.
 
 A small memory win is not automatically decisive.
 
-Example principle:
+Examples:
 
 - 4 MiB less memory with substantially more fragile text/native infrastructure probably does not justify a stack.
-- 20–30 MiB less memory plus simpler runtime behavior may justify revisiting the trade-off.
+- 20–30 MiB less memory plus simpler runtime behavior may justify additional integration work.
 
-## 15. Stop conditions
+## 16. Stop / pause conditions
 
-Pause a candidate implementation and report rather than papering over the problem if:
+Pause a candidate and report rather than papering over the problem if:
 
-- transparent presentation requires a fragile unsupported hack
-- correct text input clearly requires building a large custom subsystem
+- transparent presentation depends on a fragile unsupported hack
+- required text/IME correctness clearly requires a disproportionate custom subsystem
 - idle rendering cannot be made event-driven
 - a dependency unexpectedly embeds a browser/WebView runtime
-- repeated interaction shows unexplained unbounded memory/resource growth
-- platform glue becomes larger than the product slice itself
+- repeated equivalent workloads show unexplained unbounded memory/resource growth
+- process cleanup cannot reliably avoid orphaned children
+- native/platform behavior remains structurally unsupported by the chosen stack
 
-## 16. What happens after this comparison
+Do not pause merely because platform glue LOC exceeds generic application LOC in this small prototype. Judge maintainability and ownership complexity, not the ratio alone.
 
-Only after choosing the foundation do we add real product capabilities, roughly in this order:
+## 17. What happens after this comparison
+
+Only after choosing the foundation do we expand product scope, roughly:
 
 1. daemon/shell separation
 2. real Codex app-server adapter
@@ -368,6 +427,6 @@ Only after choosing the foundation do we add real product capabilities, roughly 
 6. browser context/control
 7. cloud/session synchronization
 8. richer session/history UI
-9. RepoSuite integration as a much later structured-memory layer
+9. RepoSuite integration much later
 
-The benchmark should not pre-build these stages.
+The benchmark must not pre-build these stages.
