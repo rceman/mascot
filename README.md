@@ -1,0 +1,2 @@
+# mascot
+AI Mascot
