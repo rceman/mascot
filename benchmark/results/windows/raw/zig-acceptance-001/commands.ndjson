@@ -1,0 +1,10 @@
+{"sent_qpc": "9582609874000", "command": {"token": 1, "command": "state"}}
+{"sent_qpc": "9582610093142", "command": {"token": 2, "command": "show"}}
+{"sent_qpc": "9582610506684", "command": {"token": 3, "command": "state"}}
+{"sent_qpc": "9582612670232", "command": {"token": 4, "command": "state"}}
+{"sent_qpc": "9582612674085", "command": {"token": 5, "command": "set_text", "text": ""}}
+{"sent_qpc": "9582612695143", "command": {"token": 6, "command": "state"}}
+{"sent_qpc": "9582616312595", "command": {"token": 7, "command": "text"}}
+{"sent_qpc": "9582616320279", "command": {"token": 8, "command": "state"}}
+{"sent_qpc": "9582616322756", "command": {"token": 9, "command": "hide"}}
+{"sent_qpc": "9582653860934", "command": {"token": 10, "command": "shutdown"}}
