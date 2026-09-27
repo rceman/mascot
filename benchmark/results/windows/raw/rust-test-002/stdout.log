@@ -1,0 +1,24 @@
+
+running 19 tests
+test framing::tests::split_multibyte_produces_exact_frames ... ok
+test framing::tests::invalid_utf8_rejected_only_at_frame_end ... ok
+test framing::tests::partial_frame_fails_finish ... ok
+test config::tests::sha256_known_vectors ... ok
+test provider::tests::frequency_mismatch_rejected ... ok
+test provider::tests::client_request_answers_once ... ok
+test provider::tests::cancel_after_one_chunk_permits_reuse ... ok
+test provider::tests::cancelled_without_request_rejected ... ok
+test provider::tests::duplicate_terminal_rejected ... ok
+test provider::tests::duplicate_seq_rejected ... ok
+test provider::tests::premature_complete_rejected ... ok
+test provider::tests::normal_sequence_accepted ... ok
+test provider::tests::skipped_seq_rejected ... ok
+test provider::tests::wrong_id_rejected ... ok
+test framing::tests::oversized_rejected_before_growth ... ok
+test queue::tests::push_pop_order_and_close ... ok
+test framing::tests::maximum_frame_accepted_at_limit ... ok
+test queue::tests::blocked_producer_wakes_on_drain ... ok
+test queue::tests::wait_pop_wakes_on_close ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

@@ -1,0 +1,709 @@
+ Downloading crates ...
+  Downloaded crc32fast v1.5.2
+  Downloaded bitflags v2.13.2
+  Downloaded quote v1.0.47
+  Downloaded zmij v1.0.23
+  Downloaded unicode-ident v1.0.26
+  Downloaded simd-adler32 v0.3.10
+  Downloaded proc-macro2 v1.0.107
+  Downloaded miniz_oxide v0.9.1
+  Downloaded memchr v2.8.3
+  Downloaded flate2 v1.1.10
+  Downloaded png v0.18.1
+  Downloaded serde_json v1.0.150
+  Downloaded zlib-rs v0.6.8
+  Downloaded itoa v1.0.18
+  Downloaded cfg-if v1.0.5
+  Downloaded syn v2.0.119
+   Compiling proc-macro2 v1.0.107
+    Checking simd-adler32 v0.3.10
+   Compiling unicode-ident v1.0.26
+   Compiling quote v1.0.47
+   Compiling serde_core v1.0.228
+   Compiling crc32fast v1.5.2
+    Checking adler2 v2.0.1
+    Checking cfg-if v1.0.5
+   Compiling zmij v1.0.23
+   Compiling serde_json v1.0.150
+   Compiling serde v1.0.228
+    Checking windows-link v0.2.1
+    Checking memchr v2.8.3
+   Compiling mascot-rust v0.1.0 (W:\devin_folder\mascot\rust)
+    Checking itoa v1.0.18
+    Checking bitflags v2.13.2
+    Checking base64 v0.22.1
+    Checking windows-sys v0.61.2
+    Checking miniz_oxide v0.9.1
+    Checking fdeflate v0.3.7
+    Checking miniz_oxide v0.8.9
+    Checking flate2 v1.1.10
+    Checking png v0.18.1
+   Compiling syn v2.0.119
+   Compiling serde_derive v1.0.228
+error[E0425]: cannot find value `SS_LEFT` in this scope
+   --> src\platform.rs:875:33
+    |
+875 |         WS_CHILD | WS_VISIBLE | SS_LEFT,
+    |                                 ^^^^^^^
+    |
+   ::: C:\Users\therceman\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-sys-0.61.2\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:560:1
+    |
+560 | pub const BS_LEFT: i32 = 256i32;
+    | ---------------------- similarly named constant `BS_LEFT` defined here
+    |
+help: a constant with a similar name exists
+    |
+875 -         WS_CHILD | WS_VISIBLE | SS_LEFT,
+875 +         WS_CHILD | WS_VISIBLE | BS_LEFT,
+    |
+
+error[E0423]: expected function, tuple struct or tuple variant, found type alias `windows_sys::Win32::UI::WindowsAndMessaging::HMENU`
+    --> src\text.rs:116:9
+     |
+ 116 |         windows_sys::Win32::UI::WindowsAndMessaging::HMENU(control_id as *mut c_void),
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: C:\Users\therceman\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-sys-0.61.2\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:1600:1
+     |
+1600 | pub const HTMENU: u32 = 5u32;
+     | --------------------- similarly named constant `HTMENU` defined here
+     |
+help: a constant with a similar name exists
+     |
+ 116 |         windows_sys::Win32::UI::WindowsAndMessaging::HTMENU(control_id as *mut c_void),
+     |                                                       +
+
+error[E0425]: cannot find value `EM_EXGETSEL` in this scope
+   --> src\text.rs:165:28
+    |
+ 18 | pub const EM_SETSEL: u32 = 0x00B1;
+    | ---------------------------------- similarly named constant `EM_SETSEL` defined here
+...
+165 |         SendMessageW(hwnd, EM_EXGETSEL, 0, &mut range as *mut _ as isize);
+    |                            ^^^^^^^^^^^
+    |
+help: a constant with a similar name exists
+    |
+165 -         SendMessageW(hwnd, EM_EXGETSEL, 0, &mut range as *mut _ as isize);
+165 +         SendMessageW(hwnd, EM_SETSEL, 0, &mut range as *mut _ as isize);
+    |
+
+error[E0425]: cannot find value `EM_EXSETSEL` in this scope
+   --> src\text.rs:173:28
+    |
+ 18 | pub const EM_SETSEL: u32 = 0x00B1;
+    | ---------------------------------- similarly named constant `EM_SETSEL` defined here
+...
+173 |         SendMessageW(hwnd, EM_EXSETSEL, 0, &range as *const _ as isize);
+    |                            ^^^^^^^^^^^
+    |
+help: a constant with a similar name exists
+    |
+173 -         SendMessageW(hwnd, EM_EXSETSEL, 0, &range as *const _ as isize);
+173 +         SendMessageW(hwnd, EM_SETSEL, 0, &range as *const _ as isize);
+    |
+
+warning: unused import: `WAIT_OBJECT_0`
+ --> src\control.rs:8:59
+  |
+8 | use windows_sys::Win32::Foundation::{CloseHandle, HANDLE, WAIT_OBJECT_0};
+  |                                                           ^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0277]: `*mut c_void` cannot be sent between threads safely
+  --> src\control.rs:46:24
+   |
+46 |       std::thread::spawn(move || {
+   |  _____------------------_^
+   | |     |
+   | |     required by a bound introduced by this call
+47 | |         unsafe {
+48 | |             let handle = OpenThread(THREAD_TERMINATE | THREAD_SYNCHRONIZE, 0, GetCurrentThreadId());
+49 | |             *handle_store.lock().unwrap_or_else(|e| e.into_inner()) = handle;
+...  |
+99 | |     })
+   | |_____^ `*mut c_void` cannot be sent between threads safely
+   |
+   = help: the trait `Send` is not implemented for `*mut c_void`
+   = note: required for `std::sync::Mutex<*mut c_void>` to implement `Sync`
+   = note: required for `Arc<std::sync::Mutex<*mut c_void>>` to implement `Send`
+note: required because it's used within this closure
+  --> src\control.rs:46:24
+   |
+46 |     std::thread::spawn(move || {
+   |                        ^^^^^^^
+note: required by a bound in `spawn`
+  --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\std\src\thread\functions.rs:125:0
+
+error[E0308]: mismatched types
+   --> src\platform.rs:168:17
+    |
+166 |             std::ptr::copy_nonoverlapping(
+    |             ----------------------------- arguments to this function are incorrect
+167 |                 self.mascot_bits.borrow().as_ptr(),
+168 |                 bits,
+    |                 ^^^^ expected `*mut u8`, found `*mut c_void`
+    |
+    = note: expected raw pointer `*mut u8`
+               found raw pointer `*mut c_void`
+note: function defined here
+   --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\ptr\mod.rs:526:20
+
+error[E0308]: mismatched types
+   --> src\platform.rs:698:24
+    |
+678 | unsafe extern "system" fn mascot_proc(hwnd: HWND, message: u32, wparam: WPARAM, lparam: LPARAM) -> LRESULT {
+    |                                                                                                    ------- expected `isize` because of return type
+...
+698 |                 return HTTRANSPARENT;
+    |                        ^^^^^^^^^^^^^ expected `isize`, found `i32`
+    |
+help: you can convert an `i32` to an `isize` and panic if the converted value doesn't fit
+    |
+698 |                 return HTTRANSPARENT.try_into().unwrap();
+    |                                     ++++++++++++++++++++
+
+error[E0308]: mismatched types
+   --> src\platform.rs:709:17
+    |
+678 | unsafe extern "system" fn mascot_proc(hwnd: HWND, message: u32, wparam: WPARAM, lparam: LPARAM) -> LRESULT {
+    |                                                                                                    ------- expected `isize` because of return type
+...
+709 |                 HTCAPTION
+    |                 ^^^^^^^^^ expected `isize`, found `u32`
+    |
+help: you can convert a `u32` to an `isize` and panic if the converted value doesn't fit
+    |
+709 |                 HTCAPTION.try_into().unwrap()
+    |                          ++++++++++++++++++++
+
+error[E0308]: mismatched types
+   --> src\platform.rs:711:17
+    |
+678 | unsafe extern "system" fn mascot_proc(hwnd: HWND, message: u32, wparam: WPARAM, lparam: LPARAM) -> LRESULT {
+    |                                                                                                    ------- expected `isize` because of return type
+...
+711 |                 HTTRANSPARENT
+    |                 ^^^^^^^^^^^^^ expected `isize`, found `i32`
+    |
+help: you can convert an `i32` to an `isize` and panic if the converted value doesn't fit
+    |
+711 |                 HTTRANSPARENT.try_into().unwrap()
+    |                              ++++++++++++++++++++
+
+error[E0423]: expected function, tuple struct or tuple variant, found type alias `HMENU`
+    --> src\platform.rs:881:9
+     |
+ 881 |         HMENU(ID_STATUS as *mut c_void),
+     |         ^^^^^
+     |
+    ::: C:\Users\therceman\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-sys-0.61.2\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:1600:1
+     |
+1600 | pub const HTMENU: u32 = 5u32;
+     | --------------------- similarly named constant `HTMENU` defined here
+     |
+help: a constant with a similar name exists
+     |
+ 881 |         HTMENU(ID_STATUS as *mut c_void),
+     |          +
+
+error[E0308]: mismatched types
+   --> src\platform.rs:889:33
+    |
+889 |         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+    |                                 ^^^^^^^^^^^^^ expected `u32`, found `i32`
+
+error[E0277]: no implementation for `u32 | i32`
+   --> src\platform.rs:889:31
+    |
+889 |         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+    |                               ^ no implementation for `u32 | i32`
+    |
+    = help: the trait `BitOr<i32>` is not implemented for `u32`
+help: the following other types implement trait `BitOr<Rhs>`
+   --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\internal_macros.rs:22:8
+    |
+    = note: `&u32` implements `BitOr<u32>`
+   ::: /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\internal_macros.rs:33:8
+    |
+    = note: `u32` implements `BitOr<&u32>`
+   ::: /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\internal_macros.rs:44:8
+    |
+    = note: `&u32` implements `BitOr`
+   --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\ops\bit.rs:278:8
+    |
+    = note: `u32` implements `BitOr`
+   ::: /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\ops\bit.rs:291:0
+    |
+    = note: in this macro invocation
+    = note: this error originates in the macro `forward_ref_binop` which comes from the expansion of the macro `bitor_impl` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0423]: expected function, tuple struct or tuple variant, found type alias `HMENU`
+    --> src\platform.rs:895:9
+     |
+ 895 |         HMENU(ID_SEND as *mut c_void),
+     |         ^^^^^
+     |
+    ::: C:\Users\therceman\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-sys-0.61.2\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:1600:1
+     |
+1600 | pub const HTMENU: u32 = 5u32;
+     | --------------------- similarly named constant `HTMENU` defined here
+     |
+help: a constant with a similar name exists
+     |
+ 895 |         HTMENU(ID_SEND as *mut c_void),
+     |          +
+
+error[E0308]: mismatched types
+   --> src\platform.rs:903:33
+    |
+903 |         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+    |                                 ^^^^^^^^^^^^^ expected `u32`, found `i32`
+
+error[E0277]: no implementation for `u32 | i32`
+   --> src\platform.rs:903:31
+    |
+903 |         WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+    |                               ^ no implementation for `u32 | i32`
+    |
+    = help: the trait `BitOr<i32>` is not implemented for `u32`
+help: the following other types implement trait `BitOr<Rhs>`
+   --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\internal_macros.rs:22:8
+    |
+    = note: `&u32` implements `BitOr<u32>`
+   ::: /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\internal_macros.rs:33:8
+    |
+    = note: `u32` implements `BitOr<&u32>`
+   ::: /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\internal_macros.rs:44:8
+    |
+    = note: `&u32` implements `BitOr`
+   --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\ops\bit.rs:278:8
+    |
+    = note: `u32` implements `BitOr`
+   ::: /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\core\src\ops\bit.rs:291:0
+    |
+    = note: in this macro invocation
+    = note: this error originates in the macro `forward_ref_binop` which comes from the expansion of the macro `bitor_impl` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0423]: expected function, tuple struct or tuple variant, found type alias `HMENU`
+    --> src\platform.rs:909:9
+     |
+ 909 |         HMENU(ID_CANCEL as *mut c_void),
+     |         ^^^^^
+     |
+    ::: C:\Users\therceman\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-sys-0.61.2\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:1600:1
+     |
+1600 | pub const HTMENU: u32 = 5u32;
+     | --------------------- similarly named constant `HTMENU` defined here
+     |
+help: a constant with a similar name exists
+     |
+ 909 |         HTMENU(ID_CANCEL as *mut c_void),
+     |          +
+
+error[E0308]: mismatched types
+   --> src\platform.rs:975:32
+    |
+975 |     let mut buffer = vec![0u8; reader.output_buffer_size()];
+    |                      ----------^^^^^^^^^^^^^^^^^^^^^^^^^^^-
+    |                      |         |
+    |                      |         expected `usize`, found `Option<usize>`
+    |                      arguments to this function are incorrect
+    |
+    = note: expected type `usize`
+               found enum `std::option::Option<usize>`
+note: function defined here
+   --> /rustc/4a4ef493e3a1488c6e321570238084b38948f6db/library\alloc\src\vec\mod.rs:3586:7
+help: consider using `Option::expect` to unwrap the `std::option::Option<usize>` value, panicking if the value is an `Option::None`
+    |
+975 |     let mut buffer = vec![0u8; reader.output_buffer_size().expect("REASON")];
+    |                                                           +++++++++++++++++
+
+error[E0599]: no method named `creation_flags` found for mutable reference `&mut std::process::Command` in the current scope
+   --> src\provider.rs:206:10
+    |
+198 | /     process
+199 | |         .args(&config.arguments)
+200 | |         .current_dir(&config.cwd)
+201 | |         .env_clear()
+...   |
+205 | |         .stderr(Stdio::piped())
+206 | |         .creation_flags(windows_sys::Win32::System::Threading::CREATE_NO_WINDOW);
+    | |         -^^^^^^^^^^^^^^ method not found in `&mut std::process::Command`
+    | |_________|
+    |
+    |
+    = help: items from traits can only be used if the trait is in scope
+help: trait `CommandExt` which provides `creation_flags` is implemented but not in scope; perhaps you want to import it
+    |
+  1 + use std::os::windows::process::CommandExt;
+    |
+
+error[E0308]: mismatched types
+   --> src\provider.rs:289:83
+    |
+289 |         let _ = push_event(ui_events, wake_ui, Event::SessionClosed { generation, exit_code, error });
+    |                                                                                   ^^^^^^^^^ expected `Option<u32>`, found `Option<i32>`
+    |
+    = note: expected enum `std::option::Option<u32>`
+               found enum `std::option::Option<i32>`
+
+error[E0308]: mismatched types
+   --> src\text.rs:222:40
+    |
+222 |             RemoveWindowSubclass(hwnd, input_subclass, 1);
+    |             --------------------       ^^^^^^^^^^^^^^ expected `Option<...>`, found fn item
+    |             |
+    |             arguments to this function are incorrect
+    |
+    = note: expected enum `std::option::Option<unsafe extern "system" fn(*mut c_void, u32, usize, isize, usize, usize) -> isize>`
+            found fn item `unsafe extern "system" fn(*mut c_void, u32, usize, isize, usize, usize) -> isize {input_subclass}`
+note: function defined here
+   --> C:\Users\therceman\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-sys-0.61.2\src\Windows\Win32\UI\Shell\mod.rs:394:48
+    |
+394 | windows_link::link!("comctl32.dll" "system" fn RemoveWindowSubclass(hwnd : super::super::Foundation:: HWND, pfnsubclass : SUBCLASSP...
+    |                                                ^^^^^^^^^^^^^^^^^^^^
+help: try wrapping the expression in `Some`
+    |
+222 |             RemoveWindowSubclass(hwnd, Some(input_subclass), 1);
+    |                                        +++++              +
+
+error[E0308]: mismatched types
+   --> src\text.rs:231:36
+    |
+231 |         if SetWindowSubclass(hwnd, input_subclass, 1, ui as usize) == 0 {
+    |            -----------------       ^^^^^^^^^^^^^^ expected `Option<...>`, found fn item
+    |            |
+    |            arguments to this function are incorrect
+    |
+    = note: expected enum `std::option::Option<unsafe extern "system" fn(*mut c_void, u32, usize, isize, usize, usize) -> isize>`
+            found fn item `unsafe extern "system" fn(*mut c_void, u32, usize, isize, usize, usize) -> isize {input_subclass}`
+note: function defined here
+   --> C:\Users\therceman\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-sys-0.61.2\src\Windows\Win32\UI\Shell\mod.rs:746:48
+    |
+746 | windows_link::link!("comctl32.dll" "system" fn SetWindowSubclass(hwnd : super::super::Foundation:: HWND, pfnsubclass : SUBCLASSPROC...
+    |                                                ^^^^^^^^^^^^^^^^^
+help: try wrapping the expression in `Some`
+    |
+231 |         if SetWindowSubclass(hwnd, Some(input_subclass), 1, ui as usize) == 0 {
+    |                                    +++++              +
+
+warning: unused variable: `exit_code`
+   --> src\platform.rs:429:40
+    |
+429 |                 Event::SessionClosed { exit_code, error, .. } => {
+    |                                        ^^^^^^^^^ help: try ignoring the field: `exit_code: _`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SetWindowLongPtrW` is unsafe and requires unsafe block
+   --> src\platform.rs:766:9
+    |
+766 |         SetWindowLongPtrW(hwnd, GWLP_USERDATA, (*create).lpCreateParams as isize);
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+note: an unsafe function restricts its caller, but its body is safe by default
+   --> src\platform.rs:763:1
+    |
+763 | unsafe extern "system" fn composer_proc(hwnd: HWND, message: u32, wparam: WPARAM, lparam: LPARAM) -> LRESULT {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = note: `#[warn(unsafe_op_in_unsafe_fn)]` (part of `#[warn(rust_2024_compatibility)]`) on by default
+
+warning[E0133]: dereference of raw pointer is unsafe and requires unsafe block
+   --> src\platform.rs:766:48
+    |
+766 |         SetWindowLongPtrW(hwnd, GWLP_USERDATA, (*create).lpCreateParams as isize);
+    |                                                ^^^^^^^^^ dereference of raw pointer
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: raw pointers may be null, dangling or unaligned; they can violate aliasing rules and cause data races: all of these are undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::DefWindowProcW` is unsafe and requires unsafe block
+   --> src\platform.rs:767:16
+    |
+767 |         return DefWindowProcW(hwnd, message, wparam, lparam);
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::GetWindowLongPtrW` is unsafe and requires unsafe block
+   --> src\platform.rs:769:18
+    |
+769 |     let ui_ptr = GetWindowLongPtrW(hwnd, GWLP_USERDATA) as *const Ui;
+    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::DefWindowProcW` is unsafe and requires unsafe block
+   --> src\platform.rs:771:16
+    |
+771 |         return DefWindowProcW(hwnd, message, wparam, lparam);
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: dereference of raw pointer is unsafe and requires unsafe block
+   --> src\platform.rs:773:15
+    |
+773 |     let ui = &*ui_ptr;
+    |               ^^^^^^^ dereference of raw pointer
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: raw pointers may be null, dangling or unaligned; they can violate aliasing rules and cause data races: all of these are undefined behavior
+
+warning[E0133]: call to unsafe function `platform::create_children` is unsafe and requires unsafe block
+   --> src\platform.rs:776:19
+    |
+776 |             match create_children(ui, hwnd) {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::DefWindowProcW` is unsafe and requires unsafe block
+   --> src\platform.rs:798:13
+    |
+798 |             DefWindowProcW(hwnd, message, wparam, lparam)
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SetWindowPos` is unsafe and requires unsafe block
+   --> src\platform.rs:802:13
+    |
+802 | /             SetWindowPos(
+803 | |                 hwnd,
+804 | |                 std::ptr::null_mut(),
+805 | |                 (*suggested).left,
+...   |
+809 | |                 SWP_NOZORDER | SWP_NOACTIVATE,
+810 | |             );
+    | |_____________^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: dereference of raw pointer is unsafe and requires unsafe block
+   --> src\platform.rs:805:17
+    |
+805 |                 (*suggested).left,
+    |                 ^^^^^^^^^^^^ dereference of raw pointer
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: raw pointers may be null, dangling or unaligned; they can violate aliasing rules and cause data races: all of these are undefined behavior
+
+warning[E0133]: dereference of raw pointer is unsafe and requires unsafe block
+   --> src\platform.rs:806:17
+    |
+806 |                 (*suggested).top,
+    |                 ^^^^^^^^^^^^ dereference of raw pointer
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: raw pointers may be null, dangling or unaligned; they can violate aliasing rules and cause data races: all of these are undefined behavior
+
+warning[E0133]: dereference of raw pointer is unsafe and requires unsafe block
+   --> src\platform.rs:807:17
+    |
+807 |                 (*suggested).right - (*suggested).left,
+    |                 ^^^^^^^^^^^^ dereference of raw pointer
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: raw pointers may be null, dangling or unaligned; they can violate aliasing rules and cause data races: all of these are undefined behavior
+
+warning[E0133]: dereference of raw pointer is unsafe and requires unsafe block
+   --> src\platform.rs:807:38
+    |
+807 |                 (*suggested).right - (*suggested).left,
+    |                                      ^^^^^^^^^^^^ dereference of raw pointer
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: raw pointers may be null, dangling or unaligned; they can violate aliasing rules and cause data races: all of these are undefined behavior
+
+warning[E0133]: dereference of raw pointer is unsafe and requires unsafe block
+   --> src\platform.rs:808:17
+    |
+808 |                 (*suggested).bottom - (*suggested).top,
+    |                 ^^^^^^^^^^^^ dereference of raw pointer
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: raw pointers may be null, dangling or unaligned; they can violate aliasing rules and cause data races: all of these are undefined behavior
+
+warning[E0133]: dereference of raw pointer is unsafe and requires unsafe block
+   --> src\platform.rs:808:39
+    |
+808 |                 (*suggested).bottom - (*suggested).top,
+    |                                       ^^^^^^^^^^^^ dereference of raw pointer
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: raw pointers may be null, dangling or unaligned; they can violate aliasing rules and cause data races: all of these are undefined behavior
+
+warning[E0133]: call to unsafe function `platform::relayout` is unsafe and requires unsafe block
+   --> src\platform.rs:811:13
+    |
+811 |             relayout(ui);
+    |             ^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::DefWindowProcW` is unsafe and requires unsafe block
+   --> src\platform.rs:818:14
+    |
+818 |         _ => DefWindowProcW(hwnd, message, wparam, lparam),
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::HiDpi::GetDpiForWindow` is unsafe and requires unsafe block
+   --> src\platform.rs:933:19
+    |
+933 |         let dpi = GetDpiForWindow(composer.hwnd);
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+note: an unsafe function restricts its caller, but its body is safe by default
+   --> src\platform.rs:930:1
+    |
+930 | unsafe fn relayout(ui: &Ui) {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::Graphics::Gdi::CreateFontW` is unsafe and requires unsafe block
+   --> src\platform.rs:935:20
+    |
+935 |           let font = CreateFontW(
+    |  ____________________^
+936 | |             -((16 * dpi as i32 + 36) / 72),
+937 | |             0,
+938 | |             0,
+...   |
+949 | |             text::wide("Segoe UI").as_ptr(),
+950 | |         );
+    | |_________^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SendMessageW` is unsafe and requires unsafe block
+   --> src\platform.rs:952:13
+    |
+952 |             SendMessageW(composer.input, WM_SETFONT, font as usize, 1);
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SendMessageW` is unsafe and requires unsafe block
+   --> src\platform.rs:953:13
+    |
+953 |             SendMessageW(composer.response, WM_SETFONT, font as usize, 1);
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SendMessageW` is unsafe and requires unsafe block
+   --> src\platform.rs:954:13
+    |
+954 |             SendMessageW(composer.status, WM_SETFONT, font as usize, 1);
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SendMessageW` is unsafe and requires unsafe block
+   --> src\platform.rs:955:13
+    |
+955 |             SendMessageW(composer.send, WM_SETFONT, font as usize, 1);
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SendMessageW` is unsafe and requires unsafe block
+   --> src\platform.rs:956:13
+    |
+956 |             SendMessageW(composer.cancel, WM_SETFONT, font as usize, 1);
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::Graphics::Gdi::DeleteObject` is unsafe and requires unsafe block
+   --> src\platform.rs:957:13
+    |
+957 |             DeleteObject(composer.font);
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SetWindowPos` is unsafe and requires unsafe block
+   --> src\platform.rs:962:9
+    |
+962 | ...   SetWindowPos(composer.input, std::ptr::null_mut(), scale(12), scale(12), scale(616), scale(ui_conf.input_height_dip as i32), SWP_NOZORDER | SWP_NOACTIVATE);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SetWindowPos` is unsafe and requires unsafe block
+   --> src\platform.rs:963:9
+    |
+963 | ...   SetWindowPos(composer.response, std::ptr::null_mut(), scale(12), scale(152), scale(616), scale(ui_conf.response_height_dip as i32), SWP_NOZORDER | SWP_NOACTIVATE);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SetWindowPos` is unsafe and requires unsafe block
+   --> src\platform.rs:964:9
+    |
+964 | ...   SetWindowPos(composer.status, std::ptr::null_mut(), scale(12), scale(436), scale(416), scale(28), SWP_NOZORDER | SWP_NOACTIVATE);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SetWindowPos` is unsafe and requires unsafe block
+   --> src\platform.rs:965:9
+    |
+965 | ...   SetWindowPos(composer.send, std::ptr::null_mut(), scale(440), scale(436), scale(80), scale(28), SWP_NOZORDER | SWP_NOACTIVATE);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+warning[E0133]: call to unsafe function `windows_sys::Win32::UI::WindowsAndMessaging::SetWindowPos` is unsafe and requires unsafe block
+   --> src\platform.rs:966:9
+    |
+966 | ...   SetWindowPos(composer.cancel, std::ptr::null_mut(), scale(528), scale(436), scale(100), scale(28), SWP_NOZORDER | SWP_NOACTIVATE);
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ call to unsafe function
+    |
+    = note: for more information, see <https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: consult the function's documentation for information on how to avoid undefined behavior
+
+error[E0502]: cannot borrow `state` as immutable because it is also borrowed as mutable
+   --> src\provider.rs:702:47
+    |
+695 |             let protocol = state.protocol.as_mut().ok_or("cancelled without request")?;
+    |                            ----- mutable borrow occurs here
+...
+702 |             if !protocol.cancel_requested && !state.shutdown_sent {
+    |                                               ^^^^^ immutable borrow occurs here
+...
+709 |             if last_seq != protocol.next_seq as i64 - 1 {
+    |                            ----------------- mutable borrow later used here
+
+Some errors have detailed explanations: E0133, E0277, E0308, E0423, E0425, E0502, E0599.
+For more information about an error, try `rustc --explain E0133`.
+warning: `mascot-rust` (bin "mascot") generated 32 warnings
+error: could not compile `mascot-rust` (bin "mascot") due to 22 previous errors; 32 warnings emitted

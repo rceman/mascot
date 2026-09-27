@@ -1,0 +1,42 @@
+{
+  "schema": "mascot-candidate-smoke-1",
+  "utc_started": "2026-09-27T14:33:11.595968+00:00",
+  "scope": "Targeted implementation smoke, not full candidate correctness or visible timing qualification",
+  "status": "FAIL",
+  "checks": [
+    {
+      "check": "decoder:small_fragments",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:coalesced_frames",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:newline_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:utf8_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:maximum_valid",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:oversized",
+      "status": "PASS"
+    },
+    {
+      "check": "native mascot handle and lazy initial state",
+      "status": "PASS"
+    }
+  ],
+  "events": [],
+  "error": "AssertionError('Composer client width differs')",
+  "fixture_version": "windows-v1.0.1",
+  "executable": "W:\\devin_folder\\mascot\\out\\rust\\mascot.exe",
+  "executable_sha256": "f92112126786177f6c907a117ad802690e274c23e03c4e0de14fe7d8bd7e7018",
+  "utc_finished": "2026-09-27T14:33:11.803549+00:00"
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "mascot-candidate-smoke-1",
+  "utc_started": "2026-09-27T14:23:36.959880+00:00",
+  "scope": "Targeted implementation smoke, not full candidate correctness or visible timing qualification",
+  "status": "FAIL",
+  "checks": [
+    {
+      "check": "decoder:small_fragments",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:coalesced_frames",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:newline_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:utf8_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:maximum_valid",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:oversized",
+      "status": "PASS"
+    }
+  ],
+  "events": [],
+  "error": "Empty()",
+  "fixture_version": "windows-v1.0.1",
+  "executable": "W:\\devin_folder\\mascot\\out\\rust\\mascot.exe",
+  "executable_sha256": "0df85345f669ffcc123e0a8eb82eeeb8c0d2bd8f48803df0f37e260caa32bc94",
+  "utc_finished": "2026-09-27T14:23:57.101336+00:00"
+}

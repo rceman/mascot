@@ -1,0 +1,3 @@
+   Compiling mascot-rust v0.1.0 (W:\devin_folder\mascot\rust)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.06s
+     Running unittests src\main.rs (target\debug\deps\mascot-8ece4adb0fd7b87e.exe)
