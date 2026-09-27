@@ -14,6 +14,9 @@ This protocol keeps the Rust, Zig, and Go comparison repeatable and prevents art
 - Report raw per-run data and distributions; do not report only a composite score.
 - The common provider fixture and measurement tools are excluded from application totals. Candidate-specific helpers are not excluded.
 - Candidate-specific runtime diagnostics are supplemental; OS-level process accounting remains authoritative for headline resource comparison.
+- Each result set identifies the candidate build, target architecture, dependency/backend configuration, and allocator/runtime policy. Alternative configurations are reported separately; do not combine their best memory, CPU, and latency values into one candidate result.
+- Benchmark-only forced GC, scavenging, allocator purges, working-set trimming, or cleanup immediately before sampling are prohibited. Deliberate shipping cleanup behavior is allowed only when declared and its resource/latency costs are measured.
+- Supplemental diagnostics use documented low-intrusion snapshots or separate diagnostic runs. Do not introduce substantial language-specific instrumentation overhead only into one candidate's headline measurements.
 
 ## 2. Application-owned process inventory
 
@@ -397,17 +400,27 @@ These diagnostics explain results; they do not replace headline OS metrics.
 
 Record where available:
 
-- live heap / HeapAlloc
+- HeapAlloc: allocated Go heap, including objects not yet reclaimed
+- optional marked-live heap snapshot from the corresponding runtime metric, clearly labeled as the previous GC's marked-live snapshot
 - HeapSys
 - HeapInuse
 - GC cycle count
 - cumulative GC pause time
 - goroutine count
+- GOMAXPROCS
 - GOGC
 - GOMEMLIMIT
+- any other non-default Go runtime controls
 - cgo usage and major native allocations if identifiable
 
-Do not subtract Go runtime/GC memory from process memory.
+Interpretation rules:
+
+- HeapSys is not resident memory.
+- HeapAlloc is not synonymous with currently reachable/live heap.
+- cumulative GC pause time is not total GC CPU cost; concurrent marking, assists, scavenging, and other runtime work also consume resources.
+- GOMEMLIMIT is a soft limit on Go-runtime-managed memory, not a cap on total process memory, cgo/native GUI allocations, or GPU resources.
+- Do not subtract Go runtime/GC memory from process memory or add it again on top of OS totals.
+- Avoid intrusive runtime sampling during headline runs; use low-intrusion snapshots or separate diagnostic passes when necessary.
 
 ### Rust / Zig
 
