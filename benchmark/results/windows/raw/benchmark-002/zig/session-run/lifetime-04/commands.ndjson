@@ -1,0 +1,5 @@
+{"sent_qpc": "9690219787792", "command": {"token": 1, "command": "state"}}
+{"sent_qpc": "9690226265072", "command": {"token": 2, "command": "state"}}
+{"sent_qpc": "9690228357928", "command": {"token": 3, "command": "text"}}
+{"sent_qpc": "9690228523974", "command": {"token": 4, "command": "text"}}
+{"sent_qpc": "9690228598586", "command": {"token": 5, "command": "shutdown"}}

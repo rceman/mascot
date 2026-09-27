@@ -19,6 +19,17 @@
   "final": {
     "files": [
       {
+        "file": "src/codex_gate.rs",
+        "bytes": 6588,
+        "chars": 6587,
+        "loc_nonblank_noncomment": 155,
+        "tokens": 1631,
+        "tokens_code_only": 1518,
+        "subsystem": "other_candidate_logic",
+        "functions": 3,
+        "ffi_boundary_lines": 0
+      },
+      {
         "file": "src/config.rs",
         "bytes": 7176,
         "chars": 7176,
@@ -53,11 +64,11 @@
       },
       {
         "file": "src/main.rs",
-        "bytes": 8677,
-        "chars": 8677,
-        "loc_nonblank_noncomment": 245,
-        "tokens": 2053,
-        "tokens_code_only": 2053,
+        "bytes": 8896,
+        "chars": 8896,
+        "loc_nonblank_noncomment": 250,
+        "tokens": 2111,
+        "tokens_code_only": 2111,
         "subsystem": "other_candidate_logic",
         "functions": 4,
         "ffi_boundary_lines": 11
@@ -107,25 +118,25 @@
         "ffi_boundary_lines": 36
       }
     ],
-    "handwritten_source_bytes": 151492,
-    "handwritten_source_chars": 151488,
-    "nonblank_noncomment_loc": 4368,
-    "source_tokens_o200k_base": 33112,
-    "source_tokens_code_only_o200k_base": 33067,
-    "tokens_per_loc": 7.5806,
-    "source_file_count": 8,
-    "median_source_file_bytes": 8138.5,
+    "handwritten_source_bytes": 158299,
+    "handwritten_source_chars": 158294,
+    "nonblank_noncomment_loc": 4528,
+    "source_tokens_o200k_base": 34801,
+    "source_tokens_code_only_o200k_base": 34643,
+    "tokens_per_loc": 7.6857,
+    "source_file_count": 9,
+    "median_source_file_bytes": 7600,
     "largest_source_file": "src/provider.rs",
     "subsystem_tokens_o200k_base": {
-      "other_candidate_logic": 6111,
+      "other_candidate_logic": 7800,
       "benchmark_candidate_hooks": 1649,
       "windowing_platform_glue": 11576,
       "provider_process_io": 11403,
       "text_ime_rendering": 2373
     },
     "max_function_lines": 149,
-    "median_function_lines": 8,
-    "max_nesting_depth": 6,
+    "median_function_lines": 8.0,
+    "max_nesting_depth": 7,
     "ffi_boundary_lines": 102,
     "architecture_doc_bytes": 18318,
     "build_config_bytes": 3373
@@ -248,8 +259,8 @@
     "build_config_bytes": 3704
   },
   "correction_churn": {
-    "tokens_added": 14804,
-    "tokens_removed": 10180,
+    "tokens_added": 16520,
+    "tokens_removed": 10207,
     "changed_files": [
       {
         "file": "ARCHITECTURE.md",
@@ -272,6 +283,11 @@
         "tokens_removed": 160
       },
       {
+        "file": "src/codex_gate.rs",
+        "tokens_added": 1631,
+        "tokens_removed": 0
+      },
+      {
         "file": "src/config.rs",
         "tokens_added": 319,
         "tokens_removed": 1807
@@ -283,8 +299,8 @@
       },
       {
         "file": "src/main.rs",
-        "tokens_added": 430,
-        "tokens_removed": 467
+        "tokens_added": 515,
+        "tokens_removed": 494
       },
       {
         "file": "src/platform.rs",

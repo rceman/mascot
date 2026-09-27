@@ -1,0 +1,5 @@
+{"sent_qpc": "9708289452281", "command": {"token": 1, "command": "state"}}
+{"sent_qpc": "9708295758261", "command": {"token": 2, "command": "state"}}
+{"sent_qpc": "9708297854220", "command": {"token": 3, "command": "text"}}
+{"sent_qpc": "9708298020694", "command": {"token": 4, "command": "text"}}
+{"sent_qpc": "9708298096180", "command": {"token": 5, "command": "shutdown"}}

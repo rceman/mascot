@@ -1,0 +1,8 @@
+{"sent_qpc": "9712920330282", "command": {"token": 1, "command": "state"}}
+{"sent_qpc": "9712921003002", "command": {"token": 2, "command": "state"}}
+{"sent_qpc": "9712921005203", "command": {"token": 3, "command": "show"}}
+{"sent_qpc": "9712921549962", "command": {"token": 4, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9712921586770", "command": {"token": 5, "command": "scenario", "name": "normal"}}
+{"sent_qpc": "9712921592180", "command": {"token": 6, "command": "submit"}}
+{"sent_qpc": "9712932128353", "command": {"token": 7, "command": "state"}}
+{"sent_qpc": "9712932144894", "command": {"token": 8, "command": "text"}}

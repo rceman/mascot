@@ -1,0 +1,5 @@
+{"sent_qpc": "9733357780922", "command": {"token": 1, "command": "state"}}
+{"sent_qpc": "9733364406763", "command": {"token": 2, "command": "state"}}
+{"sent_qpc": "9733366477426", "command": {"token": 3, "command": "text"}}
+{"sent_qpc": "9733366648508", "command": {"token": 4, "command": "text"}}
+{"sent_qpc": "9733366725555", "command": {"token": 5, "command": "shutdown"}}

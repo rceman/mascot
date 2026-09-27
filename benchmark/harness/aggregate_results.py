@@ -33,9 +33,9 @@ def read_json(path):
 
 
 def latest(raw, pattern):
-    dirs = sorted(d for d in raw.glob(pattern) if d.is_dir()
-                  and "quick" not in d.name)
-    for d in reversed(dirs):
+    dirs = [d for d in raw.glob(pattern) if d.is_dir()
+            and "quick" not in d.name]
+    for d in sorted(dirs, key=lambda d: d.stat().st_mtime, reverse=True):
         r = read_json(d / "result.json")
         if r is not None:
             return r, d.name
@@ -46,11 +46,12 @@ def latest_benchmark(raw, name):
     """Benchmark results live in benchmark-*/<name>/result.json (orchestrated)
     or <name>-benchmark-*/result.json (single-candidate runs)."""
     candidates = []
-    for batch in sorted(d for d in raw.glob("benchmark-*") if d.is_dir()):
+    for batch in sorted(raw.glob("benchmark-*"), key=lambda d: d.stat().st_mtime):
         r = read_json(batch / name / "result.json")
         if r is not None:
             candidates.append((r, f"{batch.name}/{name}"))
-    for d in sorted(raw.glob(f"{name}-benchmark-*")):
+    for d in sorted(raw.glob(f"{name}-benchmark-*"),
+                    key=lambda d: d.stat().st_mtime):
         if "quick" in d.name:
             continue
         r = read_json(d / "result.json")
@@ -190,7 +191,7 @@ def main():
             cand["source_efficiency"] = {
                 "source_tokens_o200k": f.get("source_tokens_o200k_base"),
                 "loc": f.get("nonblank_noncomment_loc"),
-                "files": f.get("files"),
+                "files": f.get("source_file_count"),
                 "first_complete_tokens": (eff.get("first_complete") or {})
                     .get("source_tokens_o200k_base"),
                 "churn_added": (eff.get("correction_churn") or {})
@@ -254,7 +255,8 @@ def main():
             ("warm_activation_p95_ms", "Warm activation p95 ms"),
             ("r0_private_ws_median", "Fresh mascot PWS (bytes)"),
             ("r3_warm_pws", "Warm mascot PWS (bytes)"),
-            ("r4_observed_max_pws", "Streaming observed peak PWS"),
+            ("r4_observed_max_pws", "Streaming observed peak PWS (bytes)"),
+            ("r4_observed_max_commit", "Streaming observed peak commit (bytes)"),
             ("r4_transport_ms_median", "Chunk transport median ms"),
             ("r4_submit_to_first_visible_ms", "Submit->first visible ms"),
             ("r0_idle_cpu_one_core_pct", "Idle CPU % of one core"),
@@ -276,7 +278,25 @@ def main():
             row.append(str(v) if v is not None else "-")
         lines.append("| " + " | ".join(row) + " |")
     lines += ["",
-              "Post-reboot first launches are **UNTESTED** — they require "
+              "Notes:",
+              "",
+              "- Stability PWS growth is the per-operation first->last sample "
+              "delta (private working set, bytes) over 100 ops, worst of 3 "
+              "batches; positive values indicate per-operation retention, "
+              "not necessarily leaks (allocator caching included).",
+              "- Zig's streaming peak commit (~100 MB) is a pre-reserved "
+              "address/commit region that is stable and unchanged through "
+              "the R5 60 s decay window and later states; its resident PWS "
+              "stays ~11 MB.",
+              "- Process inventories per lifetime contain exactly the "
+              "candidate and the excluded shared provider child; no stray "
+              "helper processes were observed in the benchmark-003 run.",
+              "- The Codex app-server gate is untimed compatibility only "
+              "(codex 0.80.0 over stdio): initialize + config/read + "
+              "thread/list + clean teardown; no model/network metrics.",
+              "- Devin ACP remains deferred; no uncovered ACP-specific "
+              "architectural obligation was identified during this stage.",
+              "- Post-reboot first launches are **UNTESTED** — they require "
               "coordinated genuine boots and no automatic reboot was "
               "performed.",
               "",

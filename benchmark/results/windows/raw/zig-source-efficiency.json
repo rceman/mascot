@@ -19,6 +19,17 @@
   "final": {
     "files": [
       {
+        "file": "src/codex_gate.zig",
+        "bytes": 7367,
+        "chars": 7366,
+        "loc_nonblank_noncomment": 167,
+        "tokens": 1954,
+        "tokens_code_only": 1843,
+        "subsystem": "other_candidate_logic",
+        "functions": 5,
+        "ffi_boundary_lines": 5
+      },
+      {
         "file": "src/config.zig",
         "bytes": 8643,
         "chars": 8643,
@@ -64,11 +75,11 @@
       },
       {
         "file": "src/main.zig",
-        "bytes": 10824,
-        "chars": 10824,
-        "loc_nonblank_noncomment": 266,
-        "tokens": 2818,
-        "tokens_code_only": 2796,
+        "bytes": 11129,
+        "chars": 11129,
+        "loc_nonblank_noncomment": 274,
+        "tokens": 2921,
+        "tokens_code_only": 2899,
         "subsystem": "other_candidate_logic",
         "functions": 7,
         "ffi_boundary_lines": 20
@@ -129,26 +140,26 @@
         "ffi_boundary_lines": 34
       }
     ],
-    "handwritten_source_bytes": 159910,
-    "handwritten_source_chars": 159908,
-    "nonblank_noncomment_loc": 3948,
-    "source_tokens_o200k_base": 41848,
-    "source_tokens_code_only_o200k_base": 40637,
-    "tokens_per_loc": 10.5998,
-    "source_file_count": 10,
-    "median_source_file_bytes": 7486.0,
+    "handwritten_source_bytes": 167582,
+    "handwritten_source_chars": 167579,
+    "nonblank_noncomment_loc": 4123,
+    "source_tokens_o200k_base": 43905,
+    "source_tokens_code_only_o200k_base": 42583,
+    "tokens_per_loc": 10.6488,
+    "source_file_count": 11,
+    "median_source_file_bytes": 7367,
     "largest_source_file": "src/provider.zig",
     "subsystem_tokens_o200k_base": {
-      "other_candidate_logic": 10485,
+      "other_candidate_logic": 12542,
       "benchmark_candidate_hooks": 1524,
       "windowing_platform_glue": 14668,
       "provider_process_io": 13258,
       "text_ime_rendering": 1913
     },
     "max_function_lines": 221,
-    "median_function_lines": 9,
+    "median_function_lines": 9.0,
     "max_nesting_depth": 10,
-    "ffi_boundary_lines": 353,
+    "ffi_boundary_lines": 358,
     "architecture_doc_bytes": 15441,
     "build_config_bytes": 2612
   },
@@ -292,8 +303,19 @@
     "build_config_bytes": 2612
   },
   "correction_churn": {
-    "tokens_added": 0,
+    "tokens_added": 2057,
     "tokens_removed": 0,
-    "changed_files": []
+    "changed_files": [
+      {
+        "file": "src/codex_gate.zig",
+        "tokens_added": 1954,
+        "tokens_removed": 0
+      },
+      {
+        "file": "src/main.zig",
+        "tokens_added": 103,
+        "tokens_removed": 0
+      }
+    ]
   }
 }

@@ -19,6 +19,17 @@
   "final": {
     "files": [
       {
+        "file": "codex_gate.go",
+        "bytes": 4045,
+        "chars": 4044,
+        "loc_nonblank_noncomment": 136,
+        "tokens": 1202,
+        "tokens_code_only": 1095,
+        "subsystem": "other_candidate_logic",
+        "functions": 2,
+        "ffi_boundary_lines": 0
+      },
+      {
         "file": "config.go",
         "bytes": 5964,
         "chars": 5964,
@@ -75,11 +86,11 @@
       },
       {
         "file": "main.go",
-        "bytes": 6439,
-        "chars": 6439,
-        "loc_nonblank_noncomment": 209,
-        "tokens": 1884,
-        "tokens_code_only": 1766,
+        "bytes": 6755,
+        "chars": 6755,
+        "loc_nonblank_noncomment": 221,
+        "tokens": 1993,
+        "tokens_code_only": 1875,
         "subsystem": "other_candidate_logic",
         "functions": 6,
         "ffi_boundary_lines": 3
@@ -173,17 +184,17 @@
         "ffi_boundary_lines": 36
       }
     ],
-    "handwritten_source_bytes": 122595,
-    "handwritten_source_chars": 122591,
-    "nonblank_noncomment_loc": 4039,
-    "source_tokens_o200k_base": 35592,
-    "source_tokens_code_only_o200k_base": 33601,
-    "tokens_per_loc": 8.8121,
-    "source_file_count": 14,
-    "median_source_file_bytes": 6124.0,
+    "handwritten_source_bytes": 126956,
+    "handwritten_source_chars": 126951,
+    "nonblank_noncomment_loc": 4187,
+    "source_tokens_o200k_base": 36903,
+    "source_tokens_code_only_o200k_base": 34805,
+    "tokens_per_loc": 8.8137,
+    "source_file_count": 15,
+    "median_source_file_bytes": 5964,
     "largest_source_file": "provider.go",
     "subsystem_tokens_o200k_base": {
-      "other_candidate_logic": 12379,
+      "other_candidate_logic": 13690,
       "benchmark_candidate_hooks": 1328,
       "provider_process_io": 10874,
       "text_ime_rendering": 1135,
@@ -380,9 +391,14 @@
     "build_config_bytes": 1367
   },
   "correction_churn": {
-    "tokens_added": 512,
+    "tokens_added": 1822,
     "tokens_removed": 296,
     "changed_files": [
+      {
+        "file": "codex_gate.go",
+        "tokens_added": 1201,
+        "tokens_removed": 0
+      },
       {
         "file": "config.go",
         "tokens_added": 29,
@@ -390,7 +406,7 @@
       },
       {
         "file": "main.go",
-        "tokens_added": 96,
+        "tokens_added": 205,
         "tokens_removed": 24
       },
       {
