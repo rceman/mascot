@@ -1,12 +1,12 @@
-# Rust vs Zig Prototype Plan v0.2
+# Rust vs Zig vs Go Prototype Plan v0.3
 
-Status: **revised after architecture review; ready for second review before implementation**
+Status: **revised after second Astra review; ready for final review before implementation**
 
 ## 1. Decision we are trying to make
 
 Choose the primary implementation language and native UI approach for an eventual ultra-light desktop AI agent shell.
 
-The comparison is between **Rust** and **Zig** implementations of the same narrow prototype.
+The comparison is between **Rust**, **Zig**, and **Go** implementations of the same narrow prototype.
 
 The useful question is:
 
@@ -32,19 +32,42 @@ Hard principles:
 - platform-specific native shims are acceptable
 - correctness of text input and OS behavior matters more than framework purity
 
-## 3. Shared contracts
+## 3. Shared contracts and fixture freeze gate
 
-Before candidate implementation starts, these documents are normative:
+Before any candidate application implementation starts, these documents are normative:
 
 - docs/ACCEPTANCE_MATRIX.md
+- docs/TEXT_FIXTURES.md
 - docs/MOCK_PROVIDER_CONTRACT.md
 - docs/BENCHMARK_PROTOCOL.md
 
-A candidate whose required correctness cases are FAIL or UNTESTED is not eligible for the final performance comparison until corrected.
+After plan approval, prepare and freeze the common fixture/harness **before Rust, Zig, or Go application implementation begins**.
+
+The shared fixture manifest freezes at minimum:
+
+- fixture version
+- mascot asset ID/hash and logical dimensions
+- composer/response dimensions
+- text/action fixtures
+- permitted native text variations
+- response payloads and sizes
+- scenario list
+- fragmentation plan
+- direct decoder-fragment vectors
+- cancellation behavior
+- exceptional recovery behavior
+- timeout values
+- frame limits
+- expected terminal events
+- benchmark font/input configuration
+
+Any later change is versioned and invalidates every affected earlier correctness or performance result, including results collected before another candidate existed.
+
+A candidate whose required correctness cases are FAIL or UNTESTED is not eligible for final performance comparison until corrected.
 
 ## 4. Prototype scope
 
-Both implementations MUST provide equivalent observable behavior.
+All three implementations MUST provide equivalent observable behavior.
 
 ### P0. Floating mascot
 
@@ -52,12 +75,12 @@ A small transparent borderless mascot window:
 
 - per-pixel transparency
 - no visible rectangular background
-- always available above ordinary application windows where the OS supports it
+- always available above ordinary application windows according to the benchmark policy
 - draggable through the shared mascot hit region
 - transparent exterior must not intercept clicks intended for a separate underlying app
 - no full-screen transparent backing window
 - no continuous redraw when stationary
-- support at least 1x and 2x display scale
+- support the shared 1x/2x and mixed-scale display tests
 - use the same mascot source asset and logical dimensions
 
 The mascot asset is a benchmark placeholder, not the final product identity.
@@ -77,30 +100,47 @@ Minimum behavior:
 - submit via keyboard
 - close/hide without terminating the shell
 - preserve mascot after chat closes
-- satisfy the text/IME cases in docs/ACCEPTANCE_MATRIX.md
+- satisfy docs/ACCEPTANCE_MATRIX.md
+- satisfy docs/TEXT_FIXTURES.md
 
-Rendering sample strings is not sufficient. The candidate must support the required editing actions.
+Rendering sample strings is not sufficient. The composer must meet the shared editing oracle.
 
-### P2. Streamed response
+### P2. Plain-text response view
 
-Both candidates use the same persistent mock-provider fixture defined in docs/MOCK_PROVIDER_CONTRACT.md.
+The response view is non-editable but must render the same representative Unicode correctly.
+
+It must satisfy the visual cases from docs/TEXT_FIXTURES.md, including:
+
+- combining-mark presentation
+- emoji-sequence presentation
+- mixed LTR/RTL ordering
+- Arabic contextual shaping
+- Latvian and Cyrillic text
+
+A candidate cannot pass through a correct native composer while using an incorrect cheaper response renderer.
+
+### P3. Streamed response
+
+All candidates use the same persistent mock-provider fixture defined in docs/MOCK_PROVIDER_CONTRACT.md.
 
 The shell must:
 
 - parse the shared framed stream correctly
+- pass the direct decoder-fragment vectors
 - read output without blocking the UI
 - display chunks incrementally
-- support cooperative cancellation
+- support the deterministic cooperative-cancellation barrier
 - handle one provider-initiated client request
 - detect child exit
 - continuously drain stderr
-- remain responsive under the shared backpressure case
+- remain responsive under shared backpressure
 - enforce the shared frame-size limit
-- clean up the child correctly
+- follow the shared exceptional-session recovery policy
+- clean up the child within shared timeouts
 
-Hide/show does not alter cancellation semantics: an active response continues while hidden and remains available when reopened. Explicit cancel is a separate action.
+Hide/show does not alter cancellation semantics: an active response continues while hidden and remains available when reopened. Explicit cancel is separate.
 
-### P3. Lifecycle
+### P4. Lifecycle
 
 The prototype must demonstrate:
 
@@ -110,10 +150,11 @@ The prototype must demonstrate:
 - repeated show/hide
 - repeated submit/complete cycles
 - repeated cancel cycles
+- exceptional provider recovery
 - clean shutdown
 - no unexplained monotonic growth in application-owned resources
 
-No persistence layer is required in this prototype.
+No persistence layer is required.
 
 ## 5. Explicit non-scope
 
@@ -145,20 +186,22 @@ Do not add:
 - production branding
 - elaborate animations
 
-Every extra subsystem makes the language comparison less useful.
+Every extra subsystem makes the comparison less useful.
 
 ## 6. Platform decision gates
 
 ### Stage A — Windows screening
 
-Implement and benchmark both prototypes as native Windows applications.
+Implement and benchmark all three candidates as native Windows applications.
 
 Windows validates:
 
 - transparent native windows
 - hit testing and drag behavior
+- always-on-top policy
 - global hotkeys
 - real text input / IME
+- response rendering
 - process I/O
 - startup/activation latency
 - memory, CPU, handles, USER/GDI objects, windows and child lifecycle
@@ -177,6 +220,7 @@ Validate:
 - activation into a working composer
 - global shortcut strategy
 - text/IME composition
+- response rendering
 - native resource lifetime
 - process I/O
 - basic startup and idle footprint
@@ -187,7 +231,7 @@ Use an actual macOS application bundle. An installer is not required.
 
 Full Linux implementation and benchmarking may follow the language decision.
 
-Before final selection, document for each surviving stack:
+Before final selection, document for every surviving stack:
 
 - Linux dependency path
 - X11 support path
@@ -195,17 +239,18 @@ Before final selection, document for each surviving stack:
 - accepted degraded behavior for positioning / always-on-top / shortcuts
 - any compositor-specific protocol requirement
 
-If a decision-threatening uncertainty remains, perform a narrow technical spike. Do not build a third complete prototype merely for symmetry.
+If a decision-threatening uncertainty remains, perform a narrow technical spike. Do not build full Linux candidates merely for symmetry.
 
 ## 7. Fairness rules
 
-Both candidates must use:
+All candidates must use:
 
 - the same mascot source asset
 - the same logical mascot dimensions
-- the same composer dimensions
+- the same composer/response dimensions
 - the same shared correctness matrix
-- the same mock-provider executable and fixture manifest
+- the same text/visual fixtures
+- the same mock-provider executable and manifest
 - the same visible fixture content
 - the same benchmark scenarios and durations
 - equivalent release/optimized build intent
@@ -228,7 +273,7 @@ If a stack requires a materially different architecture, document the difference
 
 We compare realistic product stacks, not artificially symmetric dependency graphs.
 
-For both Rust and Zig:
+For Rust, Zig, and Go:
 
 - CPU, GPU, native-widget and custom-rendered approaches are allowed
 - mature native/C/system libraries are allowed
@@ -236,6 +281,15 @@ For both Rust and Zig:
 - dependency symmetry is not required
 - allocator/threading/cache strategy may differ
 - correctness and accounting requirements do not differ
+- application-owned helper processes are counted
+
+Go-specific freedom:
+
+- direct Win32 use is allowed
+- cgo is allowed when justified
+- Gio or another native rendering layer is allowed
+- Objective-C/AppKit bridge code is allowed on macOS
+- Go runtime/GC memory and CPU are part of the application cost and are never excluded from headline process metrics
 
 The implementation agent must justify the chosen stack by:
 
@@ -248,7 +302,7 @@ A focused correction of an accidental busy loop, unsuitable first library choice
 
 ## 9. Resource-discipline requirements
 
-Both prototypes must follow the same product-level constraints:
+All prototypes must follow the same product-level constraints:
 
 - no full-screen RGBA backing surface for a tiny mascot
 - no retained duplicate decoded image buffers without reason
@@ -262,6 +316,8 @@ Both prototypes must follow the same product-level constraints:
 - disclose retained renderer/text/native caches that materially affect steady state
 
 A stable one-time cache warm-up is not automatically a leak. Repeated equivalent workloads must plateau.
+
+For Go, GC/runtime diagnostics are supplemental only. They do not replace OS-level process accounting.
 
 ## 10. Acceptance targets
 
@@ -280,6 +336,8 @@ Targets:
 - complete frame receipt to first presentation containing that content: target < 33 ms under normal load
 - no unexplained monotonic application-resource growth across repeated operation batches
 
+The targets do not change for Go. If the Go runtime materially increases the floor, that is part of the result.
+
 ## 11. Required benchmark scenarios
 
 At minimum:
@@ -290,14 +348,14 @@ At minimum:
 4. first composer activation
 5. warm composer activation
 6. open/close composer in repeated batches
-7. execute the shared Unicode/IME acceptance matrix
+7. execute shared Unicode/IME/text-visual acceptance cases
 8. submit deterministic mock response
-9. cancel at the shared cancellation point
+9. execute canonical cancellation barrier
 10. repeated submit/complete batches
 11. repeated cancellation batches
-12. backpressure/failure fixture cases
+12. backpressure/failure/oversized-frame cases
 13. composer-open idle
-14. move mascot between monitors/scales where available
+14. mixed-scale display transition
 15. return to mascot-only warm state and measure retained footprint/resources
 
 Exact collection procedure lives in docs/BENCHMARK_PROTOCOL.md.
@@ -311,11 +369,12 @@ Expected structure:
     ├── benchmark/
     ├── docs/
     ├── rust/
-    └── zig/
+    ├── zig/
+    └── go/
 
 Candidate-owned application logic must be independently implemented.
 
-Both candidates may reuse:
+All candidates may reuse:
 
 - the same mature third-party/native libraries
 - system frameworks
@@ -337,7 +396,8 @@ Each candidate must provide:
 - compiler/toolchain version
 - release-safety settings
 - allocator/runtime settings where relevant
-- LTO/stripping configuration
+- GC/runtime settings where relevant
+- LTO/stripping configuration where applicable
 - required DLL/framework/runtime files
 - direct dependency list with purpose
 - notable transitive/native dependencies
@@ -374,7 +434,7 @@ Devin ACP remains deferred unless review identifies an ACP-specific architectura
 
 ## 15. Decision criteria
 
-Review the raw data and engineering evidence across:
+Review raw data and engineering evidence across:
 
 1. correctness eligibility
 2. idle and active private working set
@@ -384,13 +444,15 @@ Review the raw data and engineering evidence across:
 6. repeated-operation stability
 7. transparent-window/hit-test correctness
 8. text/input/IME correctness
-9. implementation complexity
-10. dependency surface
-11. platform-specific integration burden
-12. debugging/tooling friction
-13. build/release complexity
-14. amount of infrastructure the project would own long-term
-15. Windows-to-macOS portability of the chosen stack
+9. response-rendering correctness
+10. implementation complexity
+11. dependency surface
+12. platform-specific integration burden
+13. debugging/tooling friction
+14. build/release complexity
+15. amount of infrastructure the project would own long-term
+16. Windows-to-macOS portability
+17. runtime/GC cost where applicable
 
 Do not reduce the decision to a weighted score before reviewing raw results.
 
@@ -400,6 +462,7 @@ Examples:
 
 - 4 MiB less memory with substantially more fragile text/native infrastructure probably does not justify a stack.
 - 20–30 MiB less memory plus simpler runtime behavior may justify additional integration work.
+- A modest Go memory premium may be acceptable if it buys materially simpler, more reliable orchestration; the benchmark must show the actual premium rather than assume it.
 
 ## 16. Stop / pause conditions
 
