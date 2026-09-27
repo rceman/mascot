@@ -1,0 +1,51 @@
+﻿{
+    "schema":  "mascot-native-text-capability-1",
+    "utc_started":  "2026-09-27T12:56:19.4267407Z",
+    "scope":  "Native stack investigation before all three architecture notes; does not change frozen fixtures or grant candidate passes",
+    "native_class":  "RICHEDIT50W",
+    "font":  "Segoe UI, physical height32 on preflight200percent display",
+    "typography_options":  "TO_ADVANCEDTYPOGRAPHY",
+    "msftedit_version":  "10.0.26100.8875 (WinBuild.160101.0800)",
+    "icu_version":  "72, 1, 0, 4 (WinBuild.160101.0800)",
+    "icu_F1_boundaries":  [
+                              0,
+                              1,
+                              3,
+                              4
+                          ],
+    "icu_F2_boundaries":  [
+                              0,
+                              1,
+                              6,
+                              7
+                          ],
+    "native":  {
+                   "F1":  {
+                              "initial":  "AéB",
+                              "positions":  [
+                                                {
+                                                    "Start":  4,
+                                                    "End":  4
+                                                },
+                                                {
+                                                    "Start":  3,
+                                                    "End":  3
+                                                },
+                                                {
+                                                    "Start":  1,
+                                                    "End":  1
+                                                },
+                                                {
+                                                    "Start":  1,
+                                                    "End":  3
+                                                }
+                                            ],
+                              "copied":  "é"
+                          }
+               },
+    "captures":  [
+
+                 ],
+    "error":  "The term \u0027Capture-TextProbe\u0027 is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.",
+    "utc_finished":  "2026-09-27T12:56:22.8215337Z"
+}

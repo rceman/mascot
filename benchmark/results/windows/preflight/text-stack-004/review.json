@@ -1,0 +1,47 @@
+{
+  "schema": "mascot-native-text-capability-review-1",
+  "observations": "observations.json",
+  "classification": "SUPPORTS_STACK_CHOICE_NOT_CANDIDATE_CORRECTNESS",
+  "reviewer": "Devin",
+  "native_control": "System RICHEDIT50W in TM_PLAINTEXT | TM_MULTILEVELUNDO | TM_MULTICODEPAGE mode",
+  "font_check": {
+    "physical_font_height": 32,
+    "observed_dpi": 192,
+    "logical_font_height_dip": 16,
+    "family": "Segoe UI with native fallback"
+  },
+  "selection_checks": {
+    "F1": {
+      "observed_caret_positions_utf16": [4, 3, 1],
+      "observed_selection_utf16": [1, 3],
+      "matches_frozen_actions_and_copy": true
+    },
+    "F2": {
+      "observed_caret_positions_utf16": [7, 6, 1],
+      "observed_selection_utf16": [1, 6],
+      "matches_frozen_actions_and_copy": true
+    }
+  },
+  "external_captures_reviewed": [
+    "F1-native-selection.png",
+    "F2-native-selection.png"
+  ],
+  "visual_observations": [
+    "Combining accent remains attached, including while its complete grapheme is selected.",
+    "MAN-ZWJ-LAPTOP is a joined glyph in editable input and read-only response; selection includes the complete sequence.",
+    "Arabic letters are contextually connected and ordered as an RTL run between readable English runs.",
+    "Latvian and Cyrillic are readable without missing-glyph boxes.",
+    "The representative response emoji render as joined monochrome glyphs rather than separated component glyphs. Color is not a frozen requirement."
+  ],
+  "scope_limits": [
+    "This is a shared pre-implementation native-control investigation, not a candidate executable.",
+    "Full F1-F10, selected-sequence deletion, actual candidate IME commit/cancel/submit/hide and both display scales still require candidate evidence.",
+    "No visible-presentation timing observer is qualified by these screenshots.",
+    "ICU boundary observations are supplemental only; candidate designs do not require an ICU shim because native selection already matched the frozen examples."
+  ],
+  "earlier_attempts": {
+    "text-stack-001": "Probe failed because PowerShell reserved variable input was used as a control handle; no native behavior conclusion.",
+    "text-stack-002": "Native F1 observation completed but capture failed because a closure could not resolve the local capture function; no complete probe conclusion.",
+    "text-stack-003": "Native selection and captures completed in the control's default rich-text mode. Run004 repeats in the intended plain-text mode and records effective DPI."
+  }
+}
