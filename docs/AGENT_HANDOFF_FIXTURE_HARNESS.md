@@ -113,7 +113,9 @@ Add the approved transparent mascot asset and freeze:
 - logical benchmark dimensions
 - alpha/hit-mask policy
 
-If the currently available mascot asset has not been explicitly approved by the user, do **not** invent or silently substitute one. Leave the asset step BLOCKED and report the exact missing approval.
+If this fixture task is executed standalone and the currently available mascot asset has not been explicitly approved by the user, do **not** silently substitute one; report the missing approval.
+
+**Override for MASCOT-WIN-COMPARE-001:** when this fixture task is being executed as Phase 1 of `docs/AGENT_HANDOFF_WINDOWS_COMPARISON.md`, that Windows handoff explicitly authorizes one shared **PROVISIONAL** transparent PNG so the language comparison is not blocked by artwork approval. In that mode, create/use exactly one provisional asset, freeze its SHA-256/pixel/logical dimensions, mark it PROVISIONAL, and use it unchanged for Rust, Zig, and Go. This override has priority over the standalone blocking rule.
 
 ### 5. Fixture manifest
 
