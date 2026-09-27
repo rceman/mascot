@@ -1,6 +1,6 @@
 # Rust vs Zig vs Go Prototype Plan v0.3
 
-Status: **revised after second Astra review; ready for final review before implementation**
+Status: **PLAN_APPROVED_WITH_NON_BLOCKING_CHANGES; non-blocking clarifications applied. Next step: prepare, validate, version, and freeze the common fixture/harness before any candidate application implementation.**
 
 ## 1. Decision we are trying to make
 
