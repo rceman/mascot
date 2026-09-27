@@ -33,12 +33,30 @@ def read_json(path):
 
 
 def latest(raw, pattern):
-    dirs = sorted(d for d in raw.glob(pattern) if d.is_dir())
+    dirs = sorted(d for d in raw.glob(pattern) if d.is_dir()
+                  and "quick" not in d.name)
     for d in reversed(dirs):
         r = read_json(d / "result.json")
         if r is not None:
             return r, d.name
     return None, None
+
+
+def latest_benchmark(raw, name):
+    """Benchmark results live in benchmark-*/<name>/result.json (orchestrated)
+    or <name>-benchmark-*/result.json (single-candidate runs)."""
+    candidates = []
+    for batch in sorted(d for d in raw.glob("benchmark-*") if d.is_dir()):
+        r = read_json(batch / name / "result.json")
+        if r is not None:
+            candidates.append((r, f"{batch.name}/{name}"))
+    for d in sorted(raw.glob(f"{name}-benchmark-*")):
+        if "quick" in d.name:
+            continue
+        r = read_json(d / "result.json")
+        if r is not None:
+            candidates.append((r, d.name))
+    return candidates[-1] if candidates else (None, None)
 
 
 def acceptance_summary(result):
@@ -63,22 +81,53 @@ def summarize_benchmark(result):
         return None
     fresh = [x["startup_ms"] for x in result.get("fresh_launches", [])
              if "startup_ms" in x]
-    warm = [x["hotkey_to_visible_ms"] for x in
-            result.get("warm_activations", {}).get("warm", [])]
+    warm_acts = result.get("warm_activations", {})
+    warm = [x["hotkey_to_visible_ms"] for x in warm_acts.get("warm", [])]
+    firsts = [x["hotkey_to_input_ready_ms"]
+              for x in warm_acts.get("first_activations", [])]
     states = result.get("resource_states", {})
     r0 = states.get("R0_fresh_mascot", {}).get("samples") or []
     r3 = states.get("R3_warm_mascot", {})
     r4 = states.get("R4_streaming", {})
+    r5 = states.get("R5_cancellation", {})
+
     def med(rows, key):
         vals = [r[key] for r in rows if r.get(key) is not None]
         return statistics.median(vals) if vals else None
+
+    def pctl(vals, p):
+        if not vals:
+            return None
+        vals = sorted(vals)
+        return vals[min(len(vals) - 1, int(len(vals) * p / 100))]
+
+    # Stability: private working set at op 0 vs op 100 per batch — a rising
+    # floor across batches indicates leak; report the worst per-operation
+    # start->end growth.
+    stability_trend = {}
+    for b in (result.get("stability") or {}).get("batches", []):
+        op = b.get("operation")
+        samples = [s for s in b.get("samples", [])
+                   if s.get("private_working_set_bytes") is not None]
+        if not samples:
+            continue
+        delta = (samples[-1]["private_working_set_bytes"] -
+                 samples[0]["private_working_set_bytes"])
+        cur = stability_trend.get(op)
+        if cur is None or delta > cur:
+            stability_trend[op] = delta
+
     return {
         "fresh_startup_median_ms": statistics.median(fresh) if fresh else None,
         "fresh_startup_range_ms": [min(fresh), max(fresh)] if fresh else None,
         "fresh_startup_samples": fresh,
-        "first_activation_ms": result.get("warm_activations", {}).get(
-            "first", {}).get("hotkey_to_input_ready_ms"),
+        "first_activation_ms": warm_acts.get("first", {}).get(
+            "hotkey_to_input_ready_ms"),
+        "first_activation_median_ms": statistics.median(firsts) if firsts else None,
+        "first_activation_range_ms": [min(firsts), max(firsts)] if firsts else None,
         "warm_activation_median_ms": statistics.median(warm) if warm else None,
+        "warm_activation_p95_ms": pctl(warm, 95),
+        "warm_activation_n": len(warm),
         "warm_activation_samples": warm,
         "r0_private_ws_median": med(r0, "private_working_set_bytes"),
         "r0_private_commit_median": med(r0, "private_commit_bytes"),
@@ -88,10 +137,21 @@ def summarize_benchmark(result):
                            "private_working_set_bytes"),
         "r4_observed_max_pws": r4.get("observed_max_pws"),
         "r4_observed_max_commit": r4.get("observed_max_commit"),
+        "r4_chunks_received": r4.get("chunks_received"),
+        "r4_transport_ms_median": r4.get("transport_ms_median"),
+        "r4_transport_ms_p95": r4.get("transport_ms_p95"),
+        "r4_submit_to_first_visible_ms": r4.get("submit_to_first_visible_ms"),
+        "r5_pws_at_cancel": (r5.get("peak_at_cancel") or {}).get(
+            "private_working_set_bytes"),
+        "r5_pws_after_60s": ((r5.get("post") or {}).get("60s") or {}).get(
+            "private_working_set_bytes"),
         "r6_paints_delta": states.get("R6_focused_idle", {}).get(
             "composer_paints_delta"),
         "r6_presents_delta": states.get("R6_focused_idle", {}).get(
             "mascot_presents_delta"),
+        "stability_pws_growth_by_op": stability_trend,
+        "post_reboot": (result.get("post_reboot_first_launches") or {})
+            .get("status"),
     }
 
 
@@ -115,10 +175,15 @@ def main():
         smoke, smoke_dir = latest(RAW, f"{name}-smoke-*")
         if smoke:
             cand["smoke"] = {"dir": smoke_dir, "status": smoke.get("status")}
-        bench, bench_dir = latest(RAW, f"{name}-benchmark-*")
+        bench, bench_dir = latest_benchmark(RAW, name)
         if bench:
             cand["benchmark"] = {"dir": bench_dir,
                                  "summary": summarize_benchmark(bench)}
+        gate, gate_dir = latest(RAW, f"{name}-codex-gate-*")
+        if gate:
+            cand["codex_gate"] = {"dir": gate_dir, "status": gate.get("status"),
+                                  "codex_version": (gate.get("codex") or {})
+                                      .get("version")}
         eff = read_json(RAW / f"{name}-source-efficiency.json")
         if eff:
             f = eff.get("final", {})
@@ -157,14 +222,15 @@ def main():
     lines += ["",
               "Provider/lifecycle (regression status per candidate):",
               "",
-              "| Candidate | Provider regression | Smoke |",
-              "|---|---|---|"]
+              "| Candidate | Provider regression | Smoke | Codex gate |",
+              "|---|---|---|---|"]
     for name in ("rust", "zig", "go"):
         r = report_rows[name]
-        lines.append("| {} | {} | {} |".format(
+        lines.append("| {} | {} | {} | {} |".format(
             name,
             r.get("provider_regression", {}).get("status", "-"),
-            r.get("smoke", {}).get("status", "-")))
+            r.get("smoke", {}).get("status", "-"),
+            r.get("codex_gate", {}).get("status", "-")))
     lines += ["", "## Source/token efficiency (tiktoken/o200k_base)",
               "",
               "| Metric | Rust | Zig | Go |", "|---|---:|---:|---:|"]
@@ -183,13 +249,17 @@ def main():
               "",
               "| Metric | Rust | Zig | Go |", "|---|---:|---:|---:|"]
     keys = [("fresh_startup_median_ms", "Fresh startup median ms"),
-            ("first_activation_ms", "First activation ms"),
+            ("first_activation_median_ms", "First activation median ms"),
             ("warm_activation_median_ms", "Warm activation median ms"),
+            ("warm_activation_p95_ms", "Warm activation p95 ms"),
             ("r0_private_ws_median", "Fresh mascot PWS (bytes)"),
             ("r3_warm_pws", "Warm mascot PWS (bytes)"),
             ("r4_observed_max_pws", "Streaming observed peak PWS"),
+            ("r4_transport_ms_median", "Chunk transport median ms"),
+            ("r4_submit_to_first_visible_ms", "Submit->first visible ms"),
             ("r0_idle_cpu_one_core_pct", "Idle CPU % of one core"),
             ("r6_paints_delta", "R6 composer paints delta")]
+    stability_keys = [("stability_pws_growth_by_op", "Stability PWS growth op->bytes")]
     for key, label in keys:
         row = [label]
         for name in ("rust", "zig", "go"):
@@ -198,7 +268,19 @@ def main():
             row.append(str(round(v, 2)) if isinstance(v, (int, float))
                        else ("-" if v is None else str(v)))
         lines.append("| " + " | ".join(row) + " |")
-    lines += ["", "Raw per-run samples are in each candidate's result.json; "
+    for key, label in stability_keys:
+        row = [label]
+        for name in ("rust", "zig", "go"):
+            v = (report_rows[name].get("benchmark") or {}).get(
+                "summary", {}).get(key)
+            row.append(str(v) if v is not None else "-")
+        lines.append("| " + " | ".join(row) + " |")
+    lines += ["",
+              "Post-reboot first launches are **UNTESTED** — they require "
+              "coordinated genuine boots and no automatic reboot was "
+              "performed.",
+              "",
+              "Raw per-run samples are in each candidate's result.json; "
               "this report deliberately avoids a composite score and does not "
               "declare a cross-platform language winner."]
     REPORT.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")

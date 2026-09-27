@@ -7,6 +7,7 @@ const provider = @import("provider.zig");
 const control = @import("control.zig");
 const platform = @import("platform.zig");
 const jsonw = @import("json.zig");
+const codex_gate = @import("codex_gate.zig");
 
 const c = win32.c;
 const Allocator = std.mem.Allocator;
@@ -31,6 +32,7 @@ pub fn main() u8 {
     defer std.process.argsFree(gpa, args);
     var fixture: ?[]const u8 = null;
     var vectors: ?[]const u8 = null;
+    var codex_exe: ?[]const u8 = null;
     var control_mode = false;
     var i: usize = 1;
     while (i < args.len) : (i += 1) {
@@ -40,9 +42,15 @@ pub fn main() u8 {
         } else if (std.mem.eql(u8, args[i], "--decode-vectors") and i + 1 < args.len) {
             i += 1;
             vectors = args[i];
+        } else if (std.mem.eql(u8, args[i], "--codex-gate") and i + 1 < args.len) {
+            i += 1;
+            codex_exe = args[i];
         } else if (std.mem.eql(u8, args[i], "--control")) {
             control_mode = true;
         }
+    }
+    if (codex_exe) |exe| {
+        return codex_gate.run(gpa, exe) catch 64;
     }
     if (vectors) |path| {
         const code = runDecodeVectors(gpa, path) catch |e| {

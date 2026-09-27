@@ -20,8 +20,8 @@
     "files": [
       {
         "file": "src/config.rs",
-        "bytes": 7184,
-        "chars": 7184,
+        "bytes": 7176,
+        "chars": 7176,
         "loc_nonblank_noncomment": 213,
         "tokens": 1830,
         "tokens_code_only": 1830,
@@ -53,22 +53,22 @@
       },
       {
         "file": "src/main.rs",
-        "bytes": 8392,
-        "chars": 8392,
-        "loc_nonblank_noncomment": 238,
-        "tokens": 1988,
-        "tokens_code_only": 1988,
+        "bytes": 8677,
+        "chars": 8677,
+        "loc_nonblank_noncomment": 245,
+        "tokens": 2053,
+        "tokens_code_only": 2053,
         "subsystem": "other_candidate_logic",
         "functions": 4,
         "ffi_boundary_lines": 11
       },
       {
         "file": "src/platform.rs",
-        "bytes": 54163,
-        "chars": 54159,
-        "loc_nonblank_noncomment": 1506,
-        "tokens": 11462,
-        "tokens_code_only": 11462,
+        "bytes": 54633,
+        "chars": 54629,
+        "loc_nonblank_noncomment": 1512,
+        "tokens": 11576,
+        "tokens_code_only": 11531,
         "subsystem": "windowing_platform_glue",
         "functions": 15,
         "ffi_boundary_lines": 40
@@ -107,19 +107,19 @@
         "ffi_boundary_lines": 36
       }
     ],
-    "handwritten_source_bytes": 150745,
-    "handwritten_source_chars": 150741,
-    "nonblank_noncomment_loc": 4355,
-    "source_tokens_o200k_base": 32933,
-    "source_tokens_code_only_o200k_base": 32933,
-    "tokens_per_loc": 7.5621,
+    "handwritten_source_bytes": 151492,
+    "handwritten_source_chars": 151488,
+    "nonblank_noncomment_loc": 4368,
+    "source_tokens_o200k_base": 33112,
+    "source_tokens_code_only_o200k_base": 33067,
+    "tokens_per_loc": 7.5806,
     "source_file_count": 8,
-    "median_source_file_bytes": 7996.0,
+    "median_source_file_bytes": 8138.5,
     "largest_source_file": "src/provider.rs",
     "subsystem_tokens_o200k_base": {
-      "other_candidate_logic": 6046,
+      "other_candidate_logic": 6111,
       "benchmark_candidate_hooks": 1649,
-      "windowing_platform_glue": 11462,
+      "windowing_platform_glue": 11576,
       "provider_process_io": 11403,
       "text_ime_rendering": 2373
     },
@@ -130,24 +130,9 @@
     "architecture_doc_bytes": 18318,
     "build_config_bytes": 3373
   },
-  "build_evidence": [
-    {
-      "record": "benchmark\\results\\windows\\raw\\rust-build-004\\command.json",
-      "argv": [
-        "cargo",
-        "+1.94.0",
-        "build",
-        "--release",
-        "--locked",
-        "--target",
-        "x86_64-pc-windows-msvc"
-      ],
-      "elapsed_ms": 13635.8933,
-      "exit_code": 0
-    }
-  ],
+  "build_evidence": [],
   "model_token_usage": "not reliably exposed; not recorded (per protocol)",
-  "baseline_revision": "65609963cca879945516129fe2f83823c2a6ba66",
+  "baseline_revision": "6560996",
   "first_complete": {
     "files": [
       {
@@ -263,8 +248,8 @@
     "build_config_bytes": 3704
   },
   "correction_churn": {
-    "tokens_added": 14430,
-    "tokens_removed": 9983,
+    "tokens_added": 14804,
+    "tokens_removed": 10180,
     "changed_files": [
       {
         "file": "ARCHITECTURE.md",
@@ -288,8 +273,8 @@
       },
       {
         "file": "src/config.rs",
-        "tokens_added": 290,
-        "tokens_removed": 1778
+        "tokens_added": 319,
+        "tokens_removed": 1807
       },
       {
         "file": "src/control.rs",
@@ -298,13 +283,13 @@
       },
       {
         "file": "src/main.rs",
-        "tokens_added": 351,
-        "tokens_removed": 452
+        "tokens_added": 430,
+        "tokens_removed": 467
       },
       {
         "file": "src/platform.rs",
-        "tokens_added": 5634,
-        "tokens_removed": 3535
+        "tokens_added": 5900,
+        "tokens_removed": 3688
       },
       {
         "file": "src/provider.rs",

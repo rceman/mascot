@@ -98,16 +98,58 @@ class ProcessSample:
         self.enum_windows = sig(USER32, "EnumThreadWindows",
                                 [wintypes.DWORD, ctypes.c_void_p, ctypes.c_ssize_t],
                                 wintypes.BOOL)
-        # PDH: authoritative Working Set - Private
+        # PDH: authoritative Working Set - Private. PDH \Process instance
+        # names strip the .exe suffix and gain #n suffixes on collisions,
+        # so resolve the instance for this pid via \Process(*)\ID Process.
         self.pdh_query = ctypes.c_void_p()
         require(PDH.PdhOpenQueryW(None, 0, ctypes.byref(self.pdh_query)) == 0,
                 "PdhOpenQueryW failed")
         self.pdh_counter = ctypes.c_void_p()
-        path = f"\\Process({self._image_name(pid)})\\Working Set - Private"
+        instance = self._pdh_instance(pid)
+        path = f"\\Process({instance})\\Working Set - Private"
         require(PDH.PdhAddEnglishCounterW(self.pdh_query, path, 0,
                                         ctypes.byref(self.pdh_counter)) == 0,
                 f"PDH counter add failed for {path}")
         PDH.PdhCollectQueryData(self.pdh_query)
+
+    def _pdh_instance(self, pid):
+        wildcard = ctypes.c_void_p()
+        require(PDH.PdhAddEnglishCounterW(self.pdh_query,
+                                        "\\Process(*)\\ID Process", 0,
+                                        ctypes.byref(wildcard)) == 0,
+                "PDH ID Process wildcard add failed")
+        # A first collect can return PDH_NO_DATA; collect twice with a gap.
+        PDH.PdhCollectQueryData(self.pdh_query)
+        time.sleep(0.25)
+        require(PDH.PdhCollectQueryData(self.pdh_query) == 0,
+                "PDH collect failed for ID Process")
+        bufsize = wintypes.DWORD(0)
+        count = wintypes.DWORD(0)
+        PDH.PdhGetFormattedCounterArrayW(wildcard, 0x00000400,  # PDH_FMT_LONG
+                                         ctypes.byref(bufsize),
+                                         ctypes.byref(count), None)
+        require(bufsize.value > 0, "PDH counter array empty")
+
+        class Item(ctypes.Structure):
+            _fields_ = [("name", wintypes.LPWSTR),
+                        ("status", wintypes.DWORD), ("pad", wintypes.DWORD),
+                        ("value", wintypes.LONG), ("pad2", wintypes.DWORD)]
+
+        buf = ctypes.create_string_buffer(bufsize.value)
+        require(PDH.PdhGetFormattedCounterArrayW(
+                    wildcard, 0x00000400, ctypes.byref(bufsize),
+                    ctypes.byref(count), buf) == 0,
+                "PDH counter array read failed")
+        items = ctypes.cast(buf, ctypes.POINTER(Item))
+        found = None
+        for i in range(count.value):
+            item = items[i]
+            if item.status == 0 and item.value == pid:
+                found = item.name
+                break
+        PDH.PdhRemoveCounter(wildcard)
+        require(found, f"no PDH process instance for pid {pid}")
+        return found
 
     def _image_name(self, pid):
         snapshot = self.native.kernel.CreateToolhelp32Snapshot(2, 0)
@@ -136,7 +178,11 @@ class ProcessSample:
         class Fmt(ctypes.Structure):
             _fields_ = [("status", wintypes.DWORD), ("type", wintypes.DWORD),
                         ("large", ctypes.c_int64)]
-        require(PDH.PdhCollectQueryData(self.pdh_query) == 0, "PDH collect failed")
+        # PdhCollectQueryData can return PDH_NO_DATA while the process
+        # instance data initializes; a transient miss yields None (recorded
+        # as unavailable) rather than aborting the run.
+        if PDH.PdhCollectQueryData(self.pdh_query) != 0:
+            return None
         value = Fmt()
         status = PDH.PdhGetFormattedCounterValue(self.pdh_counter, 0x00000100, None,
                                                  ctypes.byref(value))  # PDH_FMT_LARGE
@@ -226,7 +272,8 @@ class ProcessSample:
             self.enum_windows(tid, ctypes.cast(callback, ctypes.c_void_p), 0)
         return count[0]
 
-    def close(self):
+    def close_query(self):
+        # NOTE: self.close is bound to kernel32!CloseHandle in __init__.
         if self.pdh_query:
             PDH.PdhCloseQuery(self.pdh_query)
             self.pdh_query = None
@@ -380,42 +427,44 @@ def run_candidate_benchmarks(executable, manifest_path, output, candidate_name,
             fresh_launch_once(executable, manifest_path, output, native,
                               launch_point, index, result)
 
-    # ---------- Activation + resource states in one process ----------
-    run_dir = output / "session"
-    run_dir.mkdir()
-    holder = {"event_observations": [], "provider_lifetimes": []}
-    candidate, startup = launch_candidate(executable, manifest_path, run_dir,
-                                          native, holder, launch_point)
-    sampler = ProcessSample(candidate.process.pid, native)
-    result["session_startup"] = startup
+    # ---------- Per-lifetime activation + resource states ----------
+    manifest = load(manifest_path)
+    warm_plan = manifest["schedule"]["warm_activations_per_lifetime"]
+    independent_runs = manifest["schedule"]["steady_state_independent_runs"]
+    lifetimes = config["lifetimes"]
     observer = RegionObserver(ui)
+    result["warm_activations"] = {"lifetimes": []}
+    # Post-reboot measurements require genuine coordinated boots; no
+    # automatic reboot is performed, so these are explicitly unavailable.
+    result["post_reboot_first_launches"] = {
+        "status": "UNTESTED",
+        "reason": "post-reboot measurements require coordinated genuine "
+                  "boots; no automatic reboot was performed"}
+    result["process_inventories"] = []
+    all_first = []
+    all_warm = []
 
-    def state():
-        return candidate.call("state")["state"]
+    for lifetime in range(lifetimes):
+        run_dir = output / f"lifetime-{lifetime:02d}"
+        run_dir.mkdir()
+        holder = {"event_observations": [], "provider_lifetimes": []}
+        candidate, startup = launch_candidate(executable, manifest_path,
+                                              run_dir, native, holder,
+                                              launch_point)
+        sampler = ProcessSample(candidate.process.pid, native)
+        if lifetime == 0:
+            result["session_startup"] = startup
+        lt_result = {"lifetime": lifetime}
 
-    def collect(seconds, interval=1.0, fn=None):
-        rows, deadline = [], time.monotonic() + seconds
-        while time.monotonic() < deadline:
-            rows.append(sample_row(sampler, state() if fn is None else fn))
-            time.sleep(interval)
-        return rows
+        def state():
+            return candidate.call("state")["state"]
 
-    try:
-        # R0: fresh mascot-only — settle 60 s then collect 30 s
-        time.sleep(config["settle_s"])
-        result["resource_states"]["R0_fresh_mascot"] = {
-            "samples": collect(config["collect_s"]),
-            "state": state()}
-
-        # W-armed idle CPU baseline over collection window
-        rows = result["resource_states"]["R0_fresh_mascot"]["samples"]
-        if len(rows) >= 2:
-            cpu = int(rows[-1]["user_cpu_100ns"]) + int(rows[-1]["kernel_cpu_100ns"]) - \
-                int(rows[0]["user_cpu_100ns"]) - int(rows[0]["kernel_cpu_100ns"])
-            wall = int(rows[-1]["qpc"]) - int(rows[0]["qpc"])
-            idle_pct = (cpu / 10_000_000) / (wall / QPC_FREQ) * 100
-            result["resource_states"]["R0_fresh_mascot"]["idle_cpu_one_core_pct"] = \
-                round(idle_pct, 4)
+        def collect(seconds, interval=1.0, fn=None):
+            rows, deadline = [], time.monotonic() + seconds
+            while time.monotonic() < deadline:
+                rows.append(sample_row(sampler, state() if fn is None else fn))
+                time.sleep(interval)
+            return rows
 
         # First composer activation: external hotkey -> visible + input-ready.
         # Visibility is strictly the external pixel-diff (control-reported
@@ -450,160 +499,238 @@ def run_candidate_benchmarks(executable, manifest_path, output, candidate_name,
                     "hotkey_to_input_ready_ms": qpc_ms(start, ready),
                     "observer": "external pixel diff only; control replies are diagnostic"}
 
-        warm = {"first_activation": activation(), "warm": []}
-        result["warm_activations"]["first"] = warm["first_activation"]
-        time.sleep(0.3)
-        # R1: settle after first open, collect
-        time.sleep(config["settle_s"])
-        result["resource_states"]["R1_first_composer"] = {
-            "samples": collect(config["collect_s"]), "state": state()}
+        try:
+            if lifetime < independent_runs:
+                # R0: fresh mascot-only — settle then collect (independent run N)
+                time.sleep(config["settle_s"])
+                key = ("R0_fresh_mascot" if lifetime == 0
+                       else f"R0_fresh_mascot_run{lifetime + 1}")
+                result["resource_states"][key] = {
+                    "samples": collect(config["collect_s"]),
+                    "state": state()}
+                rows = result["resource_states"][key]["samples"]
+                if len(rows) >= 2:
+                    cpu = int(rows[-1]["user_cpu_100ns"]) + \
+                        int(rows[-1]["kernel_cpu_100ns"]) - \
+                        int(rows[0]["user_cpu_100ns"]) - \
+                        int(rows[0]["kernel_cpu_100ns"])
+                    wall = int(rows[-1]["qpc"]) - int(rows[0]["qpc"])
+                    idle_pct = (cpu / 10_000_000) / (wall / QPC_FREQ) * 100
+                    result["resource_states"][key]["idle_cpu_one_core_pct"] = \
+                        round(idle_pct, 4)
 
-        # R2: warm open after a hide
-        candidate.call("hide")
-        time.sleep(0.5)
-        candidate.call("show")
-        time.sleep(config["settle_s"])
-        result["resource_states"]["R2_warm_composer"] = {
-            "samples": collect(config["collect_s"]), "state": state()}
+            first = activation()
+            lt_result["first_activation"] = first
+            lt_result["warm"] = []
+            all_first.append(first)
 
-        # R4: normal streaming, 100 ms sampling
-        candidate.call("set_text", text="streaming benchmark")
-        candidate.call("scenario", name="normal")
-        marker = len(candidate.events)
-        candidate.call("submit")
-        stream_rows = [sample_row(sampler, state())]
-        def pump_until_terminal():
-            base = len(candidate.events)
-            while not any(e.get("event") == "terminal" for e in candidate.events[marker:]):
-                candidate.pump(5)
-                stream_rows.append(sample_row(sampler, state()))
-        pump_until_terminal()
-        result["resource_states"]["R4_streaming"] = {
-            "samples_100ms": stream_rows,
-            "observed_max_pws": max(r["private_working_set_bytes"] or 0
-                                    for r in stream_rows),
-            "observed_max_commit": max(r["private_commit_bytes"]
-                                       for r in stream_rows)}
+            if lifetime == 0:
+                time.sleep(0.3)
+                # R1: settle after first open, collect
+                time.sleep(config["settle_s"])
+                result["resource_states"]["R1_first_composer"] = {
+                    "samples": collect(config["collect_s"]), "state": state()}
 
-        # R5: cancellation
-        candidate.call("scenario", name="cancel")
-        marker = len(candidate.events)
-        candidate.call("submit")
-        candidate.wait(lambda: any(e.get("event") == "chunk_accepted" and
-                                   e.get("seq") == 49
-                                   for e in candidate.events[marker:]))
-        candidate.call("cancel")
-        candidate.wait(lambda: any(e.get("event") == "terminal"
-                                   for e in candidate.events[marker:]))
-        r5 = {"peak_at_cancel": sample_row(sampler, state()), "post": {}}
-        for label, delay in (("1s", 1), ("10s", 9), ("60s", 50)):
-            time.sleep(delay)
-            r5["post"][label] = sample_row(sampler, state())
-        result["resource_states"]["R5_cancellation"] = r5
+            if lifetime == 0:
+                # R2: warm open after a hide
+                candidate.call("hide")
+                time.sleep(0.5)
+                candidate.call("show")
+                time.sleep(config["settle_s"])
+                result["resource_states"]["R2_warm_composer"] = {
+                    "samples": collect(config["collect_s"]), "state": state()}
 
-        # R3: warm mascot-only after use (post-hide decay)
-        candidate.call("hide")
-        r3 = {"post_hide": {}}
-        for label, delay in (("1s", 1), ("10s", 9), ("60s", 50)):
-            time.sleep(delay)
-            r3["post_hide"][label] = sample_row(sampler, state())
-        r3["steady"] = collect(config["collect_s"])
-        result["resource_states"]["R3_warm_mascot"] = r3
+                # R4: normal streaming, ~10 ms resource sampling; per-chunk
+                # emit->receipt transport latency from frame_received events plus
+                # first-chunk-visible via the external region observer.
+                candidate.call("set_text", text="streaming benchmark")
+                candidate.call("scenario", name="normal")
+                marker = len(candidate.events)
+                resp = ui.rect(int(state()["response_hwnd"]))
+                region = (resp.left, resp.top, resp.right - resp.left,
+                          resp.bottom - resp.top)
+                observer = RegionObserver(ui)
+                region_baseline = observer.grab(*region)
+                submit_stamp = qpc()
+                candidate.call("submit")
+                stream_rows = [sample_row(sampler, state())]
+                first_visible = [None]
 
-        # Warm activation reps across this lifetime
-        candidate.call("show")
-        count = config["warm_reps"] // max(1, config["lifetimes"])
-        for _ in range(count):
-            candidate.call("hide")
-            time.sleep(0.15)
-            warm["warm"].append(activation())
-        result["warm_activations"]["warm"] = warm["warm"]
+                def pump_until_terminal():
+                    while not any(e.get("event") == "terminal"
+                                  for e in candidate.events[marker:]):
+                        candidate.pump(0.5)
+                        stream_rows.append(sample_row(sampler, state()))
+                        if first_visible[0] is None:
+                            shot = observer.grab(*region)
+                            if observer.changed_pixels(region_baseline, shot) >= 64:
+                                first_visible[0] = qpc()
 
-        # R6: focused composer idle (long window)
-        st = state()
-        t0 = time.monotonic()
-        before_r6 = sample_row(sampler, st)
-        while time.monotonic() - t0 < config["r6_s"]:
-            time.sleep(10)
-        after_r6 = sample_row(sampler, state())
-        result["resource_states"]["R6_focused_idle"] = {
-            "duration_s": config["r6_s"], "before": before_r6, "after": after_r6,
-            "composer_paints_delta": (after_r6.get("redraws") or 0) -
-                                     (before_r6.get("redraws") or 0),
-            "mascot_presents_delta": (after_r6.get("presents") or 0) -
-                                     (before_r6.get("presents") or 0)}
+                pump_until_terminal()
+                frequency = 10_000_000
+                transport_ms = []
+                first_emit = None
+                for e in candidate.events[marker:]:
+                    if e.get("event") == "frame_received" and "emit_qpc" in e:
+                        frequency = int(e.get("qpc_frequency") or frequency)
+                        delta = int(e["receipt_qpc"]) - int(e["emit_qpc"])
+                        transport_ms.append(delta / frequency * 1000.0)
+                        if first_emit is None:
+                            first_emit = int(e["emit_qpc"])
+                transport_ms.sort()
+                def pct(sorted_values, p):
+                    if not sorted_values:
+                        return None
+                    return sorted_values[min(len(sorted_values) - 1,
+                                             int(len(sorted_values) * p / 100))]
+                result["resource_states"]["R4_streaming"] = {
+                    "samples_100ms": stream_rows,
+                    "observed_max_pws": max(r["private_working_set_bytes"] or 0
+                                            for r in stream_rows),
+                    "observed_max_commit": max(r["private_commit_bytes"]
+                                               for r in stream_rows),
+                    "chunks_received": len(transport_ms),
+                    "transport_ms_min": transport_ms[0] if transport_ms else None,
+                    "transport_ms_median": pct(transport_ms, 50),
+                    "transport_ms_p95": pct(transport_ms, 95),
+                    "transport_ms_max": transport_ms[-1] if transport_ms else None,
+                    "first_chunk_emit_to_receipt_ms":
+                        (transport_ms[0] if transport_ms else None),
+                    "submit_to_first_visible_ms":
+                        (qpc_ms(submit_stamp, first_visible[0])
+                         if first_visible[0] is not None else None),
+                    "observer_note": "visible = external pixel diff of the response "
+                                     "control region, ~10 ms polling resolution"}
 
-        # Stability §7: three successive batches of 100 ops per operation
-        # type (open/close, submit/complete, cancellation); sample every 10;
-        # fixed content vs bounded-varying content alternating by batch.
-        def op_open_close(op, batch):
-            candidate.call("set_text",
-                           text="fixed stability text" if batch != 1
-                           else f"stability op {op} batch {batch}")
-            candidate.call("show")
-            candidate.call("hide")
+                # R5: cancellation
+                candidate.call("scenario", name="cancel")
+                marker = len(candidate.events)
+                candidate.call("submit")
+                candidate.wait(lambda: any(e.get("event") == "chunk_accepted" and
+                                           e.get("seq") == 49
+                                           for e in candidate.events[marker:]))
+                candidate.call("cancel")
+                candidate.wait(lambda: any(e.get("event") == "terminal"
+                                           for e in candidate.events[marker:]))
+                r5 = {"peak_at_cancel": sample_row(sampler, state()), "post": {}}
+                for label, delay in (("1s", 1), ("10s", 9), ("60s", 50)):
+                    time.sleep(delay)
+                    r5["post"][label] = sample_row(sampler, state())
+                result["resource_states"]["R5_cancellation"] = r5
 
-        def op_submit(op, batch):
-            candidate.call("set_text",
-                           text="fixed stability text" if batch != 1
-                           else f"stability op {op} batch {batch}")
-            candidate.call("scenario", name="normal")
-            marker = len(candidate.events)
-            candidate.call("submit")
-            candidate.wait(lambda: any(e.get("event") == "terminal"
-                                       for e in candidate.events[marker:]),
-                           timeout=15)
+                # R3: warm mascot-only after use (post-hide decay)
+                candidate.call("hide")
+                r3 = {"post_hide": {}}
+                for label, delay in (("1s", 1), ("10s", 9), ("60s", 50)):
+                    time.sleep(delay)
+                    r3["post_hide"][label] = sample_row(sampler, state())
+                r3["steady"] = collect(config["collect_s"])
+                result["resource_states"]["R3_warm_mascot"] = r3
 
-        def op_cancel(op, batch):
-            candidate.call("set_text",
-                           text="fixed stability text" if batch != 1
-                           else f"stability op {op} batch {batch}")
-            candidate.call("scenario", name="cancel")
-            marker = len(candidate.events)
-            candidate.call("submit")
-            candidate.wait(lambda: any(e.get("event") == "chunk_accepted"
-                                       and e.get("seq") == 49
-                                       for e in candidate.events[marker:]),
-                           timeout=15)
-            candidate.call("cancel")
-            candidate.wait(lambda: any(e.get("event") == "terminal"
-                                       for e in candidate.events[marker:]),
-                           timeout=15)
+                # R6: focused composer idle (long window)
+                st = state()
+                t0 = time.monotonic()
+                before_r6 = sample_row(sampler, st)
+                while time.monotonic() - t0 < config["r6_s"]:
+                    time.sleep(10)
+                after_r6 = sample_row(sampler, state())
+                result["resource_states"]["R6_focused_idle"] = {
+                    "duration_s": config["r6_s"], "before": before_r6, "after": after_r6,
+                    "composer_paints_delta": (after_r6.get("redraws") or 0) -
+                                             (before_r6.get("redraws") or 0),
+                    "mascot_presents_delta": (after_r6.get("presents") or 0) -
+                                             (before_r6.get("presents") or 0)}
 
-        stability = {"batches": []}
-        for kind, op_fn in (("open_close", op_open_close),
-                            ("submit_complete", op_submit),
-                            ("cancel", op_cancel)):
-            for batch in range(3):
-                rows = []
-                for op in range(100):
-                    if op % 10 == 0:
-                        rows.append({"op": op, **sample_row(sampler, state())})
-                    op_fn(op, batch)
-                rows.append({"op": 100, **sample_row(sampler, state())})
-                stability["batches"].append({"operation": kind,
-                                             "batch": batch,
-                                             "content": "varying" if batch == 1
-                                                        else "fixed",
-                                             "samples": rows})
-        result["stability"] = stability
+                # Stability §7: three successive batches of 100 ops per operation
+                # type (open/close, submit/complete, cancellation); sample every 10;
+                # fixed content vs bounded-varying content alternating by batch.
+                def op_open_close(op, batch):
+                    candidate.call("set_text",
+                                   text="fixed stability text" if batch != 1
+                                   else f"stability op {op} batch {batch}")
+                    candidate.call("show")
+                    candidate.call("hide")
 
-        # Process inventory
-        result["process_inventory"] = [
-            {"pid": candidate.process.pid, "parent_pid": None, "role": "candidate",
-             "counted": True},
-        ] + [{"pid": row["pid"], "parent_pid": candidate.process.pid,
-              "role": "provider", "counted": False,
-              "exclusion_reason": "shared mock provider fixture"}
-             for row in native.children(candidate.process.pid)]
+                def op_submit(op, batch):
+                    candidate.call("set_text",
+                                   text="fixed stability text" if batch != 1
+                                   else f"stability op {op} batch {batch}")
+                    candidate.call("scenario", name="normal")
+                    marker = len(candidate.events)
+                    candidate.call("submit")
+                    candidate.wait(lambda: any(e.get("event") == "terminal"
+                                               for e in candidate.events[marker:]),
+                                   timeout=15)
 
-        token, _ = candidate.send("shutdown")
-        candidate.reply(token, timeout=5)
-        candidate.process.wait(timeout=5)
-        result["process_exit_code"] = candidate.process.returncode
-    finally:
-        sampler.close()
-        candidate.close()
+                def op_cancel(op, batch):
+                    candidate.call("set_text",
+                                   text="fixed stability text" if batch != 1
+                                   else f"stability op {op} batch {batch}")
+                    candidate.call("scenario", name="cancel")
+                    marker = len(candidate.events)
+                    candidate.call("submit")
+                    candidate.wait(lambda: any(e.get("event") == "chunk_accepted"
+                                               and e.get("seq") == 49
+                                               for e in candidate.events[marker:]),
+                                   timeout=15)
+                    candidate.call("cancel")
+                    candidate.wait(lambda: any(e.get("event") == "terminal"
+                                               for e in candidate.events[marker:]),
+                                   timeout=15)
+
+                stability = {"batches": []}
+                for kind, op_fn in (("open_close", op_open_close),
+                                    ("submit_complete", op_submit),
+                                    ("cancel", op_cancel)):
+                    for batch in range(3):
+                        rows = []
+                        for op in range(100):
+                            if op % 10 == 0:
+                                rows.append({"op": op, **sample_row(sampler, state())})
+                            op_fn(op, batch)
+                        rows.append({"op": 100, **sample_row(sampler, state())})
+                        stability["batches"].append({"operation": kind,
+                                                     "batch": batch,
+                                                     "content": "varying" if batch == 1
+                                                                else "fixed",
+                                                     "samples": rows})
+                result["stability"] = stability
+
+            if lifetime < len(warm_plan):
+                # Warm activation reps for this lifetime (hide -> hotkey -> show).
+                candidate.call("show")
+                reps = (min(warm_plan[lifetime], 2)
+                        if config.get("quick") else warm_plan[lifetime])
+                for _ in range(reps):
+                    candidate.call("hide")
+                    time.sleep(0.15)
+                    lt_result["warm"].append(activation())
+                    all_warm.append(lt_result["warm"][-1])
+
+            # Process inventory for this lifetime
+            result["process_inventories"].append({
+                "lifetime": lifetime,
+                "inventory": [{"pid": candidate.process.pid,
+                               "parent_pid": None, "role": "candidate",
+                               "counted": True}] + [
+                    {"pid": row["pid"], "parent_pid": candidate.process.pid,
+                     "role": "provider", "counted": False,
+                     "exclusion_reason": "shared mock provider fixture"}
+                    for row in native.children(candidate.process.pid)]})
+
+            token, _ = candidate.send("shutdown")
+            candidate.reply(token, timeout=5)
+            candidate.process.wait(timeout=5)
+            if lifetime == 0:
+                result["process_exit_code"] = candidate.process.returncode
+        finally:
+            sampler.close_query()
+            candidate.close()
+        result["warm_activations"]["lifetimes"].append(lt_result)
+
+    result["warm_activations"]["first"] = all_first[0] if all_first else None
+    result["warm_activations"]["first_activations"] = all_first
+    result["warm_activations"]["warm"] = all_warm
 
     result["utc_finished"] = datetime.now(timezone.utc).isoformat()
     (output / "result.json").write_text(json.dumps(result, indent=2) + "\n",
@@ -640,8 +767,9 @@ def main():
     parser.add_argument("--launch-point", nargs=2, type=int, required=True,
                         metavar=("X", "Y"))
     parser.add_argument("--fresh-launches", type=int, default=30)
-    parser.add_argument("--lifetimes", type=int, default=3,
-                        help="Process lifetimes for warm-activation reps")
+    parser.add_argument("--lifetimes", type=int, default=10,
+                        help="First-activation process lifetimes "
+                             "(manifest first_activation_lifetimes_each)")
     parser.add_argument("--warm-reps", type=int, default=99)
     parser.add_argument("--settle-s", type=float, default=60.0)
     parser.add_argument("--collect-s", type=float, default=30.0)
@@ -657,6 +785,7 @@ def main():
         # manifest balanced_blocks order, then each candidate's session phase.
         require(not args.output.exists(), "Refusing to overwrite evidence directory")
         args.output.mkdir(parents=True)
+        args.manifest = args.manifest.resolve()
         manifest = load(args.manifest)
         blocks = manifest["schedule"]["balanced_blocks"]
         native = regression.Native()
@@ -680,11 +809,12 @@ def main():
                                       candidates[name]["output"], native,
                                       tuple(args.launch_point), rep,
                                       candidates[name]["result"])
-        config = {"fresh_launches": n, "lifetimes": args.lifetimes,
-                  "warm_reps": 6 if args.quick else args.warm_reps,
+        config = {"fresh_launches": n, "lifetimes": 3 if args.quick else args.lifetimes,
+                  "warm_reps": args.warm_reps,
                   "settle_s": 5.0 if args.quick else args.settle_s,
                   "collect_s": 10.0 if args.quick else args.collect_s,
                   "r6_s": 30.0 if args.quick else args.r6_s,
+                  "quick": args.quick,
                   "balanced_launch_order": orders}
         for name, entry in candidates.items():
             session_result = run_candidate_benchmarks(
@@ -706,11 +836,12 @@ def main():
     require(args.output.parent.exists(), "Output parent missing")
     require(not args.output.exists(), "Refusing to overwrite evidence directory")
     config = {"fresh_launches": 3 if args.quick else args.fresh_launches,
-              "lifetimes": args.lifetimes,
-              "warm_reps": 6 if args.quick else args.warm_reps,
+              "lifetimes": 3 if args.quick else args.lifetimes,
+              "warm_reps": args.warm_reps,
               "settle_s": 5.0 if args.quick else args.settle_s,
               "collect_s": 10.0 if args.quick else args.collect_s,
-              "r6_s": 30.0 if args.quick else args.r6_s}
+              "r6_s": 30.0 if args.quick else args.r6_s,
+              "quick": args.quick}
     result = run_candidate_benchmarks(args.exe.resolve(), args.manifest.resolve(),
                                       args.output, args.candidate,
                                       tuple(args.launch_point), config)

@@ -1,5 +1,6 @@
 #![cfg_attr(not(test), windows_subsystem = "windows")]
 
+mod codex_gate;
 mod config;
 mod control;
 mod framing;
@@ -249,7 +250,11 @@ fn main() {
                 None => Err("missing manifest path".into()),
             }
         }
-        _ => Err("usage: mascot --fixture MANIFEST [--control] | --decode-vectors VECTORS".into()),
+        Some("--codex-gate") => match args.get(2) {
+            Some(path) => Ok(codex_gate::run(path)),
+            None => Err("missing codex executable path".into()),
+        },
+        _ => Err("usage: mascot --fixture MANIFEST [--control] | --decode-vectors VECTORS | --codex-gate CODEXE".into()),
     };
     match code {
         Ok(code) => std::process::exit(code),

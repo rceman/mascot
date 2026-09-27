@@ -1,0 +1,299 @@
+{
+  "schema": "mascot-source-efficiency-1",
+  "candidate": "zig",
+  "tokenizer": "tiktoken/o200k_base",
+  "tokenizer_version": "0.12.0",
+  "normalization": "committed UTF-8 bytes, LF endings, no minification",
+  "exclusions": [
+    "Cargo.lock",
+    "go.sum",
+    ".exe",
+    ".o",
+    ".pdb",
+    ".png",
+    ".rc",
+    ".res",
+    ".syso",
+    "dirs: .zig-cache, __pycache__, node_modules, out, target, vendor, zig-cache, zig-out"
+  ],
+  "final": {
+    "files": [
+      {
+        "file": "src/config.zig",
+        "bytes": 8643,
+        "chars": 8643,
+        "loc_nonblank_noncomment": 186,
+        "tokens": 2341,
+        "tokens_code_only": 2299,
+        "subsystem": "other_candidate_logic",
+        "functions": 10,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/control.zig",
+        "bytes": 5984,
+        "chars": 5984,
+        "loc_nonblank_noncomment": 157,
+        "tokens": 1524,
+        "tokens_code_only": 1432,
+        "subsystem": "benchmark_candidate_hooks",
+        "functions": 8,
+        "ffi_boundary_lines": 10
+      },
+      {
+        "file": "src/framing.zig",
+        "bytes": 6391,
+        "chars": 6391,
+        "loc_nonblank_noncomment": 153,
+        "tokens": 1647,
+        "tokens_code_only": 1477,
+        "subsystem": "other_candidate_logic",
+        "functions": 6,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/json.zig",
+        "bytes": 8581,
+        "chars": 8579,
+        "loc_nonblank_noncomment": 206,
+        "tokens": 2253,
+        "tokens_code_only": 2170,
+        "subsystem": "other_candidate_logic",
+        "functions": 2,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/main.zig",
+        "bytes": 10824,
+        "chars": 10824,
+        "loc_nonblank_noncomment": 266,
+        "tokens": 2818,
+        "tokens_code_only": 2796,
+        "subsystem": "other_candidate_logic",
+        "functions": 7,
+        "ffi_boundary_lines": 20
+      },
+      {
+        "file": "src/platform.zig",
+        "bytes": 47815,
+        "chars": 47815,
+        "loc_nonblank_noncomment": 1185,
+        "tokens": 13358,
+        "tokens_code_only": 13127,
+        "subsystem": "windowing_platform_glue",
+        "functions": 54,
+        "ffi_boundary_lines": 230
+      },
+      {
+        "file": "src/provider.zig",
+        "bytes": 55106,
+        "chars": 55106,
+        "loc_nonblank_noncomment": 1365,
+        "tokens": 13258,
+        "tokens_code_only": 13011,
+        "subsystem": "provider_process_io",
+        "functions": 32,
+        "ffi_boundary_lines": 21
+      },
+      {
+        "file": "src/queue.zig",
+        "bytes": 5686,
+        "chars": 5686,
+        "loc_nonblank_noncomment": 156,
+        "tokens": 1426,
+        "tokens_code_only": 1354,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/text.zig",
+        "bytes": 6162,
+        "chars": 6162,
+        "loc_nonblank_noncomment": 168,
+        "tokens": 1913,
+        "tokens_code_only": 1823,
+        "subsystem": "text_ime_rendering",
+        "functions": 11,
+        "ffi_boundary_lines": 38
+      },
+      {
+        "file": "src/win32.zig",
+        "bytes": 4718,
+        "chars": 4718,
+        "loc_nonblank_noncomment": 106,
+        "tokens": 1310,
+        "tokens_code_only": 1148,
+        "subsystem": "windowing_platform_glue",
+        "functions": 11,
+        "ffi_boundary_lines": 34
+      }
+    ],
+    "handwritten_source_bytes": 159910,
+    "handwritten_source_chars": 159908,
+    "nonblank_noncomment_loc": 3948,
+    "source_tokens_o200k_base": 41848,
+    "source_tokens_code_only_o200k_base": 40637,
+    "tokens_per_loc": 10.5998,
+    "source_file_count": 10,
+    "median_source_file_bytes": 7486.0,
+    "largest_source_file": "src/provider.zig",
+    "subsystem_tokens_o200k_base": {
+      "other_candidate_logic": 10485,
+      "benchmark_candidate_hooks": 1524,
+      "windowing_platform_glue": 14668,
+      "provider_process_io": 13258,
+      "text_ime_rendering": 1913
+    },
+    "max_function_lines": 221,
+    "median_function_lines": 9,
+    "max_nesting_depth": 10,
+    "ffi_boundary_lines": 353,
+    "architecture_doc_bytes": 15441,
+    "build_config_bytes": 2612
+  },
+  "build_evidence": [],
+  "model_token_usage": "not reliably exposed; not recorded (per protocol)",
+  "baseline_revision": "9dfcf8d",
+  "first_complete": {
+    "files": [
+      {
+        "file": "src/config.zig",
+        "bytes": 8643,
+        "chars": 8643,
+        "loc_nonblank_noncomment": 186,
+        "tokens": 2341,
+        "tokens_code_only": 2299,
+        "subsystem": "other_candidate_logic",
+        "functions": 10,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/control.zig",
+        "bytes": 5984,
+        "chars": 5984,
+        "loc_nonblank_noncomment": 157,
+        "tokens": 1524,
+        "tokens_code_only": 1432,
+        "subsystem": "benchmark_candidate_hooks",
+        "functions": 8,
+        "ffi_boundary_lines": 10
+      },
+      {
+        "file": "src/framing.zig",
+        "bytes": 6391,
+        "chars": 6391,
+        "loc_nonblank_noncomment": 153,
+        "tokens": 1647,
+        "tokens_code_only": 1477,
+        "subsystem": "other_candidate_logic",
+        "functions": 6,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/json.zig",
+        "bytes": 8581,
+        "chars": 8579,
+        "loc_nonblank_noncomment": 206,
+        "tokens": 2253,
+        "tokens_code_only": 2170,
+        "subsystem": "other_candidate_logic",
+        "functions": 2,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/main.zig",
+        "bytes": 10824,
+        "chars": 10824,
+        "loc_nonblank_noncomment": 266,
+        "tokens": 2818,
+        "tokens_code_only": 2796,
+        "subsystem": "other_candidate_logic",
+        "functions": 7,
+        "ffi_boundary_lines": 20
+      },
+      {
+        "file": "src/platform.zig",
+        "bytes": 47815,
+        "chars": 47815,
+        "loc_nonblank_noncomment": 1185,
+        "tokens": 13358,
+        "tokens_code_only": 13127,
+        "subsystem": "windowing_platform_glue",
+        "functions": 54,
+        "ffi_boundary_lines": 230
+      },
+      {
+        "file": "src/provider.zig",
+        "bytes": 55106,
+        "chars": 55106,
+        "loc_nonblank_noncomment": 1365,
+        "tokens": 13258,
+        "tokens_code_only": 13011,
+        "subsystem": "provider_process_io",
+        "functions": 32,
+        "ffi_boundary_lines": 21
+      },
+      {
+        "file": "src/queue.zig",
+        "bytes": 5686,
+        "chars": 5686,
+        "loc_nonblank_noncomment": 156,
+        "tokens": 1426,
+        "tokens_code_only": 1354,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/text.zig",
+        "bytes": 6162,
+        "chars": 6162,
+        "loc_nonblank_noncomment": 168,
+        "tokens": 1913,
+        "tokens_code_only": 1823,
+        "subsystem": "text_ime_rendering",
+        "functions": 11,
+        "ffi_boundary_lines": 38
+      },
+      {
+        "file": "src/win32.zig",
+        "bytes": 4718,
+        "chars": 4718,
+        "loc_nonblank_noncomment": 106,
+        "tokens": 1310,
+        "tokens_code_only": 1148,
+        "subsystem": "windowing_platform_glue",
+        "functions": 11,
+        "ffi_boundary_lines": 34
+      }
+    ],
+    "handwritten_source_bytes": 159910,
+    "handwritten_source_chars": 159908,
+    "nonblank_noncomment_loc": 3948,
+    "source_tokens_o200k_base": 41848,
+    "source_tokens_code_only_o200k_base": 40637,
+    "tokens_per_loc": 10.5998,
+    "source_file_count": 10,
+    "median_source_file_bytes": 7486.0,
+    "largest_source_file": "src/provider.zig",
+    "subsystem_tokens_o200k_base": {
+      "other_candidate_logic": 10485,
+      "benchmark_candidate_hooks": 1524,
+      "windowing_platform_glue": 14668,
+      "provider_process_io": 13258,
+      "text_ime_rendering": 1913
+    },
+    "max_function_lines": 221,
+    "median_function_lines": 9,
+    "max_nesting_depth": 10,
+    "ffi_boundary_lines": 353,
+    "architecture_doc_bytes": 15441,
+    "build_config_bytes": 2612
+  },
+  "correction_churn": {
+    "tokens_added": 0,
+    "tokens_removed": 0,
+    "changed_files": []
+  }
+}

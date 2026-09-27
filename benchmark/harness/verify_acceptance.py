@@ -958,7 +958,7 @@ def run_hidpi_launch(executable, manifest_path, output, result):
     hi = next((m for m in monitors if m["scale"] >= 150), None)
     if hi is None:
         result["cases"].append({"case": "W2", "status": "UNTESTED",
-                                "fixture_version": candidate.manifest.get("version"),
+                                "fixture_version": load(manifest_path)["version"],
                                 "evidence": "No >=150% display target"})
         return
     left, top, right, bottom = hi["rect"]
@@ -988,12 +988,12 @@ def run_hidpi_launch(executable, manifest_path, output, result):
         second.reply(token, timeout=5)
         second.process.wait(timeout=5)
         result["cases"].append({"case": "W2", "status": "PASS",
-                                "fixture_version": candidate.manifest.get("version"),
+                                "fixture_version": load(manifest_path)["version"],
                                 "evidence": {"dpi": dpi, "size_px": size,
                                              "capture": "w2-second-launch/" + shot.name}})
     except Exception as error:
         result["cases"].append({"case": "W2", "status": "FAIL",
-                                "fixture_version": candidate.manifest.get("version"),
+                                "fixture_version": load(manifest_path)["version"],
                                 "evidence": repr(error)})
     finally:
         second.close()
@@ -1029,15 +1029,18 @@ def run(executable, manifest_path, output, with_hidpi, launch_point=None):
         run_window_cases(candidate, output, ui, result)
         if with_hidpi:
             run_hidpi_cases(candidate, output, ui, result)
-            run_hidpi_launch(executable, manifest_path, output, result)
         else:
             for case in ("W2", "W7"):
                 result["cases"].append({"case": case, "status": "UNTESTED",
                                         "fixture_version": candidate.manifest.get("version"),
                                         "evidence": "--with-hidpi not enabled"})
+        # Shut down the primary instance before the W2 second launch: the
+        # global hotkey can only be registered by one process at a time.
         token, _ = candidate.send("shutdown")
         candidate.reply(token, timeout=5)
         candidate.process.wait(timeout=5)
+        if with_hidpi:
+            run_hidpi_launch(executable, manifest_path, output, result)
     finally:
         candidate.close()
     result["utc_finished"] = datetime.now(timezone.utc).isoformat()

@@ -208,6 +208,18 @@ func main() {
 		} else {
 			code, err = decodeVectors(args[2])
 		}
+	case len(args) > 1 && args[1] == "--codex-gate":
+		if len(args) <= 2 {
+			err = errors.New("missing codex executable path")
+		} else {
+			err = codexGate(args[2])
+			if err != nil {
+				gateLine("result", "FAIL")
+				fmt.Fprintln(os.Stderr, "codex-gate:", err)
+				os.Exit(1)
+			}
+			gateLine("result", "PASS")
+		}
 	case len(args) > 1 && args[1] == "--fixture":
 		controlMode := false
 		for _, a := range args[2:] {

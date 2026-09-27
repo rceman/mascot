@@ -1,0 +1,104 @@
+{"sent_qpc": "9606576956691", "command": {"token": 1, "command": "state"}}
+{"sent_qpc": "9606577408525", "command": {"token": 2, "command": "show"}}
+{"sent_qpc": "9606577817406", "command": {"token": 3, "command": "state"}}
+{"sent_qpc": "9606579990145", "command": {"token": 4, "command": "state"}}
+{"sent_qpc": "9606579994611", "command": {"token": 5, "command": "set_text", "text": ""}}
+{"sent_qpc": "9606580017532", "command": {"token": 6, "command": "state"}}
+{"sent_qpc": "9606583698075", "command": {"token": 7, "command": "text"}}
+{"sent_qpc": "9606583701147", "command": {"token": 8, "command": "state"}}
+{"sent_qpc": "9606585166983", "command": {"token": 9, "command": "set_text", "text": ""}}
+{"sent_qpc": "9606585195217", "command": {"token": 10, "command": "state"}}
+{"sent_qpc": "9606589026448", "command": {"token": 11, "command": "text"}}
+{"sent_qpc": "9606589029813", "command": {"token": 12, "command": "state"}}
+{"sent_qpc": "9606590388061", "command": {"token": 13, "command": "set_text", "text": "AéB"}}
+{"sent_qpc": "9606590416051", "command": {"token": 14, "command": "state"}}
+{"sent_qpc": "9606598768237", "command": {"token": 15, "command": "text"}}
+{"sent_qpc": "9606598771111", "command": {"token": 16, "command": "state"}}
+{"sent_qpc": "9606600188347", "command": {"token": 17, "command": "set_text", "text": "AéB"}}
+{"sent_qpc": "9606600214351", "command": {"token": 18, "command": "state"}}
+{"sent_qpc": "9606608474735", "command": {"token": 19, "command": "text"}}
+{"sent_qpc": "9606608478020", "command": {"token": 20, "command": "set_text", "text": "A👨‍💻B"}}
+{"sent_qpc": "9606608518550", "command": {"token": 21, "command": "state"}}
+{"sent_qpc": "9606616752597", "command": {"token": 22, "command": "text"}}
+{"sent_qpc": "9606616755550", "command": {"token": 23, "command": "state"}}
+{"sent_qpc": "9606618234757", "command": {"token": 24, "command": "set_text", "text": "A👨‍💻B"}}
+{"sent_qpc": "9606618254869", "command": {"token": 25, "command": "state"}}
+{"sent_qpc": "9606626510871", "command": {"token": 26, "command": "text"}}
+{"sent_qpc": "9606626513800", "command": {"token": 27, "command": "set_text", "text": "English العربية English"}}
+{"sent_qpc": "9606626536573", "command": {"token": 28, "command": "state"}}
+{"sent_qpc": "9606631069884", "command": {"token": 29, "command": "state"}}
+{"sent_qpc": "9606632574485", "command": {"token": 30, "command": "set_text", "text": "mouse selection check 123"}}
+{"sent_qpc": "9606632602922", "command": {"token": 31, "command": "state"}}
+{"sent_qpc": "9606634654463", "command": {"token": 32, "command": "state"}}
+{"sent_qpc": "9606640907932", "command": {"token": 33, "command": "text"}}
+{"sent_qpc": "9606642186368", "command": {"token": 34, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9606642213688", "command": {"token": 35, "command": "state"}}
+{"sent_qpc": "9606646844290", "command": {"token": 36, "command": "set_text", "text": ""}}
+{"sent_qpc": "9606646866500", "command": {"token": 37, "command": "state"}}
+{"sent_qpc": "9606650140813", "command": {"token": 38, "command": "text"}}
+{"sent_qpc": "9606650143874", "command": {"token": 39, "command": "state"}}
+{"sent_qpc": "9606651531296", "command": {"token": 40, "command": "state"}}
+{"sent_qpc": "9606651533837", "command": {"token": 41, "command": "set_text", "text": "submit check"}}
+{"sent_qpc": "9606651555222", "command": {"token": 42, "command": "state"}}
+{"sent_qpc": "9606654809515", "command": {"token": 43, "command": "state"}}
+{"sent_qpc": "9606664076555", "command": {"token": 44, "command": "state"}}
+{"sent_qpc": "9606664078637", "command": {"token": 45, "command": "hide"}}
+{"sent_qpc": "9606664145939", "command": {"token": 46, "command": "show"}}
+{"sent_qpc": "9606664319610", "command": {"token": 47, "command": "state"}}
+{"sent_qpc": "9606666426105", "command": {"token": 48, "command": "set_text", "text": "reopen"}}
+{"sent_qpc": "9606666446136", "command": {"token": 49, "command": "state"}}
+{"sent_qpc": "9606669135115", "command": {"token": 50, "command": "text"}}
+{"sent_qpc": "9606669140624", "command": {"token": 51, "command": "state"}}
+{"sent_qpc": "9606672161242", "command": {"token": 52, "command": "set_text", "text": ""}}
+{"sent_qpc": "9606672184156", "command": {"token": 53, "command": "state"}}
+{"sent_qpc": "9606674241862", "command": {"token": 54, "command": "state"}}
+{"sent_qpc": "9606675459350", "command": {"token": 55, "command": "state"}}
+{"sent_qpc": "9606676674032", "command": {"token": 56, "command": "text"}}
+{"sent_qpc": "9606679772697", "command": {"token": 57, "command": "set_text", "text": ""}}
+{"sent_qpc": "9606679805330", "command": {"token": 58, "command": "state"}}
+{"sent_qpc": "9606683161319", "command": {"token": 59, "command": "state"}}
+{"sent_qpc": "9606686196566", "command": {"token": 60, "command": "set_text", "text": ""}}
+{"sent_qpc": "9606686218815", "command": {"token": 61, "command": "state"}}
+{"sent_qpc": "9606689506452", "command": {"token": 62, "command": "state"}}
+{"sent_qpc": "9606689508896", "command": {"token": 63, "command": "state"}}
+{"sent_qpc": "9606695585360", "command": {"token": 64, "command": "state"}}
+{"sent_qpc": "9606695587947", "command": {"token": 65, "command": "state"}}
+{"sent_qpc": "9606695589712", "command": {"token": 66, "command": "state"}}
+{"sent_qpc": "9606698190371", "command": {"token": 67, "command": "text"}}
+{"sent_qpc": "9606698195660", "command": {"token": 68, "command": "state"}}
+{"sent_qpc": "9606698197544", "command": {"token": 69, "command": "set_text", "text": "baseline"}}
+{"sent_qpc": "9606698221970", "command": {"token": 70, "command": "state"}}
+{"sent_qpc": "9606707574579", "command": {"token": 71, "command": "state"}}
+{"sent_qpc": "9606707576961", "command": {"token": 72, "command": "state"}}
+{"sent_qpc": "9606711404864", "command": {"token": 73, "command": "text"}}
+{"sent_qpc": "9606711410442", "command": {"token": 74, "command": "state"}}
+{"sent_qpc": "9606711414527", "command": {"token": 75, "command": "set_text", "text": ""}}
+{"sent_qpc": "9606711441902", "command": {"token": 76, "command": "state"}}
+{"sent_qpc": "9606720815856", "command": {"token": 77, "command": "state"}}
+{"sent_qpc": "9606720821091", "command": {"token": 78, "command": "state"}}
+{"sent_qpc": "9606726082269", "command": {"token": 79, "command": "state"}}
+{"sent_qpc": "9606726085666", "command": {"token": 80, "command": "state"}}
+{"sent_qpc": "9606726088528", "command": {"token": 81, "command": "state"}}
+{"sent_qpc": "9606726091167", "command": {"token": 82, "command": "submit"}}
+{"sent_qpc": "9606726116323", "command": {"token": 83, "command": "state"}}
+{"sent_qpc": "9606736331623", "command": {"token": 84, "command": "state"}}
+{"sent_qpc": "9606736339739", "command": {"token": 85, "command": "set_text", "text": "baseline-f8"}}
+{"sent_qpc": "9606736367322", "command": {"token": 86, "command": "state"}}
+{"sent_qpc": "9606745733594", "command": {"token": 87, "command": "state"}}
+{"sent_qpc": "9606745738897", "command": {"token": 88, "command": "state"}}
+{"sent_qpc": "9606747009836", "command": {"token": 89, "command": "state"}}
+{"sent_qpc": "9606747012287", "command": {"token": 90, "command": "show"}}
+{"sent_qpc": "9606747190912", "command": {"token": 91, "command": "text"}}
+{"sent_qpc": "9606747203706", "command": {"token": 92, "command": "state"}}
+{"sent_qpc": "9606751307919", "command": {"token": 93, "command": "state"}}
+{"sent_qpc": "9606753167230", "command": {"token": 94, "command": "text"}}
+{"sent_qpc": "9606753170618", "command": {"token": 95, "command": "state"}}
+{"sent_qpc": "9606753172502", "command": {"token": 96, "command": "hide"}}
+{"sent_qpc": "9606776491847", "command": {"token": 97, "command": "hide"}}
+{"sent_qpc": "9606777805583", "command": {"token": 98, "command": "state"}}
+{"sent_qpc": "9606807919157", "command": {"token": 99, "command": "hide"}}
+{"sent_qpc": "9606807987163", "command": {"token": 100, "command": "state"}}
+{"sent_qpc": "9606807992279", "command": {"token": 101, "command": "state"}}
+{"sent_qpc": "9606858000190", "command": {"token": 102, "command": "state"}}
+{"sent_qpc": "9606858003610", "command": {"token": 103, "command": "state"}}
+{"sent_qpc": "9606872162083", "command": {"token": 104, "command": "shutdown"}}

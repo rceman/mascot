@@ -1,0 +1,408 @@
+{
+  "schema": "mascot-source-efficiency-1",
+  "candidate": "go",
+  "tokenizer": "tiktoken/o200k_base",
+  "tokenizer_version": "0.12.0",
+  "normalization": "committed UTF-8 bytes, LF endings, no minification",
+  "exclusions": [
+    "Cargo.lock",
+    "go.sum",
+    ".exe",
+    ".o",
+    ".pdb",
+    ".png",
+    ".rc",
+    ".res",
+    ".syso",
+    "dirs: .zig-cache, __pycache__, node_modules, out, target, vendor, zig-cache, zig-out"
+  ],
+  "final": {
+    "files": [
+      {
+        "file": "config.go",
+        "bytes": 5964,
+        "chars": 5964,
+        "loc_nonblank_noncomment": 162,
+        "tokens": 1502,
+        "tokens_code_only": 1479,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "control.go",
+        "bytes": 4765,
+        "chars": 4765,
+        "loc_nonblank_noncomment": 179,
+        "tokens": 1328,
+        "tokens_code_only": 1193,
+        "subsystem": "benchmark_candidate_hooks",
+        "functions": 8,
+        "ffi_boundary_lines": 9
+      },
+      {
+        "file": "framing.go",
+        "bytes": 1732,
+        "chars": 1732,
+        "loc_nonblank_noncomment": 49,
+        "tokens": 454,
+        "tokens_code_only": 338,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "framing_test.go",
+        "bytes": 2953,
+        "chars": 2952,
+        "loc_nonblank_noncomment": 110,
+        "tokens": 905,
+        "tokens_code_only": 905,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "gen_syso.go",
+        "bytes": 6284,
+        "chars": 6284,
+        "loc_nonblank_noncomment": 156,
+        "tokens": 2136,
+        "tokens_code_only": 1619,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "main.go",
+        "bytes": 6439,
+        "chars": 6439,
+        "loc_nonblank_noncomment": 209,
+        "tokens": 1884,
+        "tokens_code_only": 1766,
+        "subsystem": "other_candidate_logic",
+        "functions": 6,
+        "ffi_boundary_lines": 3
+      },
+      {
+        "file": "provider.go",
+        "bytes": 27789,
+        "chars": 27789,
+        "loc_nonblank_noncomment": 1020,
+        "tokens": 7588,
+        "tokens_code_only": 7150,
+        "subsystem": "provider_process_io",
+        "functions": 28,
+        "ffi_boundary_lines": 2
+      },
+      {
+        "file": "provider_test.go",
+        "bytes": 10993,
+        "chars": 10990,
+        "loc_nonblank_noncomment": 329,
+        "tokens": 3286,
+        "tokens_code_only": 3286,
+        "subsystem": "provider_process_io",
+        "functions": 24,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "queue.go",
+        "bytes": 2195,
+        "chars": 2195,
+        "loc_nonblank_noncomment": 93,
+        "tokens": 646,
+        "tokens_code_only": 543,
+        "subsystem": "other_candidate_logic",
+        "functions": 8,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "queue_test.go",
+        "bytes": 1808,
+        "chars": 1808,
+        "loc_nonblank_noncomment": 82,
+        "tokens": 577,
+        "tokens_code_only": 577,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "text.go",
+        "bytes": 3878,
+        "chars": 3878,
+        "loc_nonblank_noncomment": 108,
+        "tokens": 1135,
+        "tokens_code_only": 1024,
+        "subsystem": "text_ime_rendering",
+        "functions": 12,
+        "ffi_boundary_lines": 8
+      },
+      {
+        "file": "ui.go",
+        "bytes": 22030,
+        "chars": 22030,
+        "loc_nonblank_noncomment": 777,
+        "tokens": 6407,
+        "tokens_code_only": 6242,
+        "subsystem": "windowing_platform_glue",
+        "functions": 37,
+        "ffi_boundary_lines": 20
+      },
+      {
+        "file": "win32.go",
+        "bytes": 11621,
+        "chars": 11621,
+        "loc_nonblank_noncomment": 328,
+        "tokens": 3469,
+        "tokens_code_only": 3302,
+        "subsystem": "windowing_platform_glue",
+        "functions": 11,
+        "ffi_boundary_lines": 10
+      },
+      {
+        "file": "wndproc.go",
+        "bytes": 14144,
+        "chars": 14144,
+        "loc_nonblank_noncomment": 437,
+        "tokens": 4275,
+        "tokens_code_only": 4177,
+        "subsystem": "other_candidate_logic",
+        "functions": 10,
+        "ffi_boundary_lines": 36
+      }
+    ],
+    "handwritten_source_bytes": 122595,
+    "handwritten_source_chars": 122591,
+    "nonblank_noncomment_loc": 4039,
+    "source_tokens_o200k_base": 35592,
+    "source_tokens_code_only_o200k_base": 33601,
+    "tokens_per_loc": 8.8121,
+    "source_file_count": 14,
+    "median_source_file_bytes": 6124.0,
+    "largest_source_file": "provider.go",
+    "subsystem_tokens_o200k_base": {
+      "other_candidate_logic": 12379,
+      "benchmark_candidate_hooks": 1328,
+      "provider_process_io": 10874,
+      "text_ime_rendering": 1135,
+      "windowing_platform_glue": 9876
+    },
+    "max_function_lines": 157,
+    "median_function_lines": 11.0,
+    "max_nesting_depth": 7,
+    "ffi_boundary_lines": 88,
+    "architecture_doc_bytes": 15680,
+    "build_config_bytes": 1367
+  },
+  "build_evidence": [],
+  "model_token_usage": "not reliably exposed; not recorded (per protocol)",
+  "baseline_revision": "bb1804e",
+  "first_complete": {
+    "files": [
+      {
+        "file": "config.go",
+        "bytes": 5972,
+        "chars": 5972,
+        "loc_nonblank_noncomment": 162,
+        "tokens": 1502,
+        "tokens_code_only": 1479,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "control.go",
+        "bytes": 4765,
+        "chars": 4765,
+        "loc_nonblank_noncomment": 179,
+        "tokens": 1328,
+        "tokens_code_only": 1193,
+        "subsystem": "benchmark_candidate_hooks",
+        "functions": 8,
+        "ffi_boundary_lines": 9
+      },
+      {
+        "file": "framing.go",
+        "bytes": 1732,
+        "chars": 1732,
+        "loc_nonblank_noncomment": 49,
+        "tokens": 454,
+        "tokens_code_only": 338,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "framing_test.go",
+        "bytes": 2953,
+        "chars": 2952,
+        "loc_nonblank_noncomment": 110,
+        "tokens": 905,
+        "tokens_code_only": 905,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "gen_syso.go",
+        "bytes": 6284,
+        "chars": 6284,
+        "loc_nonblank_noncomment": 156,
+        "tokens": 2136,
+        "tokens_code_only": 1619,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "main.go",
+        "bytes": 6206,
+        "chars": 6206,
+        "loc_nonblank_noncomment": 204,
+        "tokens": 1813,
+        "tokens_code_only": 1695,
+        "subsystem": "other_candidate_logic",
+        "functions": 6,
+        "ffi_boundary_lines": 3
+      },
+      {
+        "file": "provider.go",
+        "bytes": 27789,
+        "chars": 27789,
+        "loc_nonblank_noncomment": 1020,
+        "tokens": 7588,
+        "tokens_code_only": 7150,
+        "subsystem": "provider_process_io",
+        "functions": 28,
+        "ffi_boundary_lines": 2
+      },
+      {
+        "file": "provider_test.go",
+        "bytes": 10993,
+        "chars": 10990,
+        "loc_nonblank_noncomment": 329,
+        "tokens": 3286,
+        "tokens_code_only": 3286,
+        "subsystem": "provider_process_io",
+        "functions": 24,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "queue.go",
+        "bytes": 2195,
+        "chars": 2195,
+        "loc_nonblank_noncomment": 93,
+        "tokens": 646,
+        "tokens_code_only": 543,
+        "subsystem": "other_candidate_logic",
+        "functions": 8,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "queue_test.go",
+        "bytes": 1808,
+        "chars": 1808,
+        "loc_nonblank_noncomment": 82,
+        "tokens": 577,
+        "tokens_code_only": 577,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "text.go",
+        "bytes": 3878,
+        "chars": 3878,
+        "loc_nonblank_noncomment": 108,
+        "tokens": 1135,
+        "tokens_code_only": 1024,
+        "subsystem": "text_ime_rendering",
+        "functions": 12,
+        "ffi_boundary_lines": 8
+      },
+      {
+        "file": "ui.go",
+        "bytes": 21655,
+        "chars": 21655,
+        "loc_nonblank_noncomment": 774,
+        "tokens": 6291,
+        "tokens_code_only": 6175,
+        "subsystem": "windowing_platform_glue",
+        "functions": 37,
+        "ffi_boundary_lines": 20
+      },
+      {
+        "file": "win32.go",
+        "bytes": 11621,
+        "chars": 11621,
+        "loc_nonblank_noncomment": 328,
+        "tokens": 3469,
+        "tokens_code_only": 3302,
+        "subsystem": "windowing_platform_glue",
+        "functions": 11,
+        "ffi_boundary_lines": 10
+      },
+      {
+        "file": "wndproc.go",
+        "bytes": 14090,
+        "chars": 14090,
+        "loc_nonblank_noncomment": 437,
+        "tokens": 4248,
+        "tokens_code_only": 4150,
+        "subsystem": "other_candidate_logic",
+        "functions": 10,
+        "ffi_boundary_lines": 36
+      }
+    ],
+    "handwritten_source_bytes": 121941,
+    "handwritten_source_chars": 121937,
+    "nonblank_noncomment_loc": 4031,
+    "source_tokens_o200k_base": 35378,
+    "source_tokens_code_only_o200k_base": 33436,
+    "tokens_per_loc": 8.7765,
+    "source_file_count": 14,
+    "median_source_file_bytes": 6089.0,
+    "largest_source_file": "provider.go",
+    "subsystem_tokens_o200k_base": {
+      "other_candidate_logic": 12281,
+      "benchmark_candidate_hooks": 1328,
+      "provider_process_io": 10874,
+      "text_ime_rendering": 1135,
+      "windowing_platform_glue": 9760
+    },
+    "max_function_lines": 157,
+    "median_function_lines": 11.0,
+    "max_nesting_depth": 7,
+    "ffi_boundary_lines": 88,
+    "architecture_doc_bytes": 15680,
+    "build_config_bytes": 1367
+  },
+  "correction_churn": {
+    "tokens_added": 512,
+    "tokens_removed": 296,
+    "changed_files": [
+      {
+        "file": "config.go",
+        "tokens_added": 29,
+        "tokens_removed": 29
+      },
+      {
+        "file": "main.go",
+        "tokens_added": 96,
+        "tokens_removed": 24
+      },
+      {
+        "file": "ui.go",
+        "tokens_added": 309,
+        "tokens_removed": 192
+      },
+      {
+        "file": "wndproc.go",
+        "tokens_added": 78,
+        "tokens_removed": 51
+      }
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "mascot-codex-gate-1",
+  "candidate": "rust",
+  "codex": {
+    "path": "C:\\Users\\therceman\\AppData\\Roaming\\npm\\node_modules\\@openai\\codex\\vendor\\x86_64-pc-windows-msvc\\codex\\codex.exe",
+    "sha256": "10885ad51aecf9fa8a89d4d7fb23b84c36d587f3fc31466fa0cc30f27e8548d8",
+    "version": "codex-cli 0.80.0"
+  },
+  "status": "PASS",
+  "errors": [],
+  "events": [
+    {
+      "event": "codex_gate",
+      "step": "spawn",
+      "detail": "codex app-server started"
+    },
+    {
+      "event": "codex_gate",
+      "step": "reply",
+      "detail": "id 1 answered"
+    },
+    {
+      "event": "codex_gate",
+      "step": "reply",
+      "detail": "id 2 answered"
+    },
+    {
+      "event": "codex_gate",
+      "step": "reply",
+      "detail": "id 3 answered"
+    },
+    {
+      "event": "codex_gate",
+      "step": "interaction",
+      "detail": "config/read + thread/list answered; 3 frames, 0 unsolicited notifications"
+    },
+    {
+      "event": "codex_gate",
+      "step": "teardown",
+      "detail": "exited code ExitStatus(ExitStatus(0))"
+    },
+    {
+      "event": "codex_gate",
+      "step": "teardown",
+      "detail": "stderr drained 0 bytes"
+    },
+    {
+      "event": "codex_gate",
+      "step": "result",
+      "detail": "PASS"
+    }
+  ],
+  "exit_code": 0,
+  "utc": "2026-09-27T19:38:21.841918+00:00",
+  "scope": "untimed; model/network latency not measured or compared"
+}

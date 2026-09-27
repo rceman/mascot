@@ -1,0 +1,8 @@
+{"event":"codex_gate","step":"spawn","detail":"codex app-server started"}
+{"event":"codex_gate","step":"reply","detail":"id 1 answered"}
+{"event":"codex_gate","step":"reply","detail":"id 2 answered"}
+{"event":"codex_gate","step":"reply","detail":"id 3 answered"}
+{"event":"codex_gate","step":"interaction","detail":"config/read + thread/list answered; 3 frames, 0 unsolicited notifications"}
+{"event":"codex_gate","step":"teardown","detail":"exited (<nil>)"}
+{"event":"codex_gate","step":"teardown","detail":"stderr drained 0 bytes"}
+{"event":"codex_gate","step":"result","detail":"PASS"}
