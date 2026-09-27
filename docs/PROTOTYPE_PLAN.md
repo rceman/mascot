@@ -40,6 +40,7 @@ Before any candidate application implementation starts, these documents are norm
 - docs/TEXT_FIXTURES.md
 - docs/MOCK_PROVIDER_CONTRACT.md
 - docs/BENCHMARK_PROTOCOL.md
+- docs/AGENT_SOURCE_EFFICIENCY.md
 
 After plan approval, prepare and freeze the common fixture/harness **before Rust, Zig, or Go application implementation begins**.
 
@@ -453,6 +454,8 @@ Review raw data and engineering evidence across:
 15. amount of infrastructure the project would own long-term
 16. Windows-to-macOS portability
 17. runtime/GC cost where applicable
+18. handwritten source/context-token cost for the same accepted behavior
+19. agent correction churn and concrete build/debug friction
 
 Do not reduce the decision to a weighted score before reviewing raw results.
 
@@ -463,6 +466,7 @@ Examples:
 - 4 MiB less memory with substantially more fragile text/native infrastructure probably does not justify a stack.
 - 20–30 MiB less memory plus simpler runtime behavior may justify additional integration work.
 - A modest Go memory premium may be acceptable if it buys materially simpler, more reliable orchestration; the benchmark must show the actual premium rather than assume it.
+- A lower source-token count is valuable evidence for agent workflows, but it does not override correctness, runtime behavior, or platform viability.
 
 ## 16. Stop / pause conditions
 
