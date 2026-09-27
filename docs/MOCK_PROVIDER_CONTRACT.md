@@ -27,6 +27,13 @@ The frozen manifest must include:
 - expected terminal events
 - text/visual fixture version
 - benchmark mascot asset ID/hash and logical dimensions
+- provider executable identity and command-line arguments
+- provider working directory
+- explicit sanitized fixture-specific environment
+
+The provider launch configuration is independent of candidate-only runtime/allocator tuning. The shared provider must not inherit candidate-specific settings that would change its behavior (for example Go GC/debug settings when the fixture itself happens to be implemented in Go).
+
+Do not record secrets or dump the entire inherited environment. Freeze only the explicit fixture environment required for deterministic behavior.
 
 Any later change increments the fixture version and invalidates every affected earlier result, including results collected before another candidate was implemented or measured.
 
@@ -177,7 +184,7 @@ The manifest freezes the exact write plan.
 
 Important: provider write fragmentation does not prove the OS delivered matching fragmented reads.
 
-Therefore both candidates must also run the same direct decoder-fragment vectors, which feed the parser exact byte fragments independent of pipe read behavior.
+Therefore all three candidates must also run the same direct decoder-fragment vectors, which feed the parser exact byte fragments independent of pipe read behavior.
 
 P3 passes only if:
 
@@ -273,6 +280,9 @@ The frozen fixture package must include:
 - exact failure exit code
 - exact frame limits
 - exact timeout values
+- provider executable identity and arguments
+- provider working directory
+- sanitized fixture-specific environment
 - executable build/run instructions
 
 Once frozen, any fixture change increments the fixture version and invalidates affected correctness/benchmark evidence across all candidates.
