@@ -1,0 +1,160 @@
+{
+  "schema": "mascot-acceptance-1",
+  "candidate": "rust",
+  "cases": [
+    {
+      "case": "T1",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T2",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T3",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T4",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T5",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T6",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T7",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T8",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T9",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T9b-cancel",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T10",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T11",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T12-F7",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T12-F8",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T13",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "T14",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "W1",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "W3",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "W4",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "W5",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "W6",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "W8",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "ArgumentError('argument 1: OverflowError: int too long to convert')"
+    },
+    {
+      "case": "W2",
+      "status": "UNTESTED",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "--with-hidpi not enabled"
+    },
+    {
+      "case": "W7",
+      "status": "UNTESTED",
+      "fixture_version": "windows-v1.0.1",
+      "evidence": "--with-hidpi not enabled"
+    }
+  ],
+  "event_observations": [],
+  "provider_lifetimes": [],
+  "error": "ArgumentError('argument 1: OverflowError: int too long to convert')",
+  "scope": "Text/window acceptance via physical input; provider P-cases are covered separately by verify_provider_regression.py",
+  "utc_started": "2026-09-27T16:33:44.521247+00:00",
+  "cleanup": [],
+  "cleanup_errors": [],
+  "reader_errors": [],
+  "utc_finished": "2026-09-27T16:33:48.884940+00:00",
+  "status": "FAIL"
+}

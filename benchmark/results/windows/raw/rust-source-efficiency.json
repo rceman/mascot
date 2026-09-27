@@ -1,0 +1,326 @@
+{
+  "schema": "mascot-source-efficiency-1",
+  "candidate": "rust",
+  "tokenizer": "tiktoken/o200k_base",
+  "tokenizer_version": "0.12.0",
+  "normalization": "committed UTF-8 bytes, LF endings, no minification",
+  "exclusions": [
+    "Cargo.lock",
+    "go.sum",
+    ".exe",
+    ".o",
+    ".pdb",
+    ".png",
+    ".rc",
+    ".res",
+    ".syso",
+    "dirs: .zig-cache, __pycache__, node_modules, out, target, vendor, zig-cache, zig-out"
+  ],
+  "final": {
+    "files": [
+      {
+        "file": "src/config.rs",
+        "bytes": 7184,
+        "chars": 7184,
+        "loc_nonblank_noncomment": 213,
+        "tokens": 1830,
+        "tokens_code_only": 1830,
+        "subsystem": "other_candidate_logic",
+        "functions": 7,
+        "ffi_boundary_lines": 2
+      },
+      {
+        "file": "src/control.rs",
+        "bytes": 7600,
+        "chars": 7600,
+        "loc_nonblank_noncomment": 223,
+        "tokens": 1649,
+        "tokens_code_only": 1649,
+        "subsystem": "benchmark_candidate_hooks",
+        "functions": 8,
+        "ffi_boundary_lines": 6
+      },
+      {
+        "file": "src/framing.rs",
+        "bytes": 5137,
+        "chars": 5137,
+        "loc_nonblank_noncomment": 179,
+        "tokens": 1141,
+        "tokens_code_only": 1141,
+        "subsystem": "other_candidate_logic",
+        "functions": 2,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/main.rs",
+        "bytes": 8392,
+        "chars": 8392,
+        "loc_nonblank_noncomment": 238,
+        "tokens": 1988,
+        "tokens_code_only": 1988,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 11
+      },
+      {
+        "file": "src/platform.rs",
+        "bytes": 54163,
+        "chars": 54159,
+        "loc_nonblank_noncomment": 1506,
+        "tokens": 11462,
+        "tokens_code_only": 11462,
+        "subsystem": "windowing_platform_glue",
+        "functions": 15,
+        "ffi_boundary_lines": 40
+      },
+      {
+        "file": "src/provider.rs",
+        "bytes": 54889,
+        "chars": 54889,
+        "loc_nonblank_noncomment": 1566,
+        "tokens": 11403,
+        "tokens_code_only": 11403,
+        "subsystem": "provider_process_io",
+        "functions": 19,
+        "ffi_boundary_lines": 7
+      },
+      {
+        "file": "src/queue.rs",
+        "bytes": 4567,
+        "chars": 4567,
+        "loc_nonblank_noncomment": 143,
+        "tokens": 1087,
+        "tokens_code_only": 1087,
+        "subsystem": "other_candidate_logic",
+        "functions": 2,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/text.rs",
+        "bytes": 8813,
+        "chars": 8813,
+        "loc_nonblank_noncomment": 287,
+        "tokens": 2373,
+        "tokens_code_only": 2373,
+        "subsystem": "text_ime_rendering",
+        "functions": 14,
+        "ffi_boundary_lines": 36
+      }
+    ],
+    "handwritten_source_bytes": 150745,
+    "handwritten_source_chars": 150741,
+    "nonblank_noncomment_loc": 4355,
+    "source_tokens_o200k_base": 32933,
+    "source_tokens_code_only_o200k_base": 32933,
+    "tokens_per_loc": 7.5621,
+    "source_file_count": 8,
+    "median_source_file_bytes": 7996.0,
+    "largest_source_file": "src/provider.rs",
+    "subsystem_tokens_o200k_base": {
+      "other_candidate_logic": 6046,
+      "benchmark_candidate_hooks": 1649,
+      "windowing_platform_glue": 11462,
+      "provider_process_io": 11403,
+      "text_ime_rendering": 2373
+    },
+    "max_function_lines": 149,
+    "median_function_lines": 8,
+    "max_nesting_depth": 6,
+    "ffi_boundary_lines": 102,
+    "architecture_doc_bytes": 18318,
+    "build_config_bytes": 3373
+  },
+  "build_evidence": [
+    {
+      "record": "benchmark\\results\\windows\\raw\\rust-build-004\\command.json",
+      "argv": [
+        "cargo",
+        "+1.94.0",
+        "build",
+        "--release",
+        "--locked",
+        "--target",
+        "x86_64-pc-windows-msvc"
+      ],
+      "elapsed_ms": 13635.8933,
+      "exit_code": 0
+    }
+  ],
+  "model_token_usage": "not reliably exposed; not recorded (per protocol)",
+  "baseline_revision": "65609963cca879945516129fe2f83823c2a6ba66",
+  "first_complete": {
+    "files": [
+      {
+        "file": "src/config.rs",
+        "bytes": 11064,
+        "chars": 11064,
+        "loc_nonblank_noncomment": 314,
+        "tokens": 3319,
+        "tokens_code_only": 3302,
+        "subsystem": "other_candidate_logic",
+        "functions": 7,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/control.rs",
+        "bytes": 4961,
+        "chars": 4961,
+        "loc_nonblank_noncomment": 139,
+        "tokens": 1041,
+        "tokens_code_only": 1041,
+        "subsystem": "benchmark_candidate_hooks",
+        "functions": 3,
+        "ffi_boundary_lines": 9
+      },
+      {
+        "file": "src/framing.rs",
+        "bytes": 5137,
+        "chars": 5137,
+        "loc_nonblank_noncomment": 179,
+        "tokens": 1141,
+        "tokens_code_only": 1141,
+        "subsystem": "other_candidate_logic",
+        "functions": 2,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/main.rs",
+        "bytes": 9087,
+        "chars": 9087,
+        "loc_nonblank_noncomment": 245,
+        "tokens": 2090,
+        "tokens_code_only": 2090,
+        "subsystem": "other_candidate_logic",
+        "functions": 4,
+        "ffi_boundary_lines": 12
+      },
+      {
+        "file": "src/platform.rs",
+        "bytes": 42704,
+        "chars": 42704,
+        "loc_nonblank_noncomment": 1193,
+        "tokens": 9362,
+        "tokens_code_only": 9362,
+        "subsystem": "windowing_platform_glue",
+        "functions": 9,
+        "ffi_boundary_lines": 38
+      },
+      {
+        "file": "src/provider.rs",
+        "bytes": 40290,
+        "chars": 40290,
+        "loc_nonblank_noncomment": 1162,
+        "tokens": 8360,
+        "tokens_code_only": 8360,
+        "subsystem": "provider_process_io",
+        "functions": 15,
+        "ffi_boundary_lines": 7
+      },
+      {
+        "file": "src/queue.rs",
+        "bytes": 4106,
+        "chars": 4106,
+        "loc_nonblank_noncomment": 130,
+        "tokens": 972,
+        "tokens_code_only": 972,
+        "subsystem": "other_candidate_logic",
+        "functions": 2,
+        "ffi_boundary_lines": 0
+      },
+      {
+        "file": "src/text.rs",
+        "bytes": 8092,
+        "chars": 8092,
+        "loc_nonblank_noncomment": 269,
+        "tokens": 2178,
+        "tokens_code_only": 2178,
+        "subsystem": "text_ime_rendering",
+        "functions": 13,
+        "ffi_boundary_lines": 32
+      }
+    ],
+    "handwritten_source_bytes": 125441,
+    "handwritten_source_chars": 125441,
+    "nonblank_noncomment_loc": 3631,
+    "source_tokens_o200k_base": 28463,
+    "source_tokens_code_only_o200k_base": 28446,
+    "tokens_per_loc": 7.8389,
+    "source_file_count": 8,
+    "median_source_file_bytes": 8589.5,
+    "largest_source_file": "src/platform.rs",
+    "subsystem_tokens_o200k_base": {
+      "other_candidate_logic": 7522,
+      "benchmark_candidate_hooks": 1041,
+      "windowing_platform_glue": 9362,
+      "provider_process_io": 8360,
+      "text_ime_rendering": 2178
+    },
+    "max_function_lines": 146,
+    "median_function_lines": 8,
+    "max_nesting_depth": 8,
+    "ffi_boundary_lines": 98,
+    "architecture_doc_bytes": 18139,
+    "build_config_bytes": 3704
+  },
+  "correction_churn": {
+    "tokens_added": 14430,
+    "tokens_removed": 9983,
+    "changed_files": [
+      {
+        "file": "ARCHITECTURE.md",
+        "tokens_added": 86,
+        "tokens_removed": 58
+      },
+      {
+        "file": "Cargo.toml",
+        "tokens_added": 10,
+        "tokens_removed": 0
+      },
+      {
+        "file": "README.md",
+        "tokens_added": 190,
+        "tokens_removed": 172
+      },
+      {
+        "file": "build.rs",
+        "tokens_added": 79,
+        "tokens_removed": 160
+      },
+      {
+        "file": "src/config.rs",
+        "tokens_added": 290,
+        "tokens_removed": 1778
+      },
+      {
+        "file": "src/control.rs",
+        "tokens_added": 1490,
+        "tokens_removed": 881
+      },
+      {
+        "file": "src/main.rs",
+        "tokens_added": 351,
+        "tokens_removed": 452
+      },
+      {
+        "file": "src/platform.rs",
+        "tokens_added": 5634,
+        "tokens_removed": 3535
+      },
+      {
+        "file": "src/provider.rs",
+        "tokens_added": 5875,
+        "tokens_removed": 2833
+      },
+      {
+        "file": "src/queue.rs",
+        "tokens_added": 116,
+        "tokens_removed": 0
+      },
+      {
+        "file": "src/text.rs",
+        "tokens_added": 309,
+        "tokens_removed": 114
+      }
+    ]
+  }
+}
