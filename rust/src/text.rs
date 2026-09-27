@@ -4,7 +4,7 @@ use windows_sys::Win32::Foundation::{HMODULE, HWND, LPARAM, LRESULT, WPARAM};
 use windows_sys::Win32::System::LibraryLoader::{
     GetModuleHandleExW, LOAD_LIBRARY_SEARCH_SYSTEM32, LoadLibraryExW,
 };
-use windows_sys::Win32::System::Ole::OleInitialize;
+use windows_sys::Win32::System::Ole::{OleInitialize, OleUninitialize};
 use windows_sys::Win32::UI::Input::Ime::{
     CPS_CANCEL, ImmGetContext, ImmNotifyIME, ImmReleaseContext, NI_COMPOSITIONSTR,
 };
@@ -20,6 +20,7 @@ pub const EM_SETLIMITTEXT: u32 = 0x00C5;
 pub const EM_SETUNDOLIMIT: u32 = WM_USER + 82;
 pub const EM_SETTYPOGRAPHYOPTIONS: u32 = WM_USER + 202;
 pub const EM_SETSEL: u32 = 0x00B1;
+pub const EM_REPLACESEL: u32 = 0x00C2;
 pub const EM_SCROLLCARET: u32 = 0x00B7;
 pub const EM_EXGETSEL: u32 = WM_USER + 52;
 pub const EM_EXSETSEL: u32 = WM_USER + 55;
@@ -86,6 +87,7 @@ pub fn load_richedit() -> Result<HMODULE, String> {
             LOAD_LIBRARY_SEARCH_SYSTEM32,
         );
         if module.is_null() {
+            OleUninitialize();
             return Err("msftedit.dll load failed".into());
         }
         Ok(module)
@@ -186,6 +188,15 @@ pub fn get_text(hwnd: HWND) -> String {
     }
 }
 
+pub fn append_text(hwnd: HWND, value: &str) {
+    let value = wide(&normalize(value).replace('\n', "\r"));
+    unsafe {
+        SendMessageW(hwnd, EM_SETSEL, usize::MAX, -1);
+        SendMessageW(hwnd, EM_REPLACESEL, 0, value.as_ptr() as isize);
+        SendMessageW(hwnd, EM_SCROLLCARET, 0, 0);
+    }
+}
+
 pub fn set_text(hwnd: HWND, text: &str) {
     let crlf = text.replace('\n', "\r\n");
     let wide_text = wide(&crlf);
@@ -232,16 +243,27 @@ pub fn cancel_composition(hwnd: HWND) {
     }
 }
 
-unsafe extern "system" fn input_subclass(
+unsafe extern "system" fn control_subclass(
     hwnd: HWND,
     message: u32,
     wparam: WPARAM,
     lparam: LPARAM,
-    _subclass_id: usize,
+    subclass_id: usize,
     reference: usize,
 ) -> LRESULT {
     unsafe {
         let ui = &*(reference as *const Ui);
+        if message == WM_PAINT {
+            ui.count_paint();
+            return DefSubclassProc(hwnd, message, wparam, lparam);
+        }
+        if message == WM_NCDESTROY {
+            RemoveWindowSubclass(hwnd, Some(control_subclass), subclass_id);
+            return DefSubclassProc(hwnd, message, wparam, lparam);
+        }
+        if subclass_id != 1 {
+            return DefSubclassProc(hwnd, message, wparam, lparam);
+        }
         match message {
             WM_IME_STARTCOMPOSITION => {
                 ui.on_ime_start(hwnd);
@@ -263,18 +285,15 @@ unsafe extern "system" fn input_subclass(
                 }
                 DefSubclassProc(hwnd, message, wparam, lparam)
             }
-            WM_DESTROY => {
-                RemoveWindowSubclass(hwnd, Some(input_subclass), 1);
-                DefSubclassProc(hwnd, message, wparam, lparam)
-            }
             _ => DefSubclassProc(hwnd, message, wparam, lparam),
         }
     }
 }
 
-pub fn subclass_input(hwnd: HWND, ui: *const Ui) -> Result<(), String> {
+pub fn subclass_control(hwnd: HWND, ui: *const Ui, input: bool) -> Result<(), String> {
     unsafe {
-        if SetWindowSubclass(hwnd, Some(input_subclass), 1, ui as usize) == 0 {
+        let id = if input { 1 } else { 2 };
+        if SetWindowSubclass(hwnd, Some(control_subclass), id, ui as usize) == 0 {
             return Err("SetWindowSubclass failed".into());
         }
     }

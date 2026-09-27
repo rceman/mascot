@@ -71,7 +71,7 @@ Planned direct crate pins:
 | png | =0.18.1 | Mature safe PNG decoding without another GUI framework |
 | base64 | =0.22.1 | Exact shared direct-decoder vector transport |
 
-These are established releases, not floating latest versions. Commit Cargo.lock, record resolved transitives and use `--locked` after resolution. No custom native C/C++ runtime bridge is planned. SDK resource tooling embeds the ordinary Windows application manifest; all build glue is candidate-owned and counted separately.
+These are established releases, not floating latest versions. Commit Cargo.lock, record resolved transitives and use `--locked` after resolution. No custom native C/C++ runtime bridge is planned. SDK resource tooling embeds the ordinary Windows application manifest; all build glue is candidate-owned and counted separately. Fixture asset identity is hashed with the operating system CNG `BCrypt*` SHA-256 provider, not a candidate-owned digest implementation.
 
 Release policy: `opt-level="s"`, thin LTO, one codegen unit, `panic="abort"`, symbol stripping, overflow checks enabled, static MSVC CRT. The default system allocator remains in use. No allocator purge, working-set trim, benchmark-only prewarming or special measurement cleanup. Native unsafe boundaries must have explicit ownership and valid callback lifetimes.
 

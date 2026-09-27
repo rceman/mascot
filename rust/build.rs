@@ -2,21 +2,13 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 
 fn rc_exe() -> PathBuf {
-    let kits = Path::new(r"C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\rc.exe");
-    if kits.is_file() {
-        return kits.to_path_buf();
-    }
-    let base = Path::new(r"C:\Program Files (x86)\Windows Kits\10\bin");
-    let mut found = None;
-    if let Ok(entries) = std::fs::read_dir(base) {
-        for entry in entries.flatten() {
-            let candidate = entry.path().join("x64").join("rc.exe");
-            if candidate.is_file() {
-                found = Some(candidate);
-            }
-        }
-    }
-    found.unwrap_or_else(|| panic!("rc.exe not found under {}", base.display()))
+    let rc = Path::new(r"C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\rc.exe");
+    assert!(
+        rc.is_file(),
+        "pinned Windows SDK 10.0.26100.0 rc.exe not found at {}",
+        rc.display()
+    );
+    rc.to_path_buf()
 }
 
 fn main() {

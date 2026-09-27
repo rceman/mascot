@@ -68,12 +68,12 @@ mascot.exe --decode-vectors W:\devin_folder\mascot\benchmark\decoder-vectors\vec
 
 ## Dependencies
 
-Direct: `windows-sys =0.61.2`, `serde =1.0.228` (derive), `serde_json =1.0.150`, `png =0.18.1`, `base64 =0.22.1`. Locked transitives are in `Cargo.lock`. `windows-sys 0.61.2` ships no `Win32_UI_Controls_RichEdit` feature, so the RichEdit message constants/structs used are declared locally in `src/text.rs` against the installed SDK values; `Win32_UI_Shell` (subclassing) and `Win32_System_Ole` (`OleInitialize`) features were added beyond the initial list for the same reason.
+Direct: `windows-sys =0.61.2`, `serde =1.0.228` (derive), `serde_json =1.0.150`, `png =0.18.1`, `base64 =0.22.1`. Locked transitives are in `Cargo.lock`. `windows-sys 0.61.2` ships no `Win32_UI_Controls_RichEdit` feature, so the RichEdit message constants/structs used are declared locally in `src/text.rs` against the installed SDK values; `Win32_UI_Shell` (subclassing), `Win32_System_Ole` (`OleInitialize`) and `Win32_Security_Cryptography` (CNG `BCrypt*` hashing) features were added beyond the initial list.
 
 ## Layout
 
 - `src/main.rs` — CLI dispatch, decoder-vector mode, message loop.
-- `src/config.rs` — manifest/config loading and validation (includes candidate-owned SHA-256 for asset identity).
+- `src/config.rs` — manifest/config loading and validation (asset identity hashed with the Windows CNG SHA-256 provider).
 - `src/framing.rs` — exact shared 65536-byte NDJSON framer.
 - `src/provider.rs` — provider coordinator/stdout-validator/stderr-tail threads, session lifecycle.
 - `src/platform.rs` — Win32 mascot/composer windows, DPI handling, control dispatch.

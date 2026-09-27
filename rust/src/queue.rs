@@ -81,6 +81,10 @@ impl<T> BoundedQueue<T> {
         }
     }
 
+    pub fn capacity(&self) -> usize {
+        self.capacity
+    }
+
     pub fn len(&self) -> usize {
         self.inner
             .lock()
@@ -139,5 +143,16 @@ mod tests {
         assert_eq!(queue.pop(), Some(7));
         assert!(handle.join().unwrap());
         assert!(began.elapsed() < Duration::from_secs(2));
+    }
+
+    #[test]
+    fn blocked_producer_released_with_value_on_close() {
+        let queue = Arc::new(BoundedQueue::new(1));
+        queue.push(7).unwrap();
+        let other = Arc::clone(&queue);
+        let handle = std::thread::spawn(move || other.push(9));
+        std::thread::sleep(Duration::from_millis(20));
+        queue.close();
+        assert_eq!(handle.join().unwrap(), Err(9));
     }
 }

@@ -1,0 +1,23 @@
+{
+  "schema": "mascot-native-command-record-1",
+  "scope": "Build/debug command evidence; not candidate runtime benchmark data",
+  "utc_started": "2026-09-27T15:40:15.384223+00:00",
+  "argv": [
+    "cargo",
+    "+1.94.0",
+    "test",
+    "--locked"
+  ],
+  "cwd": "W:\\devin_folder\\mascot\\rust",
+  "environment_overrides": {},
+  "clock": "Windows QueryPerformanceCounter",
+  "qpc_frequency": 10000000,
+  "exit_code": 0,
+  "launch_error": null,
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "qpc_start": "9508395335952",
+  "qpc_end": "9508397379352",
+  "elapsed_ms": 204.34,
+  "utc_finished": "2026-09-27T15:40:15.588995+00:00"
+}

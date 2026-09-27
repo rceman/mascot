@@ -1,0 +1,35 @@
+
+running 30 tests
+test framing::tests::invalid_utf8_rejected_only_at_frame_end ... ok
+test config::tests::sha256_known_vectors ... ok
+test framing::tests::split_multibyte_produces_exact_frames ... ok
+test framing::tests::partial_frame_fails_finish ... ok
+test platform::tests::append_bounded_enforces_limit_and_nul ... ok
+test platform::tests::font_height_scales_with_dpi ... ok
+test provider::tests::client_request_answers_once ... ok
+test provider::tests::cancel_after_one_chunk_permits_reuse ... ok
+test platform::tests::stale_generation_events_do_not_match ... ok
+test provider::tests::duplicate_seq_rejected ... ok
+test provider::tests::client_request_before_start_rejected ... ok
+test provider::tests::cancelled_without_request_rejected ... ok
+test provider::tests::duplicate_terminal_rejected ... ok
+test provider::tests::client_request_after_terminal_rejected ... ok
+test provider::tests::frequency_mismatch_rejected ... ok
+test control::tests::control_framer_rejects_oversized_and_incomplete ... ok
+test framing::tests::maximum_frame_accepted_at_limit ... ok
+test framing::tests::oversized_rejected_before_growth ... ok
+test provider::tests::normal_sequence_accepted ... ok
+test provider::tests::premature_complete_rejected ... ok
+test provider::tests::shutdown_ack_accepted_mid_stream_when_requested ... ok
+test provider::tests::shutdown_ack_requires_request_and_is_once ... ok
+test provider::tests::skipped_seq_rejected ... ok
+test provider::tests::terminal_claim_once ... ok
+test provider::tests::wrong_id_rejected ... ok
+test queue::tests::push_pop_order_and_close ... ok
+test queue::tests::blocked_producer_released_with_value_on_close ... ok
+test provider::tests::event_queue_backpressure_blocks_reader_not_drops ... ok
+test queue::tests::wait_pop_wakes_on_close ... ok
+test queue::tests::blocked_producer_wakes_on_drain ... ok
+
+test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+

@@ -1,0 +1,13 @@
+test_decimal_contract (test_candidate_tools.ContractHelpers.test_decimal_contract) ... ok
+test_event_contract_accepts_valid_trace (test_candidate_tools.ContractHelpers.test_event_contract_accepts_valid_trace) ... ok
+test_event_contract_rejects_faults (test_candidate_tools.ContractHelpers.test_event_contract_rejects_faults) ... ok
+test_maximum_frame_tracks_id_width (test_candidate_tools.ContractHelpers.test_maximum_frame_tracks_id_width) ... ok
+test_reconstruction_cases (test_candidate_tools.ContractHelpers.test_reconstruction_cases) ... ok
+test_vector_buffer_bounds (test_candidate_tools.ContractHelpers.test_vector_buffer_bounds) ... ok
+test_owned_process_exit_observation (test_candidate_tools.NativeHelpers.test_owned_process_exit_observation) ... ok
+test_struct_layout (test_candidate_tools.NativeHelpers.test_struct_layout) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.354s
+
+OK

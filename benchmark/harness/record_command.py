@@ -67,7 +67,7 @@ def main():
         end = query("QueryPerformanceCounter")
     record.update(qpc_start=str(start), qpc_end=str(end), elapsed_ms=(end - start) * 1000 / frequency,
                   utc_finished=datetime.now(timezone.utc).isoformat())
-    (args.output / "command.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+    (args.output / "command.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({"record": str(args.output / "command.json"), "exit_code": record["exit_code"]}))
     return record["exit_code"] if record["exit_code"] is not None else 1
 

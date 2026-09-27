@@ -1,0 +1,24 @@
+{
+  "schema": "mascot-native-command-record-1",
+  "scope": "Build/debug command evidence; not candidate runtime benchmark data",
+  "utc_started": "2026-09-27T15:32:26.691357+00:00",
+  "argv": [
+    "python",
+    "-m",
+    "unittest",
+    "-v",
+    "test_candidate_tools"
+  ],
+  "cwd": "W:\\devin_folder\\mascot\\benchmark\\harness",
+  "environment_overrides": {},
+  "clock": "Windows QueryPerformanceCounter",
+  "qpc_frequency": 10000000,
+  "exit_code": 0,
+  "launch_error": null,
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "qpc_start": "9503708402777",
+  "qpc_end": "9503713450902",
+  "elapsed_ms": 504.8125,
+  "utc_finished": "2026-09-27T15:32:27.196893+00:00"
+}
