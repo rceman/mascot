@@ -1,28 +1,60 @@
-# Mock Provider Contract v0.1
+# Mock Provider Contract v0.2
 
-Both Rust and Zig candidates must use the same benchmark-provider executable and this exact logical protocol.
+The Rust, Zig, and Go candidates must use the same benchmark-provider executable and this exact logical protocol.
 
-The provider is excluded from application-owned memory totals because it is byte-identical for both candidates. Any candidate-specific helper remains part of that candidate's application total.
+The provider is excluded from application-owned memory totals because it is byte-identical for all candidates. Any candidate-specific helper remains part of that candidate's application total.
 
-## 1. Transport and lifetime
+## 1. Fixture freeze gate
 
-- One persistent child process per benchmark session.
+The common fixture/harness is prepared and frozen **before any candidate application implementation begins**.
+
+The frozen manifest must include:
+
+- fixture version
+- scenario list
+- exact response text/payloads
+- reconstructed response SHA-256 values
+- exact logical frame sequences
+- exact physical-write fragmentation plan
+- direct decoder-fragment vectors
+- exact cancellation barrier behavior
+- exact exceptional-session recovery policy
+- shutdown timeout
+- cancellation timeout
+- frame limits
+- stderr fixture
+- failure exit codes
+- expected terminal events
+- text/visual fixture version
+- benchmark mascot asset ID/hash and logical dimensions
+
+Any later change increments the fixture version and invalidates every affected earlier result, including results collected before another candidate was implemented or measured.
+
+## 2. Transport and lifetime
+
+- One persistent child process per ordinary benchmark provider session.
 - stdin and stdout carry UTF-8 newline-delimited JSON (NDJSON), one complete JSON object per logical frame.
 - stderr is an independent byte stream and must always be drained.
-- The child remains alive across multiple requests until explicit shutdown or an injected unexpected-exit test.
-- Candidate code must not restart the child between ordinary benchmark requests.
+- The child remains alive across ordinary completion and cooperative cancellation.
+- Candidate code must not restart the child between ordinary requests.
 - Candidate code must not kill the child as its normal cancellation mechanism.
 - Cooperative cancellation is the normal path.
-- On shell shutdown, the child must be terminated/reaped within the harness timeout.
+- Exceptional protocol cases may invalidate the session only where this contract explicitly says so.
+- On shell shutdown, the child must be terminated/reaped within the shared shutdown timeout.
 
-## 2. Frame limits
+Shared v0.2 timeout defaults, frozen into the manifest:
+
+- shutdown_timeout_ms: 2000
+- cancel_timeout_ms: 1000
+
+## 3. Frame limits
 
 - Maximum accepted logical stdout frame: 65,536 bytes including the trailing newline.
 - Maximum accepted logical stdin frame: 65,536 bytes including the trailing newline.
 - The over-limit test sends a 65,537-byte logical frame.
 - Candidate code must reject an over-limit frame without unbounded allocation or process hang.
 
-## 3. Required messages
+## 4. Required messages
 
 ### Client -> provider: request
 
@@ -34,7 +66,7 @@ Rules:
 
 - id is a positive integer unique among active requests.
 - prompt is UTF-8.
-- One ordinary request is active at a time in v0.1.
+- One ordinary request is active at a time in v0.2.
 
 ### Provider -> client: start
 
@@ -63,7 +95,21 @@ Rules:
 
     {"type":"cancelled","id":17,"last_seq":49}
 
-The canonical cancellation scenario sends cancel immediately after the client has accepted logical chunk 49. The provider must stop further chunks for that request and return cancelled.
+### Canonical cancellation barrier
+
+For the canonical cancellation case only:
+
+1. The provider emits chunks 0 through 49.
+2. After chunk 49 is emitted, the provider pauses and does not emit chunk 50.
+3. The client decodes and accepts chunk 49.
+4. The client sends cancel for that request.
+5. The provider emits exactly one cancelled terminal frame with last_seq 49.
+6. The provider emits neither chunk 50 nor complete for that request.
+7. The same child process remains alive and must successfully serve the next ordinary request.
+
+If cancel is not received within cancel_timeout_ms, the fixture fails the scenario according to the manifest.
+
+This barrier exists only to make the comparative benchmark deterministic. It is not an assumption about real provider cancellation races.
 
 ### Provider -> client: client_request
 
@@ -85,7 +131,7 @@ The provider acknowledges with:
 
 and exits zero.
 
-## 4. Normal response payload
+## 5. Normal response payload
 
 The fixture owns the canonical payload file.
 
@@ -93,48 +139,62 @@ Requirements:
 
 - exactly 100 logical chunk frames
 - deterministic text and byte count
-- includes ASCII, Latvian, Cyrillic, combining characters, and multi-codepoint emoji across the complete response
-- at least one UTF-8 multi-byte sequence is intentionally split across physical pipe writes
-- exact SHA-256 of the reconstructed text is recorded in the fixture manifest
+- includes ASCII
+- includes Latvian
+- includes Cyrillic
+- includes combining characters
+- includes multi-codepoint emoji
+- includes the shared mixed-direction Arabic rendering fixture
+- at least one UTF-8 multi-byte sequence is intentionally split across physical provider writes
+- exact SHA-256 of reconstructed text is recorded in the manifest
 
-The implementation agent must generate and freeze the manifest once; both candidates consume the same manifest unchanged.
+The response view must satisfy the visual correctness cases in docs/TEXT_FIXTURES.md.
 
-## 5. Scheduling
+## 6. Scheduling and emission timestamp
 
 Normal streaming:
 
 - 100 logical chunks
 - nominal inter-chunk interval: 10 ms
-- timestamps emitted by the mock harness use the Windows QPC-derived benchmark clock in Stage A
-- test harness records sequence ID and emission timestamp
+- Stage A uses the shared Windows QPC-derived benchmark clock
+- each logical chunk has a sequence ID and emission timestamp
 
-Scheduling jitter is measured, not treated as application latency.
+The manifest defines the emission timestamp as the timestamp captured **immediately before the first physical write attempt containing any bytes of that logical frame**.
 
-## 6. Physical write patterns
+Scheduling jitter is reported separately and is not silently attributed to application rendering latency.
 
-Logical NDJSON frames are intentionally delivered using several physical write modes:
+## 7. Physical write patterns and decoder vectors
+
+Logical NDJSON frames are delivered using deterministic physical write patterns:
 
 1. whole-frame writes
-2. frame split into small writes
+2. one frame split into small writes
 3. multiple complete frames coalesced into one write
 4. split at a multi-byte UTF-8 boundary
 5. split immediately before the newline delimiter
 
-The exact deterministic pattern is defined in the fixture manifest.
+The manifest freezes the exact write plan.
 
-Candidates must parse the byte stream correctly rather than assume one read equals one frame.
+Important: provider write fragmentation does not prove the OS delivered matching fragmented reads.
 
-## 7. stderr pressure
+Therefore both candidates must also run the same direct decoder-fragment vectors, which feed the parser exact byte fragments independent of pipe read behavior.
+
+P3 passes only if:
+
+- the direct fragment vectors pass, and
+- the end-to-end physical-write scenario passes.
+
+## 8. stderr pressure
 
 For the stderr-drain case, the provider emits a deterministic 256 KiB diagnostic stream while stdout continues normally.
 
 The shell must not deadlock, block UI interaction, or silently stop reading stdout.
 
-stderr content does not need to be rendered in the prototype UI.
+stderr content does not need to be rendered.
 
-## 8. Backpressure case
+## 9. Backpressure case
 
-A separate case emits 256 valid chunk frames as quickly as the provider can write them, subject to normal pipe backpressure.
+A separate case emits 256 valid chunk frames as quickly as the provider can write them, subject to pipe backpressure.
 
 Requirements:
 
@@ -144,11 +204,11 @@ Requirements:
 - UI remains responsive
 - coalesced redraw is allowed and encouraged
 
-This case is diagnostic and is not used for the headline 10 ms streamed-response latency numbers.
+This case is diagnostic and is not used for headline 10 ms streamed-response latency.
 
-## 9. Unexpected-exit case
+## 10. Unexpected-exit case
 
-After the start frame and a deterministic number of chunks, the provider exits with the fixture-defined non-zero code.
+After start and a deterministic number of chunks, the provider exits with the fixture-defined non-zero code.
 
 The shell must:
 
@@ -158,43 +218,61 @@ The shell must:
 - remain usable
 - leave no orphaned child/process handles
 
-## 10. Frame-limit cases
+The session ends. The next explicit request may start a fresh provider session according to the manifest.
+
+## 11. Frame-limit cases
 
 ### Maximum valid
 
-Provider emits one valid logical frame exactly at the configured maximum size. The client must accept it.
+Provider emits one valid logical frame exactly at the configured maximum size.
+
+The client must accept it.
 
 ### Oversized
 
-Provider emits one logical frame one byte above the configured maximum. The client must reject the frame/request deterministically, keep memory bounded, and either keep or restart the provider according to the shared harness policy.
+Provider emits one logical frame one byte above the configured maximum size.
 
-Both candidates must use the same policy.
+Required recovery policy:
 
-## 11. State retention
+1. The client fails the current request.
+2. The provider session is invalidated.
+3. The shell terminates/reaps the fixture within shutdown_timeout_ms.
+4. The failed request is not automatically replayed.
+5. The next explicit user/request action starts a fresh provider session.
+6. Ordinary completion and cooperative cancellation continue to reuse the persistent child and do not restart it.
+
+No candidate-specific keep-versus-restart policy is permitted.
+
+## 12. State retention
 
 For benchmark equality:
 
 - The response area holds only the current request plus a fixed fixture of four prior short messages.
-- Starting a new normal request replaces the previous current-response body after completion/cancellation.
+- Starting a new ordinary request replaces the previous current-response body after completion/cancellation.
 - Hiding the composer does not cancel the active request.
 - Reopening the composer shows the current in-progress/completed response.
 - Explicit cancel is the only normal user cancellation action.
 - No database or unbounded transcript is used.
 
-## 12. Fixture deliverables
+## 13. Fixture deliverables
 
-The implementation task must create one shared provider under the benchmark area, not one provider per language.
+The implementation task must create one shared provider under the benchmark area, not one provider per candidate language.
 
-It must include:
+The frozen fixture package must include:
 
-- fixture version
-- exact response text/payload
+- manifest with all fields from section 1
+- exact normal response payload
+- text/visual fixture version
 - reconstructed response SHA-256
-- exact frame sequence
+- exact frame sequences
 - exact physical-write fragmentation plan
-- exact failure exit code
+- direct decoder-fragment vectors
+- exact cancellation barrier
+- exact exceptional recovery rules
 - exact stderr fixture
+- exact failure exit code
 - exact frame limits
+- exact timeout values
 - executable build/run instructions
 
-Once both candidate implementations begin measurement, fixture changes require invalidating and rerunning affected measurements.
+Once frozen, any fixture change increments the fixture version and invalidates affected correctness/benchmark evidence across all candidates.
