@@ -16,7 +16,7 @@ import (
 	"unsafe"
 )
 
-const fixtureVersion = "windows-v1.0.1"
+const fixtureVersion = "windows-v1.0.2"
 const frameLimit = 65536
 const cancelTimeout = time.Second
 

@@ -267,11 +267,13 @@ class UiAutomation:
             struct.pack_into("<I", info, 0, 104)
             require(self.GetMonitorInfoW(hmon, info), "GetMonitorInfoW failed")
             left, top, right, bottom = struct.unpack_from("<4i", info, 4)
+            flags = struct.unpack_from("<I", info, 36)[0]  # MONITORINFO.dwFlags
             scale = ctypes.c_int()
             require(self.GetScaleFactorForMonitor(hmon, ctypes.byref(scale)) == 0,
                     "GetScaleFactorForMonitor failed")
             found.append({"handle": hmon, "rect": (left, top, right, bottom),
-                          "scale": scale.value})
+                          "scale": scale.value,
+                          "primary": bool(flags & 1)})  # MONITORINFOF_PRIMARY
             return True
 
         require(self.EnumDisplayMonitors(None, None, ctypes.cast(EnumProc(visit),
@@ -480,7 +482,7 @@ def run_acceptance(candidate, output, ui, text_fixture, result):
     cases = []
 
     def record(case, status, evidence=None):
-        entry = {"case": case, "status": status, "fixture_version": "windows-v1.0.1"}
+        entry = {"case": case, "status": status, "fixture_version": candidate.manifest.get("version")}
         if evidence is not None:
             entry["evidence"] = evidence
         cases.append(entry)
@@ -778,7 +780,7 @@ def run_window_cases(candidate, output, ui, result):
     cases = result["cases"]
 
     def record(case, status, evidence=None):
-        entry = {"case": case, "status": status, "fixture_version": "windows-v1.0.1"}
+        entry = {"case": case, "status": status, "fixture_version": candidate.manifest.get("version")}
         if evidence is not None:
             entry["evidence"] = evidence
         cases.append(entry)
@@ -802,6 +804,10 @@ def run_window_cases(candidate, output, ui, result):
             mrect = ui.rect(mascot)
             listener.move(mrect.left - 10, mrect.top - 10,
                           (mrect.right - mrect.left) + 20, (mrect.bottom - mrect.top) + 20)
+            # Top of the non-topmost band: stays under the topmost mascot but
+            # above unrelated windows that could occlude the click-through target.
+            ui.SetWindowPos(listener.hwnd, wintypes.HWND(0), 0, 0, 0, 0,
+                            0x0001 | 0x0002)  # HWND_TOP, NOSIZE|NOMOVE
             time.sleep(0.4)
             transparent, opaque = None, None
             for yy in range(mrect.top, mrect.bottom, 3):
@@ -899,7 +905,7 @@ def run_hidpi_cases(candidate, output, ui, result):
     cases = result["cases"]
 
     def record(case, status, evidence=None):
-        entry = {"case": case, "status": status, "fixture_version": "windows-v1.0.1"}
+        entry = {"case": case, "status": status, "fixture_version": candidate.manifest.get("version")}
         if evidence is not None:
             entry["evidence"] = evidence
         cases.append(entry)
@@ -952,7 +958,7 @@ def run_hidpi_launch(executable, manifest_path, output, result):
     hi = next((m for m in monitors if m["scale"] >= 150), None)
     if hi is None:
         result["cases"].append({"case": "W2", "status": "UNTESTED",
-                                "fixture_version": "windows-v1.0.1",
+                                "fixture_version": candidate.manifest.get("version"),
                                 "evidence": "No >=150% display target"})
         return
     left, top, right, bottom = hi["rect"]
@@ -982,18 +988,18 @@ def run_hidpi_launch(executable, manifest_path, output, result):
         second.reply(token, timeout=5)
         second.process.wait(timeout=5)
         result["cases"].append({"case": "W2", "status": "PASS",
-                                "fixture_version": "windows-v1.0.1",
+                                "fixture_version": candidate.manifest.get("version"),
                                 "evidence": {"dpi": dpi, "size_px": size,
                                              "capture": "w2-second-launch/" + shot.name}})
     except Exception as error:
         result["cases"].append({"case": "W2", "status": "FAIL",
-                                "fixture_version": "windows-v1.0.1",
+                                "fixture_version": candidate.manifest.get("version"),
                                 "evidence": repr(error)})
     finally:
         second.close()
 
 
-def run(executable, manifest_path, output, with_hidpi):
+def run(executable, manifest_path, output, with_hidpi, launch_point=None):
     output.mkdir(parents=True)
     result = {"schema": "mascot-acceptance-1", "candidate": "unknown", "cases": [],
               "event_observations": [], "provider_lifetimes": [], "error": None,
@@ -1002,8 +1008,20 @@ def run(executable, manifest_path, output, with_hidpi):
               "utc_started": datetime.now(timezone.utc).isoformat()}
     native = regression.Native()
     native.user.SetThreadDpiAwarenessContext(ctypes.c_void_p(-4))
-    candidate = regression.Candidate(executable, manifest_path, output, native, result)
     ui = UiAutomation()
+    if launch_point is None:
+        # Deterministic launch point: the secondary (virtual) display is bare
+        # and free of unrelated windows, unlike the primary desktop.
+        monitors = ui.monitors()
+        secondary = [m for m in monitors if not m["primary"]]
+        if secondary:
+            r = secondary[0]["rect"]
+            launch_point = (int((r[0] + r[2]) / 2), int((r[1] + r[3]) / 2))
+    if launch_point is not None:
+        ui.SetCursorPos(*launch_point)
+        time.sleep(0.2)
+    result["launch_point"] = launch_point
+    candidate = regression.Candidate(executable, manifest_path, output, native, result)
     try:
         candidate.call("state")
         text_fixture = load(candidate.root / "fixtures/text.json")
@@ -1015,7 +1033,7 @@ def run(executable, manifest_path, output, with_hidpi):
         else:
             for case in ("W2", "W7"):
                 result["cases"].append({"case": case, "status": "UNTESTED",
-                                        "fixture_version": "windows-v1.0.1",
+                                        "fixture_version": candidate.manifest.get("version"),
                                         "evidence": "--with-hidpi not enabled"})
         token, _ = candidate.send("shutdown")
         candidate.reply(token, timeout=5)
@@ -1040,10 +1058,16 @@ def main():
     parser.add_argument("--candidate", default="unknown")
     parser.add_argument("--with-hidpi", action="store_true",
                         help="Run W2/W7; requires the two-scale display laboratory")
+    parser.add_argument("--launch-point", nargs=2, type=int,
+                        metavar=("X", "Y"),
+                        help="cursor position at launch (default: secondary "
+                             "display center when present)")
     args = parser.parse_args()
     require(args.output.parent.exists(), "Output parent missing")
     require(not args.output.exists(), "Refusing to overwrite evidence directory")
-    result = run(args.exe.resolve(), args.manifest.resolve(), args.output, args.with_hidpi)
+    result = run(args.exe.resolve(), args.manifest.resolve(), args.output,
+                 args.with_hidpi,
+                 tuple(args.launch_point) if args.launch_point else None)
     result["candidate"] = args.candidate
     (args.output / "result.json").write_text(json.dumps(result, indent=2, ensure_ascii=False),
                                              encoding="utf-8")

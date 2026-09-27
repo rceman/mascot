@@ -23,7 +23,7 @@ def audit(root):
     manifest_path = root / "manifest/fixture.json"
     manifest = load(manifest_path)
     expected_paths = {
-        "../assets/provisional-mascot.png",
+        "../assets/mascot.png",
         "decoder-vectors/vectors.json",
         "fixtures/chunks.json",
         "fixtures/history.json",
@@ -33,7 +33,7 @@ def audit(root):
         "requirements-source.txt",
     }
     assert manifest["schema"] == "mascot-fixture-1"
-    assert manifest["version"] == "windows-v1.0.1"
+    assert manifest["version"] == "windows-v1.0.2"
     assert set(manifest["files_sha256"]) == expected_paths
     for name, expected in manifest["files_sha256"].items():
         assert digest(root / name) == expected, name
@@ -107,11 +107,11 @@ def audit(root):
         assert frames == expected, vector["name"]
         assert rejected or not pending, vector["name"]
         vector_checks.append({"name": vector["name"], "peak_buffer_bytes": peak, "status": "PASS"})
-    png = (root / "../assets/provisional-mascot.png").read_bytes()
+    png = (root / manifest["asset"]["path"]).read_bytes()
     assert png[:8] == b"\x89PNG\r\n\x1a\n" and png[12:16] == b"IHDR"
     width, height, depth, color = struct.unpack(">IIBB", png[16:26])
-    assert (width, height, depth, color) == (128, 128, 8, 6)
-    assert manifest["asset"]["status"] == "PROVISIONAL"
+    assert (width, height, depth, color) == (1254, 1254, 8, 6)
+    assert manifest["asset"]["status"] == "APPROVED"
     assert manifest["asset"]["logical_width_dip"] == manifest["asset"]["logical_height_dip"] == 64
     schedule = manifest["schedule"]
     assert sorted(tuple(block) for block in schedule["balanced_blocks"]) == sorted([
@@ -152,7 +152,7 @@ def audit(root):
         "manifest_sha256": digest(manifest_path),
         "provider_sha256": provider["sha256"],
         "payload_sha256": digest(root / "fixtures/response.txt"),
-        "asset_sha256": digest(root / "../assets/provisional-mascot.png"),
+        "asset_sha256": digest(root / manifest["asset"]["path"]),
         "packages": packages,
         "python": sys.version,
         "vectors": vector_checks,

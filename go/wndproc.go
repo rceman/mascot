@@ -88,9 +88,9 @@ func mascotWndProc(hwnd uintptr, message uint32, wparam, lparam uintptr) uintptr
 		if px < 0 || py < 0 || px >= width || py >= height {
 			return neg(htTRANSPARENT)
 		}
-		sx := min(int(int(px)*128/int(width)), 127)
-		sy := min(int(int(py)*128/int(height)), 127)
-		alpha := ui.mascotSource[(sy*128+sx)*4+3]
+		sx := min(int(int(px)*ui.mascotSrcW/int(width)), ui.mascotSrcW-1)
+		sy := min(int(int(py)*ui.mascotSrcH/int(height)), ui.mascotSrcH-1)
+		alpha := ui.mascotSource[(sy*ui.mascotSrcW+sx)*4+3]
 		if alpha > 0 {
 			return uintptr(htCAPTION)
 		}

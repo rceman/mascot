@@ -75,7 +75,7 @@ pub struct Surface {
 }
 
 impl Surface {
-    fn new(source: &[u8], pixels: usize) -> Result<Self, String> {
+    fn new(source: &[u8], src_w: usize, src_h: usize, pixels: usize) -> Result<Self, String> {
         unsafe {
             let screen = GetDC(std::ptr::null_mut());
             if screen.is_null() {
@@ -126,9 +126,9 @@ impl Surface {
                 let target = std::slice::from_raw_parts_mut(bits as *mut u8, pixels * pixels * 4);
                 for y in 0..pixels {
                     for x in 0..pixels {
-                        let sx = x * 128 / pixels;
-                        let sy = y * 128 / pixels;
-                        let src = (sy * 128 + sx) * 4;
+                        let sx = x * src_w / pixels;
+                        let sy = y * src_h / pixels;
+                        let src = (sy * src_w + sx) * 4;
                         let dst = (y * pixels + x) * 4;
                         target[dst..dst + 4].copy_from_slice(&source[src..src + 4]);
                     }
@@ -179,6 +179,8 @@ pub struct Ui {
     pub config: Config,
     pub mascot: Cell<HWND>,
     pub mascot_source: Vec<u8>,
+    pub mascot_src_w: u32,
+    pub mascot_src_h: u32,
     pub surface: RefCell<Option<Surface>>,
     pub composer: RefCell<Option<Composer>>,
     pub model: RefCell<Model>,
@@ -287,7 +289,12 @@ impl Ui {
 
     pub fn present_mascot(&self, dpi: u32) -> Result<(), String> {
         let pixels = dip(self.config.manifest.asset.logical_width_dip as i32, dpi) as usize;
-        let surface = Surface::new(&self.mascot_source, pixels)?;
+        let surface = Surface::new(
+            &self.mascot_source,
+            self.mascot_src_w as usize,
+            self.mascot_src_h as usize,
+            pixels,
+        )?;
         *self.surface.borrow_mut() = Some(surface);
         let (dc, pixels) = {
             let borrowed = self.surface.borrow();
@@ -1035,9 +1042,11 @@ unsafe extern "system" fn mascot_proc(
                 if px < 0 || py < 0 || px >= width || py >= height {
                     return HTTRANSPARENT as LRESULT;
                 }
-                let sx = (px as usize * 128 / width as usize).min(127);
-                let sy = (py as usize * 128 / height as usize).min(127);
-                let alpha = ui.mascot_source[(sy * 128 + sx) * 4 + 3];
+                let src_w = ui.mascot_src_w as usize;
+                let src_h = ui.mascot_src_h as usize;
+                let sx = (px as usize * src_w / width as usize).min(src_w - 1);
+                let sy = (py as usize * src_h / height as usize).min(src_h - 1);
+                let alpha = ui.mascot_source[(sy * src_w + sx) * 4 + 3];
                 if alpha > 0 {
                     HTCAPTION as LRESULT
                 } else {
@@ -1417,18 +1426,18 @@ unsafe fn relayout(ui: &Ui) {
     }
 }
 
-pub fn decode_png(path: &std::path::Path) -> Result<Vec<u8>, String> {
+/// Decode the asset PNG into premultiplied BGRA plus its pixel dimensions.
+/// The manifest SHA-256 pins the bytes; dimensions are reported so the
+/// caller can cross-check them against `asset.pixel_width/height`.
+pub fn decode_png(path: &std::path::Path) -> Result<(Vec<u8>, u32, u32), String> {
     let file = std::fs::File::open(path).map_err(|e| format!("open asset: {e}"))?;
     let mut decoder = png::Decoder::new(std::io::BufReader::new(file));
     decoder.set_transformations(png::Transformations::EXPAND);
     let mut reader = decoder.read_info().map_err(|e| format!("png info: {e}"))?;
-    let mut buffer = vec![0u8; reader.output_buffer_size().unwrap_or(128 * 128 * 4 + 64)];
+    let mut buffer = vec![0u8; reader.output_buffer_size().ok_or("png size unknown")?];
     let info = reader
         .next_frame(&mut buffer)
         .map_err(|e| format!("png frame: {e}"))?;
-    if info.width != 128 || info.height != 128 {
-        return Err("asset pixel size mismatch".into());
-    }
     let rgba = &buffer[..info.buffer_size()];
     let mut premul = vec![0u8; rgba.len()];
     for i in (0..rgba.len()).step_by(4) {
@@ -1443,7 +1452,7 @@ pub fn decode_png(path: &std::path::Path) -> Result<Vec<u8>, String> {
         premul[i + 2] = ((r * a + 127) / 255) as u8;
         premul[i + 3] = a as u8;
     }
-    Ok(premul)
+    Ok((premul, info.width, info.height))
 }
 
 pub fn register_classes(instance: HINSTANCE) -> Result<(), String> {

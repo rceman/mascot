@@ -119,13 +119,18 @@ func runApp(manifestArg string, controlMode bool) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	mascotSource, err := decodePNG(cfg.assetPath)
+	mascotSource, srcW, srcH, err := decodePNG(cfg.assetPath)
 	if err != nil {
 		return 0, err
+	}
+	if srcW != int(cfg.manifest.Asset.PixelWidth) || srcH != int(cfg.manifest.Asset.PixelHeight) {
+		return 0, errors.New("decoded asset dimensions differ from the manifest")
 	}
 	ui := &UI{
 		cfg:           cfg,
 		mascotSource:  mascotSource,
+		mascotSrcW:    srcW,
+		mascotSrcH:    srcH,
 		uiEvents:      newBoundedQueue[providerEvent](64),
 		commands:      newBoundedQueue[map[string]json.RawMessage](16),
 		controlEnabled: controlMode,

@@ -63,7 +63,9 @@ type composer struct {
 type UI struct {
 	cfg                     *config
 	mascotHwnd              uintptr
-	mascotSource            []byte // premultiplied BGRA, 128x128
+	mascotSource            []byte // premultiplied BGRA, mascotSrcW x mascotSrcH
+	mascotSrcW              int
+	mascotSrcH              int
 	surface                 *surface
 	composer                *composer
 	m                       model
@@ -109,22 +111,26 @@ func (ui *UI) record(value any) {
 	}
 }
 
-func decodePNG(path string) ([]byte, error) {
+// decodePNG decodes the asset to premultiplied BGRA plus its pixel dimensions.
+// The manifest SHA-256 pins the bytes; the returned dimensions let the caller
+// cross-check them against asset.pixel_width/pixel_height.
+func decodePNG(path string) ([]byte, int, int, error) {
 	f, err := os.Open(path)
 	if err != nil {
-		return nil, fmt.Errorf("open asset: %w", err)
+		return nil, 0, 0, fmt.Errorf("open asset: %w", err)
 	}
 	defer f.Close()
 	img, err := png.Decode(f)
 	if err != nil {
-		return nil, fmt.Errorf("png decode: %w", err)
+		return nil, 0, 0, fmt.Errorf("png decode: %w", err)
 	}
-	if img.Bounds().Dx() != 128 || img.Bounds().Dy() != 128 {
-		return nil, errors.New("asset pixel size mismatch")
+	w, h := img.Bounds().Dx(), img.Bounds().Dy()
+	if w <= 0 || h <= 0 {
+		return nil, 0, 0, errors.New("asset has empty extent")
 	}
 	nrgba, ok := img.(*image.NRGBA)
 	if !ok {
-		nrgba = image.NewNRGBA(image.Rect(0, 0, 128, 128))
+		nrgba = image.NewNRGBA(image.Rect(0, 0, w, h))
 		draw.Draw(nrgba, nrgba.Bounds(), img, img.Bounds().Min, draw.Src)
 	}
 	rgba := nrgba.Pix
@@ -136,10 +142,10 @@ func decodePNG(path string) ([]byte, error) {
 		premul[i+2] = byte((r*a + 127) / 255)
 		premul[i+3] = byte(a)
 	}
-	return premul, nil
+	return premul, w, h, nil
 }
 
-func newSurface(source []byte, pixels int) (*surface, error) {
+func newSurface(source []byte, srcW, srcH, pixels int) (*surface, error) {
 	screen, _, _ := procGetDC.Call(0)
 	if screen == 0 {
 		return nil, errString("GetDC failed")
@@ -175,9 +181,9 @@ func newSurface(source []byte, pixels int) (*surface, error) {
 	target := unsafe.Slice((*byte)(unsafe.Pointer(bits)), pixels*pixels*4)
 	for y := 0; y < pixels; y++ {
 		for x := 0; x < pixels; x++ {
-			sx := x * 128 / pixels
-			sy := y * 128 / pixels
-			src := (sy*128 + sx) * 4
+			sx := x * srcW / pixels
+			sy := y * srcH / pixels
+			src := (sy*srcW + sx) * 4
 			dst := (y*pixels + x) * 4
 			copy(target[dst:dst+4], source[src:src+4])
 		}
@@ -199,7 +205,7 @@ func (s *surface) destroy() {
 
 func (ui *UI) presentMascot(dpi uint32) error {
 	pixels := dip(int32(ui.cfg.manifest.Asset.LogicalWidthDip), dpi)
-	surf, err := newSurface(ui.mascotSource, int(pixels))
+	surf, err := newSurface(ui.mascotSource, ui.mascotSrcW, ui.mascotSrcH, int(pixels))
 	if err != nil {
 		return err
 	}

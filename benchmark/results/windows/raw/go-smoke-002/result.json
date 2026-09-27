@@ -1,0 +1,161 @@
+{
+  "schema": "mascot-candidate-smoke-2",
+  "utc_started": "2026-09-27T18:08:33.148566+00:00",
+  "scope": "Targeted implementation smoke, not full candidate correctness or visible timing qualification",
+  "observer_sha256": "a5e517d8c0d2f1a16530a88a36d5a80121d7ad89b46f8215e66ab0584838119a",
+  "expected_dpi": null,
+  "launch_point": [
+    4352,
+    384
+  ],
+  "status": "PASS_SMOKE_ONLY",
+  "checks": [
+    {
+      "check": "decoder:small_fragments",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:coalesced_frames",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:newline_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:utf8_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:maximum_valid",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:oversized",
+      "status": "PASS"
+    },
+    {
+      "check": "native mascot handle and lazy initial state",
+      "status": "PASS"
+    },
+    {
+      "check": "native control handles, fixed geometry and programmatic text round-trip",
+      "status": "PASS"
+    },
+    {
+      "check": "hide and no-provider shutdown",
+      "status": "PASS"
+    }
+  ],
+  "events": [],
+  "error": null,
+  "observer_dpi_context": "PER_MONITOR_AWARE_V2",
+  "fixture_version": "windows-v1.0.2",
+  "executable": "W:\\devin_folder\\mascot\\out\\go\\mascot.exe",
+  "executable_sha256": "038e0508c9d05e9f82e4273b8ac7f01234eccfa8ab639a9c80b3e2e5746385b6",
+  "initial_state": {
+    "cache_counts": {
+      "caret_draws": {
+        "reason": "native caret drawing does not surface through WM_PAINT",
+        "value": null
+      },
+      "dib_buffers": 1,
+      "provider_error": null,
+      "retained_response_utf8_bytes": 0,
+      "richedit_layout_cache_bytes": {
+        "reason": "opaque system RichEdit layout cache",
+        "value": null
+      },
+      "run_invalid": null,
+      "stderr_tail_bytes": 0,
+      "stderr_total_bytes": 0
+    },
+    "composer_hwnd": "0",
+    "composer_paints": 0,
+    "composer_visible": false,
+    "composing": false,
+    "input_hwnd": "0",
+    "last_seq": -1,
+    "mascot_hwnd": "6098340",
+    "mascot_presents": 1,
+    "pid": 28428,
+    "provider_pid": 0,
+    "provider_state": "idle",
+    "queue_capacity_frames": 64,
+    "queued_provider_frames": 0,
+    "request_count": 0,
+    "request_id": 0,
+    "response_hwnd": "0",
+    "response_utf8_bytes": 0
+  },
+  "mascot_dpi": 96,
+  "shown_state": {
+    "cache_counts": {
+      "caret_draws": {
+        "reason": "native caret drawing does not surface through WM_PAINT",
+        "value": null
+      },
+      "dib_buffers": 1,
+      "provider_error": null,
+      "retained_response_utf8_bytes": 0,
+      "richedit_layout_cache_bytes": {
+        "reason": "opaque system RichEdit layout cache",
+        "value": null
+      },
+      "run_invalid": null,
+      "stderr_tail_bytes": 0,
+      "stderr_total_bytes": 0
+    },
+    "composer_hwnd": "3346606",
+    "composer_paints": 0,
+    "composer_visible": true,
+    "composing": false,
+    "input_hwnd": "5964784",
+    "last_seq": -1,
+    "mascot_hwnd": "6098340",
+    "mascot_presents": 1,
+    "pid": 28428,
+    "provider_pid": 0,
+    "provider_state": "idle",
+    "queue_capacity_frames": 64,
+    "queued_provider_frames": 0,
+    "request_count": 0,
+    "request_id": 0,
+    "response_hwnd": "6884622",
+    "response_utf8_bytes": 0
+  },
+  "composer_geometry": {
+    "dpi": 96,
+    "client_width": 640,
+    "client_height": 480
+  },
+  "native_controls": {
+    "input": {
+      "class": "RICHEDIT50W",
+      "geometry": [
+        12,
+        12,
+        616,
+        128
+      ],
+      "font": {
+        "available": false,
+        "reason": "Control font object not queryable from observer; visual font verification still required"
+      }
+    },
+    "response": {
+      "class": "RICHEDIT50W",
+      "geometry": [
+        12,
+        152,
+        616,
+        272
+      ],
+      "font": {
+        "available": false,
+        "reason": "Control font object not queryable from observer; visual font verification still required"
+      }
+    }
+  },
+  "utc_finished": "2026-09-27T18:08:33.561481+00:00"
+}

@@ -1,0 +1,188 @@
+{
+  "schema": "mascot-results-1",
+  "fixture_version": "windows-v1.0.1",
+  "stage": "windows-a",
+  "candidates": {
+    "rust": {
+      "acceptance": {
+        "dir": "rust-acceptance-009",
+        "status": "PASS_WITH_UNTESTED",
+        "cases": {
+          "T1": "PASS",
+          "T2": "PASS",
+          "T3": "PASS",
+          "T4": "PASS",
+          "T5": "PASS",
+          "T6": "PASS",
+          "T7": "PASS",
+          "T10": "PASS",
+          "T11": "PASS",
+          "T13": "PASS",
+          "T8": "PASS",
+          "T9": "PASS",
+          "T12": "PASS",
+          "T14": "PASS",
+          "W1": "PASS",
+          "W4": "PASS",
+          "W3": "PASS",
+          "W9": "PASS",
+          "W5": "PASS",
+          "W6": "PASS",
+          "W8": "PASS",
+          "W2": "UNTESTED",
+          "W7": "UNTESTED"
+        }
+      },
+      "provider_regression": {
+        "dir": "rust-provider-002",
+        "status": "PASS_PROVIDER_REGRESSION_ONLY"
+      },
+      "smoke": {
+        "dir": "rust-smoke-008",
+        "status": "PASS_SMOKE_ONLY"
+      },
+      "source_efficiency": {
+        "source_tokens_o200k": 32933,
+        "loc": 4355,
+        "files": [
+          {
+            "file": "src/config.rs",
+            "bytes": 7184,
+            "chars": 7184,
+            "loc_nonblank_noncomment": 213,
+            "tokens": 1830,
+            "tokens_code_only": 1830,
+            "subsystem": "other_candidate_logic",
+            "functions": 7,
+            "ffi_boundary_lines": 2
+          },
+          {
+            "file": "src/control.rs",
+            "bytes": 7600,
+            "chars": 7600,
+            "loc_nonblank_noncomment": 223,
+            "tokens": 1649,
+            "tokens_code_only": 1649,
+            "subsystem": "benchmark_candidate_hooks",
+            "functions": 8,
+            "ffi_boundary_lines": 6
+          },
+          {
+            "file": "src/framing.rs",
+            "bytes": 5137,
+            "chars": 5137,
+            "loc_nonblank_noncomment": 179,
+            "tokens": 1141,
+            "tokens_code_only": 1141,
+            "subsystem": "other_candidate_logic",
+            "functions": 2,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/main.rs",
+            "bytes": 8392,
+            "chars": 8392,
+            "loc_nonblank_noncomment": 238,
+            "tokens": 1988,
+            "tokens_code_only": 1988,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 11
+          },
+          {
+            "file": "src/platform.rs",
+            "bytes": 54163,
+            "chars": 54159,
+            "loc_nonblank_noncomment": 1506,
+            "tokens": 11462,
+            "tokens_code_only": 11462,
+            "subsystem": "windowing_platform_glue",
+            "functions": 15,
+            "ffi_boundary_lines": 40
+          },
+          {
+            "file": "src/provider.rs",
+            "bytes": 54889,
+            "chars": 54889,
+            "loc_nonblank_noncomment": 1566,
+            "tokens": 11403,
+            "tokens_code_only": 11403,
+            "subsystem": "provider_process_io",
+            "functions": 19,
+            "ffi_boundary_lines": 7
+          },
+          {
+            "file": "src/queue.rs",
+            "bytes": 4567,
+            "chars": 4567,
+            "loc_nonblank_noncomment": 143,
+            "tokens": 1087,
+            "tokens_code_only": 1087,
+            "subsystem": "other_candidate_logic",
+            "functions": 2,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/text.rs",
+            "bytes": 8813,
+            "chars": 8813,
+            "loc_nonblank_noncomment": 287,
+            "tokens": 2373,
+            "tokens_code_only": 2373,
+            "subsystem": "text_ime_rendering",
+            "functions": 14,
+            "ffi_boundary_lines": 36
+          }
+        ],
+        "first_complete_tokens": 28463,
+        "churn_added": 14430,
+        "churn_removed": 9983
+      }
+    },
+    "zig": {
+      "smoke": {
+        "dir": "zig-smoke-001",
+        "status": "PASS_SMOKE_ONLY"
+      }
+    },
+    "go": {
+      "acceptance": {
+        "dir": "go-acceptance-001",
+        "status": "PASS_WITH_UNTESTED",
+        "cases": {
+          "T1": "PASS",
+          "T2": "PASS",
+          "T3": "PASS",
+          "T4": "PASS",
+          "T5": "PASS",
+          "T6": "PASS",
+          "T7": "PASS",
+          "T10": "PASS",
+          "T11": "PASS",
+          "T13": "PASS",
+          "T8": "PASS",
+          "T9": "PASS",
+          "T12": "PASS",
+          "T14": "PASS",
+          "W1": "PASS",
+          "W4": "PASS",
+          "W3": "PASS",
+          "W9": "PASS",
+          "W5": "PASS",
+          "W6": "PASS",
+          "W8": "PASS",
+          "W2": "UNTESTED",
+          "W7": "UNTESTED"
+        }
+      },
+      "provider_regression": {
+        "dir": "go-provider-001",
+        "status": "PASS_PROVIDER_REGRESSION_ONLY"
+      },
+      "smoke": {
+        "dir": "go-smoke-001",
+        "status": "PASS_SMOKE_ONLY"
+      }
+    }
+  }
+}

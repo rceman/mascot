@@ -1,0 +1,45 @@
+{
+  "schema": "mascot-candidate-smoke-2",
+  "utc_started": "2026-09-27T18:00:58.316058+00:00",
+  "scope": "Targeted implementation smoke, not full candidate correctness or visible timing qualification",
+  "observer_sha256": "a5e517d8c0d2f1a16530a88a36d5a80121d7ad89b46f8215e66ab0584838119a",
+  "expected_dpi": null,
+  "launch_point": [
+    4352,
+    384
+  ],
+  "status": "FAIL",
+  "checks": [
+    {
+      "check": "decoder:small_fragments",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:coalesced_frames",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:newline_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:utf8_boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:maximum_valid",
+      "status": "PASS"
+    },
+    {
+      "check": "decoder:oversized",
+      "status": "PASS"
+    }
+  ],
+  "events": [],
+  "error": "AssertionError('Application stdout ended before reply')",
+  "observer_dpi_context": "PER_MONITOR_AWARE_V2",
+  "fixture_version": "windows-v1.0.2",
+  "executable": "W:\\devin_folder\\mascot\\out\\rust\\mascot.exe",
+  "executable_sha256": "9e5542c70aa95f8511130289335041f22ba7b9d65898c3154b261b96c3b12110",
+  "utc_finished": "2026-09-27T18:00:58.443029+00:00"
+}

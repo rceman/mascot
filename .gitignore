@@ -3,4 +3,5 @@
 /zig/zig-out/
 /go/bin/
 /out/
+/scratch/
 **/__pycache__/

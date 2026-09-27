@@ -188,8 +188,9 @@ func materialize(root string, refresh bool) error {
 	if err := putJSON(filepath.Join(root, "decoder-vectors", "vectors.json"), makeVectors()); err != nil {
 		return err
 	}
-	asset := filepath.Join(root, "..", "assets", "provisional-mascot.png")
-	if err := drawMascot(asset); err != nil {
+	asset := filepath.Join(root, "..", "assets", "mascot.png")
+	// The approved mascot asset is user-provided; it must already exist.
+	if _, err := os.Stat(asset); err != nil {
 		return err
 	}
 	executable, err := os.Executable()
@@ -197,7 +198,7 @@ func materialize(root string, refresh bool) error {
 		return err
 	}
 	identities := make(map[string]string)
-	for _, path := range []string{"fixtures/text.json", "fixtures/chunks.json", "fixtures/response.txt", "fixtures/history.json", "decoder-vectors/vectors.json", "../assets/provisional-mascot.png", "harness/control-v1.json", "requirements-source.txt"} {
+	for _, path := range []string{"fixtures/text.json", "fixtures/chunks.json", "fixtures/response.txt", "fixtures/history.json", "decoder-vectors/vectors.json", "../assets/mascot.png", "harness/control-v1.json", "requirements-source.txt"} {
 		digest, err := hashFile(filepath.Join(root, filepath.FromSlash(path)))
 		if err != nil {
 			return err
@@ -211,7 +212,7 @@ func materialize(root string, refresh bool) error {
 	manifest := map[string]any{
 		"schema": "mascot-fixture-1", "version": fixtureVersion, "base_sha": "2f55ae825848e183a7840032782e37cbc54e641d", "files_sha256": identities,
 		"provider": map[string]any{"path": executable, "sha256": binaryHash, "arguments": []string{"provider", root}, "cwd": root, "environment": providerEnvironment(), "inherit_environment": false, "implementation": runtime.Version(), "build": "go build -trimpath -buildvcs=false -ldflags=\"-s -w -buildid=\" -o bin/fixture.exe ."},
-		"asset":    map[string]any{"status": "PROVISIONAL", "path": "../assets/provisional-mascot.png", "pixel_width": 128, "pixel_height": 128, "logical_width_dip": 64, "logical_height_dip": 64, "hit_mask": "source alpha > 0; no expansion; hit coordinates mapped to source texels at current effective DPI", "sha256": identities["../assets/provisional-mascot.png"]},
+		"asset":    map[string]any{"status": "APPROVED", "path": "../assets/mascot.png", "pixel_width": 1254, "pixel_height": 1254, "logical_width_dip": 64, "logical_height_dip": 64, "hit_mask": "source alpha > 0; no expansion; hit coordinates mapped to source texels at current effective DPI", "sha256": identities["../assets/mascot.png"]},
 		"ui":       map[string]any{"composer_client_width_dip": 640, "composer_client_height_dip": 480, "input_height_dip": 128, "response_height_dip": 272, "margin_dip": 12, "hotkey": "CTRL+ALT+SPACE", "submit": "CTRL+ENTER", "cancel": "CTRL+ALT+ESCAPE", "always_on_top": "mascot above ordinary windows, no activation merely by showing; composer activates on explicit hotkey", "input_limit_utf16_units": 4096, "response_limit_utf8_bytes": 262144, "history_messages": 4, "hide_cancels_request": false},
 		"protocol": map[string]any{"transport": "UTF-8 NDJSON", "max_stdin_frame_bytes_including_lf": frameLimit, "max_stdout_frame_bytes_including_lf": frameLimit, "oversized_frame_bytes_including_lf": frameLimit + 1, "request_extension": "optional scenario string, default normal; same persistent session accepts different scenarios", "normal_chunks": 100, "normal_interval_ms": 10, "chunk_timestamp": "emit_qpc is a zero-padded 20-character decimal QPC count captured immediately before the first physical Write containing bytes of the logical frame; fixed-width stamp copied into already serialized frame; start carries qpc_frequency", "receipt_timestamp": "QPC when LF completing a logical frame is received, before JSON decoding", "shutdown_timeout_ms": 2000, "cancel_timeout_ms": 1000, "client_response_timeout_ms": 1000, "invalid_protocol_exit_code": 64, "unexpected_exit_code": 23, "normal_exit_code": 0},
 		"scenarios": map[string]any{

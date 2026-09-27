@@ -90,7 +90,12 @@ fn set_dpi_awareness() -> Result<(), String> {
 fn run_app(manifest: &str, control: bool) -> Result<i32, String> {
     set_dpi_awareness()?;
     let config = config::load(manifest)?;
-    let mascot_source = platform::decode_png(&config.asset_path)?;
+    let (mascot_source, mascot_src_w, mascot_src_h) = platform::decode_png(&config.asset_path)?;
+    if mascot_src_w != config.manifest.asset.pixel_width
+        || mascot_src_h != config.manifest.asset.pixel_height
+    {
+        return Err("decoded asset dimensions differ from the manifest".into());
+    }
 
     let ui_events = Arc::new(queue::BoundedQueue::<provider::Event>::new(64));
     let commands = Arc::new(queue::BoundedQueue::<serde_json::Value>::new(16));
@@ -104,6 +109,8 @@ fn run_app(manifest: &str, control: bool) -> Result<i32, String> {
         config,
         mascot: std::cell::Cell::new(std::ptr::null_mut()),
         mascot_source,
+        mascot_src_w,
+        mascot_src_h,
         surface: std::cell::RefCell::new(None),
         composer: std::cell::RefCell::new(None),
         model: std::cell::RefCell::new(platform::Model {

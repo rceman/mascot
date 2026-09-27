@@ -3,24 +3,24 @@
     "hit_mask": "source alpha \u003e 0; no expansion; hit coordinates mapped to source texels at current effective DPI",
     "logical_height_dip": 64,
     "logical_width_dip": 64,
-    "path": "../assets/provisional-mascot.png",
-    "pixel_height": 128,
-    "pixel_width": 128,
-    "sha256": "3bebfc625f9af3d3a862a8f518aa5f2202e372723b9ee5a4099a942e549686e2",
-    "status": "PROVISIONAL"
+    "path": "../assets/mascot.png",
+    "pixel_height": 1254,
+    "pixel_width": 1254,
+    "sha256": "2c6e6e90aea8d3283912a46c885a763b588e526740ef9fb5a6d8ba0068ba9b37",
+    "status": "APPROVED"
   },
   "base_sha": "2f55ae825848e183a7840032782e37cbc54e641d",
   "candidate_control": "harness/control-v1.json",
   "decoder_vectors": "decoder-vectors/vectors.json",
   "files_sha256": {
-    "../assets/provisional-mascot.png": "3bebfc625f9af3d3a862a8f518aa5f2202e372723b9ee5a4099a942e549686e2",
     "decoder-vectors/vectors.json": "58f288aef52729587a42171374f152d3fdaf045b75e8104b1d60fafc9654507d",
     "fixtures/chunks.json": "146898dfbc8f875cab8a15b714d79bd9be0e4841f7de840952dc36a2edabfdc1",
     "fixtures/history.json": "1f67e4a1eeb74087efe16f5f1d8ec7fa28af31a8e95e08b68caa0abe7e168c05",
     "fixtures/response.txt": "afab2753b91d30eb9297b7afe77340f078076fa41579d68afbd5de93fb8aeb9e",
     "fixtures/text.json": "9ff1439b559aa5f26389b76576f7a2c3a9f3a975b50c83835986790863746639",
     "harness/control-v1.json": "c278ede7159d8bbf3faa8ebbd8f2c820f7f9bb4d5c66bf3e5f44d124700f7ac4",
-    "requirements-source.txt": "015f22b13fabd548033c52de1515312d9483a2796cf5d9eebabc7b7216893f8a"
+    "requirements-source.txt": "015f22b13fabd548033c52de1515312d9483a2796cf5d9eebabc7b7216893f8a",
+    "../assets/mascot.png": "2c6e6e90aea8d3283912a46c885a763b588e526740ef9fb5a6d8ba0068ba9b37"
   },
   "observer": {
     "clock": "shared Windows QPC counter/frequency; no language-specific epoch conversion",
@@ -242,5 +242,5 @@
     "response_limit_utf8_bytes": 262144,
     "submit": "CTRL+ENTER"
   },
-  "version": "windows-v1.0.1"
+  "version": "windows-v1.0.2"
 }

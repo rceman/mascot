@@ -141,8 +141,8 @@ pub fn load(manifest_arg: &str) -> Result<Config, String> {
         .ok_or_else(|| "manifest has no benchmark root".to_string())?
         .to_path_buf();
 
-    if manifest.asset.pixel_width != 128 || manifest.asset.pixel_height != 128 {
-        return Err("unsupported asset pixel size".into());
+    if manifest.asset.pixel_width == 0 || manifest.asset.pixel_height == 0 {
+        return Err("asset pixel size missing".into());
     }
     if manifest.asset.logical_width_dip != 64 || manifest.asset.logical_height_dip != 64 {
         return Err("unsupported asset logical size".into());

@@ -10,7 +10,7 @@ Status: **READY FOR CANDIDATE IMPLEMENTATION**. This is not candidate correctnes
 - The implementation branch originally started at `8d30360e88d11945361ab1f12ac7fec35ad1aa17`, then fast-forwarded to the updated planning head before implementation.
 - Frozen source/artifact commit: `378046dd624be57019b2947b377e5dde2043bbbe`.
 - Freeze-record commit: the commit introducing this file; resolve with `git log -1 --format=%H -- benchmark/FIXTURE_FREEZE.md`. A separate record commit avoids a self-referential commit hash.
-- Fixture/manifest version: `windows-v1.0.1`.
+- Fixture/manifest version: `windows-v1.0.2` (amended; see "Version history").
 - Text fixture version: `text-v1.0.0`.
 - Candidate control interface: `candidate-control-v1`.
 
@@ -20,7 +20,7 @@ All build and validation execution was native Windows. WSL was used only to stag
 
 | Artifact | SHA-256 |
 |---|---|
-| `manifest/fixture.json` | `c9c4adcc919baa2d28576f626c5ef372c2b06e638b33e99b469996b114676302` |
+| `manifest/fixture.json` | `cfdee605c3864e2cf50ed1adcf21dba96daa3a4bb4bbae1d340518ebbc0fc625` |
 | `bin/fixture.exe` | `e6a5b4d20f1c92fbb7bd48778be692b91970acc72007d6399736ef1025d5160d` |
 | `fixtures/response.txt` | `afab2753b91d30eb9297b7afe77340f078076fa41579d68afbd5de93fb8aeb9e` |
 | `fixtures/chunks.json` | `146898dfbc8f875cab8a15b714d79bd9be0e4841f7de840952dc36a2edabfdc1` |
@@ -29,9 +29,9 @@ All build and validation execution was native Windows. WSL was used only to stag
 | `decoder-vectors/vectors.json` | `58f288aef52729587a42171374f152d3fdaf045b75e8104b1d60fafc9654507d` |
 | `harness/control-v1.json` | `c278ede7159d8bbf3faa8ebbd8f2c820f7f9bb4d5c66bf3e5f44d124700f7ac4` |
 | `requirements-source.txt` | `015f22b13fabd548033c52de1515312d9483a2796cf5d9eebabc7b7216893f8a` |
-| `../assets/provisional-mascot.png` | `3bebfc625f9af3d3a862a8f518aa5f2202e372723b9ee5a4099a942e549686e2` |
+| `../assets/mascot.png` | `2c6e6e90aea8d3283912a46c885a763b588e526740ef9fb5a6d8ba0068ba9b37` |
 
-The manifest freezes provider path/arguments/cwd, an explicit eight-key environment without inheritance, 100 normal chunks, the chunk-49 cancellation barrier, 1,000 ms cancellation and 2,000 ms shutdown/reap deadlines, physical write plans, exact frame sizes, terminal events, and recovery rules. The provisional asset is 128 by 128 RGBA pixels at 64 by 64 logical pixels, with source alpha greater than zero as the hit mask and no expansion. The task-specific provisional-asset override was explicitly approved.
+The manifest freezes provider path/arguments/cwd, an explicit eight-key environment without inheritance, 100 normal chunks, the chunk-49 cancellation barrier, 1,000 ms cancellation and 2,000 ms shutdown/reap deadlines, physical write plans, exact frame sizes, terminal events, and recovery rules. The approved asset is 1254 by 1254 RGBA pixels at 64 by 64 logical pixels, with source alpha greater than zero as the hit mask and no expansion.
 
 UI dimensions, font/fallback policy, fixed history, F1-F10 strings/actions, keyboard shortcuts, IME identity, no permitted native variations, bounded input/response sizes, common control hooks, the six balanced order permutations and required sample counts are frozen in the manifest and referenced files.
 
@@ -92,3 +92,8 @@ The common native process/QPC foundation and result/inventory/resource schemas a
 Post-reboot measurements require genuine boots and user coordination; no reboot is automatic. Missing or infeasible observations must remain explicitly unavailable, not be manufactured from ordinary launches.
 
 Any later change to fixture semantics, assets, text/actions, provider executable/environment, timeouts or decoder vectors requires a new fixture version and rerunning affected candidate checks/results. Preserve old raw run IDs. Do not regenerate or silently edit this frozen version to fit a candidate.
+
+## Version history
+
+- `windows-v1.0.1` (freeze commits `378046dd` / `49d20a2`): initial freeze with a task-approved PROVISIONAL generated mascot (`../assets/provisional-mascot.png`, 128x128).
+- `windows-v1.0.2`: the user supplied and approved the real mascot image. Asset identity only changed: `../assets/mascot.png`, 1254x1254 RGBA, SHA-256 `2c6e6e90aea8d3283912a46c885a763b588e526740ef9fb5a6d8ba0068ba9b37`, status `APPROVED`, same 64x64 logical DIP window and the same alpha>0 texel hit-mask policy. Protocol, text fixture, scenarios, deadlines, environment and schedule are unchanged. Because asset bytes and version moved, all candidate asset decode/hit-test/resample paths were made dimension-generic and every candidate gate (smoke, provider regression, acceptance) was re-run against v1.0.2. Earlier v1.0.1 raw runs remain preserved under their original run IDs and are superseded by the v1.0.2 evidence.

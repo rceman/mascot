@@ -1,0 +1,116 @@
+{"sent_qpc": "9599491322587", "command": {"token": 1, "command": "state"}}
+{"sent_qpc": "9599491876279", "command": {"token": 2, "command": "state"}}
+{"sent_qpc": "9599491878536", "command": {"token": 3, "command": "show"}}
+{"sent_qpc": "9599492397795", "command": {"token": 4, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599492441133", "command": {"token": 5, "command": "scenario", "name": "normal"}}
+{"sent_qpc": "9599492446389", "command": {"token": 6, "command": "submit"}}
+{"sent_qpc": "9599503005751", "command": {"token": 7, "command": "state"}}
+{"sent_qpc": "9599503024065", "command": {"token": 8, "command": "text"}}
+{"sent_qpc": "9599503217697", "command": {"token": 9, "command": "state"}}
+{"sent_qpc": "9599503370890", "command": {"token": 10, "command": "show"}}
+{"sent_qpc": "9599503377231", "command": {"token": 11, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599503395567", "command": {"token": 12, "command": "scenario", "name": "normal"}}
+{"sent_qpc": "9599503403148", "command": {"token": 13, "command": "submit"}}
+{"sent_qpc": "9599513705359", "command": {"token": 14, "command": "state"}}
+{"sent_qpc": "9599513723325", "command": {"token": 15, "command": "text"}}
+{"sent_qpc": "9599513832618", "command": {"token": 16, "command": "state"}}
+{"sent_qpc": "9599513835401", "command": {"token": 17, "command": "show"}}
+{"sent_qpc": "9599513841397", "command": {"token": 18, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599513859325", "command": {"token": 19, "command": "scenario", "name": "fragmented"}}
+{"sent_qpc": "9599513866975", "command": {"token": 20, "command": "submit"}}
+{"sent_qpc": "9599523190850", "command": {"token": 21, "command": "state"}}
+{"sent_qpc": "9599523208560", "command": {"token": 22, "command": "text"}}
+{"sent_qpc": "9599523314983", "command": {"token": 23, "command": "state"}}
+{"sent_qpc": "9599523318102", "command": {"token": 24, "command": "show"}}
+{"sent_qpc": "9599523323527", "command": {"token": 25, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599523343893", "command": {"token": 26, "command": "scenario", "name": "client_request"}}
+{"sent_qpc": "9599523351881", "command": {"token": 27, "command": "submit"}}
+{"sent_qpc": "9599533702249", "command": {"token": 28, "command": "state"}}
+{"sent_qpc": "9599533718574", "command": {"token": 29, "command": "text"}}
+{"sent_qpc": "9599533818171", "command": {"token": 30, "command": "state"}}
+{"sent_qpc": "9599533820943", "command": {"token": 31, "command": "show"}}
+{"sent_qpc": "9599533826031", "command": {"token": 32, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599533842605", "command": {"token": 33, "command": "scenario", "name": "cancel"}}
+{"sent_qpc": "9599533849897", "command": {"token": 34, "command": "submit"}}
+{"sent_qpc": "9599538935707", "command": {"token": 35, "command": "cancel"}}
+{"sent_qpc": "9599538966089", "command": {"token": 36, "command": "state"}}
+{"sent_qpc": "9599538983661", "command": {"token": 37, "command": "text"}}
+{"sent_qpc": "9599539073981", "command": {"token": 38, "command": "state"}}
+{"sent_qpc": "9599539076830", "command": {"token": 39, "command": "show"}}
+{"sent_qpc": "9599539082083", "command": {"token": 40, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599539101032", "command": {"token": 41, "command": "scenario", "name": "normal"}}
+{"sent_qpc": "9599539109492", "command": {"token": 42, "command": "submit"}}
+{"sent_qpc": "9599549362616", "command": {"token": 43, "command": "state"}}
+{"sent_qpc": "9599549380834", "command": {"token": 44, "command": "text"}}
+{"sent_qpc": "9599549470705", "command": {"token": 45, "command": "state"}}
+{"sent_qpc": "9599549474105", "command": {"token": 46, "command": "show"}}
+{"sent_qpc": "9599549479095", "command": {"token": 47, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599549493256", "command": {"token": 48, "command": "scenario", "name": "stderr"}}
+{"sent_qpc": "9599549499858", "command": {"token": 49, "command": "submit"}}
+{"sent_qpc": "9599559806336", "command": {"token": 50, "command": "state"}}
+{"sent_qpc": "9599559826680", "command": {"token": 51, "command": "text"}}
+{"sent_qpc": "9599559913425", "command": {"token": 52, "command": "state"}}
+{"sent_qpc": "9599559916772", "command": {"token": 53, "command": "show"}}
+{"sent_qpc": "9599559922196", "command": {"token": 54, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599559943320", "command": {"token": 55, "command": "scenario", "name": "backpressure"}}
+{"sent_qpc": "9599559950539", "command": {"token": 56, "command": "submit"}}
+{"sent_qpc": "9599566104890", "command": {"token": 57, "command": "state"}}
+{"sent_qpc": "9599566136068", "command": {"token": 58, "command": "text"}}
+{"sent_qpc": "9599566230188", "command": {"token": 59, "command": "state"}}
+{"sent_qpc": "9599566235284", "command": {"token": 60, "command": "show"}}
+{"sent_qpc": "9599566240410", "command": {"token": 61, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599566255581", "command": {"token": 62, "command": "scenario", "name": "maximum"}}
+{"sent_qpc": "9599566261844", "command": {"token": 63, "command": "submit"}}
+{"sent_qpc": "9599566734696", "command": {"token": 64, "command": "state"}}
+{"sent_qpc": "9599566757889", "command": {"token": 65, "command": "text"}}
+{"sent_qpc": "9599566870599", "command": {"token": 66, "command": "state"}}
+{"sent_qpc": "9599566873369", "command": {"token": 67, "command": "show"}}
+{"sent_qpc": "9599566878653", "command": {"token": 68, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599566892548", "command": {"token": 69, "command": "scenario", "name": "normal"}}
+{"sent_qpc": "9599566898993", "command": {"token": 70, "command": "submit"}}
+{"sent_qpc": "9599566919269", "command": {"token": 71, "command": "hide"}}
+{"sent_qpc": "9599577176514", "command": {"token": 72, "command": "state"}}
+{"sent_qpc": "9599577193335", "command": {"token": 73, "command": "text"}}
+{"sent_qpc": "9599577202948", "command": {"token": 74, "command": "show"}}
+{"sent_qpc": "9599577353850", "command": {"token": 75, "command": "text"}}
+{"sent_qpc": "9599577468902", "command": {"token": 76, "command": "state"}}
+{"sent_qpc": "9599577473593", "command": {"token": 77, "command": "show"}}
+{"sent_qpc": "9599577480113", "command": {"token": 78, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599577507339", "command": {"token": 79, "command": "scenario", "name": "cancel"}}
+{"sent_qpc": "9599577517677", "command": {"token": 80, "command": "submit"}}
+{"sent_qpc": "9599577549044", "command": {"token": 81, "command": "hide"}}
+{"sent_qpc": "9599582605920", "command": {"token": 82, "command": "cancel"}}
+{"sent_qpc": "9599582625712", "command": {"token": 83, "command": "state"}}
+{"sent_qpc": "9599582643423", "command": {"token": 84, "command": "text"}}
+{"sent_qpc": "9599582656245", "command": {"token": 85, "command": "show"}}
+{"sent_qpc": "9599582790216", "command": {"token": 86, "command": "text"}}
+{"sent_qpc": "9599582887600", "command": {"token": 87, "command": "state"}}
+{"sent_qpc": "9599582890642", "command": {"token": 88, "command": "show"}}
+{"sent_qpc": "9599582896184", "command": {"token": 89, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599582920880", "command": {"token": 90, "command": "scenario", "name": "unexpected_exit"}}
+{"sent_qpc": "9599582931121", "command": {"token": 91, "command": "submit"}}
+{"sent_qpc": "9599583647522", "command": {"token": 92, "command": "state"}}
+{"sent_qpc": "9599583661376", "command": {"token": 93, "command": "text"}}
+{"sent_qpc": "9599583762676", "command": {"token": 94, "command": "state"}}
+{"sent_qpc": "9599583765312", "command": {"token": 95, "command": "show"}}
+{"sent_qpc": "9599583770507", "command": {"token": 96, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599583787265", "command": {"token": 97, "command": "scenario", "name": "normal"}}
+{"sent_qpc": "9599583795289", "command": {"token": 98, "command": "submit"}}
+{"sent_qpc": "9599594310687", "command": {"token": 99, "command": "state"}}
+{"sent_qpc": "9599594328112", "command": {"token": 100, "command": "text"}}
+{"sent_qpc": "9599594509246", "command": {"token": 101, "command": "state"}}
+{"sent_qpc": "9599594513020", "command": {"token": 102, "command": "show"}}
+{"sent_qpc": "9599594517854", "command": {"token": 103, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599594535204", "command": {"token": 104, "command": "scenario", "name": "oversized"}}
+{"sent_qpc": "9599594542761", "command": {"token": 105, "command": "submit"}}
+{"sent_qpc": "9599594562380", "command": {"token": 106, "command": "state"}}
+{"sent_qpc": "9599594578948", "command": {"token": 107, "command": "text"}}
+{"sent_qpc": "9599595584500", "command": {"token": 108, "command": "state"}}
+{"sent_qpc": "9599595780039", "command": {"token": 109, "command": "state"}}
+{"sent_qpc": "9599595783733", "command": {"token": 110, "command": "show"}}
+{"sent_qpc": "9599595789080", "command": {"token": 111, "command": "set_text", "text": "first line\nĀrā līst\nПроверка\n👨‍💻"}}
+{"sent_qpc": "9599595804262", "command": {"token": 112, "command": "scenario", "name": "normal"}}
+{"sent_qpc": "9599595810886", "command": {"token": 113, "command": "submit"}}
+{"sent_qpc": "9599606331380", "command": {"token": 114, "command": "state"}}
+{"sent_qpc": "9599606349573", "command": {"token": 115, "command": "text"}}
+{"sent_qpc": "9599606560818", "command": {"token": 116, "command": "shutdown"}}

@@ -117,8 +117,8 @@ func loadConfig(manifestArg string) (*config, error) {
 		return nil, errors.New("manifest has no benchmark root")
 	}
 
-	if m.Asset.PixelWidth != 128 || m.Asset.PixelHeight != 128 {
-		return nil, errors.New("unsupported asset pixel size")
+	if m.Asset.PixelWidth == 0 || m.Asset.PixelHeight == 0 {
+		return nil, errors.New("asset pixel size missing")
 	}
 	if m.Asset.LogicalWidthDip != 64 || m.Asset.LogicalHeightDip != 64 {
 		return nil, errors.New("unsupported asset logical size")
