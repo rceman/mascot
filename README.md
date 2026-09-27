@@ -2,14 +2,15 @@
 
 Experimental native desktop-agent shell benchmark.
 
-This planning repository will contain two independently implemented candidates for the same narrow benchmark:
+This planning repository will contain three independently implemented candidates for the same narrow benchmark:
 
-- `rust/`
-- `zig/`
+- Rust
+- Zig
+- Go
 
 The goal is to answer one concrete engineering question:
 
-> For an ultra-low-memory, ultra-low-latency native desktop agent shell, which realistic implementation stack gives us the better foundation: Rust or Zig?
+> For an ultra-low-memory, ultra-low-latency native desktop agent shell, which realistic implementation stack gives us the best foundation: Rust, Zig, or Go?
 
 This is not an IDE benchmark and not a theoretical language shootout.
 
@@ -30,15 +31,22 @@ The benchmark deliberately excludes most of that.
 
 ## Current stage
 
-**Planning only. No implementation should start until the revised experiment design passes review.**
+**Planning only. No candidate implementation should start until the common fixture/harness is frozen and the revised experiment design passes final review.**
 
 Canonical documents:
 
-- [Prototype plan](docs/PROTOTYPE_PLAN.md)
-- [Benchmark protocol](docs/BENCHMARK_PROTOCOL.md)
-- [Shared correctness matrix](docs/ACCEPTANCE_MATRIX.md)
-- [Mock provider contract](docs/MOCK_PROVIDER_CONTRACT.md)
-- [Astra review prompt](docs/ASTRA_REVIEW_PROMPT.md)
+- Prototype plan: docs/PROTOTYPE_PLAN.md
+- Benchmark protocol: docs/BENCHMARK_PROTOCOL.md
+- Shared correctness matrix: docs/ACCEPTANCE_MATRIX.md
+- Shared text/visual fixtures: docs/TEXT_FIXTURES.md
+- Mock provider contract: docs/MOCK_PROVIDER_CONTRACT.md
+- Astra review prompt: docs/ASTRA_REVIEW_PROMPT.md
+
+Candidate directories:
+
+- rust/
+- zig/
+- go/
 
 ## Decision gates
 
@@ -58,4 +66,4 @@ The benchmark does not predict the complete future product's eventual resource u
 
 No terminal, diff viewer, code viewer, project tree, browser runtime, Electron, Chromium, WebView, Tauri frontend, cloud sync, RepoSuite, browser automation, screenshots, voice, or local AI model.
 
-The first decision is narrower: can we build a tiny, correct native shell with a transparent mascot, real text/IME input, global hotkey and structured streamed agent-style I/O while keeping memory and latency extremely low?
+The first decision is narrower: can we build a tiny, correct native shell with a transparent mascot, real text/IME input, correct response rendering, global hotkey, and structured streamed agent-style I/O while keeping memory and latency extremely low?
