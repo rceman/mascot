@@ -331,44 +331,54 @@ def sample_row(sampler, candidate_state=None):
     return row
 
 
+def base_result(candidate_name):
+    return {"schema": "mascot-benchmark-1", "candidate": candidate_name,
+            "utc_started": datetime.now(timezone.utc).isoformat(),
+            "observer": {"procedure": "screen-region pixel diff >=64 px, "
+                         "polled ~10ms + injected-text input-readiness probe",
+                         "resolution_ms": RegionObserver.RESOLUTION_MS,
+                         "uncertainty": ">= one poll interval (~10 ms); "
+                         "differences below this are not decisive"},
+            "fresh_launches": [], "warm_activations": {},
+            "resource_states": {}, "stability": {}, "process_inventory": [],
+            "errors": []}
+
+
+def fresh_launch_once(executable, manifest_path, output, native, launch_point,
+                      index, result):
+    run_dir = output / f"launch-{index:03d}"
+    run_dir.mkdir()
+    holder = {"event_observations": [], "provider_lifetimes": []}
+    try:
+        candidate, timing = launch_candidate(executable, manifest_path, run_dir,
+                                             native, holder, launch_point)
+        timing["candidate_state_pid"] = candidate.process.pid
+        result["fresh_launches"].append(timing)
+        token, _ = candidate.send("shutdown")
+        try:
+            candidate.reply(token, timeout=5)
+        except Exception:
+            pass
+        candidate.process.wait(timeout=5)
+    except Exception as error:
+        result["fresh_launches"].append({"index": index, "error": repr(error)})
+        result["errors"].append(f"launch {index}: {error!r}")
+
+
 def run_candidate_benchmarks(executable, manifest_path, output, candidate_name,
-                             launch_point, config):
-    """Full per-candidate run. Returns the raw result dict (one result.json)."""
+                             launch_point, config, skip_fresh=False):
+    """Per-candidate session phase. Returns the raw result dict."""
     native = regression.Native()
     native.user.SetThreadDpiAwarenessContext(ctypes.c_void_p(-4))
     ui = acceptance.UiAutomation()
-    result = {"schema": "mascot-benchmark-1", "candidate": candidate_name,
-              "utc_started": datetime.now(timezone.utc).isoformat(),
-              "observer": {"procedure": "screen-region pixel diff >=64 px, "
-                           "polled ~10ms + injected-text input-readiness probe",
-                           "resolution_ms": RegionObserver.RESOLUTION_MS,
-                           "uncertainty": ">= one poll interval (~10 ms); "
-                           "differences below this are not decisive"},
-              "fresh_launches": [], "warm_activations": {},
-              "resource_states": {}, "stability": {}, "process_inventory": [],
-              "errors": []}
+    result = base_result(candidate_name)
     output.mkdir(parents=True)
 
     # ---------- Fresh-process startups (warm OS cache) ----------
-    n_fresh = config["fresh_launches"]
-    for index in range(n_fresh):
-        run_dir = output / f"launch-{index:03d}"
-        run_dir.mkdir()
-        holder = {"event_observations": [], "provider_lifetimes": []}
-        try:
-            candidate, timing = launch_candidate(executable, manifest_path, run_dir,
-                                                 native, holder, launch_point)
-            timing["candidate_state_pid"] = candidate.process.pid
-            result["fresh_launches"].append(timing)
-            token, _ = candidate.send("shutdown")
-            try:
-                candidate.reply(token, timeout=5)
-            except Exception:
-                pass
-            candidate.process.wait(timeout=5)
-        except Exception as error:
-            result["fresh_launches"].append({"index": index, "error": repr(error)})
-            result["errors"].append(f"launch {index}: {error!r}")
+    if not skip_fresh:
+        for index in range(config["fresh_launches"]):
+            fresh_launch_once(executable, manifest_path, output, native,
+                              launch_point, index, result)
 
     # ---------- Activation + resource states in one process ----------
     run_dir = output / "session"
@@ -523,19 +533,59 @@ def run_candidate_benchmarks(executable, manifest_path, output, candidate_name,
             "mascot_presents_delta": (after_r6.get("presents") or 0) -
                                      (before_r6.get("presents") or 0)}
 
-        # Stability: 3 batches x 100 ops, sample every 10, fixed+varying content
+        # Stability §7: three successive batches of 100 ops per operation
+        # type (open/close, submit/complete, cancellation); sample every 10;
+        # fixed content vs bounded-varying content alternating by batch.
+        def op_open_close(op, batch):
+            candidate.call("set_text",
+                           text="fixed stability text" if batch != 1
+                           else f"stability op {op} batch {batch}")
+            candidate.call("show")
+            candidate.call("hide")
+
+        def op_submit(op, batch):
+            candidate.call("set_text",
+                           text="fixed stability text" if batch != 1
+                           else f"stability op {op} batch {batch}")
+            candidate.call("scenario", name="normal")
+            marker = len(candidate.events)
+            candidate.call("submit")
+            candidate.wait(lambda: any(e.get("event") == "terminal"
+                                       for e in candidate.events[marker:]),
+                           timeout=15)
+
+        def op_cancel(op, batch):
+            candidate.call("set_text",
+                           text="fixed stability text" if batch != 1
+                           else f"stability op {op} batch {batch}")
+            candidate.call("scenario", name="cancel")
+            marker = len(candidate.events)
+            candidate.call("submit")
+            candidate.wait(lambda: any(e.get("event") == "chunk_accepted"
+                                       and e.get("seq") == 49
+                                       for e in candidate.events[marker:]),
+                           timeout=15)
+            candidate.call("cancel")
+            candidate.wait(lambda: any(e.get("event") == "terminal"
+                                       for e in candidate.events[marker:]),
+                           timeout=15)
+
         stability = {"batches": []}
-        for batch in range(3):
-            rows = []
-            for op in range(100):
-                if op % 10 == 0:
-                    rows.append({"op": op, **sample_row(sampler, state())})
-                candidate.call("set_text", text=f"stability op {op} batch {batch}"
-                                          if batch == 1 else "fixed stability text")
-                candidate.call("show")
-                candidate.call("hide")
-            rows.append({"op": 100, **sample_row(sampler, state())})
-            stability["batches"].append(rows)
+        for kind, op_fn in (("open_close", op_open_close),
+                            ("submit_complete", op_submit),
+                            ("cancel", op_cancel)):
+            for batch in range(3):
+                rows = []
+                for op in range(100):
+                    if op % 10 == 0:
+                        rows.append({"op": op, **sample_row(sampler, state())})
+                    op_fn(op, batch)
+                rows.append({"op": 100, **sample_row(sampler, state())})
+                stability["batches"].append({"operation": kind,
+                                             "batch": batch,
+                                             "content": "varying" if batch == 1
+                                                        else "fixed",
+                                             "samples": rows})
         result["stability"] = stability
 
         # Process inventory
@@ -580,10 +630,13 @@ def summarize(result):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exe", required=True, type=pathlib.Path)
+    parser.add_argument("--exe", type=pathlib.Path)
+    parser.add_argument("--exe-list", nargs="*", default=[],
+                        metavar="NAME=PATH",
+                        help="orchestrate mode: one NAME=PATH per candidate")
     parser.add_argument("--manifest", required=True, type=pathlib.Path)
     parser.add_argument("--output", required=True, type=pathlib.Path)
-    parser.add_argument("--candidate", required=True)
+    parser.add_argument("--candidate")
     parser.add_argument("--launch-point", nargs=2, type=int, required=True,
                         metavar=("X", "Y"))
     parser.add_argument("--fresh-launches", type=int, default=30)
@@ -595,7 +648,61 @@ def main():
     parser.add_argument("--r6-s", type=float, default=600.0)
     parser.add_argument("--quick", action="store_true",
                         help="Diagnostic pass: 3 launches, 6 warm reps, 5 s settles")
+    parser.add_argument("--orchestrate", action="store_true",
+                        help="Balanced all-candidate run; --exe repeated as NAME=PATH")
     args = parser.parse_args()
+
+    if args.orchestrate:
+        # exe args carry NAME=PATH pairs; runs interleaved fresh launches in
+        # manifest balanced_blocks order, then each candidate's session phase.
+        require(not args.output.exists(), "Refusing to overwrite evidence directory")
+        args.output.mkdir(parents=True)
+        manifest = load(args.manifest)
+        blocks = manifest["schedule"]["balanced_blocks"]
+        native = regression.Native()
+        native.user.SetThreadDpiAwarenessContext(ctypes.c_void_p(-4))
+        candidates = {}
+        for spec in args.exe_list:
+            name, _, path = spec.partition("=")
+            path = pathlib.Path(path).resolve()
+            out = args.output / name
+            out.mkdir(parents=True)
+            candidates[name] = {"exe": path, "output": out,
+                                "result": base_result(name)}
+        n = 3 if args.quick else args.fresh_launches
+        orders = []
+        for rep in range(n):
+            order = blocks[rep % len(blocks)]
+            orders.append(order)
+            for name in order:
+                if name in candidates:
+                    fresh_launch_once(candidates[name]["exe"], args.manifest,
+                                      candidates[name]["output"], native,
+                                      tuple(args.launch_point), rep,
+                                      candidates[name]["result"])
+        config = {"fresh_launches": n, "lifetimes": args.lifetimes,
+                  "warm_reps": 6 if args.quick else args.warm_reps,
+                  "settle_s": 5.0 if args.quick else args.settle_s,
+                  "collect_s": 10.0 if args.quick else args.collect_s,
+                  "r6_s": 30.0 if args.quick else args.r6_s,
+                  "balanced_launch_order": orders}
+        for name, entry in candidates.items():
+            session_result = run_candidate_benchmarks(
+                entry["exe"], args.manifest, entry["output"] / "session-run",
+                name, tuple(args.launch_point), config, skip_fresh=True)
+            entry["result"].update({k: v for k, v in session_result.items()
+                                    if k != "fresh_launches"})
+            entry["result"]["fresh_launch_order"] = orders
+            entry["result"]["config"] = config
+            (entry["output"] / "result.json").write_text(
+                json.dumps(entry["result"], indent=2) + "\n",
+                encoding="utf-8", newline="\n")
+        print(json.dumps({name: summarize(entry["result"])
+                          for name, entry in candidates.items()}))
+        return
+
+    require(args.exe is not None and args.candidate is not None,
+            "--exe and --candidate required for single-candidate mode")
     require(args.output.parent.exists(), "Output parent missing")
     require(not args.output.exists(), "Refusing to overwrite evidence directory")
     config = {"fresh_launches": 3 if args.quick else args.fresh_launches,

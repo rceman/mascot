@@ -1,0 +1,25 @@
+{
+  "schema": "mascot-native-command-record-1",
+  "scope": "Build/debug command evidence; not candidate runtime benchmark data",
+  "utc_started": "2026-09-27T17:00:19.614560+00:00",
+  "argv": [
+    "go",
+    "test",
+    "./..."
+  ],
+  "cwd": "W:\\devin_folder\\mascot\\go",
+  "environment_overrides": {
+    "GOTOOLCHAIN": "local",
+    "CGO_ENABLED": "0"
+  },
+  "clock": "Windows QueryPerformanceCounter",
+  "qpc_frequency": 10000000,
+  "exit_code": 0,
+  "launch_error": null,
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "qpc_start": "9556437638602",
+  "qpc_end": "9556443220910",
+  "elapsed_ms": 558.2308,
+  "utc_finished": "2026-09-27T17:00:20.172820+00:00"
+}
