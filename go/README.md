@@ -30,7 +30,7 @@ Before coding, create ARCHITECTURE.md and explain:
 - hotkeys/focus behavior
 - cache and queue bounds
 - Go runtime/GC strategy
-- GOGC and GOMEMLIMIT policy
+- GOMAXPROCS, GOGC, and GOMEMLIMIT policy
 - cgo usage
 - native allocation ownership
 - application/helper process inventory
