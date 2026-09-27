@@ -490,7 +490,31 @@ Do not exclude candidate adapter memory merely because the external Codex proces
 
 Devin ACP is not required before final selection unless a specific uncovered ACP obligation is identified.
 
-## 17. Result table
+## 17. Agent/source efficiency
+
+A separate normative protocol measures source-code/token economy and agent implementation friction:
+
+- docs/AGENT_SOURCE_EFFICIENCY.md
+
+This comparison is required for the Windows report after all correctness-eligible candidates are implemented.
+
+At minimum record:
+
+- handwritten source bytes
+- nonblank/noncomment LOC
+- frozen-tokenizer source token count
+- source tokens by major subsystem
+- first-complete versus correctness-ready token totals
+- focused correction token churn
+- structural stack changes
+- build/debug friction
+- native/FFI bridge surface
+
+The primary LLM-context proxy uses the tokenizer frozen by that protocol. It is a model-context proxy, not a universal property of the language.
+
+Do not let token counting change candidate architecture, formatting, or correctness requirements.
+
+## 18. Result table
 
 Fill only after candidate correctness eligibility is known.
 
@@ -526,5 +550,8 @@ Fill only after candidate correctness eligibility is known.
 | Handwritten LOC | TBD | TBD | TBD | |
 | Platform-specific LOC | TBD | TBD | TBD | |
 | Project-owned workarounds | TBD | TBD | TBD | |
+| Handwritten source tokens | TBD | TBD | TBD | frozen tokenizer |
+| Focused-correction token churn | TBD | TBD | TBD | candidate-owned source |
+| Structural stack changes | TBD | TBD | TBD | |
 
-Do not reduce the decision to a single weighted score.
+Do not reduce the decision to a single weighted score. Runtime results and agent/source-efficiency results must remain separately visible before any overall engineering conclusion.
