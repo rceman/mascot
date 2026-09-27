@@ -38,6 +38,7 @@ Read these files in full before coding:
 - rust/README.md
 - zig/README.md
 - go/README.md
+- docs/AGENT_SOURCE_EFFICIENCY.md
 
 These documents are normative.
 
@@ -58,8 +59,9 @@ Execute in this order:
 9. Correct only candidate-specific defects needed to reach equivalent correctness.
 10. Run the Windows benchmark with balanced candidate order.
 11. Run stability/resource-growth scenarios.
-12. Produce raw results and a factual comparison report.
-13. Commit all work and leave the branch clean.
+12. Measure agent/source efficiency and source-code token economy using the frozen protocol.
+13. Produce raw results and a factual comparison report.
+14. Commit all work and leave the branch clean.
 
 Do not skip directly to candidate implementation before the fixture/harness freeze.
 
@@ -467,7 +469,44 @@ Do not combine best memory from one configuration with best latency from another
 
 ---
 
-# Phase 11 — Comparison report
+# Phase 11 — Agent/source efficiency
+
+Follow:
+
+    docs/AGENT_SOURCE_EFFICIENCY.md
+
+After all three candidates are correctness-ready, measure source economy and implementation/rework evidence without modifying candidate code to game the metric.
+
+Required minimum outputs:
+
+    benchmark/results/windows/source-efficiency.json
+    benchmark/results/windows/source-efficiency.md
+
+Use the frozen tokenizer specified by the protocol for all three candidates.
+
+Record at minimum:
+
+- handwritten source bytes
+- nonblank/noncomment LOC
+- total handwritten source tokens
+- source tokens by major subsystem where boundaries are clear
+- first-complete implementation token total
+- correctness-ready final token total
+- focused-correction token churn
+- focused correction commits
+- structural stack/dependency changes
+- source file count
+- native/FFI bridge boundaries
+- project-owned workarounds
+- clean and incremental build times
+
+Do not fabricate model-side prompt/completion token usage. Record it only if the agent runtime exposes trustworthy per-phase usage.
+
+Preserve implementation history needed to calculate rework; do not squash away evidence before this report is generated.
+
+---
+
+# Phase 12 — Comparison report
 
 Create:
 
@@ -488,6 +527,9 @@ It must discuss:
 - debugging friction
 - build complexity
 - notable runtime/GC behavior
+- source-code token economy
+- agent correction/rework evidence
+- concrete build/debug friction
 - workarounds/hacks
 
 Do **not** hide a candidate's engineering complexity just because its benchmark number is good.
@@ -535,7 +577,8 @@ Suggested commits:
 5. correctness fixes
 6. benchmark tooling qualification
 7. Windows benchmark results
-8. comparison report
+8. agent/source efficiency report
+9. comparison report
 
 Do not rewrite published benchmark evidence after the fact. If a rerun is required, create a new result run/version and explain why.
 
@@ -555,13 +598,14 @@ Return:
 6. Zig architecture/build/result summary
 7. Go architecture/build/result summary
 8. correctness matrix status
-9. benchmark run IDs
-10. result table
-11. comparison report path
-12. unresolved Windows issues
-13. blockers for later macOS validation
-14. exact commits created
-15. clean-worktree confirmation
+10. benchmark run IDs
+11. runtime result table
+12. agent/source-efficiency result table
+13. comparison report path
+14. unresolved Windows issues
+15. blockers for later macOS validation
+16. exact commits created
+17. clean-worktree confirmation
 
 End with exactly one of:
 
