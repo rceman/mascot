@@ -69,6 +69,30 @@ Do not skip directly to candidate implementation before the fixture/harness free
 
 # Phase 0 — Windows preflight
 
+## Unattended dependency-install authorization
+
+For this task, the agent is authorized to install missing **non-destructive development prerequisites** needed to build and benchmark the three candidates without asking again, including:
+
+- Rust toolchain / rustup components
+- Zig toolchain
+- Go toolchain
+- MSVC Build Tools / Windows SDK components
+- C/C++ build helpers required by chosen native dependencies
+- package-manager dependencies required by the frozen harness or candidate builds
+
+Rules:
+
+- prefer official installers/package managers and pinned or documented versions
+- record every installation/version in preflight metadata
+- do not install Electron/Chromium/WebView/Node as application/runtime dependencies
+- do not change security policy, disable antivirus, alter boot configuration, or make unrelated system changes
+- do not reboot automatically
+- if an installer requires an interactive UAC prompt that cannot be completed unattended, or a reboot is genuinely required, pause and report exactly what is needed
+- do not remove existing toolchains/software unless explicitly required and approved
+- virtual-display-driver installation and Microsoft Japanese IME installation are already approved for this task
+
+After the environment is ready, continue without requesting confirmation for ordinary source dependencies/build tools covered above.
+
 Record:
 
 - Windows version/build
