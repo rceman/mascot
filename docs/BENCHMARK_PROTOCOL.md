@@ -1,26 +1,31 @@
-# Benchmark Protocol v0.2
+# Benchmark Protocol v0.3
 
-This protocol keeps the Rust and Zig comparison repeatable and prevents artificial wins from different accounting or lifecycle choices.
+This protocol keeps the Rust, Zig, and Go comparison repeatable and prevents artificial wins from different accounting, lifecycle, runtime, or presentation choices.
 
 ## 1. General rules
 
 - Benchmark release/optimized builds only.
 - Do not attach debugger/profiler during headline measurements.
 - Run native Windows executables for Stage A; do not benchmark via WSLg.
-- Benchmark both candidates from equivalent Windows-native deployment locations.
+- Benchmark all candidates from equivalent Windows-native deployment locations.
 - Record OS build, CPU, RAM, power mode, display topology/scaling, refresh rate, compiler/toolchain versions, and commit SHA.
-- Run both candidates on the same machine under the same display configuration.
-- Alternate candidate order in balanced A/B blocks.
+- Run all candidates on the same machine under the same display configuration.
+- Alternate candidate order in balanced blocks.
 - Report raw per-run data and distributions; do not report only a composite score.
 - The common provider fixture and measurement tools are excluded from application totals. Candidate-specific helpers are not excluded.
+- Candidate-specific runtime diagnostics are supplemental; OS-level process accounting remains authoritative for headline resource comparison.
 
 ## 2. Application-owned process inventory
 
-Before every benchmark run, record all application-owned processes with:
+Track the process inventory throughout the entire run, not only at startup.
+
+For every application-owned process, record:
 
 - PID
 - role
 - parent PID
+- creation timestamp
+- exit timestamp
 - whether counted in aggregate application metrics
 
 Only these may be excluded:
@@ -28,7 +33,7 @@ Only these may be excluded:
 - the byte-identical shared mock-provider fixture
 - measurement/instrumentation processes
 
-Any candidate-specific worker, helper, renderer service, bridge, or broker is part of that candidate's application cost.
+Any candidate-specific worker, helper, renderer service, bridge, broker, crash handler, or runtime helper process is part of that candidate's application cost from birth to exit.
 
 ## 3. Required Windows metrics
 
@@ -37,7 +42,8 @@ Mandatory where the OS exposes them:
 - private working set
 - private bytes / private commit
 - total working set
-- process/thread count
+- process count
+- thread count
 - kernel handle count
 - USER object count
 - GDI object count
@@ -57,21 +63,31 @@ If graphics APIs allocate process-attributable GPU memory, report it separately.
 
 ### Memory target metric
 
-The existing 20/50/80 MiB target bands refer to **aggregate application-owned private working set on Windows**.
+The 20/50/80 MiB target bands refer to **aggregate application-owned private working set on Windows**.
 
 Private commit and active peaks are mandatory companion metrics and must never be collapsed into the same column.
 
-## 4. Timing definitions
+## 4. Common timing and observer contract
 
-### 4.1 Fresh-process startup with warm OS caches
+Before collecting headline latency data, qualify one common benchmark observer procedure and freeze it in the benchmark manifest.
 
-Start time:
+### 4.1 Hotkey origin
 
-- external benchmark harness issues the process launch request
+The headline hotkey origin is the external harness input-injection/observation point, not the application's registered-hotkey callback.
 
-End time:
+For Windows Stage A, the harness timestamps immediately before the shared hotkey injection call.
 
-- first mascot frame is visibly presented
+The same injection path is used for all candidates.
+
+### 4.2 Fresh-process startup with warm OS caches
+
+Start:
+
+- external harness issues the process launch request
+
+End:
+
+- first mascot frame is visibly presented according to the common visibility observer
 
 Run at least 30 times per candidate initially.
 
@@ -80,51 +96,76 @@ Report:
 - every raw sample
 - median
 - range
-- p95 only if the sample count and distribution make it useful
+- p95 only when the sample count/distribution makes it useful
 
-### 4.2 Post-reboot first launch
+### 4.3 Post-reboot first launch
 
 This is distinct from ordinary fresh-process startup.
 
 Run at least 3 post-reboot observations per candidate initially.
 
-Alternate which candidate receives the actual first launch after boot.
+Balance which candidate receives the actual first launch after boot.
 
 Report raw values and median/range. Do not present a small-sample p95 as statistically strong.
 
-### 4.3 First composer activation
+### 4.4 First composer activation
 
-In a newly launched process that has not opened the composer yet:
+In a newly launched process that has never opened the composer:
 
-global hotkey -> composer visibly presented and ready for input.
+external hotkey injection -> composer visibly presented **and input-ready**.
 
-Measure separately from subsequent warm activations.
+Measure separately from warm activation.
 
-### 4.4 Warm activation
+### 4.5 Warm activation
 
-With the process settled and the composer path already exercised:
+With the composer path already exercised:
 
-global hotkey -> composer visibly presented and ready for input.
+external hotkey injection -> composer visibly presented **and input-ready**.
 
 Run at least 100 activations distributed across at least 3 process lifetimes.
 
 Report median, p95, range, and per-process distribution.
 
-### 4.5 Stream presentation
+### 4.6 Visibility and input-readiness observer
+
+Before headline collection, the harness must document and validate one common procedure for all candidates.
+
+At minimum distinguish:
+
+- visible composer presentation
+- input readiness
+
+A valid approach may combine an external screen/compositor observation with a controlled injected text probe.
+
+Application-side redraw requests, queue submissions, or presentation API returns are diagnostic markers only unless independently correlated with visible output.
+
+Record observer resolution and uncertainty.
+
+Differences smaller than observer resolution or normal run-to-run variation must not be treated as decisive.
+
+### 4.7 Stream presentation
 
 For each logical response chunk, record:
 
 1. mock emission timestamp
 2. complete logical-frame receipt timestamp before JSON decoding
-3. first presentation containing that chunk
+3. first visible presentation containing that chunk
 
 Multiple chunks may share one presentation.
 
 Do not require one redraw per chunk.
 
-Do not label a redraw request, queue submission, or presentation API return as "visible" unless the observation method actually establishes visibility.
+Hidden-window streaming is a correctness/lifecycle case and is not included in visible-stream headline latency.
 
-### 4.6 Clock and observation contract
+### 4.8 Mock emission timestamp
+
+The mock-provider contract defines emission timestamp as:
+
+- immediately before the first physical write attempt containing any bytes of that logical frame
+
+This definition is shared by all candidates.
+
+### 4.9 Clock contract
 
 For Stage A, use a documented Windows high-resolution clock strategy compatible with QPC-derived timestamps.
 
@@ -133,11 +174,7 @@ Do not assume language-specific monotonic-clock epochs are interchangeable acros
 Use one of:
 
 - a common external measurement owner, or
-- shared QPC-derived timestamp representation with documented conversion
-
-Document the visual/presentation observation method and its timing resolution.
-
-If only application-side submission is available for a diagnostic run, label it as submission latency, not visible-presentation latency.
+- shared QPC-derived timestamps with documented conversion
 
 ## 5. CPU and idle behavior
 
@@ -176,30 +213,30 @@ Use a fixed settling period followed by a common collection window. Do not rely 
 - settle 60 s
 - collect a 30 s steady-state window
 
-Purpose: startup footprint before text/provider paths have been exercised.
+Purpose: startup footprint before text/provider paths are exercised.
 
 ### R1 — first composer open
 
 - from fresh process, open composer for the first time
 - measure active peak
 - settle 60 s
-- collect 30 s steady-state window
+- collect a 30 s steady-state window
 
-Purpose: expose lazy font/input/toolkit initialization.
+Purpose: expose lazy font/input/toolkit/runtime initialization.
 
 ### R2 — warm composer open
 
 - composer path already exercised
 - open composer
-- settle
-- collect
+- settle 60 s
+- collect a 30 s steady-state window
 
 ### R3 — warm mascot-only after use
 
 - exercise composer and provider path
 - hide composer
 - sample approximately 1 s, 10 s, and 60 s after hide
-- collect 30 s steady-state window after 60 s
+- collect a 30 s steady-state window after the 60 s point
 
 Purpose: capture what an all-day resident mascot actually retains.
 
@@ -214,7 +251,7 @@ Purpose: capture what an all-day resident mascot actually retains.
 
 - execute canonical cancellation case
 - capture active peak
-- sample post-operation at 1 s, 10 s, 60 s
+- sample post-operation at approximately 1 s, 10 s, and 60 s
 
 ### R6 — focused composer idle
 
@@ -253,33 +290,40 @@ Use both:
 1. fixed repeated content to test plateau behavior
 2. bounded varying content/request IDs to exercise cache keys and eviction
 
+The varying fixture must actually exercise declared cache limits/eviction if such caches exist.
+
 A one-time warm-up increase is acceptable if later equivalent batches plateau.
 
 Unexplained monotonic growth requires investigation.
 
 Do not force working-set trimming or benchmark-only cache purges.
 
-## 8. Mock provider fixture
+## 8. Mock provider and parser fixtures
 
-The fixture contract is normative:
+The normative provider contract is:
 
 - docs/MOCK_PROVIDER_CONTRACT.md
 
-Both candidates use the same executable and frozen manifest.
+All candidates use the same executable and frozen manifest.
 
-The benchmark must include:
+The benchmark includes:
 
 - normal deterministic streaming
-- fragmented/coalesced physical reads
+- fragmented/coalesced physical writes
+- direct decoder-fragment vectors
 - UTF-8 boundary split
 - provider-initiated client request
-- cooperative cancellation
+- cooperative cancellation barrier
 - concurrent stderr pressure
-- backpressure case
+- backpressure
 - maximum valid frame
-- oversized frame
+- oversized frame with fixed recovery
 - unexpected child exit
 - explicit shutdown/cleanup
+
+Provider write fragmentation alone is not evidence of fragmented reads.
+
+The direct decoder-fragment vectors must feed exact byte fragments to the candidate framing/UTF-8 decoder and produce evidence independent of OS pipe read boundaries.
 
 The mock remains the comparative performance workload.
 
@@ -290,11 +334,11 @@ Use equivalent:
 - mascot source image
 - logical mascot dimensions
 - composer dimensions
-- font size
-- response-area dimensions
-- four-message fixed prior-history fixture
+- response-view dimensions
+- font configuration from the frozen fixture
+- fixed four-message prior-history fixture
 - animation policy
-- monitor/scaling configuration
+- display configuration
 - focus/caret state for each measurement
 
 Do not make one candidate visually or behaviorally simpler to improve its numbers.
@@ -304,12 +348,13 @@ Do not make one candidate visually or behaviorally simpler to improve its number
 Correctness eligibility is defined by:
 
 - docs/ACCEPTANCE_MATRIX.md
+- docs/TEXT_FIXTURES.md
 
 Required cases must be PASS.
 
 UNTESTED is not passing.
 
-Use the same named Windows CJK IME for both candidates.
+Use the same named Windows CJK IME and frozen text/action fixture for all candidates.
 
 Performance measurements may be collected for a failing candidate as diagnostic data, but they are not eligible for final comparison until required correctness is restored.
 
@@ -330,25 +375,52 @@ Increase sample counts only when uncertainty could plausibly change the decision
 
 Report per-run distributions rather than only pooled values.
 
+Use balanced ordering across Rust, Zig, and Go rather than always running them in the same sequence.
+
 ## 12. Peak handling
 
 For active scenarios:
 
-- sample application totals at a fixed 100 ms interval
+- sample aggregate application totals at a fixed 100 ms interval
 - record sampled observed maxima
 - record OS-provided high-water counters where available
 - label sampled maximum as "observed maximum"
 - do not sum unrelated historical per-process peaks and call that an aggregate peak
 
-For multi-process candidate architectures, aggregate simultaneous samples and also retain per-process rows.
+For multi-process candidate architectures, aggregate simultaneous samples and retain per-process rows.
 
-## 13. Build/dependency report
+## 13. Candidate-specific runtime diagnostics
+
+These diagnostics explain results; they do not replace headline OS metrics.
+
+### Go
+
+Record where available:
+
+- live heap / HeapAlloc
+- HeapSys
+- HeapInuse
+- GC cycle count
+- cumulative GC pause time
+- goroutine count
+- GOGC
+- GOMEMLIMIT
+- cgo usage and major native allocations if identifiable
+
+Do not subtract Go runtime/GC memory from process memory.
+
+### Rust / Zig
+
+If allocator/runtime diagnostics are cheaply available, report them as supplemental data with the same rule: do not subtract them from process totals.
+
+## 14. Build/dependency report
 
 For each implementation record:
 
 - compiler/toolchain version
 - exact release-build command
 - allocator choice
+- runtime/GC settings where applicable
 - runtime-safety settings
 - LTO settings
 - stripping settings
@@ -366,7 +438,7 @@ Do not compare a sanitizer/debug allocator build against a normal release build.
 
 Build time is informative, not the primary product metric.
 
-## 14. Engineering-cost report
+## 15. Engineering-cost report
 
 Record factual evidence:
 
@@ -387,7 +459,7 @@ Generated bindings do not count as handwritten LOC.
 
 A mature library doing substantial work is a legitimate engineering benefit, not unfair outsourcing.
 
-## 15. Real-provider compatibility gate
+## 16. Real-provider compatibility gate
 
 Before final selection, every surviving candidate runs one untimed Codex app-server smoke test:
 
@@ -405,41 +477,41 @@ Do not exclude candidate adapter memory merely because the external Codex proces
 
 Devin ACP is not required before final selection unless a specific uncovered ACP obligation is identified.
 
-## 16. Result table
+## 17. Result table
 
 Fill only after candidate correctness eligibility is known.
 
-| Metric | Rust | Zig | Notes |
-|---|---:|---:|---|
-| Correctness eligibility | TBD | TBD | PASS only if all required cases pass |
-| Required UNTESTED cases | TBD | TBD | |
-| Fresh startup median | TBD | TBD | warm OS cache |
-| Fresh startup range | TBD | TBD | |
-| Post-reboot first launch median/range | TBD | TBD | raw values retained |
-| First composer activation median | TBD | TBD | |
-| Warm hotkey p95 | TBD | TBD | |
-| Fresh mascot private working set | TBD | TBD | |
-| Warm mascot private working set | TBD | TBD | after use |
-| Warm mascot private commit | TBD | TBD | |
-| Composer private working set | TBD | TBD | |
-| Composer private commit | TBD | TBD | |
-| Streaming observed peak PWS | TBD | TBD | |
-| Streaming observed peak commit | TBD | TBD | |
-| Post-open/close batch delta | TBD | TBD | warmed baseline |
-| Post-stream batch delta | TBD | TBD | warmed baseline |
-| Post-cancel batch delta | TBD | TBD | warmed baseline |
-| Idle one-core CPU % | TBD | TBD | |
-| Idle redraw/present count | TBD | TBD | |
-| Wakeup diagnostic | TBD | TBD | source named |
-| Threads | TBD | TBD | |
-| Kernel handles | TBD | TBD | |
-| USER objects | TBD | TBD | |
-| GDI objects | TBD | TBD | |
-| Live child cleanup | TBD | TBD | |
-| Stripped executable size | TBD | TBD | |
-| Runtime payload size | TBD | TBD | |
-| Handwritten LOC | TBD | TBD | |
-| Platform-specific LOC | TBD | TBD | |
-| Project-owned workarounds | TBD | TBD | |
+| Metric | Rust | Zig | Go | Notes |
+|---|---:|---:|---:|---|
+| Correctness eligibility | TBD | TBD | TBD | PASS only if all required cases pass |
+| Required UNTESTED cases | TBD | TBD | TBD | |
+| Fresh startup median | TBD | TBD | TBD | warm OS cache |
+| Fresh startup range | TBD | TBD | TBD | |
+| Post-reboot first launch median/range | TBD | TBD | TBD | raw values retained |
+| First composer activation median | TBD | TBD | TBD | |
+| Warm hotkey p95 | TBD | TBD | TBD | |
+| Fresh mascot private working set | TBD | TBD | TBD | |
+| Warm mascot private working set | TBD | TBD | TBD | after use |
+| Warm mascot private commit | TBD | TBD | TBD | |
+| Composer private working set | TBD | TBD | TBD | |
+| Composer private commit | TBD | TBD | TBD | |
+| Streaming observed peak PWS | TBD | TBD | TBD | |
+| Streaming observed peak commit | TBD | TBD | TBD | |
+| Post-open/close batch delta | TBD | TBD | TBD | warmed baseline |
+| Post-stream batch delta | TBD | TBD | TBD | warmed baseline |
+| Post-cancel batch delta | TBD | TBD | TBD | warmed baseline |
+| Idle one-core CPU % | TBD | TBD | TBD | |
+| Idle redraw/present count | TBD | TBD | TBD | |
+| Wakeup diagnostic | TBD | TBD | TBD | source named |
+| Threads | TBD | TBD | TBD | |
+| Kernel handles | TBD | TBD | TBD | |
+| USER objects | TBD | TBD | TBD | |
+| GDI objects | TBD | TBD | TBD | |
+| Live child cleanup | TBD | TBD | TBD | |
+| Stripped executable size | TBD | TBD | TBD | |
+| Runtime payload size | TBD | TBD | TBD | |
+| Handwritten LOC | TBD | TBD | TBD | |
+| Platform-specific LOC | TBD | TBD | TBD | |
+| Project-owned workarounds | TBD | TBD | TBD | |
 
 Do not reduce the decision to a single weighted score.
