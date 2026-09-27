@@ -1,0 +1,116 @@
+{
+  "candidate_correctness": "NOT_RUN",
+  "checks": [
+    {
+      "check": "manifest-artifact-hashes-and-provider-identity",
+      "status": "PASS"
+    },
+    {
+      "check": "sanitized-child-environment",
+      "effective_gomaxprocs": 1,
+      "explicit_keys": 8,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/small_fragments",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/coalesced_frames",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/newline_boundary",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/utf8_boundary",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/maximum_valid",
+      "peak_buffer_bytes": 65536,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/oversized",
+      "peak_buffer_bytes": 65536,
+      "status": "PASS"
+    },
+    {
+      "check": "normal",
+      "logical_chunks": 100,
+      "provider_pid": 18952,
+      "status": "PASS"
+    },
+    {
+      "check": "fragmented",
+      "logical_chunks": 100,
+      "provider_pid": 18952,
+      "status": "PASS"
+    },
+    {
+      "check": "client_request",
+      "logical_chunks": 100,
+      "provider_pid": 18952,
+      "status": "PASS"
+    },
+    {
+      "check": "cancel",
+      "logical_chunks": 50,
+      "provider_pid": 18952,
+      "status": "PASS"
+    },
+    {
+      "check": "normal",
+      "logical_chunks": 100,
+      "provider_pid": 18952,
+      "status": "PASS"
+    },
+    {
+      "check": "stderr",
+      "logical_chunks": 100,
+      "provider_pid": 18952,
+      "status": "PASS"
+    },
+    {
+      "check": "backpressure",
+      "logical_chunks": 256,
+      "provider_pid": 18952,
+      "status": "PASS"
+    },
+    {
+      "check": "maximum",
+      "logical_chunks": 1,
+      "provider_pid": 18952,
+      "status": "PASS"
+    },
+    {
+      "check": "stderr-content-and-graceful-shutdown",
+      "status": "PASS",
+      "stderr_bytes": 262144
+    },
+    {
+      "check": "oversized/explicit-fresh-session",
+      "new_pid": 18596,
+      "old_pid": 1804,
+      "status": "PASS"
+    },
+    {
+      "check": "unexpected_exit/explicit-fresh-session",
+      "new_pid": 25272,
+      "old_pid": 27320,
+      "status": "PASS"
+    }
+  ],
+  "fixture_version": "windows-v1.0.0",
+  "observer_qualification": "PENDING",
+  "provider_sha256": "7a62f232dfa5105d0026be6fddac4b6df706674d1fa6d747d63a853823d9de8f",
+  "qpc_frequency": 10000000,
+  "schema": "mascot-fixture-validation-1",
+  "utc": "2026-09-27T12:31:27.6336715Z"
+}

@@ -1,0 +1,246 @@
+{
+  "asset": {
+    "hit_mask": "source alpha \u003e 0; no expansion; hit coordinates mapped to source texels at current effective DPI",
+    "logical_height_dip": 64,
+    "logical_width_dip": 64,
+    "path": "../assets/provisional-mascot.png",
+    "pixel_height": 128,
+    "pixel_width": 128,
+    "sha256": "3bebfc625f9af3d3a862a8f518aa5f2202e372723b9ee5a4099a942e549686e2",
+    "status": "PROVISIONAL"
+  },
+  "base_sha": "2f55ae825848e183a7840032782e37cbc54e641d",
+  "candidate_control": "harness/control-v1.json",
+  "decoder_vectors": "decoder-vectors/vectors.json",
+  "files_sha256": {
+    "../assets/provisional-mascot.png": "3bebfc625f9af3d3a862a8f518aa5f2202e372723b9ee5a4099a942e549686e2",
+    "decoder-vectors/vectors.json": "58f288aef52729587a42171374f152d3fdaf045b75e8104b1d60fafc9654507d",
+    "fixtures/chunks.json": "146898dfbc8f875cab8a15b714d79bd9be0e4841f7de840952dc36a2edabfdc1",
+    "fixtures/history.json": "1f67e4a1eeb74087efe16f5f1d8ec7fa28af31a8e95e08b68caa0abe7e168c05",
+    "fixtures/response.txt": "afab2753b91d30eb9297b7afe77340f078076fa41579d68afbd5de93fb8aeb9e",
+    "fixtures/text.json": "9ff1439b559aa5f26389b76576f7a2c3a9f3a975b50c83835986790863746639",
+    "harness/control-v1.json": "c278ede7159d8bbf3faa8ebbd8f2c820f7f9bb4d5c66bf3e5f44d124700f7ac4",
+    "requirements-source.txt": "015f22b13fabd548033c52de1515312d9483a2796cf5d9eebabc7b7216893f8a"
+  },
+  "observer": {
+    "clock": "shared Windows QPC counter/frequency; no language-specific epoch conversion",
+    "hotkey_origin": "external QPC immediately before common SendInput call",
+    "input_ready": "separate injected text probe with exact readback",
+    "qualification_required_before_headline": true,
+    "resolution_and_uncertainty_required": true,
+    "state": "INTERFACE_ONLY_PENDING_QUALIFICATION",
+    "stream": "correlate first externally visible content with accepted sequence; coalesced sequences may share a presentation",
+    "visible_end": "externally observed screen/compositor output, not app callback or presentation API return"
+  },
+  "output": "results/windows/raw/\u003cimmutable-run-id\u003e/; per-process rows and simultaneous aggregate samples; null plus reason for unavailable fields, never invented zeros",
+  "process_inventory_fields": [
+    "pid",
+    "parent_pid",
+    "role",
+    "creation_qpc",
+    "exit_qpc",
+    "counted",
+    "exclusion_reason"
+  ],
+  "protocol": {
+    "cancel_timeout_ms": 1000,
+    "chunk_timestamp": "emit_qpc is a zero-padded 20-character decimal QPC count captured immediately before the first physical Write containing bytes of the logical frame; fixed-width stamp copied into already serialized frame; start carries qpc_frequency",
+    "client_response_timeout_ms": 1000,
+    "invalid_protocol_exit_code": 64,
+    "max_stdin_frame_bytes_including_lf": 65536,
+    "max_stdout_frame_bytes_including_lf": 65536,
+    "normal_chunks": 100,
+    "normal_exit_code": 0,
+    "normal_interval_ms": 10,
+    "oversized_frame_bytes_including_lf": 65537,
+    "receipt_timestamp": "QPC when LF completing a logical frame is received, before JSON decoding",
+    "request_extension": "optional scenario string, default normal; same persistent session accepts different scenarios",
+    "shutdown_timeout_ms": 2000,
+    "transport": "UTF-8 NDJSON",
+    "unexpected_exit_code": 23
+  },
+  "provider": {
+    "arguments": [
+      "provider",
+      "W:\\devin_folder\\mascot\\benchmark"
+    ],
+    "build": "go build -trimpath -buildvcs=false -ldflags=\"-s -w -buildid=\" -o bin/fixture.exe .",
+    "cwd": "W:\\devin_folder\\mascot\\benchmark",
+    "environment": {
+      "GODEBUG": "",
+      "GOGC": "100",
+      "GOMAXPROCS": "1",
+      "GOMEMLIMIT": "off",
+      "GOTRACEBACK": "none",
+      "PATH": "C:\\Windows\\System32",
+      "SystemRoot": "C:\\Windows",
+      "WINDIR": "C:\\Windows"
+    },
+    "implementation": "go1.25.3",
+    "inherit_environment": false,
+    "path": "W:\\devin_folder\\mascot\\benchmark\\bin\\fixture.exe",
+    "sha256": "e6a5b4d20f1c92fbb7bd48778be692b91970acc72007d6399736ef1025d5160d"
+  },
+  "raw_event_fields": [
+    "run_id",
+    "fixture_version",
+    "candidate",
+    "candidate_build_sha256",
+    "configuration_id",
+    "process_lifetime",
+    "scenario",
+    "qpc",
+    "qpc_frequency",
+    "kind",
+    "request_id",
+    "seq",
+    "details"
+  ],
+  "resource_sample_fields": [
+    "qpc",
+    "pid",
+    "private_working_set_bytes",
+    "private_commit_bytes",
+    "working_set_bytes",
+    "user_cpu_100ns",
+    "kernel_cpu_100ns",
+    "threads",
+    "kernel_handles",
+    "user_objects",
+    "gdi_objects",
+    "live_windows",
+    "live_children",
+    "redraws",
+    "presents",
+    "bounded_queue_depth"
+  ],
+  "scenarios": {
+    "backpressure": {
+      "chunks": 256,
+      "headline_latency": false,
+      "interval_ms": 0,
+      "text": "chunks.json[seq%100]"
+    },
+    "cancel": {
+      "forbidden": [
+        "chunk50",
+        "complete"
+      ],
+      "reuse_child": true,
+      "sequence": "start, chunk(seq0..49), barrier, client cancel, cancelled(last_seq49)"
+    },
+    "client_request": {
+      "sequence": "start, client_request(request_id1, benchmark.confirm, value ok), wait for accepted true response, chunk(seq0..99), complete"
+    },
+    "fragmented": {
+      "sequence": "start, chunk(seq0..99), complete",
+      "write_plan": "seq%10=1 cuts at byte offsets1,7,end; seq%10=2 and next seq3 coalesced in one write; seq%10=4 split after first byte of first multibyte UTF-8 scalar; seq%10=5 split before LF; otherwise whole. Both coalesced frames share first-write QPC; scheduling jitter reported separately."
+    },
+    "maximum": {
+      "bytes_including_lf": 65536,
+      "sequence": "start(chunks1), chunk(seq0), complete",
+      "text": "ASCII x padding to exact serialized frame size"
+    },
+    "normal": {
+      "payload": "fixtures/chunks.json",
+      "sequence": "start, chunk(seq0..99), complete",
+      "write_plan": "whole frames except seq4 split after first byte of first multibyte UTF-8 scalar"
+    },
+    "oversized": {
+      "bytes_including_lf": 65537,
+      "recovery": "fail current request; invalidate session; terminate/reap within2000ms; no automatic replay; next explicit request starts fresh child",
+      "sequence": "start(chunks1), invalid oversized chunk"
+    },
+    "stderr": {
+      "bytes": 262144,
+      "content": "fixture-stderr followed by LF, repeated and truncated to262144bytes",
+      "parallel_stderr": true,
+      "stdout": "normal"
+    },
+    "unexpected_exit": {
+      "recovery": "provider-failed state; next explicit request starts fresh child",
+      "sequence": "start, chunk(seq0..6), process exit23"
+    }
+  },
+  "schedule": {
+    "active_sample_ms": 100,
+    "balanced_blocks": [
+      [
+        "rust",
+        "zig",
+        "go"
+      ],
+      [
+        "zig",
+        "go",
+        "rust"
+      ],
+      [
+        "go",
+        "rust",
+        "zig"
+      ],
+      [
+        "go",
+        "zig",
+        "rust"
+      ],
+      [
+        "zig",
+        "rust",
+        "go"
+      ],
+      [
+        "rust",
+        "go",
+        "zig"
+      ]
+    ],
+    "first_activation_lifetimes_each": 10,
+    "focused_idle_ms": 600000,
+    "fresh_launches_each": 30,
+    "operations_per_batch": 100,
+    "order_rule": "For each scenario, repetition r uses balanced_blocks[r modulo 6], executing candidates sequentially in that order; never interleave candidate processes. Cold-after-boot order must be recorded explicitly, with first position balanced across boots.",
+    "post_reboot_first_launches_each": 3,
+    "stability_batches": 3,
+    "stability_content_modes": [
+      "fixed",
+      "bounded_varying"
+    ],
+    "stability_sample_every": 10,
+    "steady_collection_ms": 30000,
+    "steady_settle_ms": 60000,
+    "steady_state_independent_runs": 3,
+    "varying_prompt": "cycle 256 IDs/content keys in the fixed input bound; no candidate cache may claim eviction coverage without evidence its declared cap is exercised",
+    "warm_activations_per_lifetime": [
+      34,
+      33,
+      33
+    ]
+  },
+  "schema": "mascot-fixture-1",
+  "source_dependency_lock": "requirements-source.txt",
+  "source_efficiency": {
+    "model_token_usage": "not exposed reliably; do not fabricate",
+    "normalization": "UTF-8 committed bytes with LF line endings; no minification or source rewriting for counts",
+    "package_version": "0.12.0",
+    "tokenizer": "tiktoken/o200k_base"
+  },
+  "text_fixture": "fixtures/text.json",
+  "ui": {
+    "always_on_top": "mascot above ordinary windows, no activation merely by showing; composer activates on explicit hotkey",
+    "cancel": "CTRL+ALT+ESCAPE",
+    "composer_client_height_dip": 480,
+    "composer_client_width_dip": 640,
+    "hide_cancels_request": false,
+    "history_messages": 4,
+    "hotkey": "CTRL+ALT+SPACE",
+    "input_height_dip": 128,
+    "input_limit_utf16_units": 4096,
+    "margin_dip": 12,
+    "response_height_dip": 272,
+    "response_limit_utf8_bytes": 262144,
+    "submit": "CTRL+ENTER"
+  },
+  "version": "windows-v1.0.1"
+}

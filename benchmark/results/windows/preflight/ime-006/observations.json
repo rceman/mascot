@@ -1,0 +1,46 @@
+﻿{
+    "schema":  "mascot-ime-preflight-1",
+    "utc_started":  "2026-09-27T12:18:33.8119393Z",
+    "method":  "Microsoft Japanese IME; actual SendInput virtual keys, no Japanese Unicode injection",
+    "romaji":  "nihon",
+    "expected_commit":  "にほん",
+    "prior_text_for_cancel":  "baseline",
+    "installed_input_languages":  [
+                                      {
+                                          "culture":  "en-US",
+                                          "layout":  "US",
+                                          "handle":  "4090409"
+                                      },
+                                      {
+                                          "culture":  "ru-RU",
+                                          "layout":  "Russian",
+                                          "handle":  "4190419"
+                                      },
+                                      {
+                                          "culture":  "lv-LV",
+                                          "layout":  "Latvian (Standard)",
+                                          "handle":  "FFFFFFFFF0B10426"
+                                      },
+                                      {
+                                          "culture":  "ja-JP",
+                                          "layout":  "Japanese",
+                                          "handle":  "4110411"
+                                      }
+                                  ],
+    "events":  [
+
+               ],
+    "captures":  [
+
+                 ],
+    "error":  "Exception calling \"Key\" with \"2\" argument(s): \"Probe lost foreground; no input injected. hwnd=B90D0A; pid=3248; class=ApplicationFrameWindow; expected=6A12E4\"",
+    "visually_reviewed":  false,
+    "japanese_layout_available":  true,
+    "tsf_profile_activation_hresult":  0,
+    "open_status_set":  true,
+    "conversion_status_set":  true,
+    "open_status":  true,
+    "composition_starts":  0,
+    "composition_ends":  0,
+    "utc_finished":  "2026-09-27T12:18:35.1310482Z"
+}

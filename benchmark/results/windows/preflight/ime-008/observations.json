@@ -1,0 +1,74 @@
+﻿{
+    "schema":  "mascot-ime-preflight-1",
+    "utc_started":  "2026-09-27T12:20:13.0200992Z",
+    "method":  "Microsoft Japanese IME; actual SendInput scan codes, no Japanese Unicode injection",
+    "romaji":  "nihonn",
+    "expected_commit":  "にほん",
+    "prior_text_for_cancel":  "baseline",
+    "installed_input_languages":  [
+                                      {
+                                          "culture":  "en-US",
+                                          "layout":  "US",
+                                          "handle":  "4090409"
+                                      },
+                                      {
+                                          "culture":  "ru-RU",
+                                          "layout":  "Russian",
+                                          "handle":  "4190419"
+                                      },
+                                      {
+                                          "culture":  "lv-LV",
+                                          "layout":  "Latvian (Standard)",
+                                          "handle":  "FFFFFFFFF0B10426"
+                                      },
+                                      {
+                                          "culture":  "ja-JP",
+                                          "layout":  "Japanese",
+                                          "handle":  "4110411"
+                                      }
+                                  ],
+    "events":  [
+                   "WM_IME_STARTCOMPOSITION",
+                   "PREEDIT:ｎ",
+                   "PREEDIT:に",
+                   "PREEDIT:にｈ",
+                   "PREEDIT:にほ",
+                   "PREEDIT:にほｎ",
+                   "PREEDIT:にほん",
+                   "RESULT:にほん",
+                   "WM_IME_ENDCOMPOSITION",
+                   "WM_IME_STARTCOMPOSITION",
+                   "PREEDIT:ｎ",
+                   "PREEDIT:に",
+                   "PREEDIT:にｈ",
+                   "PREEDIT:にほ",
+                   "PREEDIT:にほｎ",
+                   "PREEDIT:にほん",
+                   "WM_IME_ENDCOMPOSITION"
+               ],
+    "captures":  [
+                     "01-preedit.png",
+                     "02-committed.png",
+                     "03-before-cancel.png",
+                     "04-cancelled.png"
+                 ],
+    "error":  null,
+    "visually_reviewed":  false,
+    "japanese_layout_available":  true,
+    "tsf_profile_activation_hresult":  0,
+    "open_status_set":  true,
+    "conversion_status_set":  true,
+    "open_status":  true,
+    "preedit":  "にほん",
+    "composing_before_commit":  true,
+    "text_before_commit":  "にほん",
+    "committed_text":  "にほん\n",
+    "composing_after_commit":  false,
+    "cancel_preedit":  "にほん",
+    "composing_before_cancel":  true,
+    "text_after_cancel":  "baseline",
+    "composing_after_cancel":  false,
+    "composition_starts":  2,
+    "composition_ends":  2,
+    "utc_finished":  "2026-09-27T12:20:22.0882724Z"
+}

@@ -1,0 +1,57 @@
+﻿{
+    "schema":  "mascot-ime-preflight-1",
+    "utc_started":  "2026-09-27T12:16:07.1528824Z",
+    "method":  "Microsoft Japanese IME; actual SendInput virtual keys, no Japanese Unicode injection",
+    "romaji":  "nihon",
+    "expected_commit":  "にほん",
+    "prior_text_for_cancel":  "baseline",
+    "installed_input_languages":  [
+                                      {
+                                          "culture":  "en-US",
+                                          "layout":  "US",
+                                          "handle":  "4090409"
+                                      },
+                                      {
+                                          "culture":  "ru-RU",
+                                          "layout":  "Russian",
+                                          "handle":  "4190419"
+                                      },
+                                      {
+                                          "culture":  "lv-LV",
+                                          "layout":  "Latvian (Standard)",
+                                          "handle":  "FFFFFFFFF0B10426"
+                                      },
+                                      {
+                                          "culture":  "ja-JP",
+                                          "layout":  "Japanese",
+                                          "handle":  "4110411"
+                                      }
+                                  ],
+    "events":  [
+
+               ],
+    "captures":  [
+                     "01-preedit.png",
+                     "02-committed.png",
+                     "03-before-cancel.png",
+                     "04-cancelled.png"
+                 ],
+    "error":  null,
+    "visually_reviewed":  false,
+    "japanese_layout_available":  true,
+    "open_status_set":  true,
+    "conversion_status_set":  true,
+    "open_status":  true,
+    "preedit":  "",
+    "composing_before_commit":  false,
+    "text_before_commit":  "nihon",
+    "committed_text":  "nihon\n",
+    "composing_after_commit":  false,
+    "cancel_preedit":  "",
+    "composing_before_cancel":  false,
+    "text_after_cancel":  "baselinenihon",
+    "composing_after_cancel":  false,
+    "composition_starts":  0,
+    "composition_ends":  0,
+    "utc_finished":  "2026-09-27T12:16:14.6089434Z"
+}

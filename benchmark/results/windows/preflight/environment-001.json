@@ -1,0 +1,131 @@
+﻿{
+    "schema":  "mascot-windows-preflight-1",
+    "captured_utc":  "2026-09-27T12:16:35.4294817Z",
+    "base_sha":  "2f55ae825848e183a7840032782e37cbc54e641d",
+    "os":  {
+               "caption":  "Microsoft Windows 11 Home",
+               "version":  "10.0.26200",
+               "build":  "26200",
+               "update_build_revision":  9457,
+               "architecture":  "64-bit",
+               "last_boot_utc":  "2026-09-16T15:33:15.5000000Z"
+           },
+    "cpu":  [
+                {
+                    "Name":  "Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz",
+                    "NumberOfCores":  8,
+                    "NumberOfLogicalProcessors":  16
+                }
+            ],
+    "physical_ram_bytes":  34273640448,
+    "power_scheme":  "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "displays":  [
+                     {
+                         "Device":  "\\\\.\\DISPLAY1",
+                         "Primary":  true,
+                         "Left":  0,
+                         "Top":  0,
+                         "Right":  3840,
+                         "Bottom":  2160,
+                         "ScalePercent":  200,
+                         "PixelWidth":  3840,
+                         "PixelHeight":  2160,
+                         "RefreshHz":  96,
+                         "ScaleHresult":  0
+                     },
+                     {
+                         "Device":  "\\\\.\\DISPLAY5",
+                         "Primary":  false,
+                         "Left":  3840,
+                         "Top":  0,
+                         "Right":  4864,
+                         "Bottom":  768,
+                         "ScalePercent":  100,
+                         "PixelWidth":  1024,
+                         "PixelHeight":  768,
+                         "RefreshHz":  60,
+                         "ScaleHresult":  0
+                     }
+                 ],
+    "display_mode_source":  "EnumDisplayMonitors/GetMonitorInfoW/EnumDisplaySettingsW, per-monitor-v2 thread context; integral refresh Hz",
+    "display_scale_source":  "GetScaleFactorForMonitor",
+    "display_drivers":  [
+                            {
+                                "name":  "USB Mobile Monitor Virtual Display",
+                                "version":  "2.0.0.1",
+                                "provider":  "Amyuni",
+                                "signed":  true,
+                                "signer":  "Microsoft Windows Hardware Compatibility Publisher"
+                            },
+                            {
+                                "name":  "NVIDIA GeForce RTX 4070",
+                                "version":  "32.0.15.9636",
+                                "provider":  "NVIDIA",
+                                "signed":  true,
+                                "signer":  "Microsoft Windows Hardware Compatibility Publisher"
+                            }
+                        ],
+    "input_languages":  [
+                            {
+                                "language_tag":  "en-US",
+                                "input_method_tips":  [
+                                                          "0409:00000409"
+                                                      ]
+                            },
+                            {
+                                "language_tag":  "lv",
+                                "input_method_tips":  [
+                                                          "0426:00020426"
+                                                      ]
+                            },
+                            {
+                                "language_tag":  "ru",
+                                "input_method_tips":  [
+                                                          "0419:00000419"
+                                                      ]
+                            },
+                            {
+                                "language_tag":  "ja",
+                                "input_method_tips":  [
+                                                          "0411:{03B5835F-F03C-411B-9CE2-AA23E1171E36}{A76C93D9-5523-4E90-AAFA-4DB112F9AC76}"
+                                                      ]
+                            }
+                        ],
+    "toolchains":  {
+                       "rustc":  {
+                                     "path":  "C:\\Users\\therceman\\.cargo\\bin\\rustc.exe",
+                                     "version":  "rustc 1.94.0 (4a4ef493e 2026-03-02)"
+                                 },
+                       "cargo":  {
+                                     "path":  "C:\\Users\\therceman\\.cargo\\bin\\cargo.exe",
+                                     "version":  "cargo 1.94.0 (85eff7c80 2026-01-15)"
+                                 },
+                       "go":  {
+                                  "path":  "C:\\Program Files\\Go\\bin\\go.exe",
+                                  "version":  "go version go1.25.3 windows/amd64"
+                              },
+                       "python":  {
+                                      "path":  "C:\\Program Files\\Python312\\python.exe",
+                                      "version":  "Python 3.12.4"
+                                  },
+                       "git":  {
+                                   "path":  "C:\\Program Files\\Git\\cmd\\git.exe",
+                                   "version":  "git version 2.47.0.windows.2"
+                               },
+                       "zig":  {
+                                   "path":  "W:\\devin_folder\\tools\\zig-x86_64-windows-0.15.2\\zig.exe",
+                                   "version":  "0.15.2"
+                               }
+                   },
+    "visual_studio":  [
+                          {
+                              "name":  "Visual Studio Build Tools 2022",
+                              "version":  "17.14.37027.9",
+                              "path":  "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools"
+                          }
+                      ],
+    "windows_sdk":  [
+                        "10.0.26100.0"
+                    ],
+    "no_automatic_reboot":  true
+}

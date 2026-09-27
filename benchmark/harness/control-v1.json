@@ -1,0 +1,55 @@
+{
+  "version": "candidate-control-v1",
+  "purpose": "Common automation/observation seam; not a substitute for external input or visible-output observation.",
+  "launch": ["--fixture", "ABSOLUTE_MANIFEST_PATH", "--control"],
+  "transport": "UTF-8 NDJSON on application stdin/stdout; provider pipes are separate. Serialize stdout writes. Drain application stderr independently.",
+  "max_command_bytes_including_lf": 65536,
+  "max_reply_bytes_including_lf": 2097152,
+  "max_pending_commands": 16,
+  "reply_envelope": {"token": "echo positive integer", "ok": "boolean", "error": "string only on failure", "state": "state object where applicable"},
+  "commands": {
+    "state": "Snapshot without full response text; execute on UI thread. No redraw, forced GC, allocator purge or cache cleanup.",
+    "text": "Correctness-only snapshot of input logical LF text, response logical LF text, UTF-16 selection start/end and composition status. Never poll full text for headline memory sampling.",
+    "set_text": {"text": "bounded UTF-8 string; replace editable committed text through the native text control; correctness/stability preparation only, never a substitute for keyboard/IME tests"},
+    "scenario": {"name": "one frozen provider scenario; only while no request is active; applies to the next explicit submit"},
+    "show": "Use the ordinary composer show/focus path. For stability only; hotkey latency uses external SendInput.",
+    "hide": "Cancel composition and restore committed text before hiding; do not cancel the provider request.",
+    "submit": "Use the ordinary submit path and text from the real input control. Disabled while composing. For stability/provider tests; keyboard correctness uses external input.",
+    "cancel": "Use the ordinary cooperative-cancel path; works with composer hidden. Never a normal child kill.",
+    "shutdown": "Use the ordinary application shutdown path, including provider teardown within the shared timeout. No forced collector or allocator operations."
+  },
+  "state_fields": {
+    "pid": "application PID",
+    "mascot_hwnd": "unsigned decimal string HWND",
+    "composer_hwnd": "unsigned decimal string HWND, 0 before creation/after destruction",
+    "input_hwnd": "unsigned decimal string HWND, 0 if not allocated",
+    "response_hwnd": "unsigned decimal string HWND, 0 if not allocated",
+    "composer_visible": "boolean",
+    "composing": "boolean",
+    "provider_pid": "PID or 0 if none",
+    "provider_state": "idle|streaming|complete|cancelled|failed",
+    "request_id": "current/last positive integer or 0 before first request",
+    "request_count": "total submitted provider requests including explicit retries; no automatic replay",
+    "last_seq": "last accepted sequence, -1 before any chunk",
+    "response_utf8_bytes": "current response bytes, excludes fixed history",
+    "mascot_presents": "UpdateLayeredWindow or actual equivalent presentation count, not request count",
+    "composer_paints": "actual paint callbacks; renderer/backend and caret painting coverage disclosed",
+    "queued_provider_frames": "current bounded queue depth",
+    "queue_capacity_frames": "declared hard limit",
+    "cache_counts": "named measurable cache/resource counters, otherwise null with explanation"
+  },
+  "events": {
+    "frame_received": {"request_id": "integer", "seq": "integer for chunk", "receipt_qpc": "decimal string recorded on LF receipt before JSON decode", "emit_qpc": "provider decimal timestamp", "qpc_frequency": "integer"},
+    "chunk_accepted": {"request_id": "integer", "seq": "integer", "accepted_qpc": "decimal string"},
+    "terminal": {"request_id": "integer", "kind": "complete|cancelled|failed", "last_seq": "integer", "qpc": "decimal string"}
+  },
+  "canonical_cancel_driver": "External harness waits for chunk_accepted seq49, then sends cancel command, and checks exactly one cancelled terminal with last_seq49. Next ordinary submit must retain the provider PID/lifetime.",
+  "decoder_mode": {
+    "arguments": ["--decode-vectors", "ABSOLUTE_VECTORS_JSON_PATH"],
+    "ui": "must not create windows/provider",
+    "output_per_vector": {"name": "vector name", "frames_base64": "actual reconstructed logical frames including LF", "rejected": "boolean", "peak_buffer_bytes": "observed maximum partial-frame buffer"},
+    "rule": "Feed each listed fragment to the same framing implementation used for provider stdout. Do not return expected_frames_base64 as actual output. Shared harness compares exact frames/rejection independently."
+  },
+  "accounting": "Control-mode threads, queues and allocations remain in the measured application total. Use identical instrumentation settings for all candidates and disclose implementation-specific hook overhead. App event timestamps are diagnostic until externally correlated with visible output.",
+  "observer_qualification": "Pending real candidate windows. No headline timing permitted from these callbacks alone."
+}

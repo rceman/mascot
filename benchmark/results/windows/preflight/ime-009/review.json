@@ -1,0 +1,30 @@
+{
+  "schema": "mascot-ime-preflight-review-1",
+  "observation_file": "observations.json",
+  "environment_file": "../environment-001.json",
+  "reviewed_by": "implementation agent; raw events and all four visible screen captures inspected",
+  "Japanese IME available": "YES",
+  "preedit/composition visible": "YES",
+  "commit works": "YES",
+  "cancel works": "YES",
+  "input_method": "Microsoft Japanese IME",
+  "service_clsid": "03B5835F-F03C-411B-9CE2-AA23E1171E36",
+  "profile_guid": "A76C93D9-5523-4E90-AAFA-4DB112F9AC76",
+  "romaji": "nihonn",
+  "preedit": "にほん",
+  "commit_action": "Enter",
+  "committed_text": "にほん",
+  "cancel_action": "Escape, Escape",
+  "cancel_prior_text": "baseline",
+  "cancel_final_text": "baseline",
+  "composition_starts": 2,
+  "composition_ends": 2,
+  "scope": "Environment availability and operation in a stock single-line Win32 EDIT control via Windows Forms. Not a candidate T9/T12 pass; all candidate composer and response correctness gates remain required.",
+  "probe_development_notes": [
+    "ime-001 and ime-002 stopped before execution on probe implementation errors; empty directories contain no correctness evidence.",
+    "ime-003 selected a Japanese keyboard layout without explicitly activating the Microsoft Japanese TSF profile; literal romaji was observed, not composition.",
+    "ime-004 through ime-006 aborted on the foreground guard; no input was deliberately injected into an unrelated window.",
+    "ime-007 and ime-008 used a Windows Forms RichTextBox and observed an extra newline on Enter. They do not satisfy the exact commit expectation. No permission for this variation is granted to any candidate.",
+    "ime-009 uses a stock single-line EDIT control, explicitly activates the named TSF profile for the probe process, acquires focus through an occlusion-checked mouse click, and injects actual scan-code keys. It does not insert Japanese text programmatically."
+  ]
+}

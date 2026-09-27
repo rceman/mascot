@@ -1,0 +1,87 @@
+{
+  "F1": "AéB",
+  "F10": "first line\nĀrā līst\nПроверка\n👨‍💻",
+  "F1_selection": {
+    "after_selected_delete": "AB",
+    "copied": "é",
+    "keys": [
+      "CTRL+END",
+      "LEFT",
+      "LEFT",
+      "SHIFT+RIGHT",
+      "CTRL+C"
+    ],
+    "utf16_selection_end": 3,
+    "utf16_selection_start": 1
+  },
+  "F2": "A👨‍💻B",
+  "F2_selection": {
+    "after_selected_delete": "AB",
+    "copied": "👨‍💻",
+    "keys": [
+      "CTRL+END",
+      "LEFT",
+      "LEFT",
+      "SHIFT+RIGHT",
+      "CTRL+C"
+    ],
+    "utf16_selection_end": 6,
+    "utf16_selection_start": 1
+  },
+  "F3": "English العربية English",
+  "F4": [
+    "Ārā līst, bet mēs turpinām darbu.",
+    "Проверка отображения текста.",
+    "👨‍💻 🧑🏽‍🚀 ❤️‍🔥"
+  ],
+  "F5": {
+    "expected": "é",
+    "keys": [
+      "APOSTROPHE",
+      "E"
+    ],
+    "klid": "00020409",
+    "layout": "US-International",
+    "requests_during_composition": 0
+  },
+  "F6": {
+    "cancel": [
+      "ESCAPE",
+      "ESCAPE"
+    ],
+    "cancel_prior": "baseline",
+    "commit": [
+      "ENTER"
+    ],
+    "expected": "にほん",
+    "ime": "Microsoft Japanese IME",
+    "langid": 1041,
+    "profile_guid": "A76C93D9-5523-4E90-AAFA-4DB112F9AC76",
+    "romaji": "nihonn",
+    "service_clsid": "03B5835F-F03C-411B-9CE2-AA23E1171E36"
+  },
+  "F7": {
+    "after_committed_explicit_submit_requests": 1,
+    "during_composition_requests": 0,
+    "submit": "CTRL+ENTER"
+  },
+  "F8": {
+    "hide": "GLOBAL_HOTKEY",
+    "policy": "cancel composition before hiding, restore last committed text, no request"
+  },
+  "F9": [
+    "F1",
+    "F2",
+    "F3",
+    "F4"
+  ],
+  "font": {
+    "fallback": "Windows system fallback, including Segoe UI Emoji and installed Japanese fonts; no candidate-private font",
+    "family": "Segoe UI",
+    "size_dip": 16
+  },
+  "logical_line_break": "LF; Windows clipboard CRLF converts to logical LF without changing line structure",
+  "permitted_native_variations": [],
+  "version": "text-v1.0.0",
+  "visual_evidence": "Capture only candidate window with an external screen capture after each action; record exact logical UTF-8, UTF-16 caret endpoints, composition state and request count. Inspect images for attached marks, joined emoji, Arabic contextual shaping and bidi. Composer and response get separate evidence. Never infer visual PASS from bytes or APIs."
+}

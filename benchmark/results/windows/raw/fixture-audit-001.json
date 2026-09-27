@@ -1,0 +1,53 @@
+{
+  "schema": "mascot-independent-fixture-audit-1",
+  "utc": "2026-09-27T12:42:17.731145+00:00",
+  "fixture_version": "windows-v1.0.1",
+  "manifest_sha256": "c9c4adcc919baa2d28576f626c5ef372c2b06e638b33e99b469996b114676302",
+  "provider_sha256": "e6a5b4d20f1c92fbb7bd48778be692b91970acc72007d6399736ef1025d5160d",
+  "payload_sha256": "afab2753b91d30eb9297b7afe77340f078076fa41579d68afbd5de93fb8aeb9e",
+  "asset_sha256": "3bebfc625f9af3d3a862a8f518aa5f2202e372723b9ee5a4099a942e549686e2",
+  "packages": {
+    "tiktoken": "0.12.0",
+    "regex": "2025.9.18",
+    "requests": "2.32.5",
+    "certifi": "2025.8.3",
+    "charset-normalizer": "3.4.3",
+    "idna": "3.10",
+    "urllib3": "2.6.3"
+  },
+  "python": "3.12.4 (tags/v3.12.4:8e8a4ba, Jun  6 2024, 19:30:16) [MSC v.1940 64 bit (AMD64)]",
+  "vectors": [
+    {
+      "name": "small_fragments",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "name": "coalesced_frames",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "name": "newline_boundary",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "name": "utf8_boundary",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "name": "maximum_valid",
+      "peak_buffer_bytes": 65536,
+      "status": "PASS"
+    },
+    {
+      "name": "oversized",
+      "peak_buffer_bytes": 65536,
+      "status": "PASS"
+    }
+  ],
+  "status": "PASS",
+  "scope": "Independent fixture identity/schema/payload/vector/schedule and installed tokenizer checks; verifies the recorded IME review, does not replace visual review or candidate correctness."
+}

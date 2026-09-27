@@ -1,0 +1,6 @@
+/rust/target/
+/zig/.zig-cache/
+/zig/zig-out/
+/go/bin/
+/out/
+**/__pycache__/
