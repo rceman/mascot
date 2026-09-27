@@ -47,6 +47,18 @@ Permitted variation:
 
 - Native caret may expose an intermediate code-point position only if the selected/copy result and visual behavior remain grapheme-safe and the variation is pre-approved for all candidates on that platform.
 
+Deletion refinement:
+
+1. Recreate the initial text.
+2. Select the complete visible é sequence using the frozen keyboard procedure.
+3. Delete the selection.
+
+Expected result:
+
+    AB
+
+There must be no orphaned combining mark, replacement character, or hidden residual code point from the selected sequence.
+
 ## F2 — Emoji sequence navigation
 
 Initial text:
@@ -72,6 +84,18 @@ Expected:
 Permitted variation:
 
 - Platform-native caret stepping may differ only if the shared visual and copy/selection outcomes remain correct and the variation is approved before candidate implementation.
+
+Deletion refinement:
+
+1. Recreate the initial text.
+2. Select the complete 👨‍💻 sequence using the frozen keyboard procedure.
+3. Delete the selection.
+
+Expected result:
+
+    AB
+
+There must be no orphaned ZWJ, broken sequence fragment, replacement character, or hidden residual code point from the selected emoji sequence.
 
 ## F3 — Mixed-direction and Arabic shaping
 
@@ -231,5 +255,7 @@ Before candidate implementation begins, the common fixture manifest must freeze:
 - exact logical strings for F1-F4 and F10
 - any pre-approved platform-native caret/selection variation
 - visual-check procedure and evidence format
+- concrete keyboard selection procedure and expected caret/selection endpoints for F1
+- concrete keyboard selection procedure and expected caret/selection endpoints for F2
 
 Any change after freeze increments the fixture version and invalidates affected measurements/correctness evidence.
