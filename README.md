@@ -31,7 +31,7 @@ The benchmark deliberately excludes most of that.
 
 ## Current stage
 
-**Planning only. No candidate implementation should start until the common fixture/harness is frozen and the revised experiment design passes final review.**
+**Experiment design approved. Candidate application implementation must still wait until the common fixture/harness is prepared, validated, versioned, and frozen.**
 
 Canonical documents:
 
