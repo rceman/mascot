@@ -4,6 +4,8 @@ Status: mandatory corrective addendum for MASCOT-RIG-WIN-002.
 
 The first completion at commit `5013d602f11d4f4e0ba1e325ada156256a6e0b2c` is useful progress, but it is not the final visual-QA completion for the rig/runtime task.
 
+The agent-facing clip format and CLI performance contract are defined in `docs/MASCOT_AGENT_AUTHORING_FORMAT.md`. Visual-QA tooling must follow those compact-authoring and fast-iteration requirements.
+
 Two issues must be corrected:
 
 1. recurring authoring/inspection work was left as ignored `scratch/` scripts instead of reusable repository tooling;
