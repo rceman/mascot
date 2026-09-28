@@ -30,7 +30,9 @@ Read these documents in full before editing:
 - rust/ARCHITECTURE.md
 - README.md
 
-The repository-wide rules in `AGENTS.md`, the canonical gates in `docs/QUALITY_GATES.md`, and the first two task-specific documents above are authoritative for this task.
+The repository-wide rules in `AGENTS.md`, the canonical Mascot Universal Gates 1-20 in `docs/QUALITY_GATES.md`, and the first two task-specific documents above are authoritative for this task.
+
+Do not invent a second gate taxonomy for this task. Formatting, tests, visual QA, artifact analysis and performance commands are verification mechanisms/evidence for the Universal Gates. The final report MUST record Gates 1-20 as PASS/FAIL/N/A with concise evidence; N/A requires a changed-cone rationale.
 
 Migration policy for this task: internal format changes are hard cuts. Do not add backward-compatibility loaders, legacy aliases, fallback parsing, dual-write formats, deprecated-field support or other compatibility shims unless the Planner explicitly requests a named external compatibility boundary. For the compact clip migration, `mascot-clips/0.2` support must be removed after migration; only `mascot-clips/0.3` remains supported.
 
