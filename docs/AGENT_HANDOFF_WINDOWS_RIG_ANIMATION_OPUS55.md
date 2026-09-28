@@ -20,6 +20,7 @@ Read these documents in full before editing:
 
 - docs/MASCOT_PRODUCT_UI_ANIMATION_DIRECTION.md
 - docs/MASCOT_RIG_RUNTIME_SPEC_V0.2.md
+- docs/MASCOT_RIG_V0.1_POSTMORTEM.md
 - docs/BENCHMARK_RESULTS.md
 - rust/ARCHITECTURE.md
 - README.md
