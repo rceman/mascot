@@ -1,303 +1,609 @@
-# Quality gates
+# Mascot Universal Task Completion and Review Gates
 
-Status: repository-wide gate contract.
+**Canonical authority:** project-wide Mascot engineering policy  
+**Status:** active
 
-This gate model adapts the useful separation from the GPT Tunnel Gateway project to Mascot: fast worker checks, canonical deterministic correctness, explicit visual QA, and explicit native performance.
+This file contains the canonical Mascot Universal Task Completion and Review Gates 1-20.
 
-The important rule is that different gates answer different questions. A fast focused test is not a substitute for a canonical full test; an alpha-coverage check is not a substitute for visual QA; deterministic tests are not a substitute for native runtime performance measurement.
+These twenty gates are the only repository-wide completion/review gate taxonomy. Project/task specializations may strengthen them and define executable checks, but MUST NOT create a competing numbered gate system.
 
-## 1. Canonical command surface
+## GATE 1 — Requirements & Goal Completeness
 
-The target project-owned interface is:
+Every explicit requirement and approved clarification MUST be implemented and verified.
 
-    mascotctl gate format
-    mascotctl gate check
-    mascotctl gate test
-    mascotctl gate qa-static
-    mascotctl gate qa-animation
-    mascotctl gate perf
-    mascotctl gate task
+Translate the requested outcome into concrete verifiable goals before coding. Re-read the authoritative Task/request and current Planner documents after implementation rather than relying on the initial prompt or an early summary.
 
-During the current bootstrap, an equivalent repository-owned script may temporarily front these commands, but the final preferred interface is `mascotctl`.
+For Mascot this includes, as applicable:
 
-`gate task` is the canonical exact-candidate completion gate for the current task profile. It orchestrates the required deterministic gates without silently skipping expensive lanes.
+- source/runtime behavior;
+- rig/art requirements;
+- animation ranges and clips;
+- native-platform behavior;
+- visual evidence;
+- performance/iteration requirements;
+- agent-authoring/tooling requirements;
+- final WSL sync/commit/push requirements.
 
-Gate output must be concise for agents and support machine-readable JSON.
+FAIL when only a helper or partial lifecycle is proven; required states, error/default/recovery paths, animation cases, evidence, performance checks or later clarifications are missing; or completion has no specific verification path.
 
-Recommended:
+Evidence MUST map:
 
-    mascotctl gate task --json <path>
+    requirement -> implementation -> proof
 
-## 2. Gate: format
+## GATE 2 — Assumptions, Ambiguity & Approval Boundaries
 
-Purpose: formatting only.
+Material assumptions and ambiguity MUST be surfaced before semantics are chosen.
 
-Expected checks include all relevant changed source/tooling files, for example:
+If multiple reasonable interpretations exist, present them instead of silently choosing one. If a materially simpler interpretation/solution exists, surface it. If product/art/architecture ownership is unclear, stop and request the required decision.
 
-- `cargo fmt --check`;
-- Python formatting/syntax policy if Python remains in durable tooling;
-- deterministic JSON/data formatting if the repository defines one.
+Do not invent product semantics, visual language, compatibility obligations, animation behavior, runtime ownership or external integration contracts merely to keep moving.
 
-Properties:
+FAIL if implementation guessed or hid a material uncertainty.
 
-- deterministic;
-- fast;
-- no network;
-- no rendering;
-- no performance measurement.
+Small implementation details inside an already-approved design may be resolved locally when they do not alter user-visible semantics or architecture.
 
-Target warm runtime: <= 1 second where practical.
+## GATE 3 — Existing Behavior & Contract Preservation
 
-## 3. Gate: check
+Behavior outside approved change scope MUST remain unchanged unless the difference is a necessary demonstrated consequence of the Task.
 
-Purpose: cheap structural/static correctness.
+Inspect the authoritative baseline for every affected existing semantic path before changing it.
 
-Expected checks:
+Preserve unaffected:
 
-- `cargo check` for applicable workspace targets;
-- rig/clip schema validation;
-- required project files/specs present;
-- no stale generated/canonical-format conflict;
-- hard-cut migration policy checks;
-- no forbidden compatibility shim for superseded internal formats;
-- no obvious committed temporary/debug artifacts;
-- narrow static architecture invariants that can be checked cheaply.
+- CLI behavior;
+- runtime semantics;
+- public/native interaction behavior;
+- rig coordinate conventions;
+- animation semantics;
+- asset identity/style;
+- evidence format;
+- build/test behavior;
+- platform behavior.
 
-For the current clip migration, this gate must verify the final state:
+A new test that merely rewrites the expected value is not authorization for a behavior change.
 
-    canonical clip authoring: mascot-clips/0.3
-    runtime supported authoring format: mascot-clips/0.3
-    runtime 0.2 compatibility: none
+This gate does **not** require backward compatibility for superseded internal formats. Internal hard-cut migration is governed by Gate 8 and the repository hard-cut policy.
 
-Documentation/evidence may mention 0.2 for historical comparison; runtime/source compatibility code may not.
+## GATE 4 — Scope Discipline / Surgical Change
 
-Target warm runtime: a few seconds, preferably <= 5 seconds.
+Every changed line/file MUST trace to:
 
-## 4. Gate: test
+- an explicit requirement;
+- a necessary implementation;
+- a necessary test;
+- required generated consequence/evidence;
+- required authoritative documentation/contract update;
+- unavoidable dependency consequence.
 
-Purpose: canonical deterministic code correctness.
+FAIL for:
 
-Run the full deterministic Rust test corpus for the materially final candidate.
+- adjacent cleanup;
+- opportunistic refactors;
+- unrelated formatting;
+- broad dependency refresh;
+- unrelated generated churn;
+- cosmetic edits outside task scope;
+- unrelated dead-code removal.
 
-Rules:
+If a systemic audit under Gate 20 proves the defect class is broader than the initial file set, the expanded scope is justified by that audit and MUST be reported.
 
-- no network-dependent/live UI automation hidden inside this gate;
-- no machine-speed pass/fail thresholds;
-- no performance SLO assertions based on host load;
-- no visual-quality claims based solely on unit tests;
-- test the compact authoring parser/expansion and rig/animation invariants;
-- test runtime state and event-driven stop behavior where deterministic.
+## GATE 5 — Minimal Correct Design / No Overengineering
 
-This is the equivalent of GTW's canonical task correctness lane.
+Implement the smallest design that fully satisfies current requirements and established boundaries.
 
-During implementation, agents should use focused tests. Before completion, run this canonical full test gate once on the materially final candidate and rerun only if materially invalidated.
+FAIL for:
 
-## 5. Gate: qa-static
+- speculative frameworks without present ownership value;
+- one-use abstractions that add indirection;
+- unrequested flexibility/configurability;
+- unnecessary managers/strategies/adapters;
+- large general-purpose systems where a narrow project-owned primitive suffices;
+- material complexity without correctness, reuse, performance or ownership benefit.
 
-Purpose: deterministic static rig deformation QA.
+Review MUST ask whether a materially simpler solution satisfies the same contract.
 
-Run:
+For Mascot, "minimal" does not mean ad-hoc one-off scripts when the workflow is explicitly intended to be reused by agents. Durable authoring/QA tooling is justified when it eliminates repeated implementation/token cost.
 
-- canonical rest comparison;
-- all declared safe-range stress poses;
-- joint coverage/guard checks;
-- automatic artifact detector;
-- normal contact sheet;
-- zoomed joint evidence;
-- mirrored stress cases.
+## GATE 6 — Architecture, Ownership & Responsibility Boundaries
 
-The artifact detector must inspect:
+Responsibilities MUST remain with the correct owner and stay cohesive.
 
-- gaps/background leaks;
-- thin dark slivers;
-- black wedges/spikes;
-- doubled internal outlines;
-- detached components;
-- contour topology anomalies;
-- unexpected shading discontinuities;
-- exposed raw cut edges;
-- z-order/coverage anomalies.
+Current intended boundaries include:
 
-Pass policy:
+- animation semantics/data -> `mascot-animation`;
+- Windows rendering/composition -> Windows renderer layer;
+- agent/developer authoring and QA orchestration -> `mascotctl` / project-owned tooling;
+- canonical art/rig data -> versioned asset data;
+- runtime-generated outline/shadow -> renderer/compositor, not baked art;
+- native editable text -> native platform text stack when product UI work begins;
+- Git authority for current Windows task workflow -> WSL checkout;
+- native Windows build/run/render/perf -> Windows working copy.
 
-- zero unresolved ERROR;
-- every WARN reviewed;
-- suppressions must be narrow, explicit and committed as data;
-- declared safe ranges must match visually clean ranges.
+FAIL for:
 
-## 6. Gate: qa-animation
+- God crates/modules/tools;
+- hidden orchestration in unrelated infrastructure;
+- duplicated ownership;
+- renderer code owning animation authoring policy;
+- art tooling owning runtime semantics;
+- product runtime carrying development-only video/QA dependencies;
+- architecture drift from approved boundaries.
 
-Purpose: dynamic frame-by-frame visual QA.
+## GATE 7 — Duplication & Existing Capability Reuse
 
-For every required animation clip:
+Before adding material logic, inspect the affected cone for an existing owner/capability.
 
-- render deterministic frame sequence;
-- analyze every frame;
-- run joint-local artifact detection;
-- generate normal MP4;
-- generate enlarged/zoom MP4;
-- generate contact sheet/spritesheet;
-- generate zoom contact sheet;
-- extract suspect frames;
-- emit QA JSON with per-frame/per-joint findings.
+Reuse suitable:
 
-Required clips for the current rig task:
+- animation types;
+- renderer primitives;
+- asset decoders;
+- QA/artifact-analysis utilities;
+- image/render intermediates;
+- CLI parsers;
+- validation helpers;
+- test utilities;
+- timing/profiling helpers.
 
-- blink;
-- double blink;
-- look left;
-- look right;
-- small head tilt;
-- ear twitch;
-- tail flick;
-- posture adjust;
-- stretch.
+FAIL for:
 
-Pass policy:
+- duplicate business/animation rules;
+- multiple canonical clip representations;
+- a second rig parser;
+- repeated image decode/render passes that can be shared;
+- re-creating scratch crop/zoom/montage logic instead of using project tooling;
+- materially equivalent implementations without justification.
 
-- zero unresolved ERROR;
-- every WARN explicitly reviewed/fixed/suppressed narrowly;
-- evidence regenerated after the final relevant art/rig/runtime change.
+## GATE 8 — No Unrequested Fallback / Shim / Legacy Path
 
-Raw full frame sequences may remain reproducible build artifacts rather than Git content if final videos/sheets/suspect evidence and deterministic reproduction commands are committed.
+Do not add fallbacks, compatibility shims, aliases, dual read/write/configuration sources, old/new routing, heuristic legacy interpretation, weaker-authority recovery or executable obsolete paths unless explicitly required and owner-approved.
 
-## 7. Gate: perf
+Mascot internal formats are **hard-cut by default**.
 
-Purpose: explicit native Windows iteration/runtime performance measurement.
+A real compatibility boundary must be explicitly named, for example:
 
-This is a separate lane because host load affects timings.
+- released/public API;
+- persisted user data that must be read;
+- external third-party consumer;
+- plugin/provider protocol outside this repository;
+- supported released product version.
 
-Record:
+Without such a boundary:
 
-- Windows version;
-- CPU/GPU identity where practical;
-- Rust/tool versions;
-- command timings;
-- lab idle memory/CPU/threads/handles where applicable;
-- active-animation resource behavior.
+- migrate;
+- update all in-repo consumers;
+- remove old parser/loader/data path;
+- remove compatibility tests;
+- delete the shim.
 
-Authoring-tool targets are defined in `docs/MASCOT_AGENT_AUTHORING_FORMAT.md`.
+For the current clip-authoring migration, the intended final state is:
 
-Important policy:
+    canonical authoring format: mascot-clips/0.3
+    supported authoring format: mascot-clips/0.3
+    executable mascot-clips/0.2 compatibility: none
 
-- routine operations >10 s require profiling;
-- routine operations >30 s are a performance defect/blocker unless explicitly justified;
-- routine 30-120 s authoring commands are not acceptable merely because they eventually succeed;
-- video encoding should reuse already-rendered frames;
-- data-only edits must not force Cargo rebuild;
-- changing one clip must not rerender every clip.
+Historical docs/evidence may mention 0.2.
 
-Performance thresholds do not belong in `gate test`.
+## GATE 9 — Deterministic Semantics & Stable Contracts
 
-## 8. Gate: task
+Every public/cross-boundary operation MUST have one deterministic semantic meaning and one stable contract.
 
-Purpose: exact-candidate completion gate.
+For Mascot this includes:
 
-For the current rig/runtime task, `gate task` should execute or verify fresh success for:
+- rig coordinate spaces;
+- pivot/origin meaning;
+- positive rotation direction;
+- safe rotation ranges;
+- clip key/easing semantics;
+- compact authoring expansion;
+- root mirror behavior;
+- runtime outline/shadow semantics;
+- artifact detector severity/reason codes;
+- CLI output/exit semantics;
+- gate receipt structure.
 
-    format
-    check
-    test
-    qa-static
-    qa-animation
-    perf
+Inputs/outputs MUST use canonical shared naming and scalar semantics where authority defines them.
 
-It should produce one concise summary and one machine-readable receipt.
+FAIL for:
 
-Recommended receipt fields:
+- ambiguous coordinates;
+- unstable schema/types;
+- hidden modes;
+- duplicated semantic fields;
+- two canonical authoring sources;
+- caller guesswork;
+- tool output that changes meaning depending on undocumented environment state.
 
-- repository HEAD/tree identity;
-- gate profile/version;
-- platform/environment identity for platform-sensitive lanes;
-- each gate status;
-- duration;
-- evidence paths;
-- WARN/ERROR counts for visual QA;
-- slow-stage summary.
+## GATE 10 — Authority, Specs, Rules & Obsolescence
 
-Do not reuse a receipt after the candidate tree or relevant input data changes.
+Before coding and again during review, resolve current authoritative:
 
-## 9. Fast worker loop
+- `AGENTS.md`;
+- task handoff;
+- rig/runtime spec;
+- product UI/animation direction;
+- agent-authoring format policy;
+- visual-QA policy;
+- quality gates;
+- approved cutovers;
+- already-existing implementations;
+- superseding work.
 
-During implementation, prefer the narrowest useful command.
+Do not repair, optimize, expand tests for or preserve a surface already replaced/retiring unless bounded migration safety or owner approval requires it.
+
+If two docs conflict, resolve the authority/supersession rather than implementing both.
+
+## GATE 11 — Failure Safety, Atomicity, Idempotency & Security
+
+Review every changed/new:
+
+- error path;
+- retry;
+- file mutation;
+- generated artifact write;
+- subprocess call;
+- sync operation;
+- cache mutation;
+- external/native API call;
+- multi-side-effect boundary.
+
+Validate before invalid durable mutation.
+
+For authoring/QA tooling:
+
+- partial generation MUST NOT masquerade as complete evidence;
+- failed renders/encodes MUST produce non-zero failure;
+- stale cache MUST NOT be treated as fresh evidence;
+- sync-back MUST NOT overwrite unrelated WSL changes;
+- generated receipts MUST identify the exact candidate/input identity;
+- retryable subprocess operations MUST avoid duplicate/corrupt output.
+
+Keep secrets/sensitive data out of logs/evidence.
+
+Security controls MUST correspond to a demonstrated trust boundary and threat model. Do not add credential ceremony or privilege layers without concrete risk reduction.
+
+## GATE 12 — Boundedness / Resource & Agent-Visible Output Discipline
+
+All loops, retries, recursion, scans, render ranges, frame counts, subprocesses, concurrency, retained frame history, logs, result sets, caches and model-visible output MUST be safely bounded, streamed or paginated as appropriate.
+
+Agent-visible output MUST be semantically minimal.
+
+Prefer commands such as:
+
+    mascotctl clip show blink
+    mascotctl rig joint neck
+
+over dumping an entire rig/clip library.
+
+Normal status should omit:
+
+- repeated request context;
+- duplicate paths;
+- giant normalized JSON;
+- raw frame lists when a concise suspect summary suffices;
+- null/default filler;
+- verbose diagnostic detail unrelated to the next action.
+
+Detailed evidence can live in files/JSON artifacts.
+
+FAIL for token spam, unbounded frame retention, accidental giant stdout or unnecessary repeated context.
+
+## GATE 13 — Dependency, External-System & Blast-Radius Necessity
+
+Every added/widened:
+
+- Rust crate;
+- Python package;
+- native library;
+- binary tool;
+- subprocess;
+- media encoder;
+- runtime;
+- service;
+- network dependency
+
+MUST be materially necessary.
+
+Review:
+
+- reverse dependency cone;
+- binary/runtime footprint;
+- build/test cost;
+- deployment coupling;
+- dev-only vs production ownership.
 
 Examples:
 
-    mascotctl clip validate
-    mascotctl clip show blink
-    mascotctl qa clip blink --no-video
-    mascotctl qa stress --bone head
-    cargo test -p mascot-animation <focused-test>
+- development-only `ffmpeg` is acceptable for evidence encoding when kept out of the production runtime;
+- a browser engine/game engine/general-purpose UI framework is not acceptable merely to simplify the animation lab;
+- image-analysis Python may be acceptable if clearly owned as dev tooling and materially simpler than duplicating it in Rust.
 
-Do not run `gate task` after every small pivot/keyframe tweak.
+FAIL for unnecessary dependency expansion or production coupling to development-only tooling.
 
-Recommended loop:
+## GATE 14 — Performance, Latency & Redundant Work
 
-    edit
-      -> narrow validate/test/render
-      -> inspect automatic suspects
-      -> fix
-      -> repeat
+The change MUST NOT introduce or leave a material performance regression or unnecessary repeated work in the affected path.
 
-Then on materially final candidate:
+Inspect:
 
+- algorithmic complexity;
+- repeated image decoding;
+- duplicate frame rendering;
+- repeated art decomposition;
+- process-per-frame/subprocess amplification;
+- unnecessary Cargo rebuilds for data-only edits;
+- unnecessary rerender of unchanged clips;
+- avoidable synchronous I/O;
+- excessive allocations/memory growth;
+- lock contention;
+- token/output overhead.
+
+Current authoring-tool targets are defined in `docs/MASCOT_AGENT_AUTHORING_FORMAT.md`.
+
+Project policy:
+
+- routine operation >10 s -> profile before completion;
+- routine operation >30 s -> performance defect/blocker unless explicitly justified;
+- routine 30-120 s authoring commands are not acceptable merely because they eventually succeed.
+
+Render frames once and reuse them for:
+
+- artifact analysis;
+- contact sheets;
+- zoom evidence;
+- video encoding.
+
+Performance-sensitive native runtime measurements MUST remain separate from deterministic correctness tests.
+
+## GATE 15 — Persistence / Infrastructure Boundary
+
+Persistence, filesystem layout, cache mechanics, evidence storage and platform infrastructure MUST remain behind explicit typed/use-case-oriented boundaries where they are not themselves the task domain.
+
+Animation/runtime logic MUST NOT depend directly on:
+
+- WSL sync mechanics;
+- evidence directory layout;
+- ffmpeg command construction;
+- Windows working-copy location;
+- cache filesystem internals.
+
+The product runtime MUST NOT know developer evidence/QA storage mechanics.
+
+CLI/orchestration layers may own those infrastructure concerns.
+
+FAIL when domain/runtime code becomes coupled to physical persistence or dev-environment mechanics without explicit architectural approval.
+
+## GATE 16 — Verification Sufficiency & Test Quality
+
+Verification MUST prove changed semantics rather than merely execute code.
+
+Bugs SHOULD use:
+
+    RED -> minimal fix -> GREEN -> regression proof
+
+where practical.
+
+Features MUST map acceptance criteria to focused automated/runtime evidence.
+
+For the current animation/rig work, verification may include:
+
+- parser/expansion unit tests;
+- rig validation;
+- runtime animation tests;
+- deterministic static stress renders;
+- all-frame artifact analysis;
+- zoomed visual inspection;
+- committed MP4/contact-sheet evidence;
+- native Windows performance measurements.
+
+Existing relevant tests MUST remain green.
+
+Never weaken:
+
+- assertions;
+- safe ranges;
+- detector thresholds;
+- visual gates;
+- tests;
+- gate definitions
+
+merely to obtain green.
+
+A passing alpha guard alone does not prove visual quality.
+
+## GATE 17 — Recovery Proportionality / Sunk-Cost Containment
+
+Repair of stale, rejected, obsolete, contaminated or ambiguous execution state MUST NOT cost/risk more than bounded salvage into a clean lane plus cleanup.
+
+Explicitly compare repair cost/risk against clean salvage/restart.
+
+Mascot examples:
+
+- do not preserve a bad v0.1 rig decomposition merely because effort was spent on it;
+- do not stack adapters around an obsolete clip format;
+- do not keep corrupted/generated evidence if deterministic regeneration is cheaper;
+- do not keep patching a broken Windows working copy when a clean copy from authoritative WSL is safer.
+
+After repeated failures of the same local approach, prefer a bounded reset/reconstruction rather than sunk-cost continuation.
+
+## GATE 18 — Verification / Review Immutability & Artifact Identity
+
+All mutating:
+
+- formatting;
+- code generation;
+- art generation/reconstruction;
+- clip compilation/migration;
+- evidence generation;
+- dependency installation/update;
+- autofix
+
+MUST occur before authoritative final verification.
+
+Capture exact candidate identity and relevant content/input hashes where practical.
+
+Run final verification against that materially frozen candidate.
+
+If final verification or review mutates source, rig data, clips or renderer behavior, previous verification/evidence is stale and MUST be rerun.
+
+For generated visual evidence, the receipt MUST tie evidence to the exact:
+
+- source HEAD/tree;
+- rig data;
+- clip data;
+- renderer/tool version;
+- relevant generation settings.
+
+Any unaccounted artifact mutation during authoritative verification is FAIL.
+
+## GATE 19 — Completion Integrity / Final Artifact Honesty
+
+Before declaring completion, inspect:
+
+- final code;
+- final rig data;
+- final clips;
+- final generated evidence;
+- final videos/contact sheets;
+- final QA JSON;
+- final performance report;
+- final documentation;
+- final Git state.
+
+Every changed file MUST be justified.
+
+Known relevant failures, unresolved visual artifacts or contract mismatches MUST NOT be hidden behind a green summary.
+
+For visual work, Lead/agent MUST inspect representative **actual rendered outputs**, not only schemas, logs or detector summaries.
+
+For the current WSL/Windows workflow, completion also requires:
+
+- intended files synced back;
+- `git status` reviewed in WSL;
+- commit created from WSL;
+- push completed;
+- WSL authoritative worktree clean and equal to expected origin state.
+
+Use COMPLETE only when the final artifact honestly satisfies the declared contract.
+
+## GATE 20 — Systemic Scope Completeness / Exhaustive Invariant Audit
+
+Automatically applicable when the Task/change claims a:
+
+- cross-cutting;
+- subsystem-wide;
+- project-wide;
+- repo-wide;
+- migration;
+- hard-cut;
+- replacement;
+- prohibition;
+- sole-authority;
+- exhaustive invariant.
+
+A systemic claim requires systemic evidence; examples cannot prove a global invariant.
+
+Before completion:
+
+1. define the invariant and bounded surface;
+2. enumerate candidate violations with independent discovery methods;
+3. classify every candidate;
+4. fix the complete required set;
+5. rerun the same audit;
+6. demonstrate zero unexplained candidates.
+
+After the second finding of the same architectural defect class in one implementation/review cycle, STOP whack-a-mole correction and perform this systemic audit before further local fixes.
+
+Current examples that trigger Gate 20:
+
+- "0.2 compatibility is completely removed";
+- "all required clips use compact 0.3 authoring";
+- "no required visual artifact remains inside declared safe ranges";
+- "all required clips have committed video/contact-sheet evidence";
+- "no recurring authoring workflow remains scratch-only";
+- "static runtime has no continuous frame loop";
+- "every required animation is checked frame-by-frame";
+- "no routine authoring command exceeds the performance policy without explanation".
+
+---
+
+## Mascot specializations
+
+These are specializations of Gates 1-20, not additional gates.
+
+### Visual rig / animation QA
+
+The canonical visual-QA implementation is defined in:
+
+- `docs/MASCOT_AGENT_AUTHORING_VISUAL_QA.md`
+- `docs/MASCOT_RIG_RUNTIME_SPEC_V0.2.md`
+
+Visual completion requires both automated detection and actual rendered-output review.
+
+Automatic detection should identify, rank and provide zoom evidence for likely:
+
+- gaps;
+- dark slivers;
+- black wedges;
+- double outlines;
+- detached components;
+- topology anomalies;
+- shading discontinuities;
+- exposed cut edges;
+- z-order/coverage anomalies.
+
+ERROR findings MUST be fixed before pass. WARN findings MUST be reviewed and either fixed or narrowly suppressed with committed rationale/data.
+
+### Agent authoring / token efficiency
+
+The canonical compact authoring and tool-performance requirements are defined in:
+
+- `docs/MASCOT_AGENT_AUTHORING_FORMAT.md`
+
+Agent-facing data and CLI output must remain compact enough that repeated development does not waste context/tokens.
+
+### Native Windows validation
+
+For tasks whose handoff requires native Windows validation:
+
+- WSL remains Git authority;
+- native Windows is the build/run/render/performance environment;
+- no CI substitution;
+- no `.git` copy from Windows;
+- final sync/status/diff/commit/push happen through authoritative WSL.
+
+### Executable gate mapping
+
+`mascotctl` SHOULD expose project-owned commands that implement these twenty gates without inventing a second gate taxonomy.
+
+Examples:
+
+    mascotctl gate review
     mascotctl gate task
 
-## 10. No ad-hoc substitution
+A task receipt MUST report each Gate 1-20 as:
 
-The following are not valid claims of a canonical gate pass:
+    PASS / FAIL / N/A
 
-- "cargo check passed, therefore tests pass";
-- "joint guards pass, therefore visual QA passes";
-- "video looks fine at normal playback, therefore frame QA passes";
-- "I ran a custom Python script similar to the gate";
-- "the previous gate receipt was green before the last rig change".
+with concise evidence/reference.
 
-If a canonical gate cannot run, report it as blocked.
+Lower-level commands such as:
 
-## 11. Gate implementation quality
+    mascotctl format
+    mascotctl check
+    mascotctl test
+    mascotctl qa stress
+    mascotctl qa animations
+    mascotctl perf
 
-The gate runner itself is production-quality development infrastructure.
+are verification mechanisms used as evidence for one or more universal gates; they are **not** separate numbered gates.
 
-Requirements:
+## Universal evidence and reporting
 
-- deterministic command ordering;
-- concise output;
-- machine-readable results;
-- no unnecessary process-per-frame design;
-- reuse intermediate renders;
-- no hidden network dependency;
-- no CI requirement;
-- clear non-zero exit status on failure;
-- timings per stage;
-- actionable failure paths.
+The completion report records every Gate 1-20 as PASS/FAIL/N/A plus concise evidence/reference.
 
-## 12. Anti-shim gate
+Detailed command output may remain in project-native evidence artifacts.
 
-The repository should include an explicit static hard-cut check.
+N/A requires a concrete changed-cone rationale.
 
-It should reject superseded internal compatibility logic in source/runtime data, while allowing historical mentions in designated documentation/evidence.
-
-For the current clip migration, reject runtime/source patterns implementing:
-
-- `mascot-clips/0.2` parsing;
-- fallback from 0.3 to 0.2;
-- old/new dual-read;
-- old/new dual-write;
-- legacy clip field aliases.
-
-Do not implement this as a naive repository-wide string ban because historical docs/evidence intentionally mention the old format.
-
-## 13. Future gate profiles
-
-As Mascot grows, gate profiles may be added rather than making every gate universally expensive.
-
-Likely future profiles:
-
-- animation/runtime task;
-- Windows shell/UI task;
-- macOS shell/UI task;
-- provider/agentd task;
-- release task.
-
-Profiles may choose applicable platform lanes, but they must not silently weaken the task's acceptance contract.
+Mascot-specific specialization only strengthens these twenty gates and never creates another gate taxonomy.
