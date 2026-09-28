@@ -56,11 +56,13 @@ Compatibility is a cost that must be justified, not a default safety behavior.
 
 ## 4. Project-owned gates are mandatory
 
-Use the canonical gates defined in:
+Use the canonical Mascot Universal Gates 1-20 defined in:
 
     docs/QUALITY_GATES.md
 
-Do not replace a project-owned gate with an ad-hoc approximation and then report the gate as passed.
+These twenty gates are the only repository-wide completion/review gate taxonomy. Lower-level commands such as formatting, tests, visual QA and performance checks are evidence mechanisms for the universal gates, not a second numbered gate system.
+
+Do not replace a project-owned verification mechanism with an ad-hoc approximation and then report the corresponding universal gate as passed.
 
 Focused commands are useful during implementation, but completion requires the canonical gates applicable to the task.
 
@@ -84,7 +86,7 @@ During implementation:
 - reuse cached deterministic intermediates;
 - avoid repeatedly running expensive full gates after every small edit.
 
-Before completion, run the canonical gates on the materially final candidate.
+Before completion, run the canonical project-owned verification required by the materially final candidate and report Gates 1-20 as PASS/FAIL/N/A with concise evidence.
 
 Do not waste agent tokens or machine time by rerunning the same expensive gate without a material change.
 
@@ -156,7 +158,7 @@ Do not commit an old contact sheet/video/benchmark result and present it as proo
 
 ## 11. Completion language
 
-Use COMPLETE only after all task-required gates and evidence pass.
+Use COMPLETE only after all applicable Universal Gates 1-20 and required evidence pass. N/A requires a concrete changed-cone rationale.
 
 Known visible defects inside a declared safe range are not a successful visual-QA completion.
 
