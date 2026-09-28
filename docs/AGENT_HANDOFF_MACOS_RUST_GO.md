@@ -210,17 +210,29 @@ Record:
 
 Do not rewrite architecture merely to optimize these numbers.
 
-## Codex compatibility
+## Devin ACP compatibility
 
-If a compatible Codex app-server is available on the Mac, run the same untimed compatibility gate:
+For macOS Stage B, use **Devin ACP instead of Codex app-server** as the real-provider compatibility gate.
 
-- launch
-- initialize
-- one read-only request
-- streamed/notification evidence
-- clean teardown
+Do not run the Codex app-server compatibility gate for this macOS task unless explicitly requested later.
 
-If Codex is unavailable, mark this macOS sub-gate UNAVAILABLE rather than changing the core Stage B result.
+Use the locally available/current Devin ACP interface and record:
+
+- Devin/ACP client or endpoint identity/version
+- transport used
+- launch/connect procedure
+- initialization/session establishment
+- one bounded read-only or otherwise non-destructive interaction supported by the available ACP contract
+- streamed/notification evidence where the ACP contract exposes it
+- interrupt/cancel if supported by the available ACP contract; otherwise normal completion
+- clean disconnect/teardown
+- candidate-owned adapter/process inventory
+
+Do not invent ACP methods or message shapes. Discover and use the actual installed/available Devin ACP contract.
+
+The gate is compatibility-focused and untimed with respect to model/network response latency.
+
+If Devin ACP itself requires an interactive login/authorization step that cannot be completed unattended, pause and report exactly what the user must approve.
 
 ## Visual evidence
 
@@ -320,7 +332,7 @@ Return:
 8. macOS-specific LOC/token/FFI table
 9. build/feedback-loop table
 10. visual evidence paths
-11. Codex gate status
+11. Devin ACP gate status
 12. structural risks / workarounds
 13. unavailable measurements and reasons
 14. commits created
