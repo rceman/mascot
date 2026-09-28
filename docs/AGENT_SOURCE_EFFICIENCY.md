@@ -125,11 +125,26 @@ For each candidate record:
 - incremental build command
 - clean build time
 - incremental one-file-change build time
+- candidate unit/self-test command and execution time, if such tests exist
+- provider regression execution time
+- smoke-test execution time
+- full acceptance execution time, excluding the long performance benchmark
+- Codex compatibility-gate execution time (reported separately because it includes external-process startup)
+- one representative edit -> incremental build -> targeted test feedback-loop time
 - compiler/linker diagnostic quality notes based on concrete failures encountered
 - native bridge/FFI setup steps
 - dependency-resolution issues
 - platform-specific debugging issues
 - number of project-maintained workarounds
+
+For timing comparisons:
+- use the same machine and power mode
+- use final correctness-ready binaries/source
+- distinguish cold/first run from warm repeated runs where relevant
+- run each short timing at least 5 times when practical and report median plus range
+- do not include the long benchmark campaign in "test execution time"
+- report shared-harness/provider time separately from candidate-owned test time when the boundary is measurable
+- do not claim language-level causation when the timing is dominated by a shared external fixture
 
 Narrative observations must cite concrete incidents from the implementation log/commits.
 
@@ -201,6 +216,12 @@ Add a separate table to the Windows comparison report:
 | Structural stack changes | TBD | TBD | TBD |
 | Clean build time | TBD | TBD | TBD |
 | Incremental build time | TBD | TBD | TBD |
+| Candidate unit/self-test time | TBD | TBD | TBD |
+| Provider regression time | TBD | TBD | TBD |
+| Smoke-test time | TBD | TBD | TBD |
+| Full acceptance time (no long benchmark) | TBD | TBD | TBD |
+| Codex gate time | TBD | TBD | TBD |
+| Edit -> build -> targeted test loop | TBD | TBD | TBD |
 | Native/FFI bridge boundaries | TBD | TBD | TBD |
 | Project-owned workarounds | TBD | TBD | TBD |
 
