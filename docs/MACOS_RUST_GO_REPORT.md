@@ -60,6 +60,7 @@ structural.
 | ASCII + Unicode typing roundtrip | PASS | PASS |
 | Marked-text composition flag | PASS | PASS |
 | IME commit / cancel (composition pipeline) | PASS* | PASS* |
+| Live Japanese IME basic input/commit (manual user check) | PASS† | PASS† |
 | Submit blocked while composing | PASS | PASS |
 | Hide during composition leaves consistent state | PASS | PASS |
 | Cmd+Return submits; plain Return = newline | PASS | PASS |
@@ -69,12 +70,18 @@ structural.
 | Screenshots / recording | PASS | PASS |
 | Clean shutdown, no orphan children, no stderr | PASS | PASS |
 
-\* Composition was exercised through the *same* `NSTextInputClient` entry
+\* Automated composition was exercised through the *same* `NSTextInputClient` entry
 points (`setMarkedText:`/`insertText:`/`unmarkText`) that a live input
 method drives, because selecting an input *method* source requires a
 genuine user gesture on macOS 26 (see §12). The marked-text pipeline —
 composing flag, submit guard, cancel/discard, hide-during-composition —
 is identical from the view's side.
+
+† After the automated campaign, the user enabled the native Japanese input
+source and manually confirmed live Japanese IME text input/commit in the
+prototype on the same Mac. This closes the basic live-IME availability
+sanity check. The manual check did not independently re-run every automated
+composition edge case such as cancel/hide-during-preedit.
 
 ### macOS shortcut map (both candidates)
 
@@ -214,15 +221,24 @@ unattended. Evidence: `raw/acp-gate/{rust,go}.ndjson`.
    floating level, per-pixel-alpha hit-tested (click-through verified);
    click focus tests confirmed the composer takes real key focus while
    the mascot stays non-activating.
+10. **Prototype perch-follow lag during window drag.** Manual visual testing
+   found that when the composer window is dragged, the separately-positioned
+   mascot can trail the window briefly instead of remaining perfectly locked
+   to the top edge every frame. This is non-blocking for Stage B and does not
+   affect the foundation decision because the current composer/perch UI is a
+   benchmark prototype scheduled for redesign. Preserve it as a known visual
+   artifact rather than silently treating the current anchoring as production-ready.
 
 ## 13. Unavailable measurements
 
 - **Real-provider streamed prompt via Devin ACP** — unavailable: CLI not
   authenticated; `devin auth login` requires interactive credentials.
   All ACP steps up to the prompt succeed; see §11.
-- **Live Japanese IME session** — unavailable under automation only:
-  input-method source selection requires a real user gesture (§12.2).
-  Composition/commit/cancel verified via identical entry points.
+- **Live Japanese IME automation** — unavailable: input-method source
+  selection requires a real user gesture (§12.2). Basic live Japanese IME
+  input/commit was subsequently confirmed manually by the user; automated
+  composition/cancel edge cases remain covered via identical
+  `NSTextInputClient` entry points.
 - **Streaming-peak CPU %** — the `top` delta sample did not resolve the
   CPU column for the short streaming window; idle CPU is 0.0% for both.
 - **Full-screen "perched composite" capture** — own-window captures only;
