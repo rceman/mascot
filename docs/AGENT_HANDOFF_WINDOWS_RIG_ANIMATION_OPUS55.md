@@ -22,6 +22,7 @@ Read these documents in full before editing:
 - docs/MASCOT_RIG_RUNTIME_SPEC_V0.2.md
 - docs/MASCOT_RIG_V0.1_POSTMORTEM.md
 - docs/MASCOT_AGENT_AUTHORING_VISUAL_QA.md
+- docs/MASCOT_AGENT_AUTHORING_FORMAT.md
 - docs/BENCHMARK_RESULTS.md
 - rust/ARCHITECTURE.md
 - README.md
