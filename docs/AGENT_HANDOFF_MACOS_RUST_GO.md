@@ -135,6 +135,24 @@ Record the darwin fixture binary hash and toolchain.
 
 Do not change fixture semantics to make one candidate pass.
 
+## macOS keyboard / shortcut semantics
+
+Do **not** copy Windows key assumptions literally onto macOS.
+
+The macOS candidate must use native macOS keyboard conventions and translate the shared logical actions into platform-appropriate shortcuts.
+
+At minimum:
+
+- use **Command** for standard editing shortcuts such as Copy/Paste/Cut/Select All rather than Windows Ctrl conventions
+- preserve native macOS Option/Command navigation behavior exposed by the chosen text control
+- distinguish Return/Enter, Escape, Tab, modifier state, and IME composition correctly
+- the global shortcut must be implemented with a macOS-appropriate key/modifier combination and documented explicitly
+- shared acceptance tests should assert logical actions (copy, paste, select, submit, cancel, open composer), not hard-code Windows virtual-key values
+- do not force Windows-style Ctrl shortcuts merely for benchmark symmetry
+- where the prototype defines a product-specific action such as submit/hide, document the exact macOS binding used
+
+Record the final macOS shortcut map in the Stage B report.
+
 ## macOS text/IME gate
 
 Use the built-in macOS Japanese input source / IME.
