@@ -12,8 +12,8 @@ use objc2_app_kit::{
     NSView, NSWindow, NSWindowCollectionBehavior, NSWindowDelegate, NSWindowStyleMask,
 };
 use objc2_foundation::{
-    MainThreadMarker, NSNotification, NSObject, NSObjectProtocol, NSPoint, NSRange, NSRect, NSSize,
-    NSString,
+    MainThreadMarker, NSDate, NSNotification, NSObject, NSObjectProtocol, NSPoint, NSRange, NSRect,
+    NSSize, NSString,
 };
 use serde_json::{Value, json};
 use std::cell::{Cell, RefCell};
@@ -82,6 +82,71 @@ unsafe extern "C" {
 unsafe extern "C" {
     static _dispatch_main_q: c_void;
     fn dispatch_async_f(queue: *mut c_void, context: *mut c_void, work: extern "C" fn(*mut c_void));
+}
+
+// Text Input Services (Carbon/HIToolbox): per-process input source
+// selection. Needed because the accessory app cannot become the frontmost
+// app under automation, so the system input menu cannot switch its source.
+// HIToolbox is a Carbon subframework not resolvable via `-framework`, so
+// symbols are looked up at runtime (AppKit already links HIToolbox).
+unsafe extern "C" {
+    fn CFRelease(object: *const c_void);
+}
+
+fn select_input_source(id: &str) -> Result<(), String> {
+    // TISCopyInputSourceWithID was removed on modern macOS; enumerate
+    // TISCreateInputSourceList and match kTISPropertyInputSourceID.
+    type ListFn = unsafe extern "C" fn(*const c_void, bool) -> *mut c_void;
+    type PropFn = unsafe extern "C" fn(*mut c_void, *const c_void) -> *const c_void;
+    type SelFn = unsafe extern "C" fn(*mut c_void) -> i32;
+    type CountFn = unsafe extern "C" fn(*const c_void) -> isize;
+    type ValueFn = unsafe extern "C" fn(*const c_void, isize) -> *const c_void;
+    type CmpFn = unsafe extern "C" fn(*const c_void, *const c_void, usize) -> i32;
+    unsafe {
+        let sym = |name: &std::ffi::CStr| -> Result<*mut c_void, String> {
+            let p = libc::dlsym(libc::RTLD_DEFAULT, name.as_ptr());
+            if p.is_null() {
+                Err(format!("{} not resolvable", name.to_string_lossy()))
+            } else {
+                Ok(p)
+            }
+        };
+        let list: ListFn = std::mem::transmute(sym(c"TISCreateInputSourceList")?);
+        let prop: PropFn = std::mem::transmute(sym(c"TISGetInputSourceProperty")?);
+        let select: SelFn = std::mem::transmute(sym(c"TISSelectInputSource")?);
+        let count: CountFn = std::mem::transmute(sym(c"CFArrayGetCount")?);
+        let value: ValueFn = std::mem::transmute(sym(c"CFArrayGetValueAtIndex")?);
+        let cmp: CmpFn = std::mem::transmute(sym(c"CFStringCompare")?);
+        let key_var = sym(c"kTISPropertyInputSourceID")? as *const *const c_void;
+        let key = *key_var;
+        let ident = ns(id);
+        let sources = list(std::ptr::null(), true);
+        if sources.is_null() {
+            return Err("TISCreateInputSourceList failed".into());
+        }
+        let mut found = std::ptr::null_mut();
+        let n = count(sources);
+        for i in 0..n {
+            let source = value(sources, i) as *mut c_void;
+            let source_id = prop(source, key);
+            if !source_id.is_null()
+                && cmp(source_id, Retained::as_ptr(&ident).cast::<c_void>(), 0) == 0
+            {
+                found = source;
+                break;
+            }
+        }
+        if found.is_null() {
+            CFRelease(sources);
+            return Err(format!("input source not found: {id}"));
+        }
+        let status = select(found);
+        CFRelease(sources);
+        if status != 0 {
+            return Err(format!("TISSelectInputSource -> {status}"));
+        }
+        Ok(())
+    }
 }
 
 fn main_queue() -> *mut c_void {
@@ -427,6 +492,10 @@ impl Ui {
         let composer = self.composer.borrow();
         let composer = composer.as_ref().ok_or("composer not created")?;
         app.activate();
+        #[allow(deprecated)]
+        unsafe {
+            app.activateIgnoringOtherApps(true);
+        }
         composer.window.makeKeyAndOrderFront(None);
         composer
             .window
@@ -897,6 +966,106 @@ impl Ui {
                 self.hide_composer();
                 self.reply(&token, true, None);
             }
+            "focus" => {
+                let borrowed = self.composer.borrow();
+                match borrowed.as_ref() {
+                    Some(c) => {
+                        let fr = unsafe { c.window.firstResponder() };
+                        let info = match fr {
+                            Some(r) => {
+                                let is_input =
+                                    Retained::as_ptr(&r) as usize == &*c.input as *const _ as usize;
+                                json!({
+                                    "class": r.class().name().to_string_lossy().into_owned(),
+                                    "is_input": is_input,
+                                    "key": c.window.isKeyWindow(),
+                                    "main": c.window.isMainWindow(),
+                                })
+                            }
+                            None => json!({"class": null, "is_input": false}),
+                        };
+                        self.reply(&token, true, Some(info));
+                    }
+                    None => self.reply_error(&token, "composer not created".into()),
+                }
+            }
+            "ime_select" => {
+                let id = command
+                    .get("source")
+                    .and_then(Value::as_str)
+                    .unwrap_or("")
+                    .to_string();
+                if id.is_empty() {
+                    self.reply_error(&token, "missing source id".into());
+                } else {
+                    // Try the per-context selection (works only when the app
+                    // is active) plus the process-global TIS selection.
+                    let mut detail = String::new();
+                    let borrowed = self.composer.borrow();
+                    if let Some(c) = borrowed.as_ref() {
+                        if let Some(ctx) = c.input.inputContext() {
+                            unsafe {
+                                ctx.setSelectedKeyboardInputSource(Some(&ns(&id)));
+                                let cur = ctx
+                                    .selectedKeyboardInputSource()
+                                    .map(|s| s.to_string())
+                                    .unwrap_or_else(|| "none".into());
+                                detail.push_str(&format!("ctx={cur} "));
+                            }
+                        }
+                    }
+                    match select_input_source(&id) {
+                        Ok(()) => detail.push_str("tis=ok"),
+                        Err(e) => detail.push_str(&format!("tis={e}")),
+                    }
+                    self.reply(&token, true, Some(json!({"detail": detail})));
+                }
+            }
+            // Drive the NSTextInputClient entry points the IME itself calls.
+            // Input-method source selection needs a real user gesture on
+            // macOS 26, so composition is emulated through the same calls.
+            "ime_mark" | "ime_insert" | "ime_discard" => {
+                let value = command
+                    .get("text")
+                    .and_then(Value::as_str)
+                    .unwrap_or("")
+                    .to_string();
+                let borrowed = self.composer.borrow();
+                match borrowed.as_ref() {
+                    Some(c) => {
+                        let tv: &NSTextView = &c.input;
+                        unsafe {
+                            match name.as_str() {
+                                "ime_mark" => {
+                                    let sel = tv.selectedRange();
+                                    tv.setMarkedText_selectedRange_replacementRange(
+                                        &ns(&value),
+                                        NSRange::new(sel.location + sel.length, 0),
+                                        NSRange::new(usize::MAX, 0),
+                                    );
+                                }
+                                "ime_insert" => {
+                                    tv.insertText_replacementRange(
+                                        &ns(&value),
+                                        NSRange::new(usize::MAX, 0),
+                                    );
+                                }
+                                _ => {
+                                    let marked = tv.markedRange();
+                                    tv.setMarkedText_selectedRange_replacementRange(
+                                        &ns(""),
+                                        NSRange::new(marked.location, 0),
+                                        marked,
+                                    );
+                                    tv.unmarkText();
+                                }
+                            }
+                        }
+                        self.reply(&token, true, None)
+                    }
+                    None => self.reply_error(&token, "composer not created".into()),
+                }
+            }
             "submit" => match self.submit() {
                 Ok(()) => self.reply(&token, true, None),
                 Err(error) => self.reply_error(&token, error),
@@ -1084,11 +1253,12 @@ define_class!(
                 start_frame.origin.y + down.y,
             );
             let mask = NSEventMask::LeftMouseDragged | NSEventMask::LeftMouseUp;
+            let distant = NSDate::distantFuture();
             loop {
                 let Some(next) = (unsafe {
                     window.nextEventMatchingMask_untilDate_inMode_dequeue(
                         mask,
-                        None,
+                        Some(&distant),
                         NSEventTrackingRunLoopMode,
                         true,
                     )
@@ -1158,7 +1328,7 @@ define_class!(
             let submit = event.keyCode() == K_VK_RETURN
                 && event
                     .modifierFlags()
-                    .contains(NSEventModifierFlags::Control);
+                    .contains(NSEventModifierFlags::Command);
             if submit && !self.hasMarkedText() && !ui.composing.get() {
                 if let Err(error) = ui.submit() {
                     eprintln!("submit rejected: {error}");
@@ -1444,7 +1614,17 @@ fn run_app_inner(manifest: &str, control: bool) -> Result<i32, String> {
     }));
 
     let app = NSApplication::sharedApplication(mtm);
-    app.setActivationPolicy(NSApplicationActivationPolicy::Accessory);
+    // MASCOT_REGULAR_APP=1 runs the app as a regular app for automation
+    // experiments (activation requires a user-initiated context on macOS 26;
+    // injected events do not count). Shipping mode is accessory.
+    let regular = std::env::var_os("MASCOT_REGULAR_APP").is_some();
+    unsafe {
+        app.setActivationPolicy(if regular {
+            NSApplicationActivationPolicy::Regular
+        } else {
+            NSApplicationActivationPolicy::Accessory
+        });
+    }
 
     let dip = ui.config.manifest.asset.logical_width_dip as f64;
     let mouse = NSEvent::mouseLocation();

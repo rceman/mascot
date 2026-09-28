@@ -101,8 +101,9 @@ static NSWindow *gComposerWindow;
 @implementation MascotInputTextView
 
 - (void)keyDown:(NSEvent *)event {
+    // macOS convention: Cmd+Return submits, plain Return inserts a newline.
     BOOL submit = event.keyCode == 36 &&
-        (event.modifierFlags & NSEventModifierFlagControl) != 0;
+        (event.modifierFlags & NSEventModifierFlagCommand) != 0;
     if (submit && !self.hasMarkedText) {
         goUISubmit();
         return;
@@ -238,7 +239,13 @@ void mascot_post_control(void) {
 int mascot_app_init(void) {
     @autoreleasepool {
         [NSApplication sharedApplication];
-        [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+        // MASCOT_REGULAR_APP=1 runs as a regular app for automation
+        // experiments (accessory apps cannot be programmatically activated
+        // on macOS 26). Shipping mode is accessory.
+        const char *regular = getenv("MASCOT_REGULAR_APP");
+        [NSApp setActivationPolicy:(regular != NULL && regular[0] != '\0'
+            ? NSApplicationActivationPolicyRegular
+            : NSApplicationActivationPolicyAccessory)];
     }
     return 1;
 }
@@ -524,6 +531,79 @@ void mascot_unregister_hotkeys(void) {
     if (gToggleKey != NULL) { UnregisterEventHotKey(gToggleKey); gToggleKey = NULL; }
     if (gCancelKey != NULL) { UnregisterEventHotKey(gCancelKey); gCancelKey = NULL; }
     if (gHotkeyHandler != NULL) { RemoveEventHandler(gHotkeyHandler); gHotkeyHandler = NULL; }
+}
+
+// -------------------------------------------------------------- IME helpers
+//
+// Input-method source selection requires a genuine user gesture on
+// macOS 26, so composition is emulated through the same NSTextInputClient
+// entry points the IME calls (setMarkedText:/insertText:/unmarkText).
+
+int mascot_ime_select(const char *utf8) {
+    @autoreleasepool {
+        NSString *identifier = [[NSString alloc] initWithUTF8String:utf8 ?: ""];
+        NSTextInputContext *ctx = gInputView.inputContext;
+        if (ctx != nil) {
+            ctx.selectedKeyboardInputSource = identifier;
+        }
+        CFArrayRef list = TISCreateInputSourceList(NULL, true);
+        if (list == NULL) return -1;
+        OSStatus status = paramErr;
+        for (CFIndex i = 0; i < CFArrayGetCount(list); i++) {
+            TISInputSourceRef source =
+                (TISInputSourceRef)CFArrayGetValueAtIndex(list, i);
+            CFStringRef sid = (CFStringRef)TISGetInputSourceProperty(
+                source, kTISPropertyInputSourceID);
+            if (sid != NULL && CFStringCompare(sid, (__bridge CFStringRef)identifier, 0) == 0) {
+                status = TISSelectInputSource(source);
+                break;
+            }
+        }
+        CFRelease(list);
+        return (int)status;
+    }
+}
+
+void mascot_ime_mark(const char *utf8) {
+    @autoreleasepool {
+        if (gInputView == nil) return;
+        NSString *s = [[NSString alloc] initWithUTF8String:utf8 ?: ""];
+        NSRange sel = gInputView.selectedRange;
+        [gInputView setMarkedText:s
+                    selectedRange:NSMakeRange(sel.location + sel.length, 0)
+                 replacementRange:NSMakeRange(NSNotFound, 0)];
+    }
+}
+
+void mascot_ime_insert(const char *utf8) {
+    @autoreleasepool {
+        if (gInputView == nil) return;
+        NSString *s = [[NSString alloc] initWithUTF8String:utf8 ?: ""];
+        [gInputView insertText:s replacementRange:NSMakeRange(NSNotFound, 0)];
+    }
+}
+
+void mascot_ime_discard(void) {
+    @autoreleasepool {
+        if (gInputView == nil) return;
+        NSRange marked = gInputView.markedRange;
+        [gInputView setMarkedText:@""
+                    selectedRange:NSMakeRange(marked.location, 0)
+                 replacementRange:marked];
+        [gInputView unmarkText];
+    }
+}
+
+int mascot_focus_info(void) {
+    @autoreleasepool {
+        if (gComposerWindow == nil) return 0;
+        int bits = 0;
+        if (gComposerWindow.keyWindow) bits |= 1;
+        if (gComposerWindow.mainWindow) bits |= 2;
+        NSResponder *fr = gComposerWindow.firstResponder;
+        if (fr == gInputView) bits |= 4;
+        return bits;
+    }
 }
 
 void mascot_run(void) {

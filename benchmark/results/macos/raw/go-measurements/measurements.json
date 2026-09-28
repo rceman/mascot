@@ -1,0 +1,64 @@
+{
+  "candidate": "go",
+  "binary": "/Users/therceman/Documents/git/mascot/go/packaging/MascotGo.app/Contents/MacOS/mascot",
+  "measurement_sources": {
+    "visibility": "CGWindowListCopyWindowInfo bounds helper",
+    "rss": "ps -o rss (bytes)",
+    "physical_footprint": "footprint --noCategories -f bytes",
+    "cpu": "top -l 2 delta sample",
+    "threads": "ps -M line count",
+    "children": "recursive pgrep -P",
+    "clock": "time.monotonic_ns"
+  },
+  "runs": [
+    {
+      "exit_code": 0,
+      "launch_to_visible_ms": 349.9,
+      "idle_mascot": {
+        "rss_bytes": 71286784,
+        "physical_footprint_bytes": 38880048,
+        "threads": 13,
+        "cpu_percent": 0.0,
+        "children": []
+      },
+      "first_composer_activation_ms": 422.1,
+      "composer_open": {
+        "rss_bytes": 100466688,
+        "physical_footprint_bytes": 48497552,
+        "threads": 13,
+        "cpu_percent": 0.0,
+        "children": []
+      },
+      "warm_composer_activation_ms": [
+        322.7,
+        158.6,
+        326.2,
+        323.3,
+        329.8
+      ],
+      "streaming_peak": {
+        "rss_bytes": 122404864,
+        "physical_footprint_bytes": 81511504,
+        "threads": 17,
+        "children": [
+          54641
+        ]
+      },
+      "stability": {
+        "show_hide_failures": 0,
+        "submit_cancel_failures": 0,
+        "rss_before": 134922240,
+        "rss_after": 140099584,
+        "rss_delta_bytes": 5177344
+      },
+      "clean_shutdown": true,
+      "shutdown_ms": 17.4,
+      "stderr_bytes": 0,
+      "repeat_launch_to_visible_ms": [
+        335.0,
+        267.4,
+        263.9
+      ]
+    }
+  ]
+}

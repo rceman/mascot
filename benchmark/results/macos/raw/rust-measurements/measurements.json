@@ -1,0 +1,64 @@
+{
+  "candidate": "rust",
+  "binary": "/Users/therceman/Documents/git/mascot/rust/packaging/MascotRust.app/Contents/MacOS/mascot",
+  "measurement_sources": {
+    "visibility": "CGWindowListCopyWindowInfo bounds helper",
+    "rss": "ps -o rss (bytes)",
+    "physical_footprint": "footprint --noCategories -f bytes",
+    "cpu": "top -l 2 delta sample",
+    "threads": "ps -M line count",
+    "children": "recursive pgrep -P",
+    "clock": "time.monotonic_ns"
+  },
+  "runs": [
+    {
+      "exit_code": 0,
+      "launch_to_visible_ms": 400.1,
+      "idle_mascot": {
+        "rss_bytes": 64864256,
+        "physical_footprint_bytes": 35701408,
+        "threads": 9,
+        "cpu_percent": 0.0,
+        "children": []
+      },
+      "first_composer_activation_ms": 426.9,
+      "composer_open": {
+        "rss_bytes": 113000448,
+        "physical_footprint_bytes": 45908712,
+        "threads": 9,
+        "cpu_percent": 0.0,
+        "children": []
+      },
+      "warm_composer_activation_ms": [
+        332.7,
+        325.2,
+        327.0,
+        330.6,
+        324.2
+      ],
+      "streaming_peak": {
+        "rss_bytes": 120143872,
+        "physical_footprint_bytes": 73221080,
+        "threads": 12,
+        "children": [
+          54551
+        ]
+      },
+      "stability": {
+        "show_hide_failures": 0,
+        "submit_cancel_failures": 0,
+        "rss_before": 126910464,
+        "rss_after": 129957888,
+        "rss_delta_bytes": 3047424
+      },
+      "clean_shutdown": true,
+      "shutdown_ms": 25.9,
+      "stderr_bytes": 0,
+      "repeat_launch_to_visible_ms": [
+        326.5,
+        267.1,
+        279.9
+      ]
+    }
+  ]
+}

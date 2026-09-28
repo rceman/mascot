@@ -1,0 +1,91 @@
+{
+  "candidate": "go",
+  "checks": {
+    "initial_idle": {
+      "ok": true,
+      "detail": "state=idle"
+    },
+    "hotkey_toggle_show": {
+      "ok": true,
+      "detail": "visible=True"
+    },
+    "hotkey_toggle_hide": {
+      "ok": true,
+      "detail": "visible=False"
+    },
+    "composer_focus": {
+      "ok": true,
+      "detail": "focus={'class': '', 'is_input': True, 'key': True, 'main': True}"
+    },
+    "typing_ascii": {
+      "ok": true,
+      "detail": "input='hello mascot'"
+    },
+    "unicode_roundtrip": {
+      "ok": true,
+      "detail": "input_len=69 missing=[]"
+    },
+    "ime_marked_text": {
+      "ok": true,
+      "detail": "composing=True input='\u306b\u307b\u3093\u3054'"
+    },
+    "ime_commit": {
+      "ok": true,
+      "detail": "input='\u65e5\u672c\u8a9e'"
+    },
+    "ime_cancel": {
+      "ok": true,
+      "detail": "during=True after=False input='\u65e5\u672c\u8a9e'"
+    },
+    "submit_blocked_while_composing": {
+      "ok": true,
+      "detail": "composing=True state=idle"
+    },
+    "hide_during_composition": {
+      "ok": true,
+      "detail": "composing=False input='\u65e5\u672c\u8a9e\u3042'"
+    },
+    "cmd_enter_submits": {
+      "ok": true,
+      "detail": "state=streaming composing=False"
+    },
+    "hotkey_cancel": {
+      "ok": true,
+      "detail": "state=cancelled composing=False req=1"
+    },
+    "plain_enter_newline": {
+      "ok": true,
+      "detail": "input='line1\\nline2'"
+    },
+    "stream_completes": {
+      "ok": true,
+      "detail": "state=complete seq=99"
+    },
+    "mascot_drag_moves_pair": {
+      "ok": true,
+      "detail": "mascot (928, 238) -> (1048, 298); composer (640, 296) -> (760, 356)"
+    },
+    "click_through_transparent": {
+      "ok": true,
+      "detail": "mascot 1048,298 -> (1048, 298)"
+    },
+    "screenshots": {
+      "ok": true,
+      "detail": "results={'response': True, 'mascot': True, 'composer': True, 'perched': True}"
+    },
+    "clean_shutdown": {
+      "ok": true,
+      "detail": "exit=0"
+    }
+  },
+  "screenshots": {
+    "response": true,
+    "mascot": true,
+    "composer": true,
+    "perched": true
+  },
+  "notes": [
+    "real IME source switch unavailable under automation (macOS 26 requires a genuine user gesture; TISSelectInputSource and setSelectedKeyboardInputSource both reject input-method sources for this app); composition pipeline verified via the same NSTextInputClient entry points the IME calls"
+  ],
+  "app_stderr_tail": ""
+}

@@ -519,6 +519,29 @@ func (ui *UI) handleControl(command map[string]json.RawMessage) {
 	case "hide":
 		ui.hideComposer()
 		ui.reply(token, true, nil)
+	case "ime_select":
+		id := rawString(command, "source")
+		status := mascotIMESelect(id)
+		ui.reply(token, true, map[string]any{
+			"detail": fmt.Sprintf("tis=%d", status),
+		})
+	case "ime_mark":
+		mascotIMEMark(rawString(command, "text"))
+		ui.reply(token, true, nil)
+	case "ime_insert":
+		mascotIMEInsert(rawString(command, "text"))
+		ui.reply(token, true, nil)
+	case "ime_discard":
+		mascotIMEDiscard()
+		ui.reply(token, true, nil)
+	case "focus":
+		bits := mascotFocusInfo()
+		ui.reply(token, true, map[string]any{
+			"key":      bits&1 != 0,
+			"main":     bits&2 != 0,
+			"is_input": bits&4 != 0,
+			"class":    "",
+		})
 	case "submit":
 		if err := ui.submit(); err != nil {
 			ui.replyError(token, err.Error())

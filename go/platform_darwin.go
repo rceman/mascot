@@ -126,6 +126,32 @@ func mascotUnmark(tv unsafe.Pointer) {
 	C.mascot_unmark(tv)
 }
 
+func mascotIMESelect(id string) int {
+	cstr := C.CString(id)
+	defer C.free(unsafe.Pointer(cstr))
+	return int(C.mascot_ime_select(cstr))
+}
+
+func mascotIMEMark(text string) {
+	cstr := C.CString(text)
+	defer C.free(unsafe.Pointer(cstr))
+	C.mascot_ime_mark(cstr)
+}
+
+func mascotIMEInsert(text string) {
+	cstr := C.CString(text)
+	defer C.free(unsafe.Pointer(cstr))
+	C.mascot_ime_insert(cstr)
+}
+
+func mascotIMEDiscard() {
+	C.mascot_ime_discard()
+}
+
+func mascotFocusInfo() int {
+	return int(C.mascot_focus_info())
+}
+
 func mascotRegisterHotkeys() bool {
 	return C.mascot_register_hotkeys() != 0
 }

@@ -1,0 +1,632 @@
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":0,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"m1"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"idle","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":0,"request_id":0,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":2,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":0,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346384030387","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346384035037","request_id":1,"seq":0}
+{"emit_qpc":"00000013346384300195","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346384301543","request_id":1,"seq":1}
+{"accepted_qpc":"13346384444516","event":"chunk_accepted","request_id":1,"seq":0}
+{"accepted_qpc":"13346384455452","event":"chunk_accepted","request_id":1,"seq":1}
+{"emit_qpc":"00000013346384589245","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346384589871","request_id":1,"seq":2}
+{"accepted_qpc":"13346384630647","event":"chunk_accepted","request_id":1,"seq":2}
+{"emit_qpc":"00000013346384878252","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346384878791","request_id":1,"seq":3}
+{"accepted_qpc":"13346384880580","event":"chunk_accepted","request_id":1,"seq":3}
+{"emit_qpc":"00000013346385167529","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346385168475","request_id":1,"seq":4}
+{"accepted_qpc":"13346385170843","event":"chunk_accepted","request_id":1,"seq":4}
+{"emit_qpc":"00000013346385456882","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346385457475","request_id":1,"seq":5}
+{"accepted_qpc":"13346385458695","event":"chunk_accepted","request_id":1,"seq":5}
+{"emit_qpc":"00000013346385745739","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346385746427","request_id":1,"seq":6}
+{"accepted_qpc":"13346385754954","event":"chunk_accepted","request_id":1,"seq":6}
+{"emit_qpc":"00000013346386035013","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346386036260","request_id":1,"seq":7}
+{"accepted_qpc":"13346386037715","event":"chunk_accepted","request_id":1,"seq":7}
+{"emit_qpc":"00000013346386324089","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346386324671","request_id":1,"seq":8}
+{"accepted_qpc":"13346386326132","event":"chunk_accepted","request_id":1,"seq":8}
+{"emit_qpc":"00000013346386613549","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346386614407","request_id":1,"seq":9}
+{"accepted_qpc":"13346386615671","event":"chunk_accepted","request_id":1,"seq":9}
+{"emit_qpc":"00000013346386905498","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346386905921","request_id":1,"seq":10}
+{"accepted_qpc":"13346386907344","event":"chunk_accepted","request_id":1,"seq":10}
+{"emit_qpc":"00000013346387178251","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346387179438","request_id":1,"seq":11}
+{"accepted_qpc":"13346387181213","event":"chunk_accepted","request_id":1,"seq":11}
+{"emit_qpc":"00000013346387468262","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346387469007","request_id":1,"seq":12}
+{"accepted_qpc":"13346387513445","event":"chunk_accepted","request_id":1,"seq":12}
+{"emit_qpc":"00000013346387757221","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346387757777","request_id":1,"seq":13}
+{"accepted_qpc":"13346387888492","event":"chunk_accepted","request_id":1,"seq":13}
+{"emit_qpc":"00000013346388046078","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346388046566","request_id":1,"seq":14}
+{"accepted_qpc":"13346388047741","event":"chunk_accepted","request_id":1,"seq":14}
+{"emit_qpc":"00000013346388335116","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346388335571","request_id":1,"seq":15}
+{"accepted_qpc":"13346388336453","event":"chunk_accepted","request_id":1,"seq":15}
+{"emit_qpc":"00000013346388623829","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346388624135","request_id":1,"seq":16}
+{"accepted_qpc":"13346388654904","event":"chunk_accepted","request_id":1,"seq":16}
+{"emit_qpc":"00000013346388902885","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346388903801","request_id":1,"seq":17}
+{"accepted_qpc":"13346388904982","event":"chunk_accepted","request_id":1,"seq":17}
+{"emit_qpc":"00000013346389189152","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346389189933","request_id":1,"seq":18}
+{"accepted_qpc":"13346389191037","event":"chunk_accepted","request_id":1,"seq":18}
+{"emit_qpc":"00000013346389435386","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346389436493","request_id":1,"seq":19}
+{"accepted_qpc":"13346389453890","event":"chunk_accepted","request_id":1,"seq":19}
+{"emit_qpc":"00000013346389724407","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346389724690","request_id":1,"seq":20}
+{"accepted_qpc":"13346389725616","event":"chunk_accepted","request_id":1,"seq":20}
+{"emit_qpc":"00000013346389977972","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346389978588","request_id":1,"seq":21}
+{"accepted_qpc":"13346389981063","event":"chunk_accepted","request_id":1,"seq":21}
+{"emit_qpc":"00000013346390267103","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346390267681","request_id":1,"seq":22}
+{"accepted_qpc":"13346390270846","event":"chunk_accepted","request_id":1,"seq":22}
+{"emit_qpc":"00000013346390556447","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346390558213","request_id":1,"seq":23}
+{"accepted_qpc":"13346390645023","event":"chunk_accepted","request_id":1,"seq":23}
+{"emit_qpc":"00000013346390845273","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346390845758","request_id":1,"seq":24}
+{"accepted_qpc":"13346390846650","event":"chunk_accepted","request_id":1,"seq":24}
+{"emit_qpc":"00000013346391134896","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346391135337","request_id":1,"seq":25}
+{"accepted_qpc":"13346391136310","event":"chunk_accepted","request_id":1,"seq":25}
+{"emit_qpc":"00000013346391396343","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346391397006","request_id":1,"seq":26}
+{"accepted_qpc":"13346391469593","event":"chunk_accepted","request_id":1,"seq":26}
+{"emit_qpc":"00000013346391669154","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346391669739","request_id":1,"seq":27}
+{"accepted_qpc":"13346391670961","event":"chunk_accepted","request_id":1,"seq":27}
+{"emit_qpc":"00000013346391957908","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346391958345","request_id":1,"seq":28}
+{"accepted_qpc":"13346391959232","event":"chunk_accepted","request_id":1,"seq":28}
+{"emit_qpc":"00000013346392246654","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346392246992","request_id":1,"seq":29}
+{"accepted_qpc":"13346392247814","event":"chunk_accepted","request_id":1,"seq":29}
+{"emit_qpc":"00000013346392504541","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346392505093","request_id":1,"seq":30}
+{"accepted_qpc":"13346392506905","event":"chunk_accepted","request_id":1,"seq":30}
+{"emit_qpc":"00000013346392793517","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346392794280","request_id":1,"seq":31}
+{"accepted_qpc":"13346392795572","event":"chunk_accepted","request_id":1,"seq":31}
+{"emit_qpc":"00000013346393082475","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346393083047","request_id":1,"seq":32}
+{"accepted_qpc":"13346393084014","event":"chunk_accepted","request_id":1,"seq":32}
+{"emit_qpc":"00000013346393371334","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346393371660","request_id":1,"seq":33}
+{"accepted_qpc":"13346393445688","event":"chunk_accepted","request_id":1,"seq":33}
+{"emit_qpc":"00000013346393660153","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346393660449","request_id":1,"seq":34}
+{"accepted_qpc":"13346393661249","event":"chunk_accepted","request_id":1,"seq":34}
+{"emit_qpc":"00000013346393949101","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346393949488","request_id":1,"seq":35}
+{"accepted_qpc":"13346393951313","event":"chunk_accepted","request_id":1,"seq":35}
+{"emit_qpc":"00000013346394238395","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346394239583","request_id":1,"seq":36}
+{"accepted_qpc":"13346394265936","event":"chunk_accepted","request_id":1,"seq":36}
+{"emit_qpc":"00000013346394528162","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346394528617","request_id":1,"seq":37}
+{"accepted_qpc":"13346394529565","event":"chunk_accepted","request_id":1,"seq":37}
+{"emit_qpc":"00000013346394777148","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346394777550","request_id":1,"seq":38}
+{"accepted_qpc":"13346394778272","event":"chunk_accepted","request_id":1,"seq":38}
+{"emit_qpc":"00000013346395067595","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346395068260","request_id":1,"seq":39}
+{"accepted_qpc":"13346395069115","event":"chunk_accepted","request_id":1,"seq":39}
+{"emit_qpc":"00000013346395356529","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346395358307","request_id":1,"seq":40}
+{"accepted_qpc":"13346395368854","event":"chunk_accepted","request_id":1,"seq":40}
+{"emit_qpc":"00000013346395645572","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346395646028","request_id":1,"seq":41}
+{"accepted_qpc":"13346395647274","event":"chunk_accepted","request_id":1,"seq":41}
+{"emit_qpc":"00000013346395934271","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346395934591","request_id":1,"seq":42}
+{"accepted_qpc":"13346395935528","event":"chunk_accepted","request_id":1,"seq":42}
+{"emit_qpc":"00000013346396223299","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346396223607","request_id":1,"seq":43}
+{"accepted_qpc":"13346396263800","event":"chunk_accepted","request_id":1,"seq":43}
+{"emit_qpc":"00000013346396512210","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346396512740","request_id":1,"seq":44}
+{"accepted_qpc":"13346396513773","event":"chunk_accepted","request_id":1,"seq":44}
+{"emit_qpc":"00000013346396776347","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346396777574","request_id":1,"seq":45}
+{"accepted_qpc":"13346396779143","event":"chunk_accepted","request_id":1,"seq":45}
+{"emit_qpc":"00000013346397064927","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346397065338","request_id":1,"seq":46}
+{"accepted_qpc":"13346397073886","event":"chunk_accepted","request_id":1,"seq":46}
+{"emit_qpc":"00000013346397354682","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346397355713","request_id":1,"seq":47}
+{"accepted_qpc":"13346397439839","event":"chunk_accepted","request_id":1,"seq":47}
+{"emit_qpc":"00000013346397634379","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346397634821","request_id":1,"seq":48}
+{"accepted_qpc":"13346397635659","event":"chunk_accepted","request_id":1,"seq":48}
+{"emit_qpc":"00000013346397923419","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346397923860","request_id":1,"seq":49}
+{"accepted_qpc":"13346397924970","event":"chunk_accepted","request_id":1,"seq":49}
+{"emit_qpc":"00000013346398212315","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346398213161","request_id":1,"seq":50}
+{"accepted_qpc":"13346398258784","event":"chunk_accepted","request_id":1,"seq":50}
+{"emit_qpc":"00000013346398502071","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346398502479","request_id":1,"seq":51}
+{"accepted_qpc":"13346398504026","event":"chunk_accepted","request_id":1,"seq":51}
+{"emit_qpc":"00000013346398776981","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346398777318","request_id":1,"seq":52}
+{"accepted_qpc":"13346398778241","event":"chunk_accepted","request_id":1,"seq":52}
+{"emit_qpc":"00000013346399065967","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346399066517","request_id":1,"seq":53}
+{"accepted_qpc":"13346399067713","event":"chunk_accepted","request_id":1,"seq":53}
+{"emit_qpc":"00000013346399348310","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346399349500","request_id":1,"seq":54}
+{"accepted_qpc":"13346399367766","event":"chunk_accepted","request_id":1,"seq":54}
+{"emit_qpc":"00000013346399599563","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346399599983","request_id":1,"seq":55}
+{"accepted_qpc":"13346399600663","event":"chunk_accepted","request_id":1,"seq":55}
+{"emit_qpc":"00000013346399888782","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346399889547","request_id":1,"seq":56}
+{"accepted_qpc":"13346399890618","event":"chunk_accepted","request_id":1,"seq":56}
+{"emit_qpc":"00000013346400178418","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346400178730","request_id":1,"seq":57}
+{"accepted_qpc":"13346400255270","event":"chunk_accepted","request_id":1,"seq":57}
+{"emit_qpc":"00000013346400467530","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346400468124","request_id":1,"seq":58}
+{"accepted_qpc":"13346400470436","event":"chunk_accepted","request_id":1,"seq":58}
+{"emit_qpc":"00000013346400734510","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346400735512","request_id":1,"seq":59}
+{"accepted_qpc":"13346400736615","event":"chunk_accepted","request_id":1,"seq":59}
+{"emit_qpc":"00000013346400999058","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346401000152","request_id":1,"seq":60}
+{"accepted_qpc":"13346401064178","event":"chunk_accepted","request_id":1,"seq":60}
+{"emit_qpc":"00000013346401288784","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346401289324","request_id":1,"seq":61}
+{"accepted_qpc":"13346401291123","event":"chunk_accepted","request_id":1,"seq":61}
+{"emit_qpc":"00000013346401577917","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346401579063","request_id":1,"seq":62}
+{"accepted_qpc":"13346401581060","event":"chunk_accepted","request_id":1,"seq":62}
+{"emit_qpc":"00000013346401867590","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346401868639","request_id":1,"seq":63}
+{"accepted_qpc":"13346401875568","event":"chunk_accepted","request_id":1,"seq":63}
+{"emit_qpc":"00000013346402156970","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346402158081","request_id":1,"seq":64}
+{"accepted_qpc":"13346402170112","event":"chunk_accepted","request_id":1,"seq":64}
+{"emit_qpc":"00000013346402446508","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346402447524","request_id":1,"seq":65}
+{"accepted_qpc":"13346402449572","event":"chunk_accepted","request_id":1,"seq":65}
+{"emit_qpc":"00000013346402731747","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346402732233","request_id":1,"seq":66}
+{"accepted_qpc":"13346402733087","event":"chunk_accepted","request_id":1,"seq":66}
+{"emit_qpc":"00000013346402982145","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346402983045","request_id":1,"seq":67}
+{"accepted_qpc":"13346403058921","event":"chunk_accepted","request_id":1,"seq":67}
+{"emit_qpc":"00000013346403271775","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346403273410","request_id":1,"seq":68}
+{"accepted_qpc":"13346403275530","event":"chunk_accepted","request_id":1,"seq":68}
+{"emit_qpc":"00000013346403560699","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346403561061","request_id":1,"seq":69}
+{"accepted_qpc":"13346403562322","event":"chunk_accepted","request_id":1,"seq":69}
+{"emit_qpc":"00000013346403849606","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346403850021","request_id":1,"seq":70}
+{"accepted_qpc":"13346403865403","event":"chunk_accepted","request_id":1,"seq":70}
+{"emit_qpc":"00000013346404138704","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346404139048","request_id":1,"seq":71}
+{"accepted_qpc":"13346404237324","event":"chunk_accepted","request_id":1,"seq":71}
+{"emit_qpc":"00000013346404427910","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346404429481","request_id":1,"seq":72}
+{"accepted_qpc":"13346404431320","event":"chunk_accepted","request_id":1,"seq":72}
+{"emit_qpc":"00000013346404688696","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346404689189","request_id":1,"seq":73}
+{"accepted_qpc":"13346404690331","event":"chunk_accepted","request_id":1,"seq":73}
+{"emit_qpc":"00000013346404940097","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346404940636","request_id":1,"seq":74}
+{"accepted_qpc":"13346405055714","event":"chunk_accepted","request_id":1,"seq":74}
+{"emit_qpc":"00000013346405189082","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346405189866","request_id":1,"seq":75}
+{"accepted_qpc":"13346405190988","event":"chunk_accepted","request_id":1,"seq":75}
+{"emit_qpc":"00000013346405478651","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346405479545","request_id":1,"seq":76}
+{"accepted_qpc":"13346405480740","event":"chunk_accepted","request_id":1,"seq":76}
+{"emit_qpc":"00000013346405767785","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346405768557","request_id":1,"seq":77}
+{"accepted_qpc":"13346405862951","event":"chunk_accepted","request_id":1,"seq":77}
+{"emit_qpc":"00000013346406057036","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346406057583","request_id":1,"seq":78}
+{"accepted_qpc":"13346406059247","event":"chunk_accepted","request_id":1,"seq":78}
+{"emit_qpc":"00000013346406346237","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346406346776","request_id":1,"seq":79}
+{"accepted_qpc":"13346406348100","event":"chunk_accepted","request_id":1,"seq":79}
+{"emit_qpc":"00000013346406635506","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346406636153","request_id":1,"seq":80}
+{"accepted_qpc":"13346406662281","event":"chunk_accepted","request_id":1,"seq":80}
+{"emit_qpc":"00000013346406924507","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346406924913","request_id":1,"seq":81}
+{"accepted_qpc":"13346406926027","event":"chunk_accepted","request_id":1,"seq":81}
+{"emit_qpc":"00000013346407186325","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346407187147","request_id":1,"seq":82}
+{"accepted_qpc":"13346407189463","event":"chunk_accepted","request_id":1,"seq":82}
+{"emit_qpc":"00000013346407476188","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346407476823","request_id":1,"seq":83}
+{"accepted_qpc":"13346407477789","event":"chunk_accepted","request_id":1,"seq":83}
+{"emit_qpc":"00000013346407764977","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346407765468","request_id":1,"seq":84}
+{"accepted_qpc":"13346407767853","event":"chunk_accepted","request_id":1,"seq":84}
+{"emit_qpc":"00000013346408053806","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346408054290","request_id":1,"seq":85}
+{"accepted_qpc":"13346408059146","event":"chunk_accepted","request_id":1,"seq":85}
+{"emit_qpc":"00000013346408342646","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346408343095","request_id":1,"seq":86}
+{"accepted_qpc":"13346408344730","event":"chunk_accepted","request_id":1,"seq":86}
+{"emit_qpc":"00000013346408625138","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346408626414","request_id":1,"seq":87}
+{"accepted_qpc":"13346408662520","event":"chunk_accepted","request_id":1,"seq":87}
+{"emit_qpc":"00000013346408914663","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346408915869","request_id":1,"seq":88}
+{"accepted_qpc":"13346408916961","event":"chunk_accepted","request_id":1,"seq":88}
+{"emit_qpc":"00000013346409177230","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346409177685","request_id":1,"seq":89}
+{"accepted_qpc":"13346409178779","event":"chunk_accepted","request_id":1,"seq":89}
+{"emit_qpc":"00000013346409454161","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346409455110","request_id":1,"seq":90}
+{"accepted_qpc":"13346409478055","event":"chunk_accepted","request_id":1,"seq":90}
+{"emit_qpc":"00000013346409742947","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346409743385","request_id":1,"seq":91}
+{"accepted_qpc":"13346409847502","event":"chunk_accepted","request_id":1,"seq":91}
+{"emit_qpc":"00000013346410031751","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346410032247","request_id":1,"seq":92}
+{"accepted_qpc":"13346410033394","event":"chunk_accepted","request_id":1,"seq":92}
+{"emit_qpc":"00000013346410320410","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346410320811","request_id":1,"seq":93}
+{"accepted_qpc":"13346410321690","event":"chunk_accepted","request_id":1,"seq":93}
+{"emit_qpc":"00000013346410608889","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346410609244","request_id":1,"seq":94}
+{"accepted_qpc":"13346410667806","event":"chunk_accepted","request_id":1,"seq":94}
+{"emit_qpc":"00000013346410897855","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346410898236","request_id":1,"seq":95}
+{"accepted_qpc":"13346410899559","event":"chunk_accepted","request_id":1,"seq":95}
+{"emit_qpc":"00000013346411177283","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346411177761","request_id":1,"seq":96}
+{"accepted_qpc":"13346411181928","event":"chunk_accepted","request_id":1,"seq":96}
+{"emit_qpc":"00000013346411466510","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346411466905","request_id":1,"seq":97}
+{"accepted_qpc":"13346411468208","event":"chunk_accepted","request_id":1,"seq":97}
+{"emit_qpc":"00000013346411740796","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346411741318","request_id":1,"seq":98}
+{"accepted_qpc":"13346411765066","event":"chunk_accepted","request_id":1,"seq":98}
+{"emit_qpc":"00000013346411990551","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346411991289","request_id":1,"seq":99}
+{"accepted_qpc":"13346411993016","event":"chunk_accepted","request_id":1,"seq":99}
+{"event":"terminal","kind":"complete","last_seq":99,"qpc":"13346412012419","request_id":1}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":false,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"h"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"s"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":5050,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":99,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"complete","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":1,"request_id":1,"response_hwnd":"46057709568","response_utf8_bytes":5050},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":75,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":2,"request_id":2,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346419630555","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346419631301","request_id":2,"seq":0}
+{"accepted_qpc":"13346419644987","event":"chunk_accepted","request_id":2,"seq":0}
+{"emit_qpc":"00000013346419919679","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346419920635","request_id":2,"seq":1}
+{"accepted_qpc":"13346419954255","event":"chunk_accepted","request_id":2,"seq":1}
+{"emit_qpc":"00000013346420181883","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346420182496","request_id":2,"seq":2}
+{"accepted_qpc":"13346420284316","event":"chunk_accepted","request_id":2,"seq":2}
+{"emit_qpc":"00000013346420471218","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346420471970","request_id":2,"seq":3}
+{"accepted_qpc":"13346420473744","event":"chunk_accepted","request_id":2,"seq":3}
+{"emit_qpc":"00000013346420760998","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346420761794","request_id":2,"seq":4}
+{"accepted_qpc":"13346420764366","event":"chunk_accepted","request_id":2,"seq":4}
+{"emit_qpc":"00000013346421005085","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346421006073","request_id":2,"seq":5}
+{"accepted_qpc":"13346421009056","event":"chunk_accepted","request_id":2,"seq":5}
+{"emit_qpc":"00000013346421256829","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346421257559","request_id":2,"seq":6}
+{"accepted_qpc":"13346421259603","event":"chunk_accepted","request_id":2,"seq":6}
+{"emit_qpc":"00000013346421546634","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346421548207","request_id":2,"seq":7}
+{"emit_qpc":"00000013346421835954","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346421836715","request_id":2,"seq":8}
+{"accepted_qpc":"13346422114914","event":"chunk_accepted","request_id":2,"seq":7}
+{"emit_qpc":"00000013346422117591","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346422118126","request_id":2,"seq":9}
+{"accepted_qpc":"13346422128895","event":"chunk_accepted","request_id":2,"seq":8}
+{"accepted_qpc":"13346422141417","event":"chunk_accepted","request_id":2,"seq":9}
+{"emit_qpc":"00000013346422406691","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346422407149","request_id":2,"seq":10}
+{"accepted_qpc":"13346422408474","event":"chunk_accepted","request_id":2,"seq":10}
+{"emit_qpc":"00000013346422695649","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346422696201","request_id":2,"seq":11}
+{"emit_qpc":"00000013346422984402","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346422984997","request_id":2,"seq":12}
+{"emit_qpc":"00000013346423273760","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346423274608","request_id":2,"seq":13}
+{"emit_qpc":"00000013346423562633","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346423563089","request_id":2,"seq":14}
+{"emit_qpc":"00000013346423851748","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346423852544","request_id":2,"seq":15}
+{"emit_qpc":"00000013346424140621","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346424141293","request_id":2,"seq":16}
+{"emit_qpc":"00000013346424429802","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346424430626","request_id":2,"seq":17}
+{"emit_qpc":"00000013346424719860","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346424720242","request_id":2,"seq":18}
+{"emit_qpc":"00000013346425009057","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346425010085","request_id":2,"seq":19}
+{"emit_qpc":"00000013346425263821","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346425265083","request_id":2,"seq":20}
+{"emit_qpc":"00000013346425552528","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346425553021","request_id":2,"seq":21}
+{"emit_qpc":"00000013346425841396","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346425841895","request_id":2,"seq":22}
+{"emit_qpc":"00000013346426129907","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346426130319","request_id":2,"seq":23}
+{"emit_qpc":"00000013346426419057","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346426420250","request_id":2,"seq":24}
+{"emit_qpc":"00000013346426708158","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346426708631","request_id":2,"seq":25}
+{"emit_qpc":"00000013346426997219","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346426998087","request_id":2,"seq":26}
+{"emit_qpc":"00000013346427286471","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346427287265","request_id":2,"seq":27}
+{"emit_qpc":"00000013346427540955","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346427541269","request_id":2,"seq":28}
+{"emit_qpc":"00000013346427829419","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346427829886","request_id":2,"seq":29}
+{"emit_qpc":"00000013346428118255","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346428118701","request_id":2,"seq":30}
+{"emit_qpc":"00000013346428408048","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346428409314","request_id":2,"seq":31}
+{"emit_qpc":"00000013346428698622","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346428699778","request_id":2,"seq":32}
+{"emit_qpc":"00000013346428994363","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346428995327","request_id":2,"seq":33}
+{"emit_qpc":"00000013346429266075","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346429266998","request_id":2,"seq":34}
+{"emit_qpc":"00000013346429526191","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346429527090","request_id":2,"seq":35}
+{"emit_qpc":"00000013346429800997","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346429801908","request_id":2,"seq":36}
+{"emit_qpc":"00000013346430091544","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346430092531","request_id":2,"seq":37}
+{"emit_qpc":"00000013346430381126","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346430381636","request_id":2,"seq":38}
+{"emit_qpc":"00000013346430670187","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346430670938","request_id":2,"seq":39}
+{"emit_qpc":"00000013346430939963","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346430940669","request_id":2,"seq":40}
+{"emit_qpc":"00000013346431229156","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346431229822","request_id":2,"seq":41}
+{"emit_qpc":"00000013346431518463","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346431519058","request_id":2,"seq":42}
+{"emit_qpc":"00000013346431807710","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346431808595","request_id":2,"seq":43}
+{"emit_qpc":"00000013346432097397","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346432098504","request_id":2,"seq":44}
+{"accepted_qpc":"13346432120086","event":"chunk_accepted","request_id":2,"seq":11}
+{"accepted_qpc":"13346432143411","event":"chunk_accepted","request_id":2,"seq":12}
+{"accepted_qpc":"13346432152069","event":"chunk_accepted","request_id":2,"seq":13}
+{"accepted_qpc":"13346432159810","event":"chunk_accepted","request_id":2,"seq":14}
+{"accepted_qpc":"13346432169402","event":"chunk_accepted","request_id":2,"seq":15}
+{"accepted_qpc":"13346432180536","event":"chunk_accepted","request_id":2,"seq":16}
+{"accepted_qpc":"13346432185925","event":"chunk_accepted","request_id":2,"seq":17}
+{"accepted_qpc":"13346432191654","event":"chunk_accepted","request_id":2,"seq":18}
+{"accepted_qpc":"13346432199512","event":"chunk_accepted","request_id":2,"seq":19}
+{"accepted_qpc":"13346432208191","event":"chunk_accepted","request_id":2,"seq":20}
+{"accepted_qpc":"13346432212416","event":"chunk_accepted","request_id":2,"seq":21}
+{"accepted_qpc":"13346432217238","event":"chunk_accepted","request_id":2,"seq":22}
+{"accepted_qpc":"13346432223224","event":"chunk_accepted","request_id":2,"seq":23}
+{"accepted_qpc":"13346432231129","event":"chunk_accepted","request_id":2,"seq":24}
+{"accepted_qpc":"13346432235427","event":"chunk_accepted","request_id":2,"seq":25}
+{"accepted_qpc":"13346432240265","event":"chunk_accepted","request_id":2,"seq":26}
+{"accepted_qpc":"13346432246164","event":"chunk_accepted","request_id":2,"seq":27}
+{"accepted_qpc":"13346432254240","event":"chunk_accepted","request_id":2,"seq":28}
+{"accepted_qpc":"13346432258419","event":"chunk_accepted","request_id":2,"seq":29}
+{"accepted_qpc":"13346432263474","event":"chunk_accepted","request_id":2,"seq":30}
+{"accepted_qpc":"13346432269082","event":"chunk_accepted","request_id":2,"seq":31}
+{"accepted_qpc":"13346432277147","event":"chunk_accepted","request_id":2,"seq":32}
+{"accepted_qpc":"13346432281277","event":"chunk_accepted","request_id":2,"seq":33}
+{"accepted_qpc":"13346432286450","event":"chunk_accepted","request_id":2,"seq":34}
+{"accepted_qpc":"13346432292241","event":"chunk_accepted","request_id":2,"seq":35}
+{"accepted_qpc":"13346432300621","event":"chunk_accepted","request_id":2,"seq":36}
+{"accepted_qpc":"13346432304912","event":"chunk_accepted","request_id":2,"seq":37}
+{"accepted_qpc":"13346432310145","event":"chunk_accepted","request_id":2,"seq":38}
+{"accepted_qpc":"13346432315860","event":"chunk_accepted","request_id":2,"seq":39}
+{"accepted_qpc":"13346432325049","event":"chunk_accepted","request_id":2,"seq":40}
+{"accepted_qpc":"13346432329290","event":"chunk_accepted","request_id":2,"seq":41}
+{"accepted_qpc":"13346432335040","event":"chunk_accepted","request_id":2,"seq":42}
+{"accepted_qpc":"13346432340793","event":"chunk_accepted","request_id":2,"seq":43}
+{"accepted_qpc":"13346432350103","event":"chunk_accepted","request_id":2,"seq":44}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":2268,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":83,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":44,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":2,"request_id":2,"response_hwnd":"46057709568","response_utf8_bytes":2268},"token":"cn"}
+{"emit_qpc":"00000013346432378360","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346432379299","request_id":2,"seq":45}
+{"accepted_qpc":"13346432385522","event":"chunk_accepted","request_id":2,"seq":45}
+{"event":"terminal","kind":"cancelled","last_seq":45,"qpc":"13346432395308","request_id":2}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":2329,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":84,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":45,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":2,"request_id":2,"response_hwnd":"46057709568","response_utf8_bytes":2329},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":2329,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":84,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":45,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":2,"request_id":2,"response_hwnd":"46057709568","response_utf8_bytes":2329},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":84,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":3,"request_id":3,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346432458987","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346432459847","request_id":3,"seq":0}
+{"accepted_qpc":"13346432466559","event":"chunk_accepted","request_id":3,"seq":0}
+{"emit_qpc":"00000013346432707872","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346432708399","request_id":3,"seq":1}
+{"accepted_qpc":"13346432709536","event":"chunk_accepted","request_id":3,"seq":1}
+{"emit_qpc":"00000013346432996912","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346432997365","request_id":3,"seq":2}
+{"accepted_qpc":"13346433059939","event":"chunk_accepted","request_id":3,"seq":2}
+{"emit_qpc":"00000013346433285659","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346433286068","request_id":3,"seq":3}
+{"accepted_qpc":"13346433287201","event":"chunk_accepted","request_id":3,"seq":3}
+{"emit_qpc":"00000013346433539435","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346433539885","request_id":3,"seq":4}
+{"accepted_qpc":"13346433540847","event":"chunk_accepted","request_id":3,"seq":4}
+{"emit_qpc":"00000013346433811894","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346433813277","request_id":3,"seq":5}
+{"accepted_qpc":"13346433814607","event":"chunk_accepted","request_id":3,"seq":5}
+{"emit_qpc":"00000013346434101012","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346434101521","request_id":3,"seq":6}
+{"accepted_qpc":"13346434102835","event":"chunk_accepted","request_id":3,"seq":6}
+{"emit_qpc":"00000013346434390013","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346434390803","request_id":3,"seq":7}
+{"accepted_qpc":"13346434392235","event":"chunk_accepted","request_id":3,"seq":7}
+{"emit_qpc":"00000013346434679011","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346434679844","request_id":3,"seq":8}
+{"accepted_qpc":"13346434681056","event":"chunk_accepted","request_id":3,"seq":8}
+{"emit_qpc":"00000013346434968365","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346434969459","request_id":3,"seq":9}
+{"accepted_qpc":"13346434979554","event":"chunk_accepted","request_id":3,"seq":9}
+{"emit_qpc":"00000013346435235342","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346435235810","request_id":3,"seq":10}
+{"accepted_qpc":"13346435236966","event":"chunk_accepted","request_id":3,"seq":10}
+{"emit_qpc":"00000013346435524109","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346435524547","request_id":3,"seq":11}
+{"accepted_qpc":"13346435525716","event":"chunk_accepted","request_id":3,"seq":11}
+{"emit_qpc":"00000013346435780356","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346435780792","request_id":3,"seq":12}
+{"accepted_qpc":"13346435836149","event":"chunk_accepted","request_id":3,"seq":12}
+{"emit_qpc":"00000013346436061881","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346436063409","request_id":3,"seq":13}
+{"accepted_qpc":"13346436064720","event":"chunk_accepted","request_id":3,"seq":13}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":94,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":3,"request_id":3,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"cn"}
+{"event":"terminal","kind":"cancelled","last_seq":13,"qpc":"13346436084435","request_id":3}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":94,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":3,"request_id":3,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":94,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":3,"request_id":3,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":94,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":4,"request_id":4,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346436100946","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346436101287","request_id":4,"seq":0}
+{"accepted_qpc":"13346436108583","event":"chunk_accepted","request_id":4,"seq":0}
+{"emit_qpc":"00000013346436351380","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346436351909","request_id":4,"seq":1}
+{"accepted_qpc":"13346436352821","event":"chunk_accepted","request_id":4,"seq":1}
+{"emit_qpc":"00000013346436640453","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346436640918","request_id":4,"seq":2}
+{"accepted_qpc":"13346436642105","event":"chunk_accepted","request_id":4,"seq":2}
+{"emit_qpc":"00000013346436929487","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346436929914","request_id":4,"seq":3}
+{"accepted_qpc":"13346436931074","event":"chunk_accepted","request_id":4,"seq":3}
+{"emit_qpc":"00000013346437176110","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346437176758","request_id":4,"seq":4}
+{"accepted_qpc":"13346437177874","event":"chunk_accepted","request_id":4,"seq":4}
+{"emit_qpc":"00000013346437465372","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346437466041","request_id":4,"seq":5}
+{"accepted_qpc":"13346437467490","event":"chunk_accepted","request_id":4,"seq":5}
+{"emit_qpc":"00000013346437754482","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346437755612","request_id":4,"seq":6}
+{"accepted_qpc":"13346437756986","event":"chunk_accepted","request_id":4,"seq":6}
+{"emit_qpc":"00000013346438044372","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346438044949","request_id":4,"seq":7}
+{"accepted_qpc":"13346438046036","event":"chunk_accepted","request_id":4,"seq":7}
+{"emit_qpc":"00000013346438334103","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346438334709","request_id":4,"seq":8}
+{"accepted_qpc":"13346438335666","event":"chunk_accepted","request_id":4,"seq":8}
+{"emit_qpc":"00000013346438623974","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346438624739","request_id":4,"seq":9}
+{"accepted_qpc":"13346438626043","event":"chunk_accepted","request_id":4,"seq":9}
+{"emit_qpc":"00000013346438913082","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346438913650","request_id":4,"seq":10}
+{"accepted_qpc":"13346438914743","event":"chunk_accepted","request_id":4,"seq":10}
+{"emit_qpc":"00000013346439177094","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346439177629","request_id":4,"seq":11}
+{"accepted_qpc":"13346439178842","event":"chunk_accepted","request_id":4,"seq":11}
+{"emit_qpc":"00000013346439466326","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346439466952","request_id":4,"seq":12}
+{"accepted_qpc":"13346439480061","event":"chunk_accepted","request_id":4,"seq":12}
+{"emit_qpc":"00000013346439755136","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346439755529","request_id":4,"seq":13}
+{"accepted_qpc":"13346439877214","event":"chunk_accepted","request_id":4,"seq":13}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":105,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":4,"request_id":4,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"cn"}
+{"event":"terminal","kind":"cancelled","last_seq":13,"qpc":"13346439894671","request_id":4}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":105,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":4,"request_id":4,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":105,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":4,"request_id":4,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":105,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":5,"request_id":5,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346439911084","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346439911500","request_id":5,"seq":0}
+{"accepted_qpc":"13346439920197","event":"chunk_accepted","request_id":5,"seq":0}
+{"emit_qpc":"00000013346440169542","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346440170075","request_id":5,"seq":1}
+{"accepted_qpc":"13346440178279","event":"chunk_accepted","request_id":5,"seq":1}
+{"emit_qpc":"00000013346440458713","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346440459948","request_id":5,"seq":2}
+{"accepted_qpc":"13346440461024","event":"chunk_accepted","request_id":5,"seq":2}
+{"emit_qpc":"00000013346440747701","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346440749087","request_id":5,"seq":3}
+{"accepted_qpc":"13346440751980","event":"chunk_accepted","request_id":5,"seq":3}
+{"emit_qpc":"00000013346441036845","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346441037884","request_id":5,"seq":4}
+{"accepted_qpc":"13346441039242","event":"chunk_accepted","request_id":5,"seq":4}
+{"emit_qpc":"00000013346441325721","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346441326239","request_id":5,"seq":5}
+{"accepted_qpc":"13346441328020","event":"chunk_accepted","request_id":5,"seq":5}
+{"emit_qpc":"00000013346441576926","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346441577485","request_id":5,"seq":6}
+{"accepted_qpc":"13346441578491","event":"chunk_accepted","request_id":5,"seq":6}
+{"emit_qpc":"00000013346441866235","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346441866639","request_id":5,"seq":7}
+{"accepted_qpc":"13346441867511","event":"chunk_accepted","request_id":5,"seq":7}
+{"emit_qpc":"00000013346442155570","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346442155958","request_id":5,"seq":8}
+{"accepted_qpc":"13346442156994","event":"chunk_accepted","request_id":5,"seq":8}
+{"emit_qpc":"00000013346442444225","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346442444561","request_id":5,"seq":9}
+{"accepted_qpc":"13346442445598","event":"chunk_accepted","request_id":5,"seq":9}
+{"emit_qpc":"00000013346442733271","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346442733697","request_id":5,"seq":10}
+{"accepted_qpc":"13346442734823","event":"chunk_accepted","request_id":5,"seq":10}
+{"emit_qpc":"00000013346443022428","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346443023035","request_id":5,"seq":11}
+{"accepted_qpc":"13346443084961","event":"chunk_accepted","request_id":5,"seq":11}
+{"emit_qpc":"00000013346443311414","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346443311831","request_id":5,"seq":12}
+{"accepted_qpc":"13346443312794","event":"chunk_accepted","request_id":5,"seq":12}
+{"emit_qpc":"00000013346443578726","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346443579676","request_id":5,"seq":13}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":652,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":115,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":12,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":5,"request_id":5,"response_hwnd":"46057709568","response_utf8_bytes":652},"token":"cn"}
+{"accepted_qpc":"13346443581485","event":"chunk_accepted","request_id":5,"seq":13}
+{"event":"terminal","kind":"cancelled","last_seq":13,"qpc":"13346443593278","request_id":5}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":115,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":5,"request_id":5,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":115,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":5,"request_id":5,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":115,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":6,"request_id":6,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346443613385","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346443613851","request_id":6,"seq":0}
+{"accepted_qpc":"13346443621516","event":"chunk_accepted","request_id":6,"seq":0}
+{"emit_qpc":"00000013346443867579","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346443867864","request_id":6,"seq":1}
+{"accepted_qpc":"13346443898029","event":"chunk_accepted","request_id":6,"seq":1}
+{"emit_qpc":"00000013346444156472","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346444156986","request_id":6,"seq":2}
+{"accepted_qpc":"13346444268136","event":"chunk_accepted","request_id":6,"seq":2}
+{"emit_qpc":"00000013346444400655","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346444401561","request_id":6,"seq":3}
+{"accepted_qpc":"13346444402749","event":"chunk_accepted","request_id":6,"seq":3}
+{"emit_qpc":"00000013346444677137","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346444677533","request_id":6,"seq":4}
+{"accepted_qpc":"13346444678516","event":"chunk_accepted","request_id":6,"seq":4}
+{"emit_qpc":"00000013346444966053","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346444966433","request_id":6,"seq":5}
+{"accepted_qpc":"13346444967574","event":"chunk_accepted","request_id":6,"seq":5}
+{"emit_qpc":"00000013346445255556","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346445256164","request_id":6,"seq":6}
+{"accepted_qpc":"13346445258005","event":"chunk_accepted","request_id":6,"seq":6}
+{"emit_qpc":"00000013346445544433","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346445544974","request_id":6,"seq":7}
+{"accepted_qpc":"13346445546365","event":"chunk_accepted","request_id":6,"seq":7}
+{"emit_qpc":"00000013346445833372","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346445833917","request_id":6,"seq":8}
+{"accepted_qpc":"13346445834893","event":"chunk_accepted","request_id":6,"seq":8}
+{"emit_qpc":"00000013346446122250","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346446122743","request_id":6,"seq":9}
+{"accepted_qpc":"13346446123695","event":"chunk_accepted","request_id":6,"seq":9}
+{"emit_qpc":"00000013346446376698","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346446377323","request_id":6,"seq":10}
+{"accepted_qpc":"13346446378681","event":"chunk_accepted","request_id":6,"seq":10}
+{"emit_qpc":"00000013346446665493","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346446665971","request_id":6,"seq":11}
+{"accepted_qpc":"13346446685861","event":"chunk_accepted","request_id":6,"seq":11}
+{"emit_qpc":"00000013346446954438","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346446954859","request_id":6,"seq":12}
+{"accepted_qpc":"13346446980231","event":"chunk_accepted","request_id":6,"seq":12}
+{"emit_qpc":"00000013346447206236","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346447207058","request_id":6,"seq":13}
+{"accepted_qpc":"13346447208536","event":"chunk_accepted","request_id":6,"seq":13}
+{"emit_qpc":"00000013346447495078","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346447495597","request_id":6,"seq":14}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":126,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":1,"request_count":6,"request_id":6,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"cn"}
+{"accepted_qpc":"13346447500166","event":"chunk_accepted","request_id":6,"seq":14}
+{"event":"terminal","kind":"cancelled","last_seq":14,"qpc":"13346447511638","request_id":6}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":770,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":126,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":14,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":6,"request_id":6,"response_hwnd":"46057709568","response_utf8_bytes":770},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":770,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":126,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":14,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":6,"request_id":6,"response_hwnd":"46057709568","response_utf8_bytes":770},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":126,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":7,"request_id":7,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346447528244","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346447530527","request_id":7,"seq":0}
+{"accepted_qpc":"13346447535451","event":"chunk_accepted","request_id":7,"seq":0}
+{"emit_qpc":"00000013346447776124","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346447776520","request_id":7,"seq":1}
+{"accepted_qpc":"13346447897557","event":"chunk_accepted","request_id":7,"seq":1}
+{"emit_qpc":"00000013346448035694","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346448036244","request_id":7,"seq":2}
+{"accepted_qpc":"13346448037521","event":"chunk_accepted","request_id":7,"seq":2}
+{"emit_qpc":"00000013346448324658","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346448325122","request_id":7,"seq":3}
+{"accepted_qpc":"13346448325859","event":"chunk_accepted","request_id":7,"seq":3}
+{"emit_qpc":"00000013346448612213","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346448612641","request_id":7,"seq":4}
+{"accepted_qpc":"13346448613564","event":"chunk_accepted","request_id":7,"seq":4}
+{"emit_qpc":"00000013346448901685","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346448902438","request_id":7,"seq":5}
+{"accepted_qpc":"13346448903444","event":"chunk_accepted","request_id":7,"seq":5}
+{"emit_qpc":"00000013346449191105","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346449191833","request_id":7,"seq":6}
+{"accepted_qpc":"13346449193303","event":"chunk_accepted","request_id":7,"seq":6}
+{"emit_qpc":"00000013346449480060","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346449480638","request_id":7,"seq":7}
+{"accepted_qpc":"13346449481737","event":"chunk_accepted","request_id":7,"seq":7}
+{"emit_qpc":"00000013346449769145","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346449769553","request_id":7,"seq":8}
+{"accepted_qpc":"13346449770410","event":"chunk_accepted","request_id":7,"seq":8}
+{"emit_qpc":"00000013346450058039","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346450058596","request_id":7,"seq":9}
+{"accepted_qpc":"13346450059559","event":"chunk_accepted","request_id":7,"seq":9}
+{"emit_qpc":"00000013346450327798","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346450328448","request_id":7,"seq":10}
+{"accepted_qpc":"13346450329541","event":"chunk_accepted","request_id":7,"seq":10}
+{"emit_qpc":"00000013346450616739","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346450617261","request_id":7,"seq":11}
+{"accepted_qpc":"13346450700291","event":"chunk_accepted","request_id":7,"seq":11}
+{"emit_qpc":"00000013346450905603","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346450906015","request_id":7,"seq":12}
+{"accepted_qpc":"13346450906965","event":"chunk_accepted","request_id":7,"seq":12}
+{"emit_qpc":"00000013346451175771","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346451178039","request_id":7,"seq":13}
+{"accepted_qpc":"13346451179346","event":"chunk_accepted","request_id":7,"seq":13}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":136,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":7,"request_id":7,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"cn"}
+{"event":"terminal","kind":"cancelled","last_seq":13,"qpc":"13346451220486","request_id":7}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":136,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":7,"request_id":7,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":136,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":7,"request_id":7,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":136,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":8,"request_id":8,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346451239119","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346451239920","request_id":8,"seq":0}
+{"accepted_qpc":"13346451246552","event":"chunk_accepted","request_id":8,"seq":0}
+{"emit_qpc":"00000013346451483139","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346451483535","request_id":8,"seq":1}
+{"accepted_qpc":"13346451495492","event":"chunk_accepted","request_id":8,"seq":1}
+{"emit_qpc":"00000013346451771964","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346451772520","request_id":8,"seq":2}
+{"accepted_qpc":"13346451863367","event":"chunk_accepted","request_id":8,"seq":2}
+{"emit_qpc":"00000013346452061389","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346452062580","request_id":8,"seq":3}
+{"accepted_qpc":"13346452063683","event":"chunk_accepted","request_id":8,"seq":3}
+{"emit_qpc":"00000013346452350083","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346452350482","request_id":8,"seq":4}
+{"accepted_qpc":"13346452351653","event":"chunk_accepted","request_id":8,"seq":4}
+{"emit_qpc":"00000013346452638806","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346452639306","request_id":8,"seq":5}
+{"accepted_qpc":"13346452640292","event":"chunk_accepted","request_id":8,"seq":5}
+{"emit_qpc":"00000013346452927759","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346452928265","request_id":8,"seq":6}
+{"accepted_qpc":"13346452929648","event":"chunk_accepted","request_id":8,"seq":6}
+{"emit_qpc":"00000013346453216601","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346453217225","request_id":8,"seq":7}
+{"accepted_qpc":"13346453218793","event":"chunk_accepted","request_id":8,"seq":7}
+{"emit_qpc":"00000013346453505235","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346453505607","request_id":8,"seq":8}
+{"accepted_qpc":"13346453506473","event":"chunk_accepted","request_id":8,"seq":8}
+{"emit_qpc":"00000013346453793808","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346453794214","request_id":8,"seq":9}
+{"accepted_qpc":"13346453795454","event":"chunk_accepted","request_id":8,"seq":9}
+{"emit_qpc":"00000013346454083070","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346454083938","request_id":8,"seq":10}
+{"accepted_qpc":"13346454084671","event":"chunk_accepted","request_id":8,"seq":10}
+{"emit_qpc":"00000013346454371915","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346454372335","request_id":8,"seq":11}
+{"accepted_qpc":"13346454373659","event":"chunk_accepted","request_id":8,"seq":11}
+{"emit_qpc":"00000013346454660621","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346454661550","request_id":8,"seq":12}
+{"accepted_qpc":"13346454682859","event":"chunk_accepted","request_id":8,"seq":12}
+{"emit_qpc":"00000013346454902788","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346454903153","request_id":8,"seq":13}
+{"accepted_qpc":"13346454904100","event":"chunk_accepted","request_id":8,"seq":13}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":147,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":8,"request_id":8,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"cn"}
+{"event":"terminal","kind":"cancelled","last_seq":13,"qpc":"13346455083825","request_id":8}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":147,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":8,"request_id":8,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":147,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":8,"request_id":8,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":147,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":9,"request_id":9,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346455099551","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346455099871","request_id":9,"seq":0}
+{"accepted_qpc":"13346455107991","event":"chunk_accepted","request_id":9,"seq":0}
+{"emit_qpc":"00000013346455377784","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346455378298","request_id":9,"seq":1}
+{"accepted_qpc":"13346455493934","event":"chunk_accepted","request_id":9,"seq":1}
+{"emit_qpc":"00000013346455666571","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346455667009","request_id":9,"seq":2}
+{"accepted_qpc":"13346455667931","event":"chunk_accepted","request_id":9,"seq":2}
+{"emit_qpc":"00000013346455934528","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346455934998","request_id":9,"seq":3}
+{"accepted_qpc":"13346455936042","event":"chunk_accepted","request_id":9,"seq":3}
+{"emit_qpc":"00000013346456212388","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346456212857","request_id":9,"seq":4}
+{"accepted_qpc":"13346456213670","event":"chunk_accepted","request_id":9,"seq":4}
+{"emit_qpc":"00000013346456502072","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346456502802","request_id":9,"seq":5}
+{"accepted_qpc":"13346456503659","event":"chunk_accepted","request_id":9,"seq":5}
+{"emit_qpc":"00000013346456776441","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346456777729","request_id":9,"seq":6}
+{"accepted_qpc":"13346456778845","event":"chunk_accepted","request_id":9,"seq":6}
+{"emit_qpc":"00000013346457065300","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346457065849","request_id":9,"seq":7}
+{"accepted_qpc":"13346457066880","event":"chunk_accepted","request_id":9,"seq":7}
+{"emit_qpc":"00000013346457354292","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346457354763","request_id":9,"seq":8}
+{"accepted_qpc":"13346457355526","event":"chunk_accepted","request_id":9,"seq":8}
+{"emit_qpc":"00000013346457643206","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346457643702","request_id":9,"seq":9}
+{"accepted_qpc":"13346457644839","event":"chunk_accepted","request_id":9,"seq":9}
+{"emit_qpc":"00000013346457932204","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346457932681","request_id":9,"seq":10}
+{"accepted_qpc":"13346457934074","event":"chunk_accepted","request_id":9,"seq":10}
+{"emit_qpc":"00000013346458221593","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346458222093","request_id":9,"seq":11}
+{"accepted_qpc":"13346458281235","event":"chunk_accepted","request_id":9,"seq":11}
+{"emit_qpc":"00000013346458502088","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346458502623","request_id":9,"seq":12}
+{"accepted_qpc":"13346458503597","event":"chunk_accepted","request_id":9,"seq":12}
+{"emit_qpc":"00000013346458776732","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346458778510","request_id":9,"seq":13}
+{"accepted_qpc":"13346458779801","event":"chunk_accepted","request_id":9,"seq":13}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":157,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":9,"request_id":9,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"cn"}
+{"event":"terminal","kind":"cancelled","last_seq":13,"qpc":"13346458805393","request_id":9}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":157,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":9,"request_id":9,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":157,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":9,"request_id":9,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":157,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":10,"request_id":10,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346458824252","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346458825033","request_id":10,"seq":0}
+{"accepted_qpc":"13346458830111","event":"chunk_accepted","request_id":10,"seq":0}
+{"emit_qpc":"00000013346459068233","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346459068583","request_id":10,"seq":1}
+{"accepted_qpc":"13346459078257","event":"chunk_accepted","request_id":10,"seq":1}
+{"emit_qpc":"00000013346459357284","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346459357769","request_id":10,"seq":2}
+{"accepted_qpc":"13346459473195","event":"chunk_accepted","request_id":10,"seq":2}
+{"emit_qpc":"00000013346459646118","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346459646692","request_id":10,"seq":3}
+{"accepted_qpc":"13346459648110","event":"chunk_accepted","request_id":10,"seq":3}
+{"emit_qpc":"00000013346459935158","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346459935570","request_id":10,"seq":4}
+{"accepted_qpc":"13346459936424","event":"chunk_accepted","request_id":10,"seq":4}
+{"emit_qpc":"00000013346460224615","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346460225631","request_id":10,"seq":5}
+{"accepted_qpc":"13346460226684","event":"chunk_accepted","request_id":10,"seq":5}
+{"emit_qpc":"00000013346460514153","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346460514653","request_id":10,"seq":6}
+{"accepted_qpc":"13346460515987","event":"chunk_accepted","request_id":10,"seq":6}
+{"emit_qpc":"00000013346460788407","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346460789266","request_id":10,"seq":7}
+{"accepted_qpc":"13346460791132","event":"chunk_accepted","request_id":10,"seq":7}
+{"emit_qpc":"00000013346461077463","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346461077900","request_id":10,"seq":8}
+{"accepted_qpc":"13346461078944","event":"chunk_accepted","request_id":10,"seq":8}
+{"emit_qpc":"00000013346461366352","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346461367656","request_id":10,"seq":9}
+{"accepted_qpc":"13346461378756","event":"chunk_accepted","request_id":10,"seq":9}
+{"emit_qpc":"00000013346461655160","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346461655608","request_id":10,"seq":10}
+{"accepted_qpc":"13346461656536","event":"chunk_accepted","request_id":10,"seq":10}
+{"emit_qpc":"00000013346461944069","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346461945149","request_id":10,"seq":11}
+{"accepted_qpc":"13346461946315","event":"chunk_accepted","request_id":10,"seq":11}
+{"emit_qpc":"00000013346462234038","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346462235083","request_id":10,"seq":12}
+{"accepted_qpc":"13346462277655","event":"chunk_accepted","request_id":10,"seq":12}
+{"emit_qpc":"00000013346462523225","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346462523738","request_id":10,"seq":13}
+{"accepted_qpc":"13346462524732","event":"chunk_accepted","request_id":10,"seq":13}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":168,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":10,"request_id":10,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"cn"}
+{"event":"terminal","kind":"cancelled","last_seq":13,"qpc":"13346462687058","request_id":10}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":168,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":10,"request_id":10,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"sc"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":168,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"cancelled","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":10,"request_id":10,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"tx"}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":0,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":168,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":-1,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":11,"request_id":11,"response_hwnd":"46057709568","response_utf8_bytes":0},"token":"sub"}
+{"emit_qpc":"00000013346462702947","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346462703096","request_id":11,"seq":0}
+{"accepted_qpc":"13346462710715","event":"chunk_accepted","request_id":11,"seq":0}
+{"emit_qpc":"00000013346462985370","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346462985956","request_id":11,"seq":1}
+{"accepted_qpc":"13346463068284","event":"chunk_accepted","request_id":11,"seq":1}
+{"emit_qpc":"00000013346463274451","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346463274894","request_id":11,"seq":2}
+{"accepted_qpc":"13346463276145","event":"chunk_accepted","request_id":11,"seq":2}
+{"emit_qpc":"00000013346463563555","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346463564002","request_id":11,"seq":3}
+{"accepted_qpc":"13346463564984","event":"chunk_accepted","request_id":11,"seq":3}
+{"emit_qpc":"00000013346463852246","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346463852731","request_id":11,"seq":4}
+{"accepted_qpc":"13346463853604","event":"chunk_accepted","request_id":11,"seq":4}
+{"emit_qpc":"00000013346464141461","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346464142020","request_id":11,"seq":5}
+{"accepted_qpc":"13346464155776","event":"chunk_accepted","request_id":11,"seq":5}
+{"emit_qpc":"00000013346464430528","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346464431033","request_id":11,"seq":6}
+{"accepted_qpc":"13346464432371","event":"chunk_accepted","request_id":11,"seq":6}
+{"emit_qpc":"00000013346464713896","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346464714433","request_id":11,"seq":7}
+{"accepted_qpc":"13346464715421","event":"chunk_accepted","request_id":11,"seq":7}
+{"emit_qpc":"00000013346465002658","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346465003108","request_id":11,"seq":8}
+{"accepted_qpc":"13346465004105","event":"chunk_accepted","request_id":11,"seq":8}
+{"emit_qpc":"00000013346465291536","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346465291925","request_id":11,"seq":9}
+{"accepted_qpc":"13346465292704","event":"chunk_accepted","request_id":11,"seq":9}
+{"emit_qpc":"00000013346465579453","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346465579943","request_id":11,"seq":10}
+{"accepted_qpc":"13346465580805","event":"chunk_accepted","request_id":11,"seq":10}
+{"emit_qpc":"00000013346465868173","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346465868650","request_id":11,"seq":11}
+{"accepted_qpc":"13346465896999","event":"chunk_accepted","request_id":11,"seq":11}
+{"emit_qpc":"00000013346466156996","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346466157596","request_id":11,"seq":12}
+{"accepted_qpc":"13346466180423","event":"chunk_accepted","request_id":11,"seq":12}
+{"emit_qpc":"00000013346466445955","event":"frame_received","qpc_frequency":24000000,"receipt_qpc":"13346466446329","request_id":11,"seq":13}
+{"accepted_qpc":"13346466447524","event":"chunk_accepted","request_id":11,"seq":13}
+{"ok":true,"state":{"cache_counts":{"caret_draws":{"reason":"native caret drawing does not surface through drawRect","value":null},"dib_buffers":{"reason":"no DIB section cache; NSBitmapImageRep owned by NSImage","value":null},"provider_error":null,"retained_response_utf8_bytes":713,"richedit_layout_cache_bytes":{"reason":"opaque NSTextView layout cache","value":null},"run_invalid":null,"stderr_tail_bytes":0,"stderr_total_bytes":0},"composer_hwnd":"46051019904","composer_paints":178,"composer_visible":true,"composing":false,"input_hwnd":"46057708544","last_seq":13,"mascot_hwnd":"4377028384","mascot_presents":1,"pid":54594,"provider_pid":54641,"provider_state":"streaming","queue_capacity_frames":64,"queued_provider_frames":0,"request_count":11,"request_id":11,"response_hwnd":"46057709568","response_utf8_bytes":713},"token":"cn"}
+{"event":"terminal","kind":"cancelled","last_seq":13,"qpc":"13346466464242","request_id":11}
+{"ok":true,"token":"fin"}

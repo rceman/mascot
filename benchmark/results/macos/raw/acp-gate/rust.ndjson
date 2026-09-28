@@ -1,0 +1,6 @@
+{"event":"acp_gate","step":"spawn","detail":"devin acp started"}
+{"event":"acp_gate","step":"reply","detail":"id 1 answered"}
+{"event":"acp_gate","step":"reply","detail":"id 2 answered"}
+{"event":"acp_gate","step":"session","detail":"sessionId courageous-verse"}
+{"event":"acp_gate","step":"result","detail":"FAIL"}
+acp-gate: id 3 errored: {"jsonrpc":"2.0","id":3,"error":{"code":-32000,"message":"Please log in to use Devin. Use `/login` to authenticate again."}}
