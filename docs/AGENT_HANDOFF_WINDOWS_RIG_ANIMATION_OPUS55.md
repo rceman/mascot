@@ -29,6 +29,8 @@ Read these documents in full before editing:
 
 The first two documents are authoritative for this task.
 
+Migration policy for this task: internal format changes are hard cuts. Do not add backward-compatibility loaders, legacy aliases, fallback parsing, dual-write formats, deprecated-field support or other compatibility shims unless the Planner explicitly requests a named external compatibility boundary. For the compact clip migration, `mascot-clips/0.2` support must be removed after migration; only `mascot-clips/0.3` remains supported.
+
 ## Important context
 
 A prior rig decomposition experiment was rejected as an animation solution.
