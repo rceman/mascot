@@ -1,0 +1,116 @@
+{
+  "candidate_correctness": "NOT_RUN",
+  "checks": [
+    {
+      "check": "manifest-artifact-hashes-and-provider-identity",
+      "status": "PASS"
+    },
+    {
+      "check": "sanitized-child-environment",
+      "effective_gomaxprocs": 1,
+      "explicit_keys": 8,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/small_fragments",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/coalesced_frames",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/newline_boundary",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/utf8_boundary",
+      "peak_buffer_bytes": 44,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/maximum_valid",
+      "peak_buffer_bytes": 65536,
+      "status": "PASS"
+    },
+    {
+      "check": "decoder/oversized",
+      "peak_buffer_bytes": 65536,
+      "status": "PASS"
+    },
+    {
+      "check": "normal",
+      "logical_chunks": 100,
+      "provider_pid": 49699,
+      "status": "PASS"
+    },
+    {
+      "check": "fragmented",
+      "logical_chunks": 100,
+      "provider_pid": 49699,
+      "status": "PASS"
+    },
+    {
+      "check": "client_request",
+      "logical_chunks": 100,
+      "provider_pid": 49699,
+      "status": "PASS"
+    },
+    {
+      "check": "cancel",
+      "logical_chunks": 50,
+      "provider_pid": 49699,
+      "status": "PASS"
+    },
+    {
+      "check": "normal",
+      "logical_chunks": 100,
+      "provider_pid": 49699,
+      "status": "PASS"
+    },
+    {
+      "check": "stderr",
+      "logical_chunks": 100,
+      "provider_pid": 49699,
+      "status": "PASS"
+    },
+    {
+      "check": "backpressure",
+      "logical_chunks": 256,
+      "provider_pid": 49699,
+      "status": "PASS"
+    },
+    {
+      "check": "maximum",
+      "logical_chunks": 1,
+      "provider_pid": 49699,
+      "status": "PASS"
+    },
+    {
+      "check": "stderr-content-and-graceful-shutdown",
+      "status": "PASS",
+      "stderr_bytes": 262144
+    },
+    {
+      "check": "oversized/explicit-fresh-session",
+      "new_pid": 49705,
+      "old_pid": 49704,
+      "status": "PASS"
+    },
+    {
+      "check": "unexpected_exit/explicit-fresh-session",
+      "new_pid": 49708,
+      "old_pid": 49707,
+      "status": "PASS"
+    }
+  ],
+  "fixture_version": "macos-v1.0.0",
+  "observer_qualification": "PENDING",
+  "provider_sha256": "f41d852660fd792a4777a90de2f22db94bc5d8e9782fee9986aadd20104de599",
+  "qpc_frequency": 24000000,
+  "schema": "mascot-fixture-validation-1",
+  "utc": "2026-09-28T08:55:10.213537Z"
+}

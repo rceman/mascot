@@ -34,13 +34,6 @@ func putJSON(path string, value any) error {
 	return os.WriteFile(path, append(data, '\n'), 0644)
 }
 
-func providerEnvironment() map[string]string {
-	return map[string]string{
-		"SystemRoot": `C:\Windows`, "WINDIR": `C:\Windows`, "PATH": `C:\Windows\System32`,
-		"GOMAXPROCS": "1", "GOGC": "100", "GOMEMLIMIT": "off", "GODEBUG": "", "GOTRACEBACK": "none",
-	}
-}
-
 func reportEnvironment() error {
 	values := make(map[string]string)
 	for key := range providerEnvironment() {
@@ -51,16 +44,6 @@ func reportEnvironment() error {
 		values[key] = value
 	}
 	return json.NewEncoder(os.Stdout).Encode(map[string]any{"values": values, "gomaxprocs": runtime.GOMAXPROCS(0)})
-}
-
-func environmentList() []string {
-	values := providerEnvironment()
-	keys := []string{"SystemRoot", "WINDIR", "PATH", "GOMAXPROCS", "GOGC", "GOMEMLIMIT", "GODEBUG", "GOTRACEBACK"}
-	result := make([]string, 0, len(keys))
-	for _, key := range keys {
-		result = append(result, key+"="+values[key])
-	}
-	return result
 }
 
 type vector struct {

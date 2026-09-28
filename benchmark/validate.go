@@ -302,7 +302,7 @@ func checkStream(value *session, id int64, scenario string, payload []string) (i
 }
 
 func validate(root string) error {
-	data, err := os.ReadFile(filepath.Join(root, "manifest", "fixture.json"))
+	data, err := os.ReadFile(filepath.Join(root, "manifest", manifestFile))
 	if err != nil {
 		return err
 	}
@@ -456,7 +456,7 @@ func validate(root string) error {
 		checks = append(checks, map[string]any{"check": scenario + "/explicit-fresh-session", "status": "PASS", "old_pid": broken.cmd.Process.Pid, "new_pid": fresh.cmd.Process.Pid})
 	}
 	result := map[string]any{"schema": "mascot-fixture-validation-1", "fixture_version": fixtureVersion, "provider_sha256": binaryHash, "utc": time.Now().UTC().Format(time.RFC3339Nano), "qpc_frequency": frequency(), "checks": checks, "candidate_correctness": "NOT_RUN", "observer_qualification": "PENDING"}
-	output := filepath.Join(root, "results", "windows", "raw", "fixture-validation-"+time.Now().UTC().Format("20060102T150405.000000000Z")+".json")
+	output := filepath.Join(root, filepath.FromSlash(resultsDir), "fixture-validation-"+time.Now().UTC().Format("20060102T150405.000000000Z")+".json")
 	if err := putJSON(output, result); err != nil {
 		return err
 	}

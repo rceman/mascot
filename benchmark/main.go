@@ -11,37 +11,13 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"syscall"
 	"time"
-	"unsafe"
 )
 
-const fixtureVersion = "windows-v1.0.2"
 const frameLimit = 65536
 const cancelTimeout = time.Second
 
-var kernel32 = syscall.NewLazyDLL("kernel32.dll")
-var queryCounter = kernel32.NewProc("QueryPerformanceCounter")
-var queryFrequency = kernel32.NewProc("QueryPerformanceFrequency")
 var shutdown = errors.New("shutdown")
-
-func qpc() int64 {
-	var value int64
-	ok, _, _ := queryCounter.Call(uintptr(unsafe.Pointer(&value)))
-	if ok == 0 {
-		panic("QueryPerformanceCounter failed")
-	}
-	return value
-}
-
-func frequency() int64 {
-	var value int64
-	ok, _, _ := queryFrequency.Call(uintptr(unsafe.Pointer(&value)))
-	if ok == 0 || value <= 0 {
-		panic("QueryPerformanceFrequency failed")
-	}
-	return value
-}
 
 type command struct {
 	Type      string `json:"type"`
@@ -328,7 +304,7 @@ func provider(root string) error {
 
 func main() {
 	if len(os.Args) < 3 {
-		fmt.Fprintln(os.Stderr, "usage: fixture.exe materialize|provider|validate ROOT")
+		fmt.Fprintln(os.Stderr, "usage: fixture materialize|provider|validate|environment|freeze-manifest ROOT")
 		os.Exit(64)
 	}
 	root, err := filepath.Abs(os.Args[2])
@@ -344,6 +320,8 @@ func main() {
 			err = validate(root)
 		case "environment":
 			err = reportEnvironment()
+		case "freeze-manifest":
+			err = freezeManifest(root)
 		default:
 			err = errors.New("unknown operation")
 		}
