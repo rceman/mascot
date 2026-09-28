@@ -323,34 +323,41 @@ Do not implement:
 - macOS implementation;
 - Linux implementation.
 
-## 17. Authoritative WSL / native Windows workflow
+## 17. Authoritative native Windows Git workflow
 
-For this task:
+For this task, native Windows Git is authoritative.
 
-    authoritative Git checkout: ~/git/mascot
-    native Windows working area: devin_folder
+The machine already has working Git + SSH access to GitHub.
+
+Use a dedicated clone under the existing Windows `devin_folder`, for example:
+
+    W:\\devin_folder\\mascot-ui-v01
+
+Clone/fetch directly from:
+
+    git@github.com:rceman/mascot.git
 
 The agent MUST:
 
-- verify the correct task branch in `~/git/mascot`;
-- copy/sync source into a dedicated task directory under Windows `devin_folder`;
-- work/build/run/capture/profile natively on Windows;
-- keep `.git` only in the authoritative WSL checkout;
-- treat the Windows tree as disposable implementation state;
-- sync only intended source/assets/docs/evidence back to `~/git/mascot` when ready;
-- review the final diff from WSL;
-- commit and push from WSL only;
-- leave the WSL task branch clean and pushed.
+- use the Windows clone as the only working Git checkout for this task;
+- fetch origin;
+- checkout `agent/native-ui-foundation-v0.1-swe2`;
+- verify the required Planner baseline/current branch state before editing;
+- implement/build/run/capture/profile natively on Windows;
+- keep normal Git history in this Windows clone;
+- review `git status` and the complete diff before commit;
+- commit and push directly from Windows over the configured SSH remote;
+- finish with the task branch pushed and the Windows worktree clean.
 
-Do not commit from the Windows working copy.
+Do NOT copy source back and forth through WSL for this task.
 
-Do not copy `.git` into or out of `devin_folder`.
+Do NOT create a second authoritative checkout or sync pipeline.
 
-Avoid syncing:
+Do not commit build outputs or machine-local state such as:
 
 - `target/`;
 - compiler/build caches;
-- temporary screenshots;
+- temporary screenshots not selected as evidence;
 - scratch files;
 - local tool environments;
 - unrelated machine-specific state.
