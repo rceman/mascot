@@ -18,6 +18,9 @@ The previous benchmark established Rust as the product foundation candidate. Thi
 
 Read these documents in full before editing:
 
+- AGENTS.md
+- docs/QUALITY_GATES.md
+
 - docs/MASCOT_PRODUCT_UI_ANIMATION_DIRECTION.md
 - docs/MASCOT_RIG_RUNTIME_SPEC_V0.2.md
 - docs/MASCOT_RIG_V0.1_POSTMORTEM.md
@@ -27,7 +30,7 @@ Read these documents in full before editing:
 - rust/ARCHITECTURE.md
 - README.md
 
-The first two documents are authoritative for this task.
+The repository-wide rules in `AGENTS.md`, the canonical gates in `docs/QUALITY_GATES.md`, and the first two task-specific documents above are authoritative for this task.
 
 Migration policy for this task: internal format changes are hard cuts. Do not add backward-compatibility loaders, legacy aliases, fallback parsing, dual-write formats, deprecated-field support or other compatibility shims unless the Planner explicitly requests a named external compatibility boundary. For the compact clip migration, `mascot-clips/0.2` support must be removed after migration; only `mascot-clips/0.3` remains supported.
 
