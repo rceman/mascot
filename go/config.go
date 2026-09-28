@@ -130,7 +130,7 @@ func loadConfig(manifestArg string) (*config, error) {
 	if m.Provider.InheritEnvironment {
 		return nil, errors.New("provider must not inherit environment")
 	}
-	if !strings.HasPrefix(m.Version, "windows-v") {
+	if !strings.HasPrefix(m.Version, manifestVersionPrefix) {
 		return nil, fmt.Errorf("unsupported fixture version %s", m.Version)
 	}
 	ui := &m.UI

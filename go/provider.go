@@ -15,10 +15,7 @@ import (
 	"sort"
 	"strconv"
 	"sync"
-	"syscall"
 	"time"
-
-	"golang.org/x/sys/windows"
 )
 
 type eventKind int
@@ -330,7 +327,7 @@ func (c *coordinator) spawnChild() (*session, string) {
 		env = append(env, k+"="+c.config.environment[k])
 	}
 	cmd.Env = env
-	cmd.SysProcAttr = &syscall.SysProcAttr{CreationFlags: windows.CREATE_NO_WINDOW}
+	applyProviderSysProcAttr(cmd)
 	stdin, err := cmd.StdinPipe()
 	if err != nil {
 		return nil, "provider stdin pipe: " + err.Error()

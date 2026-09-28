@@ -10,16 +10,6 @@ import (
 	"unsafe"
 )
 
-func normalizeText(text string) string {
-	text = strings.ReplaceAll(text, "\r\n", "\n")
-	return strings.ReplaceAll(text, "\r", "\n")
-}
-
-type textSnapshot struct {
-	text          string
-	selStart      int32
-	selEnd        int32
-}
 
 // loadRichedit initializes OLE on the calling (locked UI) thread and loads the
 // system msftedit.dll.
@@ -112,9 +102,6 @@ func setSelection(hwnd uintptr, min, max int32) {
 	sendMessage(hwnd, emEXSETSEL, 0, uintptr(unsafe.Pointer(&r)))
 }
 
-func utf16Units(text string) int {
-	return len(utf16.Encode([]rune(text)))
-}
 
 func cancelComposition(hwnd uintptr) {
 	ctx, _, _ := procImmGetContext.Call(hwnd)
@@ -124,8 +111,3 @@ func cancelComposition(hwnd uintptr) {
 	}
 }
 
-type staticError string
-
-func (e staticError) Error() string { return string(e) }
-
-func errString(s string) error { return staticError(s) }
