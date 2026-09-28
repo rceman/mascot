@@ -1,0 +1,8 @@
+{"sent_qpc": "10067531869507", "command": {"token": 1, "command": "state"}}
+{"sent_qpc": "10067532046643", "command": {"token": 2, "command": "show"}}
+{"sent_qpc": "10067538051110", "command": {"token": 3, "command": "state"}}
+{"sent_qpc": "10067539948732", "command": {"token": 4, "command": "set_text", "text": "Ārā līst, mēs turpinām. 世界 👨‍💻"}}
+{"sent_qpc": "10067546707085", "command": {"token": 5, "command": "set_text", "text": "visual check"}}
+{"sent_qpc": "10067549710957", "command": {"token": 6, "command": "submit"}}
+{"sent_qpc": "10067560221045", "command": {"token": 7, "command": "hide"}}
+{"sent_qpc": "10067564224116", "command": {"token": 8, "command": "shutdown"}}
