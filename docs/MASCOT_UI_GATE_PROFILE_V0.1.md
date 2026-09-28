@@ -157,7 +157,7 @@ Profile any surprising slow/open path.
 UI/layout logic must not know:
 
 - screenshot evidence directory internals;
-- WSL sync mechanics;
+- Git checkout/sync mechanics;
 - dev video encoding;
 - machine-specific paths.
 
@@ -199,8 +199,8 @@ Before COMPLETE inspect:
 - light/dark;
 - all required DPI variants;
 - final evidence;
-- final diff;
-- clean/pushed branch.
+- final diff from the authoritative Windows Git clone;
+- clean/pushed Windows task branch.
 
 Known visible defects may not be hidden behind "functional" status.
 
