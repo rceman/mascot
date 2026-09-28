@@ -80,7 +80,7 @@ A simple developer state switcher/hotkeys are acceptable.
 
 The final product UI should visually read as:
 
-- shadcn-inspired restraint;
+- **shadcn-first** native component styling and proportions;
 - Devin-like monochrome/neutral product feel;
 - original Mascot composition;
 - native, not HTML/CSS-looking;
@@ -140,7 +140,7 @@ Requirements:
 - consistent stroke sizing/alignment;
 - license/provenance documented.
 
-The icon source vocabulary should be visually compatible with the shadcn direction.
+Use **Lucide as the canonical M1A icon source**. Convert the required upstream Lucide SVG/path geometry into compact native path data at build/dev time. Do not invent approximate Lucide-like icons or mix icon families without a concrete documented reason.
 
 ## 8. Theme/tokens
 
