@@ -150,6 +150,8 @@ At minimum:
 - shared acceptance tests should assert logical actions (copy, paste, select, submit, cancel, open composer), not hard-code Windows virtual-key values
 - do not force Windows-style Ctrl shortcuts merely for benchmark symmetry
 - where the prototype defines a product-specific action such as submit/hide, document the exact macOS binding used
+- for the current multiline composer prototype, translate the Windows submit chord **Ctrl+Enter** to **Command+Enter** on macOS; plain Return/Enter remains text-entry/newline behavior unless the native control requires an equivalent platform-specific handling
+- do not spend time trying to make Ctrl+Enter behave like the Windows submit chord on macOS
 
 Record the final macOS shortcut map in the Stage B report.
 
