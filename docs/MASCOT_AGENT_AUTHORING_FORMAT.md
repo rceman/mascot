@@ -345,7 +345,67 @@ Report the before/after result for the shipped clip library.
 
 Do not optimize solely for the smallest possible token count. The target is a substantial reduction while keeping the format obvious enough for agents and humans to edit safely.
 
-## 14. Completion condition
+## 14. Hard-cut migration policy
+
+Do not preserve old authoring/runtime formats by default.
+
+For this project, format changes are **hard cuts** unless the task explicitly requires compatibility with an already released external consumer.
+
+The current `mascot-clips/0.2` authoring format is internal development data and is being superseded by the compact format.
+
+Required behavior:
+
+- migrate the shipped clip library to the new compact format;
+- update the loader/runtime/tests/tooling to the new format;
+- remove obsolete `0.2` parsing code, compatibility branches, migration shims and fallback loaders;
+- remove obsolete fixtures/tests that only exist to preserve the old format;
+- do not add automatic "try 0.3, then fall back to 0.2" logic;
+- do not retain duplicate canonical representations;
+- do not generate both old and new files "just in case";
+- do not add deprecation layers unless a real external compatibility requirement exists.
+
+The only allowed retention of the old format is:
+
+- documentation/evidence showing the before/after token-size comparison;
+- a narrowly scoped migration test fixture if needed during implementation, removed before final completion unless it provides enduring value.
+
+If a real compatibility boundary exists later, it must be named explicitly:
+
+- released product version;
+- public API;
+- persisted user data;
+- external plugin/provider contract;
+- third-party consumer.
+
+Without such a named boundary, prefer deletion over compatibility.
+
+### 14.1 Agent anti-shim rule
+
+Agents must not introduce any of the following without explicit approval:
+
+- backward-compatibility loaders;
+- legacy aliases;
+- fallback parsing;
+- dual-write old/new formats;
+- temporary adapters left in production code;
+- deprecated field support;
+- "legacy" branches;
+- version sniffing for superseded internal formats;
+- compatibility feature flags.
+
+If implementation temporarily needs a converter during migration, keep it as a one-shot development tool and remove it when the repository is fully migrated.
+
+### 14.2 Completion check
+
+Before declaring completion, search the changed area for obsolete compatibility logic and report the result.
+
+For this migration, final expected state is:
+
+    canonical authoring format: mascot-clips/0.3
+    runtime supported authoring format: mascot-clips/0.3
+    mascot-clips/0.2 runtime compatibility: none
+
+## 15. Completion condition
 
 This authoring-format correction is complete only when:
 
