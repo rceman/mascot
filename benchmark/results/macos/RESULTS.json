@@ -1,0 +1,144 @@
+{
+  "stage": "macOS Stage B critical slice (Rust vs Go)",
+  "base_sha": "7858b54a1f5ec07f370e8e767dc5d751eebbaed6",
+  "environment": {
+    "os": "macOS 26.7 (build 25G229), Darwin 25.6.0",
+    "hardware": "Apple M2, 16 GiB RAM, arm64",
+    "sdk": "/Library/Developer/CommandLineTools/SDKs/MacOSX26.sdk (pinned: default SDK 27 .tbd files break the linker)",
+    "clang": "Apple clang 21.0.0",
+    "rust": "cargo 1.94.0 (rust-toolchain pin), builds on 1.98.1 toolchain as configured",
+    "go": "go1.25.3 (~/sdk/go1.25.3)",
+    "permissions": {"accessibility": true, "screen_recording": true}
+  },
+  "fixture": {
+    "path": "benchmark/bin/fixture",
+    "target": "darwin/arm64 native (mach_absolute_time clock)",
+    "manifest": "benchmark/manifest/fixture.darwin-arm64.json",
+    "manifest_version": "macos-v1.0.0",
+    "asset_sha256": "2c6e6e90aea8d3283912a46c885a763b588e526740ef9fb5a6d8ba0068ba9b37"
+  },
+  "candidates": {
+    "rust": {
+      "stack": "Rust + objc2/objc2-app-kit/objc2-foundation, direct AppKit + Carbon FFI",
+      "bundle": "rust/packaging/MascotRust.app",
+      "bundle_bytes": 774144,
+      "executable_bytes": 765936,
+      "signing": "ad-hoc (linker-signed)",
+      "macos_specific": {
+        "files": ["rust/src/platform/macos.rs", "rust/build.rs", "rust/Cargo.toml", "rust/rust-toolchain.toml"],
+        "loc_nonblank_noncomment": 1778,
+        "tokens_o200k": 15314
+      },
+      "shared_source": {"loc_nonblank_noncomment": 2993, "tokens_o200k": 23100},
+      "ffi_boundaries": [
+        "unsafe extern blocks: Carbon hotkeys, dispatch_async_f main queue, CFRelease",
+        "dlsym-resolved TIS functions (HIToolbox subframework, not linkable via -framework Carbon)",
+        "objc2 define_class! subclasses: NSView (mascot), NSTextView (input/response), NSObject (composer delegate)",
+        "unsafe msg_send! for AppKit calls without generated bindings"
+      ],
+      "frameworks": ["AppKit", "Foundation", "Carbon (hotkeys)", "HIToolbox/TIS via dlsym", "libSystem/dispatch"]
+    },
+    "go": {
+      "stack": "Go 1.25.3 + cgo; all Cocoa in project-owned mascot_darwin.m (Objective-C), golang.org/x/sys/unix",
+      "bundle": "go/packaging/MascotGo.app",
+      "bundle_bytes": 4091904,
+      "executable_bytes": 4118834,
+      "signing": "ad-hoc (linker-signed)",
+      "macos_specific": {
+        "files": [
+          "go/mascot_darwin.h", "go/mascot_darwin.m", "go/platform_darwin.go",
+          "go/ui_darwin.go", "go/runapp_darwin.go", "go/control_darwin.go",
+          "go/clock_darwin.go", "go/provider_spawn_darwin.go",
+          "go/metrics_darwin.go", "go/codex_gate_darwin.go",
+          "go/version_darwin.go", "go/build_app.sh", "go/go.mod"
+        ],
+        "loc_nonblank_noncomment": 1671,
+        "tokens_o200k": 14721
+      },
+      "shared_source": {"loc_nonblank_noncomment": 1839, "tokens_o200k": 14508},
+      "ffi_boundaries": [
+        "cgo boundary: Go -> mascot_darwin.h C API (opaque pointers)",
+        "Objective-C -> Go //export callbacks (goUI*, goDispatch*)",
+        "Carbon RegisterEventHotKey for global shortcuts",
+        "TIS enumeration for input-source select attempt"
+      ],
+      "frameworks": ["AppKit/Cocoa", "Carbon (hotkeys + TIS)", "Foundation", "libSystem/dispatch"]
+    }
+  },
+  "correctness": {
+    "provider_scenarios": {
+      "harness": "benchmark/harness/macos_run_scenarios.py",
+      "rust": {"passed": 9, "total": 9, "evidence": "raw/rust-scenarios/"},
+      "go": {"passed": 9, "total": 9, "evidence": "raw/go-scenarios/"},
+      "scenarios": ["normal", "cancel", "client_request", "backpressure",
+                     "maximum", "oversized", "unexpected_exit", "stderr", "fragmented"]
+    },
+    "interactive": {
+      "harness": "benchmark/harness/macos_interactive.py",
+      "rust": {"passed": 19, "total": 19, "evidence": "raw/rust-interactive/"},
+      "go": {"passed": 19, "total": 19, "evidence": "raw/go-interactive/"},
+      "checks": [
+        "initial_idle", "hotkey_toggle_show", "hotkey_toggle_hide",
+        "composer_focus", "typing_ascii", "unicode_roundtrip",
+        "ime_marked_text", "ime_commit", "ime_cancel",
+        "submit_blocked_while_composing", "hide_during_composition",
+        "cmd_enter_submits", "hotkey_cancel", "plain_enter_newline",
+        "stream_completes", "mascot_drag_moves_pair",
+        "click_through_transparent", "screenshots", "clean_shutdown"
+      ],
+      "keyboard_contract": "Cmd+Return submits; plain Return inserts newline (macOS semantics)"
+    }
+  },
+  "measurements": {
+    "sources": {
+      "visibility": "CGWindowListCopyWindowInfo bounds helper",
+      "rss": "ps -o rss (bytes)",
+      "physical_footprint": "footprint --noCategories -f bytes",
+      "cpu": "top -l 2 delta sample",
+      "threads": "ps -M line count",
+      "children": "recursive pgrep -P",
+      "clock": "time.monotonic_ns"
+    },
+    "rust": {
+      "launch_to_visible_ms": 400.1,
+      "repeat_launch_to_visible_ms": [326.5, 267.1, 279.9],
+      "first_composer_activation_ms": 426.9,
+      "warm_composer_activation_ms": [332.7, 325.2, 327.0, 330.6, 324.2],
+      "idle_mascot": {"rss_bytes": 64864256, "footprint_bytes": 35701408, "threads": 9, "cpu_percent": 0.0},
+      "composer_open": {"rss_bytes": 113000448, "footprint_bytes": 45908712, "threads": 9, "cpu_percent": 0.0},
+      "streaming_peak": {"rss_bytes": 120143872, "footprint_bytes": 73221080, "threads": 12, "children": [54551]},
+      "stability": {"show_hide_failures": 0, "submit_cancel_failures": 0, "rss_delta_bytes": 3047424},
+      "shutdown_ms": 25.9, "stderr_bytes": 0,
+      "evidence": "raw/rust-measurements/measurements.json"
+    },
+    "go": {
+      "launch_to_visible_ms": 349.9,
+      "repeat_launch_to_visible_ms": [335.0, 267.4, 263.9],
+      "first_composer_activation_ms": 422.1,
+      "warm_composer_activation_ms": [322.7, 158.6, 326.2, 323.3, 329.8],
+      "idle_mascot": {"rss_bytes": 71286784, "footprint_bytes": 38880048, "threads": 13, "cpu_percent": 0.0},
+      "composer_open": {"rss_bytes": 100466688, "footprint_bytes": 48497552, "threads": 13, "cpu_percent": 0.0},
+      "streaming_peak": {"rss_bytes": 122404864, "footprint_bytes": 81511504, "threads": 17, "children": [54641]},
+      "stability": {"show_hide_failures": 0, "submit_cancel_failures": 0, "rss_delta_bytes": 5177344},
+      "shutdown_ms": 17.4, "stderr_bytes": 0,
+      "evidence": "raw/go-measurements/measurements.json"
+    }
+  },
+  "acp_gate": {
+    "provider": "Devin CLI ACP (/Applications/Devin.app/.../devin acp)",
+    "rust": {"initialize": "ok", "session_new": "ok", "session_prompt": "FAIL: Devin not logged in (Please log in to use Devin)", "status": "UNAVAILABLE", "evidence": "raw/acp-gate/rust.ndjson"},
+    "go": {"initialize": "ok", "session_new": "ok", "session_prompt": "FAIL: Devin not logged in (Please log in to use Devin)", "status": "UNAVAILABLE", "evidence": "raw/acp-gate/go.ndjson"},
+    "note": "ACP transport and protocol handshake verified end-to-end; only the model prompt requires interactive devin auth login, which cannot be completed unattended."
+  },
+  "visual_evidence": {
+    "rust": ["visual/rust/mascot.png", "visual/rust/composer.png", "visual/rust/perched.png", "visual/rust/response.png", "visual/rust-interaction.mov"],
+    "go": ["visual/go/mascot.png", "visual/go/composer.png", "visual/go/perched.png", "visual/go/response.png", "visual/go-interaction.mov"]
+  },
+  "platform_findings": {
+    "activation": "Accessory-policy apps cannot be activated by synthetic events on macOS 26 (injected keys/clicks/hotkeys do not count as user gestures). NSApp.activate + activateIgnoringOtherApps only take effect under a real user-initiated context, or when run with regular activation policy (MASCOT_REGULAR_APP=1 test flag proves the path).",
+    "ime": "Input-method sources (Kotoeri) cannot be selected programmatically: TISSelectInputSource -> paramErr(-50); NSTextInputContext.setSelectedKeyboardInputSource silently ignores input-method IDs. System input menu / real user gesture required. Composition pipeline verified via the same NSTextInputClient entry points the IME calls (setMarkedText/insertText/unmarkText through ime_mark/ime_insert/ime_discard control commands).",
+    "hide_during_composition": "Resigning key commits preedit natively on macOS (NSTextView semantics); committed state remains consistent.",
+    "linker": "Default CommandLineTools SDK 27 .tbd files contain arm64e.x1-* entries the linker rejects; all builds pin SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX26.sdk.",
+    "documents_tcc": "screencapture -V cannot write into ~/Documents (TCC); recordings were captured to /tmp and moved by the agent."
+  }
+}
