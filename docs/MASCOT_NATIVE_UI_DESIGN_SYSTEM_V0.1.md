@@ -34,10 +34,28 @@ The mascot visually perches on / overlaps the top edge of the bubble. The bubble
 
 ## 2. Visual language
 
+### Shadcn-first rule
+
+For M1A, **shadcn is the primary visual reference system**.
+
+When choosing spacing, radii, border treatment, neutral surfaces, control density, hover/focus treatment, icon-button proportions and overall component composition, start from the shadcn visual language before inventing a Mascot-specific alternative.
+
+This does NOT mean importing shadcn, React, Tailwind or CSS. It means reproducing the useful visual grammar natively in Rust/Win32.
+
+Deviate from the shadcn-first baseline only when there is a concrete product reason, such as:
+
+- mascot overlap/perching;
+- transparent desktop composition;
+- native editable-text constraints;
+- DPI/native-window behavior;
+- a Mascot-specific interaction that shadcn does not model.
+
+Do not redesign standard controls merely to make them "more custom".
+
 Direction:
 
 - strongly monochrome;
-- shadcn-inspired restraint and spacing discipline;
+- shadcn-first restraint, spacing, borders, radii and control density;
 - Devin-like black/white/neutral product feel;
 - native desktop execution, not a browser imitation;
 - minimal chrome;
@@ -169,7 +187,11 @@ Extract shared primitives only when real repeated use exists.
 
 ## 7. Icons
 
-Use a small open-source icon vocabulary visually consistent with the shadcn ecosystem.
+**Lucide is the canonical icon source for M1A.**
+
+Use the actual upstream Lucide icon geometry for required icons rather than drawing approximate "Lucide-style" replacements.
+
+If Lucide does not contain a genuinely required icon, document the exception before introducing another source.
 
 Preferred initial vocabulary:
 
@@ -185,7 +207,7 @@ Preferred initial vocabulary:
 - History
 - Settings
 
-Prefer Lucide-style / shadcn-standard iconography where licensing permits. Verify the upstream license before importing assets and preserve required attribution/license files.
+Use Lucide geometry as the default iconography. Verify the upstream Lucide license before importing assets and preserve required attribution/license/provenance files. Do not silently mix several icon families in M1A.
 
 ### Runtime rule
 
@@ -198,7 +220,7 @@ Do NOT ship:
 
 Preferred pipeline:
 
-    source SVG/path data
+    upstream Lucide SVG/path data
         -> build/dev conversion
         -> compact native path data
         -> Rust Icon enum
