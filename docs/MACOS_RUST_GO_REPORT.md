@@ -76,6 +76,18 @@ genuine user gesture on macOS 26 (see §12). The marked-text pipeline —
 composing flag, submit guard, cancel/discard, hide-during-composition —
 is identical from the view's side.
 
+### macOS shortcut map (both candidates)
+
+| Logical action | macOS binding | Notes |
+|---|---|---|
+| Toggle composer | Ctrl+Alt+Space (Carbon hotkey) | macOS-appropriate custom combo; does not collide with system input-source or Spotlight defaults on this machine |
+| Cancel active request | Ctrl+Alt+Escape (Carbon hotkey) | same registration path |
+| Submit | Cmd+Return | native convention; plain Return = newline |
+| Newline | Return | multiline input |
+| Copy/Paste/Cut/Select-All | Cmd+C / Cmd+V / Cmd+X / Cmd+A | provided natively by `NSTextView` |
+| Composition commit | Return (during marked text) | native IME semantics |
+| Composition cancel | Escape (during marked text) | native IME semantics |
+
 ## 7. Resources and latency
 
 Same machine/power/display, one measurement pass per candidate;
