@@ -294,6 +294,13 @@ Design the attachment enum/data model so a future MeshAttachment can be added wi
 
 ### Animation clip
 
+Author clips through the compact agent authoring format defined in:
+
+    docs/MASCOT_AGENT_AUTHORING_FORMAT.md
+
+The runtime may normalize that compact representation into explicit `Clip` / `Track` structures internally. Do not require agents to maintain verbose duplicated runtime JSON as the canonical source.
+
+
 Support:
 
 - named clip
