@@ -12,6 +12,9 @@ fn rc_exe() -> PathBuf {
 }
 
 fn main() {
+    if std::env::var("CARGO_CFG_TARGET_OS").as_deref() != Ok("windows") {
+        return;
+    }
     let out_dir = std::env::var("OUT_DIR").expect("OUT_DIR");
     let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR");
     let output = Path::new(&out_dir).join("app.res");

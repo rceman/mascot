@@ -62,6 +62,7 @@ pub struct Config {
     pub history_prefix: String,
 }
 
+#[cfg(windows)]
 fn sha256(data: &[u8]) -> Result<[u8; 32], String> {
     use windows_sys::Win32::Security::Cryptography::*;
     let length = u32::try_from(data.len()).map_err(|_| "hash input too large")?;
@@ -91,6 +92,17 @@ fn sha256(data: &[u8]) -> Result<[u8; 32], String> {
             return Err(format!("BCryptHash/close: {status:#x}/{closed:#x}"));
         }
     }
+    Ok(digest)
+}
+
+#[cfg(unix)]
+fn sha256(data: &[u8]) -> Result<[u8; 32], String> {
+    unsafe extern "C" {
+        fn CC_SHA256(data: *const std::ffi::c_void, len: u32, md: *mut u8) -> *mut u8;
+    }
+    let length = u32::try_from(data.len()).map_err(|_| "hash input too large")?;
+    let mut digest = [0u8; 32];
+    unsafe { CC_SHA256(data.as_ptr() as *const _, length, digest.as_mut_ptr()) };
     Ok(digest)
 }
 
@@ -155,7 +167,11 @@ pub fn load(manifest_arg: &str) -> Result<Config, String> {
     if manifest.provider.inherit_environment {
         return Err("provider must not inherit environment".into());
     }
-    if !manifest.version.starts_with("windows-v") {
+    #[cfg(windows)]
+    let supported = manifest.version.starts_with("windows-v");
+    #[cfg(unix)]
+    let supported = manifest.version.starts_with("macos-v");
+    if !supported {
         return Err(format!("unsupported fixture version {}", manifest.version));
     }
     let ui = &manifest.ui;
@@ -190,7 +206,10 @@ pub fn load(manifest_arg: &str) -> Result<Config, String> {
         }
     }
 
+    #[cfg(windows)]
     let asset_path = root.join(manifest.asset.path.replace('/', "\\"));
+    #[cfg(unix)]
+    let asset_path = root.join(&manifest.asset.path);
     let actual = sha256_hex(&asset_path)?;
     if !actual.eq_ignore_ascii_case(&manifest.asset.sha256) {
         return Err(format!("asset sha256 mismatch: {actual}"));

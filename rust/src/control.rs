@@ -1,17 +1,23 @@
 use crate::framing::Decoder;
-use crate::platform::{Ui, WM_APP_CONTROL};
+use crate::platform::Ui;
 use crate::queue::BoundedQueue;
 use serde_json::{Value, json};
-use std::io::{Read, Write};
-use std::os::windows::io::AsRawHandle;
+use std::io::Write;
 use std::sync::Arc;
+#[cfg(windows)]
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::thread::JoinHandle;
 use std::time::{Duration, Instant};
+#[cfg(windows)]
+use std::io::Read;
+#[cfg(windows)]
+use std::os::windows::io::AsRawHandle;
+#[cfg(windows)]
 use windows_sys::Win32::Foundation::{HANDLE, WAIT_OBJECT_0};
+#[cfg(windows)]
 use windows_sys::Win32::System::IO::CancelSynchronousIo;
+#[cfg(windows)]
 use windows_sys::Win32::System::Threading::WaitForSingleObject;
-use windows_sys::Win32::UI::WindowsAndMessaging::PostMessageW;
 
 fn push_record(records: &Option<Arc<BoundedQueue<String>>>, record: String) {
     if let Some(records) = records {
@@ -19,19 +25,14 @@ fn push_record(records: &Option<Arc<BoundedQueue<String>>>, record: String) {
     }
 }
 
-fn post_control(hwnd: usize) {
-    unsafe {
-        PostMessageW(hwnd as *mut std::ffi::c_void, WM_APP_CONTROL, 0, 0);
-    }
-}
-
-fn request_shutdown(commands: &Arc<BoundedQueue<Value>>, hwnd: usize) {
+fn request_shutdown(commands: &Arc<BoundedQueue<Value>>, wake: &Arc<dyn Fn() + Send + Sync>) {
     let _ = commands.push(json!({"command": "shutdown", "token": null}));
-    post_control(hwnd);
+    wake();
 }
 
+#[cfg(windows)]
 fn reader_run(
-    hwnd: usize,
+    wake: Arc<dyn Fn() + Send + Sync>,
     commands: Arc<BoundedQueue<Value>>,
     records: Option<Arc<BoundedQueue<String>>>,
     stop: Arc<AtomicBool>,
@@ -53,7 +54,7 @@ fn reader_run(
                             .to_string(),
                     );
                 }
-                request_shutdown(&commands, hwnd);
+                request_shutdown(&commands, &wake);
                 break;
             }
             Ok(count) => {
@@ -68,7 +69,7 @@ fn reader_run(
                             commands
                                 .push(value)
                                 .map_err(|_| "control queue closed".to_string())?;
-                            post_control(hwnd);
+                            wake();
                             Ok(())
                         },
                     )
@@ -79,7 +80,7 @@ fn reader_run(
                         json!({"token": null, "ok": false, "error": format!("invalid control frame: {error}")})
                             .to_string(),
                     );
-                    request_shutdown(&commands, hwnd);
+                    request_shutdown(&commands, &wake);
                     break;
                 }
             }
@@ -92,9 +93,111 @@ fn reader_run(
                     json!({"token": null, "ok": false, "error": "control input read failed"})
                         .to_string(),
                 );
-                request_shutdown(&commands, hwnd);
+                request_shutdown(&commands, &wake);
                 break;
             }
+        }
+    }
+}
+
+#[cfg(unix)]
+fn reader_run(
+    wake: Arc<dyn Fn() + Send + Sync>,
+    commands: Arc<BoundedQueue<Value>>,
+    records: Option<Arc<BoundedQueue<String>>>,
+    stop_read: std::os::fd::RawFd,
+) {
+    use std::os::fd::RawFd;
+    let mut decoder = Decoder::new();
+    let mut buffer = [0u8; 4096];
+    loop {
+        let mut fds = [
+            libc::pollfd {
+                fd: 0 as RawFd,
+                events: libc::POLLIN,
+                revents: 0,
+            },
+            libc::pollfd {
+                fd: stop_read,
+                events: libc::POLLIN,
+                revents: 0,
+            },
+        ];
+        let ready = unsafe { libc::poll(fds.as_mut_ptr(), 2, -1) };
+        if ready < 0 {
+            let error = std::io::Error::last_os_error();
+            if error.kind() == std::io::ErrorKind::Interrupted {
+                continue;
+            }
+            push_record(
+                &records,
+                json!({"token": null, "ok": false, "error": format!("control poll failed: {error}")})
+                    .to_string(),
+            );
+            request_shutdown(&commands, &wake);
+            break;
+        }
+        if fds[1].revents != 0 {
+            break;
+        }
+        if fds[0].revents & (libc::POLLIN | libc::POLLHUP | libc::POLLERR) == 0 {
+            continue;
+        }
+        let count = unsafe {
+            libc::read(
+                0,
+                buffer.as_mut_ptr() as *mut std::ffi::c_void,
+                buffer.len(),
+            )
+        };
+        if count == 0 {
+            if decoder.finish().is_err() {
+                push_record(
+                    &records,
+                    json!({"token": null, "ok": false, "error": "incomplete control frame"})
+                        .to_string(),
+                );
+            }
+            request_shutdown(&commands, &wake);
+            break;
+        }
+        if count < 0 {
+            let error = std::io::Error::last_os_error();
+            if error.kind() == std::io::ErrorKind::Interrupted {
+                continue;
+            }
+            push_record(
+                &records,
+                json!({"token": null, "ok": false, "error": "control input read failed"})
+                    .to_string(),
+            );
+            request_shutdown(&commands, &wake);
+            break;
+        }
+        let result = {
+            let commands = &commands;
+            decoder.feed(
+                &buffer[..count as usize],
+                || 0,
+                |frame, _| {
+                    let value: Value =
+                        serde_json::from_slice(frame).map_err(|e| e.to_string())?;
+                    commands
+                        .push(value)
+                        .map_err(|_| "control queue closed".to_string())?;
+                    wake();
+                    Ok(())
+                },
+            )
+        };
+        if let Err(error) = result {
+            push_record(
+                &records,
+                json!({"token": null, "ok": false, "error": format!("invalid control frame: {error}")})
+                    .to_string(),
+            );
+            request_shutdown(&commands, &wake);
+            break;
         }
     }
 }
@@ -113,6 +216,7 @@ impl Thread {
         }
     }
 
+    #[cfg(windows)]
     fn join_bounded(self, deadline: Instant, cancel: bool) -> bool {
         let handle = self.handle;
         let raw = handle.as_raw_handle() as HANDLE;
@@ -137,13 +241,30 @@ impl Thread {
             }
         }
     }
+
+    #[cfg(unix)]
+    fn join_bounded(self, deadline: Instant, _cancel: bool) -> bool {
+        let handle = self.handle;
+        while !handle.is_finished() && Instant::now() < deadline {
+            std::thread::sleep(Duration::from_millis(5));
+        }
+        if handle.is_finished() {
+            let _ = handle.join();
+            true
+        } else {
+            false
+        }
+    }
 }
 
 pub struct Control {
     reader: Option<Thread>,
     writer: Option<Thread>,
     commands: Option<Arc<BoundedQueue<Value>>>,
+    #[cfg(windows)]
     stop: Arc<AtomicBool>,
+    #[cfg(unix)]
+    stop_write: std::os::fd::RawFd,
 }
 
 impl Control {
@@ -152,7 +273,10 @@ impl Control {
             reader: None,
             writer: None,
             commands: None,
+            #[cfg(windows)]
             stop: Arc::new(AtomicBool::new(false)),
+            #[cfg(unix)]
+            stop_write: -1,
         }
     }
 
@@ -169,15 +293,46 @@ impl Control {
             publish_writer(writer_records);
         }));
         let commands = Arc::clone(&ui.commands);
-        let stop = Arc::clone(&self.stop);
-        let hwnd = ui.mascot.get() as usize;
-        self.reader = Some(Thread::spawn(move || {
-            reader_run(hwnd, commands, Some(records), stop);
-        }));
+        let wake = ui.control_waker();
+        #[cfg(windows)]
+        {
+            let stop = Arc::clone(&self.stop);
+            self.reader = Some(Thread::spawn(move || {
+                reader_run(wake, commands, Some(records), stop);
+            }));
+        }
+        #[cfg(unix)]
+        {
+            let mut fds = [0i32; 2];
+            if unsafe { libc::pipe(fds.as_mut_ptr()) } != 0 {
+                eprintln!("control stop pipe creation failed");
+                return;
+            }
+            let (read_fd, write_fd) = (fds[0], fds[1]);
+            self.stop_write = write_fd;
+            self.reader = Some(Thread::spawn(move || {
+                reader_run(wake, commands, Some(records), read_fd);
+                unsafe { libc::close(read_fd) };
+            }));
+        }
     }
 
     pub fn stop(&mut self) {
+        #[cfg(windows)]
         self.stop.store(true, Ordering::Release);
+        #[cfg(unix)]
+        if self.stop_write >= 0 {
+            let byte = [1u8; 1];
+            unsafe {
+                libc::write(
+                    self.stop_write,
+                    byte.as_ptr() as *const std::ffi::c_void,
+                    1,
+                );
+                libc::close(self.stop_write);
+            }
+            self.stop_write = -1;
+        }
         if let Some(commands) = &self.commands {
             commands.close();
         }

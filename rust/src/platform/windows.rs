@@ -265,6 +265,13 @@ impl Ui {
         }
     }
 
+    pub fn control_waker(&self) -> Arc<dyn Fn() + Send + Sync> {
+        let hwnd = self.mascot.get() as usize;
+        Arc::new(move || unsafe {
+            PostMessageW(hwnd as *mut std::ffi::c_void, WM_APP_CONTROL, 0, 0);
+        })
+    }
+
     pub fn record(&self, value: Value) {
         if !self.control_enabled {
             return;
@@ -1566,4 +1573,168 @@ mod tests {
         assert!(event_matches(2, 7, 2, 7));
         assert!(!event_matches(2, 8, 2, 7));
     }
+}
+
+fn set_dpi_awareness() -> Result<(), String> {
+    unsafe {
+        if SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2) == 0 {
+            let current = GetThreadDpiAwarenessContext();
+            if AreDpiAwarenessContextsEqual(current, DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)
+                == 0
+            {
+                return Err("per-monitor-v2 awareness not in effect".into());
+            }
+        }
+    }
+    Ok(())
+}
+
+pub fn run_app(manifest: &str, control: bool) -> Result<i32, String> {
+    set_dpi_awareness()?;
+    let config = crate::config::load(manifest)?;
+    let (mascot_source, mascot_src_w, mascot_src_h) = decode_png(&config.asset_path)?;
+    if mascot_src_w != config.manifest.asset.pixel_width
+        || mascot_src_h != config.manifest.asset.pixel_height
+    {
+        return Err("decoded asset dimensions differ from the manifest".into());
+    }
+
+    let ui_events = Arc::new(BoundedQueue::<crate::provider::Event>::new(64));
+    let commands = Arc::new(BoundedQueue::<serde_json::Value>::new(16));
+    let records = if control {
+        Some(Arc::new(BoundedQueue::<String>::new(256)))
+    } else {
+        None
+    };
+
+    let ui = Box::leak(Box::new(Ui {
+        config,
+        mascot: std::cell::Cell::new(std::ptr::null_mut()),
+        mascot_source,
+        mascot_src_w,
+        mascot_src_h,
+        surface: std::cell::RefCell::new(None),
+        composer: std::cell::RefCell::new(None),
+        model: std::cell::RefCell::new(Model {
+            provider_state: "idle".into(),
+            request_id: 0,
+            request_count: 0,
+            last_seq: -1,
+            response: String::new(),
+            provider_pid: 0,
+            scenario: "normal".into(),
+            run_invalid: None,
+            provider_error: None,
+            generation: 0,
+        }),
+        composing: std::cell::Cell::new(false),
+        snapshot: std::cell::RefCell::new(None),
+        ui_events: Arc::clone(&ui_events),
+        commands: Arc::clone(&commands),
+        records: records.clone(),
+        provider: std::sync::Mutex::new(None),
+        control_enabled: control,
+        shutdown_started: std::cell::Cell::new(false),
+        cancel_pending: std::cell::Cell::new(false),
+        pending_shutdown_token: std::cell::RefCell::new(None),
+        presents: std::cell::Cell::new(0),
+        paints: std::cell::Cell::new(0),
+    }));
+
+    let instance = text::instance();
+    register_classes(instance)?;
+    let mascot = create_mascot(ui, instance)?;
+    ui.mascot.set(mascot);
+    let dpi = unsafe { GetDpiForWindow(mascot) };
+    ui.present_mascot(dpi)?;
+    unsafe {
+        ShowWindow(mascot, SW_SHOWNOACTIVATE);
+        if RegisterHotKey(
+            mascot,
+            HOTKEY_TOGGLE_ID,
+            MOD_NOREPEAT | MOD_CONTROL | MOD_ALT,
+            VK_SPACE as u32,
+        ) == 0
+        {
+            return Err("hotkey registration failed".into());
+        }
+        if RegisterHotKey(
+            mascot,
+            HOTKEY_CANCEL_ID,
+            MOD_NOREPEAT | MOD_CONTROL | MOD_ALT,
+            VK_ESCAPE as u32,
+        ) == 0
+        {
+            return Err("cancel hotkey registration failed".into());
+        }
+    }
+
+    let mut scenario_chunks = std::collections::HashMap::new();
+    for name in ui.config.manifest.scenarios.keys() {
+        if let Ok(chunks) = crate::config::scenario_chunks(&ui.config.manifest, name) {
+            scenario_chunks.insert(name.clone(), chunks);
+        }
+    }
+    let provider_config = crate::provider::ProviderConfig {
+        path: ui.config.manifest.provider.path.clone(),
+        arguments: ui.config.manifest.provider.arguments.clone(),
+        cwd: ui.config.manifest.provider.cwd.clone(),
+        environment: ui
+            .config
+            .manifest
+            .provider
+            .environment
+            .iter()
+            .map(|(k, v)| (k.clone(), v.clone()))
+            .collect(),
+        scenario_chunks,
+        cancel_timeout_ms: ui.config.manifest.protocol.cancel_timeout_ms,
+        shutdown_timeout_ms: ui.config.manifest.protocol.shutdown_timeout_ms,
+    };
+    let wake_ui: Arc<dyn Fn() + Send + Sync> = {
+        let hwnd = mascot as usize;
+        Arc::new(move || unsafe {
+            PostMessageW(hwnd as *mut std::ffi::c_void, WM_APP_PROVIDER, 0, 0);
+        })
+    };
+    let provider = crate::provider::Provider::spawn(
+        provider_config,
+        ui_events,
+        records.clone(),
+        wake_ui,
+    );
+    *ui.provider.lock().unwrap_or_else(|e| e.into_inner()) = Some(provider);
+
+    let mut control_state = crate::control::Control::new();
+    control_state.arm(ui, control);
+
+    let exit_code = {
+        let mut message = MSG::default();
+        loop {
+            let result = unsafe { GetMessageW(&mut message, std::ptr::null_mut(), 0, 0) };
+            if result == 0 {
+                break message.wParam as i32;
+            }
+            if result < 0 {
+                eprintln!("GetMessageW failed; requesting backend stop");
+                ui.request_shutdown(None);
+                break 64;
+            }
+            if ui.consume_submit_key(&message) {
+                continue;
+            }
+            unsafe {
+                TranslateMessage(&message);
+                DispatchMessageW(&message);
+            }
+        }
+    };
+
+    control_state.stop();
+    ui.teardown();
+    unsafe {
+        UnregisterHotKey(mascot, HOTKEY_TOGGLE_ID);
+        UnregisterHotKey(mascot, HOTKEY_CANCEL_ID);
+    }
+    Ok(exit_code)
 }

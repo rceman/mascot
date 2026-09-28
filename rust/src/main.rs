@@ -1,4 +1,4 @@
-#![cfg_attr(not(test), windows_subsystem = "windows")]
+#![cfg_attr(all(not(test), windows), windows_subsystem = "windows")]
 
 mod codex_gate;
 mod config;
@@ -7,18 +7,14 @@ mod framing;
 mod platform;
 mod provider;
 mod queue;
+#[cfg(windows)]
+#[path = "text_windows.rs"]
 mod text;
 
 use base64::Engine;
 use base64::engine::general_purpose::STANDARD as BASE64;
 use serde::Deserialize;
 use serde_json::json;
-use std::sync::Arc;
-use windows_sys::Win32::UI::HiDpi::*;
-use windows_sys::Win32::UI::Input::KeyboardAndMouse::*;
-use windows_sys::Win32::UI::WindowsAndMessaging::*;
-
-use platform::{Ui, WM_APP_PROVIDER};
 
 #[derive(Deserialize)]
 struct Vector {
@@ -74,168 +70,6 @@ fn decode_vectors(path: &str) -> Result<i32, String> {
     Ok(0)
 }
 
-fn set_dpi_awareness() -> Result<(), String> {
-    unsafe {
-        if SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2) == 0 {
-            let current = GetThreadDpiAwarenessContext();
-            if AreDpiAwarenessContextsEqual(current, DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)
-                == 0
-            {
-                return Err("per-monitor-v2 awareness not in effect".into());
-            }
-        }
-    }
-    Ok(())
-}
-
-fn run_app(manifest: &str, control: bool) -> Result<i32, String> {
-    set_dpi_awareness()?;
-    let config = config::load(manifest)?;
-    let (mascot_source, mascot_src_w, mascot_src_h) = platform::decode_png(&config.asset_path)?;
-    if mascot_src_w != config.manifest.asset.pixel_width
-        || mascot_src_h != config.manifest.asset.pixel_height
-    {
-        return Err("decoded asset dimensions differ from the manifest".into());
-    }
-
-    let ui_events = Arc::new(queue::BoundedQueue::<provider::Event>::new(64));
-    let commands = Arc::new(queue::BoundedQueue::<serde_json::Value>::new(16));
-    let records = if control {
-        Some(Arc::new(queue::BoundedQueue::<String>::new(256)))
-    } else {
-        None
-    };
-
-    let ui = Box::leak(Box::new(Ui {
-        config,
-        mascot: std::cell::Cell::new(std::ptr::null_mut()),
-        mascot_source,
-        mascot_src_w,
-        mascot_src_h,
-        surface: std::cell::RefCell::new(None),
-        composer: std::cell::RefCell::new(None),
-        model: std::cell::RefCell::new(platform::Model {
-            provider_state: "idle".into(),
-            request_id: 0,
-            request_count: 0,
-            last_seq: -1,
-            response: String::new(),
-            provider_pid: 0,
-            scenario: "normal".into(),
-            run_invalid: None,
-            provider_error: None,
-            generation: 0,
-        }),
-        composing: std::cell::Cell::new(false),
-        snapshot: std::cell::RefCell::new(None),
-        ui_events: Arc::clone(&ui_events),
-        commands: Arc::clone(&commands),
-        records: records.clone(),
-        provider: std::sync::Mutex::new(None),
-        control_enabled: control,
-        shutdown_started: std::cell::Cell::new(false),
-        cancel_pending: std::cell::Cell::new(false),
-        pending_shutdown_token: std::cell::RefCell::new(None),
-        presents: std::cell::Cell::new(0),
-        paints: std::cell::Cell::new(0),
-    }));
-
-    let instance = text::instance();
-    platform::register_classes(instance)?;
-    let mascot = platform::create_mascot(ui, instance)?;
-    ui.mascot.set(mascot);
-    let dpi = unsafe { GetDpiForWindow(mascot) };
-    ui.present_mascot(dpi)?;
-    unsafe {
-        ShowWindow(mascot, SW_SHOWNOACTIVATE);
-    }
-
-    unsafe {
-        if RegisterHotKey(
-            mascot,
-            platform::HOTKEY_TOGGLE_ID,
-            MOD_NOREPEAT | MOD_CONTROL | MOD_ALT,
-            VK_SPACE as u32,
-        ) == 0
-        {
-            return Err("hotkey registration failed".into());
-        }
-        if RegisterHotKey(
-            mascot,
-            platform::HOTKEY_CANCEL_ID,
-            MOD_NOREPEAT | MOD_CONTROL | MOD_ALT,
-            VK_ESCAPE as u32,
-        ) == 0
-        {
-            return Err("cancel hotkey registration failed".into());
-        }
-    }
-
-    let mut scenario_chunks = std::collections::HashMap::new();
-    for name in ui.config.manifest.scenarios.keys() {
-        if let Ok(chunks) = config::scenario_chunks(&ui.config.manifest, name) {
-            scenario_chunks.insert(name.clone(), chunks);
-        }
-    }
-    let provider_config = provider::ProviderConfig {
-        path: ui.config.manifest.provider.path.clone(),
-        arguments: ui.config.manifest.provider.arguments.clone(),
-        cwd: ui.config.manifest.provider.cwd.clone(),
-        environment: ui
-            .config
-            .manifest
-            .provider
-            .environment
-            .iter()
-            .map(|(k, v)| (k.clone(), v.clone()))
-            .collect(),
-        scenario_chunks,
-        cancel_timeout_ms: ui.config.manifest.protocol.cancel_timeout_ms,
-        shutdown_timeout_ms: ui.config.manifest.protocol.shutdown_timeout_ms,
-    };
-    let wake_ui: Arc<dyn Fn() + Send + Sync> = {
-        let hwnd = mascot as usize;
-        Arc::new(move || unsafe {
-            PostMessageW(hwnd as *mut std::ffi::c_void, WM_APP_PROVIDER, 0, 0);
-        })
-    };
-    let provider = provider::Provider::spawn(provider_config, ui_events, records.clone(), wake_ui);
-    *ui.provider.lock().unwrap_or_else(|e| e.into_inner()) = Some(provider);
-
-    let mut control_state = control::Control::new();
-    control_state.arm(ui, control);
-
-    let exit_code = {
-        let mut message = MSG::default();
-        loop {
-            let result = unsafe { GetMessageW(&mut message, std::ptr::null_mut(), 0, 0) };
-            if result == 0 {
-                break message.wParam as i32;
-            }
-            if result < 0 {
-                eprintln!("GetMessageW failed; requesting backend stop");
-                ui.request_shutdown(None);
-                break 64;
-            }
-            if ui.consume_submit_key(&message) {
-                continue;
-            }
-            unsafe {
-                TranslateMessage(&message);
-                DispatchMessageW(&message);
-            }
-        }
-    };
-
-    control_state.stop();
-    ui.teardown();
-    unsafe {
-        UnregisterHotKey(mascot, platform::HOTKEY_TOGGLE_ID);
-        UnregisterHotKey(mascot, platform::HOTKEY_CANCEL_ID);
-    }
-    Ok(exit_code)
-}
-
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     let code = match args.get(1).map(String::as_str) {
@@ -246,7 +80,7 @@ fn main() {
         Some("--fixture") => {
             let control = args.iter().any(|a| a == "--control");
             match args.get(2) {
-                Some(path) => run_app(path, control),
+                Some(path) => platform::run_app(path, control),
                 None => Err("missing manifest path".into()),
             }
         }
@@ -254,7 +88,11 @@ fn main() {
             Some(path) => Ok(codex_gate::run(path)),
             None => Err("missing codex executable path".into()),
         },
-        _ => Err("usage: mascot --fixture MANIFEST [--control] | --decode-vectors VECTORS | --codex-gate CODEXE".into()),
+        Some("--acp-gate") => match args.get(2) {
+            Some(path) => Ok(codex_gate::run_acp(path)),
+            None => Err("missing ACP executable path".into()),
+        },
+        _ => Err("usage: mascot --fixture MANIFEST [--control] | --decode-vectors VECTORS | --codex-gate CODEXE | --acp-gate ACPEXE".into()),
     };
     match code {
         Ok(code) => std::process::exit(code),

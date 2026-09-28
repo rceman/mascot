@@ -4,16 +4,22 @@ use serde_json::{Value, json};
 use std::collections::HashMap;
 use std::io::Read;
 use std::io::Write;
+#[cfg(windows)]
 use std::os::windows::io::AsRawHandle;
+#[cfg(windows)]
 use std::os::windows::process::CommandExt;
 use std::process::{Child, Command as ProcessCommand, Stdio};
 use std::sync::{Arc, Condvar, Mutex};
 use std::thread::JoinHandle;
 use std::time::{Duration, Instant};
+#[cfg(windows)]
 use windows_sys::Win32::Foundation::{HANDLE, WAIT_OBJECT_0};
+#[cfg(windows)]
 use windows_sys::Win32::System::Performance::{QueryPerformanceCounter, QueryPerformanceFrequency};
+#[cfg(windows)]
 use windows_sys::Win32::System::Threading::WaitForSingleObject;
 
+#[cfg(windows)]
 pub fn qpc() -> i64 {
     let mut value = 0i64;
     if unsafe { QueryPerformanceCounter(&mut value) } == 0 {
@@ -22,12 +28,44 @@ pub fn qpc() -> i64 {
     value
 }
 
+#[cfg(windows)]
 pub fn qpc_frequency() -> i64 {
     let mut value = 0i64;
     if unsafe { QueryPerformanceFrequency(&mut value) } == 0 || value <= 0 {
         panic!("QueryPerformanceFrequency failed");
     }
     value
+}
+
+// The macOS common clock is mach_absolute_time; emit_qpc/receipt_qpc keep the
+// same wire names and share this domain with the darwin fixture build.
+#[cfg(unix)]
+#[link(name = "System")]
+unsafe extern "C" {
+    fn mach_absolute_time() -> u64;
+    fn mach_timebase_info(info: *mut MachTimebaseInfo) -> i32;
+}
+
+#[cfg(unix)]
+#[repr(C)]
+#[derive(Default)]
+struct MachTimebaseInfo {
+    numer: u32,
+    denom: u32,
+}
+
+#[cfg(unix)]
+pub fn qpc() -> i64 {
+    unsafe { mach_absolute_time() as i64 }
+}
+
+#[cfg(unix)]
+pub fn qpc_frequency() -> i64 {
+    let mut info = MachTimebaseInfo::default();
+    if unsafe { mach_timebase_info(&mut info) } != 0 || info.numer == 0 {
+        panic!("mach_timebase_info failed");
+    }
+    (1e9f64 * info.denom as f64 / info.numer as f64) as i64
 }
 
 #[derive(Debug)]
@@ -296,8 +334,9 @@ fn spawn_child(
         .envs(config.environment.iter().cloned())
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
-        .stderr(Stdio::piped())
-        .creation_flags(windows_sys::Win32::System::Threading::CREATE_NO_WINDOW);
+        .stderr(Stdio::piped());
+    #[cfg(windows)]
+    process.creation_flags(windows_sys::Win32::System::Threading::CREATE_NO_WINDOW);
     let mut child = process
         .spawn()
         .map_err(|e| format!("provider spawn: {e}"))?;
@@ -381,10 +420,25 @@ fn push_record(records: &Option<Arc<BoundedQueue<String>>>, record: String) -> R
         .map_err(|_| "control output queue overflow".to_string())
 }
 
+#[cfg(windows)]
 fn wait_handle(handle: HANDLE, deadline: Instant) -> bool {
     let remaining = deadline.saturating_duration_since(Instant::now());
     let ms = remaining.as_millis().min(u32::MAX as u128) as u32;
     unsafe { WaitForSingleObject(handle, ms) == WAIT_OBJECT_0 }
+}
+
+#[cfg(unix)]
+fn wait_child(child: &mut Child, deadline: Instant) -> bool {
+    loop {
+        match child.try_wait() {
+            Ok(Some(_)) => return true,
+            Ok(None) if Instant::now() < deadline => {
+                std::thread::sleep(Duration::from_millis(5));
+            }
+            Ok(None) => return false,
+            Err(_) => return true,
+        }
+    }
 }
 
 fn join_readers(readers: &mut Vec<JoinHandle<()>>, deadline: Instant) -> Result<(), String> {
@@ -411,13 +465,15 @@ fn teardown(
         return error;
     };
     let mut error = error;
-    let handle = active.child.as_raw_handle() as HANDLE;
     let grace = if error.is_some() {
         Instant::now() + Duration::from_millis(100)
     } else {
         deadline
     };
-    let mut reaped = wait_handle(handle, grace.min(deadline));
+    #[cfg(windows)]
+    let mut reaped = wait_handle(active.child.as_raw_handle() as HANDLE, grace.min(deadline));
+    #[cfg(unix)]
+    let mut reaped = wait_child(&mut active.child, grace.min(deadline));
     if !reaped {
         if active.child.kill().is_err() {
             error = Some(format!(
@@ -425,7 +481,14 @@ fn teardown(
                 error.map(|e| e + "; ").unwrap_or_default()
             ));
         }
-        reaped = wait_handle(handle, deadline);
+        #[cfg(windows)]
+        {
+            reaped = wait_handle(active.child.as_raw_handle() as HANDLE, deadline);
+        }
+        #[cfg(unix)]
+        {
+            reaped = wait_child(&mut active.child, deadline);
+        }
         if !reaped {
             error = Some(format!(
                 "{}provider did not exit before teardown deadline",
