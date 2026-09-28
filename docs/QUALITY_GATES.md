@@ -22,7 +22,7 @@ For Mascot this includes, as applicable:
 - visual evidence;
 - performance/iteration requirements;
 - agent-authoring/tooling requirements;
-- final WSL sync/commit/push requirements.
+- final authoritative Git status/diff/commit/push requirements.
 
 FAIL when only a helper or partial lifecycle is proven; required states, error/default/recovery paths, animation cases, evidence, performance checks or later clarifications are missing; or completion has no specific verification path.
 
@@ -116,8 +116,8 @@ Current intended boundaries include:
 - canonical art/rig data -> versioned asset data;
 - runtime-generated outline/shadow -> renderer/compositor, not baked art;
 - native editable text -> native platform text stack when product UI work begins;
-- Git authority for current Windows task workflow -> WSL checkout;
-- native Windows build/run/render/perf -> Windows working copy.
+- Git authority for a Windows task -> the authoritative checkout named by its handoff;
+- native Windows build/run/render/perf -> native Windows environment.
 
 FAIL for:
 
@@ -254,7 +254,7 @@ For authoring/QA tooling:
 - partial generation MUST NOT masquerade as complete evidence;
 - failed renders/encodes MUST produce non-zero failure;
 - stale cache MUST NOT be treated as fresh evidence;
-- sync-back MUST NOT overwrite unrelated WSL changes;
+- source/evidence synchronization, when a task actually requires it, MUST NOT overwrite unrelated authoritative changes;
 - generated receipts MUST identify the exact candidate/input identity;
 - retryable subprocess operations MUST avoid duplicate/corrupt output.
 
@@ -361,7 +361,7 @@ Persistence, filesystem layout, cache mechanics, evidence storage and platform i
 
 Animation/runtime logic MUST NOT depend directly on:
 
-- WSL sync mechanics;
+- task-specific Git checkout/sync mechanics;
 - evidence directory layout;
 - ffmpeg command construction;
 - Windows working-copy location;
@@ -422,7 +422,7 @@ Mascot examples:
 - do not preserve a bad v0.1 rig decomposition merely because effort was spent on it;
 - do not stack adapters around an obsolete clip format;
 - do not keep corrupted/generated evidence if deterministic regeneration is cheaper;
-- do not keep patching a broken Windows working copy when a clean copy from authoritative WSL is safer.
+- do not keep patching a broken working copy when a clean clone from the authoritative remote is safer.
 
 After repeated failures of the same local approach, prefer a bounded reset/reconstruction rather than sunk-cost continuation.
 
@@ -476,13 +476,15 @@ Known relevant failures, unresolved visual artifacts or contract mismatches MUST
 
 For visual work, Lead/agent MUST inspect representative **actual rendered outputs**, not only schemas, logs or detector summaries.
 
-For the current WSL/Windows workflow, completion also requires:
+For platform-specific workflows, completion also requires:
 
-- intended files synced back;
-- `git status` reviewed in WSL;
-- commit created from WSL;
-- push completed;
-- WSL authoritative worktree clean and equal to expected origin state.
+- the task's designated authoritative Git checkout is used;
+- `git status` and the complete diff are reviewed there;
+- commit and push are performed from that authoritative checkout;
+- the authoritative task branch is pushed;
+- the authoritative worktree is clean and equal to the expected origin state.
+
+When a task explicitly designates a native Windows clone as Git authority, do not add an unnecessary WSL copy/sync round-trip.
 
 Use COMPLETE only when the final artifact honestly satisfies the declared contract.
 
@@ -566,11 +568,11 @@ Agent-facing data and CLI output must remain compact enough that repeated develo
 
 For tasks whose handoff requires native Windows validation:
 
-- WSL remains Git authority;
+- the task handoff names the authoritative Git checkout;
 - native Windows is the build/run/render/performance environment;
+- when Windows Git/SSH is available and the task designates Windows authority, clone/fetch/commit/push directly on Windows;
 - no CI substitution;
-- no `.git` copy from Windows;
-- final sync/status/diff/commit/push happen through authoritative WSL.
+- avoid unnecessary cross-environment source-copy/sync pipelines.
 
 ### Executable gate mapping
 
