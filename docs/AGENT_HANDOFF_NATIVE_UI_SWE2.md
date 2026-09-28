@@ -195,46 +195,38 @@ No second numbered gate taxonomy.
 
 ## Git / platform workflow
 
-The authoritative repository already exists in WSL at:
+Native Windows Git is authoritative for this task.
 
-    ~/git/mascot
+The Windows machine already has working Git + SSH access to GitHub.
 
-That WSL checkout is the **only Git authority** for this task.
+Use a dedicated clone under the existing `devin_folder`, for example:
 
-Native Windows is the implementation/build/run/render/performance environment.
+    W:\\devin_folder\\mascot-ui-v01
+
+Repository SSH remote:
+
+    git@github.com:rceman/mascot.git
 
 Required workflow:
 
-1. In WSL, verify:
-   - repository: `~/git/mascot`;
-   - branch: `agent/native-ui-foundation-v0.1-swe2`;
-   - expected Planner baseline / current origin state;
-   - clean or explicitly understood worktree.
-2. Create a dedicated native-Windows working copy under `devin_folder`.
-   - Use a task-specific directory, for example:
-         W:\\devin_folder\\mascot-ui-v01
-   - Copy/sync repository source from the authoritative WSL checkout into that Windows working directory.
-   - Do **not** copy `.git`.
-3. Perform implementation, builds, native UI execution, screenshot capture, DPI checks and performance measurements from the Windows working copy.
-4. Treat the Windows copy as disposable working state, not as a Git repository and not as source-of-truth history.
-5. When source/evidence is ready to commit:
-   - sync only intended source/assets/docs/evidence from the Windows working copy back to `~/git/mascot` in WSL;
-   - never sync `.git`, build caches, `target/`, temporary capture directories or unrelated local files;
-   - preserve sensible LF/text modes and file permissions;
-   - do not overwrite unrelated WSL changes.
-6. In WSL:
+1. Clone or reuse a clean native-Windows clone under `devin_folder`.
+2. Fetch origin.
+3. Checkout:
+       agent/native-ui-foundation-v0.1-swe2
+4. Verify the required Planner baseline / latest remote branch state before editing.
+5. Perform implementation, builds, native UI execution, screenshots, DPI checks and performance measurements in that Windows clone.
+6. Before commit:
    - inspect `git status`;
    - inspect the complete diff;
-   - run/re-run any verification that is required against the final synced candidate;
-   - stage intentionally;
-   - commit;
-   - push the task branch.
-7. Final state:
-   - WSL branch pushed;
-   - WSL worktree clean;
-   - Windows copy may remain as working/cache state, but it is not authoritative.
+   - run final required verification against the exact candidate.
+7. Commit and push directly from Windows using the configured SSH Git remote.
+8. Finish with:
+   - branch pushed;
+   - Windows worktree clean.
 
-Do not commit or push from the Windows working copy.
+Do NOT copy source back and forth through WSL for this task.
+
+Do NOT create a second Git authority or manual source-sync pipeline.
 
 Do not add CI.
 
