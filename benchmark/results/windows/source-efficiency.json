@@ -1,0 +1,2072 @@
+{
+  "schema": "mascot-source-efficiency-report-1",
+  "protocol": "docs/AGENT_SOURCE_EFFICIENCY.md v0.1",
+  "tokenizer": "tiktoken/o200k_base 0.12.0",
+  "scope": "candidate-owned handwritten implementation under rust/, zig/, go/; shared benchmark/, assets/, lockfiles, generated resources and build outputs excluded",
+  "implementation_order": [
+    "rust",
+    "zig",
+    "go"
+  ],
+  "candidates": {
+    "rust": {
+      "final": {
+        "files": [
+          {
+            "file": "src/codex_gate.rs",
+            "bytes": 6588,
+            "chars": 6587,
+            "loc_nonblank_noncomment": 155,
+            "tokens": 1631,
+            "tokens_code_only": 1518,
+            "subsystem": "other_candidate_logic",
+            "functions": 3,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/config.rs",
+            "bytes": 7176,
+            "chars": 7176,
+            "loc_nonblank_noncomment": 213,
+            "tokens": 1830,
+            "tokens_code_only": 1830,
+            "subsystem": "other_candidate_logic",
+            "functions": 7,
+            "ffi_boundary_lines": 2
+          },
+          {
+            "file": "src/control.rs",
+            "bytes": 7600,
+            "chars": 7600,
+            "loc_nonblank_noncomment": 223,
+            "tokens": 1649,
+            "tokens_code_only": 1649,
+            "subsystem": "benchmark_candidate_hooks",
+            "functions": 8,
+            "ffi_boundary_lines": 6
+          },
+          {
+            "file": "src/framing.rs",
+            "bytes": 5137,
+            "chars": 5137,
+            "loc_nonblank_noncomment": 179,
+            "tokens": 1141,
+            "tokens_code_only": 1141,
+            "subsystem": "other_candidate_logic",
+            "functions": 2,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/main.rs",
+            "bytes": 8896,
+            "chars": 8896,
+            "loc_nonblank_noncomment": 250,
+            "tokens": 2111,
+            "tokens_code_only": 2111,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 11
+          },
+          {
+            "file": "src/platform.rs",
+            "bytes": 54633,
+            "chars": 54629,
+            "loc_nonblank_noncomment": 1512,
+            "tokens": 11576,
+            "tokens_code_only": 11531,
+            "subsystem": "windowing_platform_glue",
+            "functions": 15,
+            "ffi_boundary_lines": 40
+          },
+          {
+            "file": "src/provider.rs",
+            "bytes": 54889,
+            "chars": 54889,
+            "loc_nonblank_noncomment": 1566,
+            "tokens": 11403,
+            "tokens_code_only": 11403,
+            "subsystem": "provider_process_io",
+            "functions": 19,
+            "ffi_boundary_lines": 7
+          },
+          {
+            "file": "src/queue.rs",
+            "bytes": 4567,
+            "chars": 4567,
+            "loc_nonblank_noncomment": 143,
+            "tokens": 1087,
+            "tokens_code_only": 1087,
+            "subsystem": "other_candidate_logic",
+            "functions": 2,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/text.rs",
+            "bytes": 8813,
+            "chars": 8813,
+            "loc_nonblank_noncomment": 287,
+            "tokens": 2373,
+            "tokens_code_only": 2373,
+            "subsystem": "text_ime_rendering",
+            "functions": 14,
+            "ffi_boundary_lines": 36
+          }
+        ],
+        "handwritten_source_bytes": 158299,
+        "handwritten_source_chars": 158294,
+        "nonblank_noncomment_loc": 4528,
+        "source_tokens_o200k_base": 34801,
+        "source_tokens_code_only_o200k_base": 34643,
+        "tokens_per_loc": 7.6857,
+        "source_file_count": 9,
+        "median_source_file_bytes": 7600,
+        "largest_source_file": "src/provider.rs",
+        "subsystem_tokens_o200k_base": {
+          "other_candidate_logic": 7800,
+          "benchmark_candidate_hooks": 1649,
+          "windowing_platform_glue": 11576,
+          "provider_process_io": 11403,
+          "text_ime_rendering": 2373
+        },
+        "max_function_lines": 149,
+        "median_function_lines": 8.0,
+        "max_nesting_depth": 7,
+        "ffi_boundary_lines": 102,
+        "architecture_doc_bytes": 18318,
+        "build_config_bytes": 3373
+      },
+      "first_complete": {
+        "files": [
+          {
+            "file": "src/config.rs",
+            "bytes": 11064,
+            "chars": 11064,
+            "loc_nonblank_noncomment": 314,
+            "tokens": 3319,
+            "tokens_code_only": 3302,
+            "subsystem": "other_candidate_logic",
+            "functions": 7,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/control.rs",
+            "bytes": 4961,
+            "chars": 4961,
+            "loc_nonblank_noncomment": 139,
+            "tokens": 1041,
+            "tokens_code_only": 1041,
+            "subsystem": "benchmark_candidate_hooks",
+            "functions": 3,
+            "ffi_boundary_lines": 9
+          },
+          {
+            "file": "src/framing.rs",
+            "bytes": 5137,
+            "chars": 5137,
+            "loc_nonblank_noncomment": 179,
+            "tokens": 1141,
+            "tokens_code_only": 1141,
+            "subsystem": "other_candidate_logic",
+            "functions": 2,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/main.rs",
+            "bytes": 9087,
+            "chars": 9087,
+            "loc_nonblank_noncomment": 245,
+            "tokens": 2090,
+            "tokens_code_only": 2090,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 12
+          },
+          {
+            "file": "src/platform.rs",
+            "bytes": 42704,
+            "chars": 42704,
+            "loc_nonblank_noncomment": 1193,
+            "tokens": 9362,
+            "tokens_code_only": 9362,
+            "subsystem": "windowing_platform_glue",
+            "functions": 9,
+            "ffi_boundary_lines": 38
+          },
+          {
+            "file": "src/provider.rs",
+            "bytes": 40290,
+            "chars": 40290,
+            "loc_nonblank_noncomment": 1162,
+            "tokens": 8360,
+            "tokens_code_only": 8360,
+            "subsystem": "provider_process_io",
+            "functions": 15,
+            "ffi_boundary_lines": 7
+          },
+          {
+            "file": "src/queue.rs",
+            "bytes": 4106,
+            "chars": 4106,
+            "loc_nonblank_noncomment": 130,
+            "tokens": 972,
+            "tokens_code_only": 972,
+            "subsystem": "other_candidate_logic",
+            "functions": 2,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/text.rs",
+            "bytes": 8092,
+            "chars": 8092,
+            "loc_nonblank_noncomment": 269,
+            "tokens": 2178,
+            "tokens_code_only": 2178,
+            "subsystem": "text_ime_rendering",
+            "functions": 13,
+            "ffi_boundary_lines": 32
+          }
+        ],
+        "handwritten_source_bytes": 125441,
+        "handwritten_source_chars": 125441,
+        "nonblank_noncomment_loc": 3631,
+        "source_tokens_o200k_base": 28463,
+        "source_tokens_code_only_o200k_base": 28446,
+        "tokens_per_loc": 7.8389,
+        "source_file_count": 8,
+        "median_source_file_bytes": 8589.5,
+        "largest_source_file": "src/platform.rs",
+        "subsystem_tokens_o200k_base": {
+          "other_candidate_logic": 7522,
+          "benchmark_candidate_hooks": 1041,
+          "windowing_platform_glue": 9362,
+          "provider_process_io": 8360,
+          "text_ime_rendering": 2178
+        },
+        "max_function_lines": 146,
+        "median_function_lines": 8,
+        "max_nesting_depth": 8,
+        "ffi_boundary_lines": 98,
+        "architecture_doc_bytes": 18139,
+        "build_config_bytes": 3704
+      },
+      "correction_churn": {
+        "tokens_added": 16520,
+        "tokens_removed": 10207,
+        "changed_files": [
+          {
+            "file": "ARCHITECTURE.md",
+            "tokens_added": 86,
+            "tokens_removed": 58
+          },
+          {
+            "file": "Cargo.toml",
+            "tokens_added": 10,
+            "tokens_removed": 0
+          },
+          {
+            "file": "README.md",
+            "tokens_added": 190,
+            "tokens_removed": 172
+          },
+          {
+            "file": "build.rs",
+            "tokens_added": 79,
+            "tokens_removed": 160
+          },
+          {
+            "file": "src/codex_gate.rs",
+            "tokens_added": 1631,
+            "tokens_removed": 0
+          },
+          {
+            "file": "src/config.rs",
+            "tokens_added": 319,
+            "tokens_removed": 1807
+          },
+          {
+            "file": "src/control.rs",
+            "tokens_added": 1490,
+            "tokens_removed": 881
+          },
+          {
+            "file": "src/main.rs",
+            "tokens_added": 515,
+            "tokens_removed": 494
+          },
+          {
+            "file": "src/platform.rs",
+            "tokens_added": 5900,
+            "tokens_removed": 3688
+          },
+          {
+            "file": "src/provider.rs",
+            "tokens_added": 5875,
+            "tokens_removed": 2833
+          },
+          {
+            "file": "src/queue.rs",
+            "tokens_added": 116,
+            "tokens_removed": 0
+          },
+          {
+            "file": "src/text.rs",
+            "tokens_added": 309,
+            "tokens_removed": 114
+          }
+        ]
+      },
+      "homologous_regions": {
+        "create_show_hide_transparent_mascot_window": {
+          "label": "create/show/hide transparent mascot window",
+          "tokens_o200k_base": 2878,
+          "regions": [
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                60,
+                208
+              ],
+              "tokens": 1022
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                290,
+                347
+              ],
+              "tokens": 435
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                975,
+                1010
+              ],
+              "tokens": 273
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                1099,
+                1110
+              ],
+              "tokens": 58
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                1432,
+                1456
+              ],
+              "tokens": 370
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                1458,
+                1494
+              ],
+              "tokens": 337
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                1496,
+                1540
+              ],
+              "tokens": 383
+            }
+          ]
+        },
+        "hit_testing_dragging": {
+          "label": "hit testing + dragging",
+          "tokens_o200k_base": 282,
+          "regions": [
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                1030,
+                1055
+              ],
+              "tokens": 282
+            }
+          ]
+        },
+        "global_hotkey": {
+          "label": "global hotkey",
+          "tokens_o200k_base": 322,
+          "regions": [
+            {
+              "file": "src/main.rs",
+              "lines": [
+                150,
+                170
+              ],
+              "tokens": 133
+            },
+            {
+              "file": "src/main.rs",
+              "lines": [
+                230,
+                236
+              ],
+              "tokens": 53
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                1011,
+                1029
+              ],
+              "tokens": 136
+            }
+          ]
+        },
+        "composer_input_ime_bridge": {
+          "label": "composer input/IME bridge",
+          "tokens_o200k_base": 5173,
+          "regions": [
+            {
+              "file": "src/text.rs",
+              "lines": "all",
+              "tokens": 2373
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                1112,
+                1341
+              ],
+              "tokens": 1608
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                1343,
+                1427
+              ],
+              "tokens": 615
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                427,
+                463
+              ],
+              "tokens": 285
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                235,
+                257
+              ],
+              "tokens": 157
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                213,
+                233
+              ],
+              "tokens": 135
+            }
+          ]
+        },
+        "response_rendering": {
+          "label": "response rendering",
+          "tokens_o200k_base": 255,
+          "regions": [
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                36,
+                47
+              ],
+              "tokens": 87
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                576,
+                599
+              ],
+              "tokens": 168
+            }
+          ]
+        },
+        "provider_process_launch": {
+          "label": "provider process launch",
+          "tokens_o200k_base": 890,
+          "regions": [
+            {
+              "file": "src/provider.rs",
+              "lines": [
+                187,
+                223
+              ],
+              "tokens": 266
+            },
+            {
+              "file": "src/provider.rs",
+              "lines": [
+                282,
+                361
+              ],
+              "tokens": 624
+            }
+          ]
+        },
+        "framed_stdout_parser": {
+          "label": "framed stdout parser",
+          "tokens_o200k_base": 3690,
+          "regions": [
+            {
+              "file": "src/framing.rs",
+              "lines": "all",
+              "tokens": 1141
+            },
+            {
+              "file": "src/provider.rs",
+              "lines": [
+                855,
+                973
+              ],
+              "tokens": 701
+            },
+            {
+              "file": "src/provider.rs",
+              "lines": [
+                975,
+                1240
+              ],
+              "tokens": 1848
+            }
+          ]
+        },
+        "stderr_drain": {
+          "label": "stderr drain",
+          "tokens_o200k_base": 244,
+          "regions": [
+            {
+              "file": "src/provider.rs",
+              "lines": [
+                163,
+                178
+              ],
+              "tokens": 97
+            },
+            {
+              "file": "src/provider.rs",
+              "lines": [
+                334,
+                353
+              ],
+              "tokens": 147
+            }
+          ]
+        },
+        "cooperative_cancellation": {
+          "label": "cooperative cancellation",
+          "tokens_o200k_base": 946,
+          "regions": [
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                549,
+                574
+              ],
+              "tokens": 154
+            },
+            {
+              "file": "src/provider.rs",
+              "lines": [
+                694,
+                810
+              ],
+              "tokens": 792
+            }
+          ]
+        },
+        "clean_child_shutdown": {
+          "label": "clean child shutdown",
+          "tokens_o200k_base": 1437,
+          "regions": [
+            {
+              "file": "src/provider.rs",
+              "lines": [
+                384,
+                401
+              ],
+              "tokens": 174
+            },
+            {
+              "file": "src/provider.rs",
+              "lines": [
+                403,
+                464
+              ],
+              "tokens": 421
+            },
+            {
+              "file": "src/provider.rs",
+              "lines": [
+                508,
+                569
+              ],
+              "tokens": 455
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                912,
+                932
+              ],
+              "tokens": 130
+            },
+            {
+              "file": "src/platform.rs",
+              "lines": [
+                934,
+                972
+              ],
+              "tokens": 257
+            }
+          ]
+        }
+      },
+      "rework": {
+        "first_complete_commit": "6560996",
+        "candidate_dir_commits_total": 4,
+        "focused_correction_commits": 1,
+        "post_ready_source_commits": 2,
+        "first_complete_note": "first buildable snapshot preserved at 6560996; review recorded in corrections/rust-001-review.md; consolidated correction landed in 447ba34 (corrections/rust-002-corrections.md)",
+        "structural_stack_changes": 0,
+        "benchmark_exceptions_requested": 0,
+        "correction_loop_count": 4,
+        "correction_loop_evidence": "build+test, smoke(2x 96/192dpi), provider regression fail at rust-provider-001 then pass at 002/003; codex-gate add verified"
+      },
+      "build": {
+        "clean_build_cmd": "cargo clean && cargo build --release",
+        "incremental_build_cmd": "cargo build --release  (after touching src/text.rs)",
+        "clean_build_ms": 16487,
+        "incremental_build_ms": 8581,
+        "toolchain": "rustc/cargo 1.94.0, edition 2024, lto=thin",
+        "ffi_setup": "windows-sys 0.61.2 (extern declarations via crate); SDK rc.exe pinned for the app manifest resource (build.rs fails if absent)",
+        "deps": "windows-sys, serde, serde_json, png, base64 (5 direct)",
+        "workarounds": [
+          "bounded native-handle wait via JoinHandle::as_raw_handle (documented in rust-002)",
+          "prompt-kill teardown path to satisfy the shared 2s provider deadline",
+          "BCrypt SHA-256 via windows-sys instead of a bespoke digest",
+          "stale-generation event filtering added after regression run showed stale-session pollution"
+        ],
+        "diagnostic_notes": "rustc caught real bugs (unused assignments, borrow across re-entrant calls); the failing case was a runtime deadline violation visible only under the shared provider gate",
+        "platform_debug_notes": "conhost/NoWindow verified via CREATE_NO_WINDOW; PDH instance naming had to be discovered (process instance strips .exe)"
+      }
+    },
+    "zig": {
+      "final": {
+        "files": [
+          {
+            "file": "src/codex_gate.zig",
+            "bytes": 7367,
+            "chars": 7366,
+            "loc_nonblank_noncomment": 167,
+            "tokens": 1954,
+            "tokens_code_only": 1843,
+            "subsystem": "other_candidate_logic",
+            "functions": 5,
+            "ffi_boundary_lines": 5
+          },
+          {
+            "file": "src/config.zig",
+            "bytes": 8643,
+            "chars": 8643,
+            "loc_nonblank_noncomment": 186,
+            "tokens": 2341,
+            "tokens_code_only": 2299,
+            "subsystem": "other_candidate_logic",
+            "functions": 10,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/control.zig",
+            "bytes": 5984,
+            "chars": 5984,
+            "loc_nonblank_noncomment": 157,
+            "tokens": 1524,
+            "tokens_code_only": 1432,
+            "subsystem": "benchmark_candidate_hooks",
+            "functions": 8,
+            "ffi_boundary_lines": 10
+          },
+          {
+            "file": "src/framing.zig",
+            "bytes": 6391,
+            "chars": 6391,
+            "loc_nonblank_noncomment": 153,
+            "tokens": 1647,
+            "tokens_code_only": 1477,
+            "subsystem": "other_candidate_logic",
+            "functions": 6,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/json.zig",
+            "bytes": 8581,
+            "chars": 8579,
+            "loc_nonblank_noncomment": 206,
+            "tokens": 2253,
+            "tokens_code_only": 2170,
+            "subsystem": "other_candidate_logic",
+            "functions": 2,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/main.zig",
+            "bytes": 11129,
+            "chars": 11129,
+            "loc_nonblank_noncomment": 274,
+            "tokens": 2921,
+            "tokens_code_only": 2899,
+            "subsystem": "other_candidate_logic",
+            "functions": 7,
+            "ffi_boundary_lines": 20
+          },
+          {
+            "file": "src/platform.zig",
+            "bytes": 47815,
+            "chars": 47815,
+            "loc_nonblank_noncomment": 1185,
+            "tokens": 13358,
+            "tokens_code_only": 13127,
+            "subsystem": "windowing_platform_glue",
+            "functions": 54,
+            "ffi_boundary_lines": 230
+          },
+          {
+            "file": "src/provider.zig",
+            "bytes": 55106,
+            "chars": 55106,
+            "loc_nonblank_noncomment": 1365,
+            "tokens": 13258,
+            "tokens_code_only": 13011,
+            "subsystem": "provider_process_io",
+            "functions": 32,
+            "ffi_boundary_lines": 21
+          },
+          {
+            "file": "src/queue.zig",
+            "bytes": 5686,
+            "chars": 5686,
+            "loc_nonblank_noncomment": 156,
+            "tokens": 1426,
+            "tokens_code_only": 1354,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/text.zig",
+            "bytes": 6162,
+            "chars": 6162,
+            "loc_nonblank_noncomment": 168,
+            "tokens": 1913,
+            "tokens_code_only": 1823,
+            "subsystem": "text_ime_rendering",
+            "functions": 11,
+            "ffi_boundary_lines": 38
+          },
+          {
+            "file": "src/win32.zig",
+            "bytes": 4718,
+            "chars": 4718,
+            "loc_nonblank_noncomment": 106,
+            "tokens": 1310,
+            "tokens_code_only": 1148,
+            "subsystem": "windowing_platform_glue",
+            "functions": 11,
+            "ffi_boundary_lines": 34
+          }
+        ],
+        "handwritten_source_bytes": 167582,
+        "handwritten_source_chars": 167579,
+        "nonblank_noncomment_loc": 4123,
+        "source_tokens_o200k_base": 43905,
+        "source_tokens_code_only_o200k_base": 42583,
+        "tokens_per_loc": 10.6488,
+        "source_file_count": 11,
+        "median_source_file_bytes": 7367,
+        "largest_source_file": "src/provider.zig",
+        "subsystem_tokens_o200k_base": {
+          "other_candidate_logic": 12542,
+          "benchmark_candidate_hooks": 1524,
+          "windowing_platform_glue": 14668,
+          "provider_process_io": 13258,
+          "text_ime_rendering": 1913
+        },
+        "max_function_lines": 221,
+        "median_function_lines": 9.0,
+        "max_nesting_depth": 10,
+        "ffi_boundary_lines": 358,
+        "architecture_doc_bytes": 15441,
+        "build_config_bytes": 2612
+      },
+      "first_complete": {
+        "files": [
+          {
+            "file": "src/config.zig",
+            "bytes": 8643,
+            "chars": 8643,
+            "loc_nonblank_noncomment": 186,
+            "tokens": 2341,
+            "tokens_code_only": 2299,
+            "subsystem": "other_candidate_logic",
+            "functions": 10,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/control.zig",
+            "bytes": 5984,
+            "chars": 5984,
+            "loc_nonblank_noncomment": 157,
+            "tokens": 1524,
+            "tokens_code_only": 1432,
+            "subsystem": "benchmark_candidate_hooks",
+            "functions": 8,
+            "ffi_boundary_lines": 10
+          },
+          {
+            "file": "src/framing.zig",
+            "bytes": 6391,
+            "chars": 6391,
+            "loc_nonblank_noncomment": 153,
+            "tokens": 1647,
+            "tokens_code_only": 1477,
+            "subsystem": "other_candidate_logic",
+            "functions": 6,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/json.zig",
+            "bytes": 8581,
+            "chars": 8579,
+            "loc_nonblank_noncomment": 206,
+            "tokens": 2253,
+            "tokens_code_only": 2170,
+            "subsystem": "other_candidate_logic",
+            "functions": 2,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/main.zig",
+            "bytes": 10824,
+            "chars": 10824,
+            "loc_nonblank_noncomment": 266,
+            "tokens": 2818,
+            "tokens_code_only": 2796,
+            "subsystem": "other_candidate_logic",
+            "functions": 7,
+            "ffi_boundary_lines": 20
+          },
+          {
+            "file": "src/platform.zig",
+            "bytes": 47815,
+            "chars": 47815,
+            "loc_nonblank_noncomment": 1185,
+            "tokens": 13358,
+            "tokens_code_only": 13127,
+            "subsystem": "windowing_platform_glue",
+            "functions": 54,
+            "ffi_boundary_lines": 230
+          },
+          {
+            "file": "src/provider.zig",
+            "bytes": 55106,
+            "chars": 55106,
+            "loc_nonblank_noncomment": 1365,
+            "tokens": 13258,
+            "tokens_code_only": 13011,
+            "subsystem": "provider_process_io",
+            "functions": 32,
+            "ffi_boundary_lines": 21
+          },
+          {
+            "file": "src/queue.zig",
+            "bytes": 5686,
+            "chars": 5686,
+            "loc_nonblank_noncomment": 156,
+            "tokens": 1426,
+            "tokens_code_only": 1354,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "src/text.zig",
+            "bytes": 6162,
+            "chars": 6162,
+            "loc_nonblank_noncomment": 168,
+            "tokens": 1913,
+            "tokens_code_only": 1823,
+            "subsystem": "text_ime_rendering",
+            "functions": 11,
+            "ffi_boundary_lines": 38
+          },
+          {
+            "file": "src/win32.zig",
+            "bytes": 4718,
+            "chars": 4718,
+            "loc_nonblank_noncomment": 106,
+            "tokens": 1310,
+            "tokens_code_only": 1148,
+            "subsystem": "windowing_platform_glue",
+            "functions": 11,
+            "ffi_boundary_lines": 34
+          }
+        ],
+        "handwritten_source_bytes": 159910,
+        "handwritten_source_chars": 159908,
+        "nonblank_noncomment_loc": 3948,
+        "source_tokens_o200k_base": 41848,
+        "source_tokens_code_only_o200k_base": 40637,
+        "tokens_per_loc": 10.5998,
+        "source_file_count": 10,
+        "median_source_file_bytes": 7486.0,
+        "largest_source_file": "src/provider.zig",
+        "subsystem_tokens_o200k_base": {
+          "other_candidate_logic": 10485,
+          "benchmark_candidate_hooks": 1524,
+          "windowing_platform_glue": 14668,
+          "provider_process_io": 13258,
+          "text_ime_rendering": 1913
+        },
+        "max_function_lines": 221,
+        "median_function_lines": 9,
+        "max_nesting_depth": 10,
+        "ffi_boundary_lines": 353,
+        "architecture_doc_bytes": 15441,
+        "build_config_bytes": 2612
+      },
+      "correction_churn": {
+        "tokens_added": 2057,
+        "tokens_removed": 0,
+        "changed_files": [
+          {
+            "file": "src/codex_gate.zig",
+            "tokens_added": 1954,
+            "tokens_removed": 0
+          },
+          {
+            "file": "src/main.zig",
+            "tokens_added": 103,
+            "tokens_removed": 0
+          }
+        ]
+      },
+      "homologous_regions": {
+        "create_show_hide_transparent_mascot_window": {
+          "label": "create/show/hide transparent mascot window",
+          "tokens_o200k_base": 2854,
+          "regions": [
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                48,
+                96
+              ],
+              "tokens": 571
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                190,
+                254
+              ],
+              "tokens": 779
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                256,
+                291
+              ],
+              "tokens": 371
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                1250,
+                1289
+              ],
+              "tokens": 734
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                803,
+                823
+              ],
+              "tokens": 298
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                834,
+                849
+              ],
+              "tokens": 101
+            }
+          ]
+        },
+        "hit_testing_dragging": {
+          "label": "hit testing + dragging",
+          "tokens_o200k_base": 354,
+          "regions": [
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                293,
+                310
+              ],
+              "tokens": 354
+            }
+          ]
+        },
+        "global_hotkey": {
+          "label": "global hotkey",
+          "tokens_o200k_base": 240,
+          "regions": [
+            {
+              "file": "src/main.zig",
+              "lines": [
+                214,
+                226
+              ],
+              "tokens": 158
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                824,
+                833
+              ],
+              "tokens": 82
+            }
+          ]
+        },
+        "composer_input_ime_bridge": {
+          "label": "composer input/IME bridge",
+          "tokens_o200k_base": 4429,
+          "regions": [
+            {
+              "file": "src/text.zig",
+              "lines": "all",
+              "tokens": 1913
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                861,
+                919
+              ],
+              "tokens": 554
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                927,
+                956
+              ],
+              "tokens": 302
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                958,
+                967
+              ],
+              "tokens": 99
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                456,
+                532
+              ],
+              "tokens": 953
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                419,
+                431
+              ],
+              "tokens": 256
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                438,
+                454
+              ],
+              "tokens": 352
+            }
+          ]
+        },
+        "response_rendering": {
+          "label": "response rendering",
+          "tokens_o200k_base": 264,
+          "regions": [
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                164,
+                167
+              ],
+              "tokens": 61
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                759,
+                769
+              ],
+              "tokens": 98
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                969,
+                978
+              ],
+              "tokens": 105
+            }
+          ]
+        },
+        "provider_process_launch": {
+          "label": "provider process launch",
+          "tokens_o200k_base": 1170,
+          "regions": [
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                226,
+                267
+              ],
+              "tokens": 311
+            },
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                329,
+                427
+              ],
+              "tokens": 859
+            }
+          ]
+        },
+        "framed_stdout_parser": {
+          "label": "framed stdout parser",
+          "tokens_o200k_base": 4626,
+          "regions": [
+            {
+              "file": "src/framing.zig",
+              "lines": "all",
+              "tokens": 1647
+            },
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                805,
+                893
+              ],
+              "tokens": 705
+            },
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                966,
+                1129
+              ],
+              "tokens": 2072
+            },
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                921,
+                937
+              ],
+              "tokens": 202
+            }
+          ]
+        },
+        "stderr_drain": {
+          "label": "stderr drain",
+          "tokens_o200k_base": 310,
+          "regions": [
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                129,
+                155
+              ],
+              "tokens": 208
+            },
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                899,
+                908
+              ],
+              "tokens": 102
+            }
+          ]
+        },
+        "cooperative_cancellation": {
+          "label": "cooperative cancellation",
+          "tokens_o200k_base": 813,
+          "regions": [
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                771,
+                781
+              ],
+              "tokens": 106
+            },
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                689,
+                760
+              ],
+              "tokens": 707
+            }
+          ]
+        },
+        "clean_child_shutdown": {
+          "label": "clean child shutdown",
+          "tokens_o200k_base": 1397,
+          "regions": [
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                460,
+                533
+              ],
+              "tokens": 644
+            },
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                542,
+                581
+              ],
+              "tokens": 360
+            },
+            {
+              "file": "src/provider.zig",
+              "lines": [
+                299,
+                303
+              ],
+              "tokens": 63
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                783,
+                799
+              ],
+              "tokens": 144
+            },
+            {
+              "file": "src/platform.zig",
+              "lines": [
+                1220,
+                1244
+              ],
+              "tokens": 186
+            }
+          ]
+        }
+      },
+      "rework": {
+        "first_complete_commit": "9dfcf8d",
+        "candidate_dir_commits_total": 3,
+        "focused_correction_commits": 1,
+        "post_ready_source_commits": 2,
+        "first_complete_note": "implementation pass at 9dfcf8d included in-flight fixes found by the shared gates (shutdown timeout, composer z-order, u64 cast); documented in corrections/zig-001-implementation.md",
+        "structural_stack_changes": 0,
+        "benchmark_exceptions_requested": 0,
+        "correction_loop_count": 4,
+        "correction_loop_evidence": "zig build+test, smoke, provider regression, acceptance cycles (005 -> hidpi -> final); composer z-order fix verified by T1"
+      },
+      "build": {
+        "clean_build_cmd": "zig build -Doptimize=ReleaseSafe  (cold .zig-cache)",
+        "incremental_build_cmd": "zig build -Doptimize=ReleaseSafe  (after touching src/text.zig)",
+        "clean_build_ms": 17635,
+        "incremental_build_ms": 221,
+        "toolchain": "zig 0.15.2, ReleaseSafe, LTO, windows subsystem",
+        "ffi_setup": "handwritten win32 extern declarations in src/win32.zig; system libs linked via build.zig; WIC COM for PNG; app.manifest via exe.win32_manifest",
+        "deps": "none (std only; handwritten json.zig + extern declarations)",
+        "workarounds": [
+          "extern win32 declaration set maintained by hand (no bindgen)",
+          "WIC COM vtable calls used for PNG decode",
+          "composer raised to top of non-topmost band after SetForegroundWindow foreground-lock failure (zig-acceptance-001)",
+          "global-hotkey second-launch sequencing discovered via acceptance run"
+        ],
+        "diagnostic_notes": "compiler caught const-correctness on atomic.Value pointers; shutdown deadline was a runtime violation found by the gate",
+        "platform_debug_notes": "foreground-lock behavior required z-order fix; ~100 MB stable commit reservation measured (arena/queue capacity)"
+      }
+    },
+    "go": {
+      "final": {
+        "files": [
+          {
+            "file": "codex_gate.go",
+            "bytes": 4045,
+            "chars": 4044,
+            "loc_nonblank_noncomment": 136,
+            "tokens": 1202,
+            "tokens_code_only": 1095,
+            "subsystem": "other_candidate_logic",
+            "functions": 2,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "config.go",
+            "bytes": 5964,
+            "chars": 5964,
+            "loc_nonblank_noncomment": 162,
+            "tokens": 1502,
+            "tokens_code_only": 1479,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "control.go",
+            "bytes": 4765,
+            "chars": 4765,
+            "loc_nonblank_noncomment": 179,
+            "tokens": 1328,
+            "tokens_code_only": 1193,
+            "subsystem": "benchmark_candidate_hooks",
+            "functions": 8,
+            "ffi_boundary_lines": 9
+          },
+          {
+            "file": "framing.go",
+            "bytes": 1732,
+            "chars": 1732,
+            "loc_nonblank_noncomment": 49,
+            "tokens": 454,
+            "tokens_code_only": 338,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "framing_test.go",
+            "bytes": 2953,
+            "chars": 2952,
+            "loc_nonblank_noncomment": 110,
+            "tokens": 905,
+            "tokens_code_only": 905,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "gen_syso.go",
+            "bytes": 6284,
+            "chars": 6284,
+            "loc_nonblank_noncomment": 156,
+            "tokens": 2136,
+            "tokens_code_only": 1619,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "main.go",
+            "bytes": 6755,
+            "chars": 6755,
+            "loc_nonblank_noncomment": 221,
+            "tokens": 1993,
+            "tokens_code_only": 1875,
+            "subsystem": "other_candidate_logic",
+            "functions": 6,
+            "ffi_boundary_lines": 3
+          },
+          {
+            "file": "provider.go",
+            "bytes": 27789,
+            "chars": 27789,
+            "loc_nonblank_noncomment": 1020,
+            "tokens": 7588,
+            "tokens_code_only": 7150,
+            "subsystem": "provider_process_io",
+            "functions": 28,
+            "ffi_boundary_lines": 2
+          },
+          {
+            "file": "provider_test.go",
+            "bytes": 10993,
+            "chars": 10990,
+            "loc_nonblank_noncomment": 329,
+            "tokens": 3286,
+            "tokens_code_only": 3286,
+            "subsystem": "provider_process_io",
+            "functions": 24,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "queue.go",
+            "bytes": 2195,
+            "chars": 2195,
+            "loc_nonblank_noncomment": 93,
+            "tokens": 646,
+            "tokens_code_only": 543,
+            "subsystem": "other_candidate_logic",
+            "functions": 8,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "queue_test.go",
+            "bytes": 1808,
+            "chars": 1808,
+            "loc_nonblank_noncomment": 82,
+            "tokens": 577,
+            "tokens_code_only": 577,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "text.go",
+            "bytes": 3878,
+            "chars": 3878,
+            "loc_nonblank_noncomment": 108,
+            "tokens": 1135,
+            "tokens_code_only": 1024,
+            "subsystem": "text_ime_rendering",
+            "functions": 12,
+            "ffi_boundary_lines": 8
+          },
+          {
+            "file": "ui.go",
+            "bytes": 22030,
+            "chars": 22030,
+            "loc_nonblank_noncomment": 777,
+            "tokens": 6407,
+            "tokens_code_only": 6242,
+            "subsystem": "windowing_platform_glue",
+            "functions": 37,
+            "ffi_boundary_lines": 20
+          },
+          {
+            "file": "win32.go",
+            "bytes": 11621,
+            "chars": 11621,
+            "loc_nonblank_noncomment": 328,
+            "tokens": 3469,
+            "tokens_code_only": 3302,
+            "subsystem": "windowing_platform_glue",
+            "functions": 11,
+            "ffi_boundary_lines": 10
+          },
+          {
+            "file": "wndproc.go",
+            "bytes": 14144,
+            "chars": 14144,
+            "loc_nonblank_noncomment": 437,
+            "tokens": 4275,
+            "tokens_code_only": 4177,
+            "subsystem": "other_candidate_logic",
+            "functions": 10,
+            "ffi_boundary_lines": 36
+          }
+        ],
+        "handwritten_source_bytes": 126956,
+        "handwritten_source_chars": 126951,
+        "nonblank_noncomment_loc": 4187,
+        "source_tokens_o200k_base": 36903,
+        "source_tokens_code_only_o200k_base": 34805,
+        "tokens_per_loc": 8.8137,
+        "source_file_count": 15,
+        "median_source_file_bytes": 5964,
+        "largest_source_file": "provider.go",
+        "subsystem_tokens_o200k_base": {
+          "other_candidate_logic": 13690,
+          "benchmark_candidate_hooks": 1328,
+          "provider_process_io": 10874,
+          "text_ime_rendering": 1135,
+          "windowing_platform_glue": 9876
+        },
+        "max_function_lines": 157,
+        "median_function_lines": 11.0,
+        "max_nesting_depth": 7,
+        "ffi_boundary_lines": 88,
+        "architecture_doc_bytes": 15680,
+        "build_config_bytes": 1367
+      },
+      "first_complete": {
+        "files": [
+          {
+            "file": "config.go",
+            "bytes": 5972,
+            "chars": 5972,
+            "loc_nonblank_noncomment": 162,
+            "tokens": 1502,
+            "tokens_code_only": 1479,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "control.go",
+            "bytes": 4765,
+            "chars": 4765,
+            "loc_nonblank_noncomment": 179,
+            "tokens": 1328,
+            "tokens_code_only": 1193,
+            "subsystem": "benchmark_candidate_hooks",
+            "functions": 8,
+            "ffi_boundary_lines": 9
+          },
+          {
+            "file": "framing.go",
+            "bytes": 1732,
+            "chars": 1732,
+            "loc_nonblank_noncomment": 49,
+            "tokens": 454,
+            "tokens_code_only": 338,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "framing_test.go",
+            "bytes": 2953,
+            "chars": 2952,
+            "loc_nonblank_noncomment": 110,
+            "tokens": 905,
+            "tokens_code_only": 905,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "gen_syso.go",
+            "bytes": 6284,
+            "chars": 6284,
+            "loc_nonblank_noncomment": 156,
+            "tokens": 2136,
+            "tokens_code_only": 1619,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "main.go",
+            "bytes": 6206,
+            "chars": 6206,
+            "loc_nonblank_noncomment": 204,
+            "tokens": 1813,
+            "tokens_code_only": 1695,
+            "subsystem": "other_candidate_logic",
+            "functions": 6,
+            "ffi_boundary_lines": 3
+          },
+          {
+            "file": "provider.go",
+            "bytes": 27789,
+            "chars": 27789,
+            "loc_nonblank_noncomment": 1020,
+            "tokens": 7588,
+            "tokens_code_only": 7150,
+            "subsystem": "provider_process_io",
+            "functions": 28,
+            "ffi_boundary_lines": 2
+          },
+          {
+            "file": "provider_test.go",
+            "bytes": 10993,
+            "chars": 10990,
+            "loc_nonblank_noncomment": 329,
+            "tokens": 3286,
+            "tokens_code_only": 3286,
+            "subsystem": "provider_process_io",
+            "functions": 24,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "queue.go",
+            "bytes": 2195,
+            "chars": 2195,
+            "loc_nonblank_noncomment": 93,
+            "tokens": 646,
+            "tokens_code_only": 543,
+            "subsystem": "other_candidate_logic",
+            "functions": 8,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "queue_test.go",
+            "bytes": 1808,
+            "chars": 1808,
+            "loc_nonblank_noncomment": 82,
+            "tokens": 577,
+            "tokens_code_only": 577,
+            "subsystem": "other_candidate_logic",
+            "functions": 4,
+            "ffi_boundary_lines": 0
+          },
+          {
+            "file": "text.go",
+            "bytes": 3878,
+            "chars": 3878,
+            "loc_nonblank_noncomment": 108,
+            "tokens": 1135,
+            "tokens_code_only": 1024,
+            "subsystem": "text_ime_rendering",
+            "functions": 12,
+            "ffi_boundary_lines": 8
+          },
+          {
+            "file": "ui.go",
+            "bytes": 21655,
+            "chars": 21655,
+            "loc_nonblank_noncomment": 774,
+            "tokens": 6291,
+            "tokens_code_only": 6175,
+            "subsystem": "windowing_platform_glue",
+            "functions": 37,
+            "ffi_boundary_lines": 20
+          },
+          {
+            "file": "win32.go",
+            "bytes": 11621,
+            "chars": 11621,
+            "loc_nonblank_noncomment": 328,
+            "tokens": 3469,
+            "tokens_code_only": 3302,
+            "subsystem": "windowing_platform_glue",
+            "functions": 11,
+            "ffi_boundary_lines": 10
+          },
+          {
+            "file": "wndproc.go",
+            "bytes": 14090,
+            "chars": 14090,
+            "loc_nonblank_noncomment": 437,
+            "tokens": 4248,
+            "tokens_code_only": 4150,
+            "subsystem": "other_candidate_logic",
+            "functions": 10,
+            "ffi_boundary_lines": 36
+          }
+        ],
+        "handwritten_source_bytes": 121941,
+        "handwritten_source_chars": 121937,
+        "nonblank_noncomment_loc": 4031,
+        "source_tokens_o200k_base": 35378,
+        "source_tokens_code_only_o200k_base": 33436,
+        "tokens_per_loc": 8.7765,
+        "source_file_count": 14,
+        "median_source_file_bytes": 6089.0,
+        "largest_source_file": "provider.go",
+        "subsystem_tokens_o200k_base": {
+          "other_candidate_logic": 12281,
+          "benchmark_candidate_hooks": 1328,
+          "provider_process_io": 10874,
+          "text_ime_rendering": 1135,
+          "windowing_platform_glue": 9760
+        },
+        "max_function_lines": 157,
+        "median_function_lines": 11.0,
+        "max_nesting_depth": 7,
+        "ffi_boundary_lines": 88,
+        "architecture_doc_bytes": 15680,
+        "build_config_bytes": 1367
+      },
+      "correction_churn": {
+        "tokens_added": 1822,
+        "tokens_removed": 296,
+        "changed_files": [
+          {
+            "file": "codex_gate.go",
+            "tokens_added": 1201,
+            "tokens_removed": 0
+          },
+          {
+            "file": "config.go",
+            "tokens_added": 29,
+            "tokens_removed": 29
+          },
+          {
+            "file": "main.go",
+            "tokens_added": 205,
+            "tokens_removed": 24
+          },
+          {
+            "file": "ui.go",
+            "tokens_added": 309,
+            "tokens_removed": 192
+          },
+          {
+            "file": "wndproc.go",
+            "tokens_added": 78,
+            "tokens_removed": 51
+          }
+        ]
+      },
+      "homologous_regions": {
+        "create_show_hide_transparent_mascot_window": {
+          "label": "create/show/hide transparent mascot window",
+          "tokens_o200k_base": 2469,
+          "regions": [
+            {
+              "file": "ui.go",
+              "lines": [
+                117,
+                146
+              ],
+              "tokens": 358
+            },
+            {
+              "file": "ui.go",
+              "lines": [
+                148,
+                204
+              ],
+              "tokens": 522
+            },
+            {
+              "file": "ui.go",
+              "lines": [
+                206,
+                245
+              ],
+              "tokens": 357
+            },
+            {
+              "file": "wndproc.go",
+              "lines": [
+                35,
+                59
+              ],
+              "tokens": 222
+            },
+            {
+              "file": "wndproc.go",
+              "lines": [
+                98,
+                138
+              ],
+              "tokens": 385
+            },
+            {
+              "file": "wndproc.go",
+              "lines": [
+                404,
+                458
+              ],
+              "tokens": 625
+            }
+          ]
+        },
+        "hit_testing_dragging": {
+          "label": "hit testing + dragging",
+          "tokens_o200k_base": 251,
+          "regions": [
+            {
+              "file": "wndproc.go",
+              "lines": [
+                76,
+                97
+              ],
+              "tokens": 251
+            }
+          ]
+        },
+        "global_hotkey": {
+          "label": "global hotkey",
+          "tokens_o200k_base": 302,
+          "regions": [
+            {
+              "file": "main.go",
+              "lines": [
+                158,
+                166
+              ],
+              "tokens": 128
+            },
+            {
+              "file": "main.go",
+              "lines": [
+                190,
+                193
+              ],
+              "tokens": 41
+            },
+            {
+              "file": "wndproc.go",
+              "lines": [
+                60,
+                75
+              ],
+              "tokens": 133
+            }
+          ]
+        },
+        "composer_input_ime_bridge": {
+          "label": "composer input/IME bridge",
+          "tokens_o200k_base": 3640,
+          "regions": [
+            {
+              "file": "text.go",
+              "lines": "all",
+              "tokens": 1135
+            },
+            {
+              "file": "wndproc.go",
+              "lines": [
+                140,
+                198
+              ],
+              "tokens": 541
+            },
+            {
+              "file": "wndproc.go",
+              "lines": [
+                361,
+                402
+              ],
+              "tokens": 356
+            },
+            {
+              "file": "wndproc.go",
+              "lines": [
+                200,
+                312
+              ],
+              "tokens": 1031
+            },
+            {
+              "file": "wndproc.go",
+              "lines": [
+                314,
+                356
+              ],
+              "tokens": 488
+            },
+            {
+              "file": "ui.go",
+              "lines": [
+                819,
+                831
+              ],
+              "tokens": 89
+            }
+          ]
+        },
+        "response_rendering": {
+          "label": "response rendering",
+          "tokens_o200k_base": 196,
+          "regions": [
+            {
+              "file": "ui.go",
+              "lines": [
+                91,
+                97
+              ],
+              "tokens": 63
+            },
+            {
+              "file": "ui.go",
+              "lines": [
+                426,
+                442
+              ],
+              "tokens": 133
+            }
+          ]
+        },
+        "provider_process_launch": {
+          "label": "provider process launch",
+          "tokens_o200k_base": 669,
+          "regions": [
+            {
+              "file": "provider.go",
+              "lines": [
+                230,
+                255
+              ],
+              "tokens": 174
+            },
+            {
+              "file": "provider.go",
+              "lines": [
+                320,
+                381
+              ],
+              "tokens": 495
+            }
+          ]
+        },
+        "framed_stdout_parser": {
+          "label": "framed stdout parser",
+          "tokens_o200k_base": 3155,
+          "regions": [
+            {
+              "file": "framing.go",
+              "lines": "all",
+              "tokens": 454
+            },
+            {
+              "file": "provider.go",
+              "lines": [
+                704,
+                777
+              ],
+              "tokens": 592
+            },
+            {
+              "file": "provider.go",
+              "lines": [
+                817,
+                1103
+              ],
+              "tokens": 2109
+            }
+          ]
+        },
+        "stderr_drain": {
+          "label": "stderr drain",
+          "tokens_o200k_base": 204,
+          "regions": [
+            {
+              "file": "provider.go",
+              "lines": [
+                155,
+                181
+              ],
+              "tokens": 204
+            }
+          ]
+        },
+        "cooperative_cancellation": {
+          "label": "cooperative cancellation",
+          "tokens_o200k_base": 613,
+          "regions": [
+            {
+              "file": "ui.go",
+              "lines": [
+                409,
+                424
+              ],
+              "tokens": 113
+            },
+            {
+              "file": "provider.go",
+              "lines": [
+                280,
+                285
+              ],
+              "tokens": 49
+            },
+            {
+              "file": "provider.go",
+              "lines": [
+                603,
+                652
+              ],
+              "tokens": 451
+            }
+          ]
+        },
+        "clean_child_shutdown": {
+          "label": "clean child shutdown",
+          "tokens_o200k_base": 1024,
+          "regions": [
+            {
+              "file": "provider.go",
+              "lines": [
+                294,
+                301
+              ],
+              "tokens": 37
+            },
+            {
+              "file": "provider.go",
+              "lines": [
+                398,
+                450
+              ],
+              "tokens": 350
+            },
+            {
+              "file": "provider.go",
+              "lines": [
+                494,
+                529
+              ],
+              "tokens": 274
+            },
+            {
+              "file": "ui.go",
+              "lines": [
+                736,
+                754
+              ],
+              "tokens": 125
+            },
+            {
+              "file": "ui.go",
+              "lines": [
+                756,
+                787
+              ],
+              "tokens": 238
+            }
+          ]
+        }
+      },
+      "rework": {
+        "first_complete_commit": "bb1804e",
+        "candidate_dir_commits_total": 3,
+        "focused_correction_commits": 0,
+        "post_ready_source_commits": 2,
+        "first_complete_note": "implementation landed correctness-ready at bb1804e; the only post-pass source changes were the v1.0.2 asset generality and the codex-gate entrypoint (corrections/go-001-implementation.md)",
+        "structural_stack_changes": 0,
+        "benchmark_exceptions_requested": 0,
+        "correction_loop_count": 2,
+        "correction_loop_evidence": "smoke+provider+acceptance passed on first complete binary; gate re-verified after codex_gate.go addition and after the windowsgui rebuild (conhost finding)"
+      },
+      "build": {
+        "clean_build_cmd": "GOCACHE=<empty> go build -trimpath -buildvcs=false -ldflags='-H windowsgui -s -w -buildid=' -o bin/mascot.exe .",
+        "incremental_build_cmd": "go build (warm cache) after touching text.go; full pinned build is build.ps1 (rc.exe -> gen_syso.go -> rsrc syso -> go test -> build)",
+        "clean_build_ms": 12396,
+        "incremental_build_ms": 708,
+        "toolchain": "go 1.25.3, CGO_ENABLED=0, -H windowsgui",
+        "ffi_setup": "syscall via golang.org/x/sys/windows Proc table + handwritten win32 wrappers in win32.go; syso resource produced by rc.exe + custom gen_syso.go because MSVC cvtres output is rejected by the Go linker",
+        "deps": "golang.org/x/sys (1 direct; image/png and encoding/json from stdlib)",
+        "workarounds": [
+          "gen_syso.go emits the .syso by hand since cvtres output contains .debug$S/@comp.id symbols the Go linker rejects",
+          "explicit CreationFlags CREATE_NO_WINDOW on provider spawn",
+          "SendMessageTimeout wrappers used for cross-thread text reads"
+        ],
+        "diagnostic_notes": "go vet/build clean; a console-subsystem build mistake (plain go build instead of -H windowsgui via build.ps1) was caught by the provider gate as a stray conhost child",
+        "platform_debug_notes": "subwindow subclassing needed for Enter/Escape key routing in the RichEdit composer"
+      }
+    }
+  },
+  "unavailable": {
+    "model_prompt_completion_tokens": "the agent platform does not expose per-phase model token usage; not recorded (protocol §5 allows absence)",
+    "first_complete_tokens_note": "first-complete snapshots are committed pre-correction states (rust=6560996, zig=9dfcf8d, go=bb1804e); churn is computed as a committed diff, not reconstructed usage"
+  }
+}
