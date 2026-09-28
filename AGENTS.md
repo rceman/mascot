@@ -136,17 +136,20 @@ Prefer:
 
 Do not make the canonical authoring format verbose merely because the runtime structure is explicit.
 
-## 9. Windows / WSL task workflow
+## 9. Native Windows task workflow
 
-For tasks whose handoff specifies native Windows validation:
+For tasks whose handoff specifies native Windows validation, follow the task-specific Git authority declared by the handoff.
 
-- authoritative Git checkout remains in WSL;
-- native Windows working copy is used for build/run/render/performance work;
-- do not copy/replace `.git`;
-- sync only intended files/evidence back to WSL;
-- inspect status/diff from WSL;
-- commit and push from WSL;
-- leave authoritative WSL worktree clean.
+When native Windows Git/SSH is available and the handoff designates Windows as authoritative:
+
+- clone/fetch the repository directly on Windows using the configured Git/SSH setup;
+- work on the exact task branch in the Windows clone;
+- build/run/render/profile natively on Windows;
+- review `git status` and the complete diff in that same clone;
+- commit and push from Windows;
+- finish with the task branch pushed and the Windows worktree clean.
+
+Do not introduce an unnecessary WSL copy/sync round-trip when native Windows Git authority is explicitly approved.
 
 Do not use CI as a substitute when the task explicitly requires native local Windows validation.
 
