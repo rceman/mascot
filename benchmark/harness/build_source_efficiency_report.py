@@ -410,6 +410,10 @@ def main():
                                             REGION_MAP[cand][key])
             regions[key] = {"label": label, "tokens_o200k_base": tokens,
                             "regions": covered}
+        timing = {}
+        timing_path = RAW / "test-timing-001" / f"{cand}-timing.json"
+        if timing_path.exists():
+            timing = json.loads(timing_path.read_text(encoding="utf-8"))
         per_candidate[cand] = {
             "final": eff["final"],
             "first_complete": eff.get("first_complete"),
@@ -417,6 +421,7 @@ def main():
             "homologous_regions": regions,
             "rework": REWORK[cand],
             "build": BUILD[cand],
+            "test_timing": timing,
         }
 
     doc = {
@@ -486,7 +491,8 @@ def main():
          lambda c: rw(c, "benchmark_exceptions_requested")),
         ("Correction loops observed", lambda c: rw(c, "correction_loop_count")),
         ("Clean build ms", lambda c: bd(c, "clean_build_ms")),
-        ("Incremental build ms", lambda c: bd(c, "incremental_build_ms")),
+        ("Incremental build ms (one file)",
+         lambda c: bd(c, "incremental_build_ms")),
         ("Max function lines", lambda c: f(c, "max_function_lines")),
         ("Median function lines", lambda c: f(c, "median_function_lines")),
         ("Max nesting depth", lambda c: f(c, "max_nesting_depth")),
@@ -532,6 +538,41 @@ def main():
                        ("Platform debugging", "platform_debug_notes")):
         lines.append("| {} | {} | {} | {} |".format(
             label, bd("rust", key), bd("zig", key), bd("go", key)))
+    tt = lambda c, k: (per_candidate[c]["test_timing"].get(k) or {})
+    def tr(name, k, fmt="{median_ms} (range {min_ms}-{max_ms}, n={n})"):
+        row = [name]
+        for c in ("rust", "zig", "go"):
+            s = tt(c, k)
+            row.append(fmt.format(**s) if s else "unavailable")
+        lines.append("| " + " | ".join(row) + " |")
+
+    lines += ["", "## Test execution timing (median ms; n reps; same host/",
+              "power mode; fixture windows-v1.0.2; shared harness overhead",
+              "included identically for all candidates)", "",
+              "| Suite | Rust | Zig | Go |", "|---|---|---|---|"]
+    tr("Candidate unit/self-tests", "unit_tests")
+    tr("Provider regression", "provider_regression")
+    tr("Smoke", "smoke")
+    tr("Full acceptance (UI, W2/W7 untested here)", "acceptance")
+    tr("Codex compatibility gate", "codex_gate")
+    tr("No-op incremental build", "incremental_noop_build")
+    tr("One-file incremental build", "incremental_one_file_build")
+    tr("Edit -> build -> unit-test loop", "edit_build_test_loop")
+    lines += ["",
+        "Cold-vs-warm: first unit-test rep includes compiling the test "
+        "binary (rust ~11.3s, zig ~6.1s cold vs ~230/~360 ms warm). Rust "
+        "no-op rep0 (~20.5 s) re-linked after a prior clean; warm no-op is "
+        "~170 ms. Go's no-op (~0.7-0.8 s) is dominated by link + vet-style "
+        "checks each run.", "",
+        "Notes: two acceptance reps in the raw timing dir failed because an "
+        "orphaned candidate still held the global hotkey (recorded as "
+        "excluded reps in `*-timing.json` notes); all reported times are "
+        "passing runs. Provider regression time is dominated by the shared "
+        "mock-provider protocol script (~11.5-11.8 s), i.e. shared fixture "
+        "cost, not candidate cost. Acceptance (~28.6-28.8 s) is dominated "
+        "by IME/input injection waits and screen capture, also shared.",
+        ""]
+
     lines += ["", "### Project-maintained workarounds", ""]
     for c in ("rust", "zig", "go"):
         lines.append(f"**{c}** ({len(BUILD[c]['workarounds'])}): " +

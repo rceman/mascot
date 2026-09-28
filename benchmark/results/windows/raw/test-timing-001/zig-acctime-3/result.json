@@ -1,0 +1,4220 @@
+{
+  "schema": "mascot-acceptance-1",
+  "candidate": "zig",
+  "cases": [
+    {
+      "case": "T1",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "t1-typed.png"
+    },
+    {
+      "case": "T2",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "t2-typed.png"
+    },
+    {
+      "case": "T3",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": {
+        "capture": "f1-selection.png",
+        "copied": "é",
+        "endpoints": [
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "case": "T4",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": {
+        "capture": "f2-selection.png",
+        "copied": "👨‍💻",
+        "endpoints": [
+          1,
+          6
+        ]
+      }
+    },
+    {
+      "case": "T5",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "t5-bidi.png"
+    },
+    {
+      "case": "T6",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": {
+        "selected_utf16": [
+          1,
+          20
+        ]
+      }
+    },
+    {
+      "case": "T7",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "t7-multiline.png"
+    },
+    {
+      "case": "T10",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "Same frozen procedures/endpoints as T3/T4"
+    },
+    {
+      "case": "T11",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": {
+        "request_count": 1
+      }
+    },
+    {
+      "case": "T13",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "T8",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "T9",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": {
+        "commit": "にほん",
+        "capture": "f6-preedit.png"
+      }
+    },
+    {
+      "case": "T9b-cancel",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "f6b-before-cancel.png"
+    },
+    {
+      "case": "T12-F7",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "T12-F8",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "T14",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "t14-response.png"
+    },
+    {
+      "case": "W1",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": {
+        "capture": "w1-transparency.png",
+        "hit_transparent": [
+          4312,
+          344
+        ],
+        "hit_opaque": [
+          4342,
+          353
+        ]
+      }
+    },
+    {
+      "case": "W4",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": {
+        "message": 161,
+        "x": 4312,
+        "y": 344
+      }
+    },
+    {
+      "case": "W3",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "W9",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "W5",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "W6",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "W8",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "W2",
+      "status": "UNTESTED",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "--with-hidpi not enabled"
+    },
+    {
+      "case": "W7",
+      "status": "UNTESTED",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "--with-hidpi not enabled"
+    }
+  ],
+  "event_observations": [
+    {
+      "observer_qpc": "10048524967755",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 0,
+        "receipt_qpc": "10048524967025",
+        "emit_qpc": "00000010048524966805",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048524968554",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 0,
+        "accepted_qpc": "10048524967928"
+      }
+    },
+    {
+      "observer_qpc": "10048525073487",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 1,
+        "receipt_qpc": "10048525072420",
+        "emit_qpc": "00000010048525072150",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048525074082",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 1,
+        "accepted_qpc": "10048525073089"
+      }
+    },
+    {
+      "observer_qpc": "10048525175886",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 2,
+        "receipt_qpc": "10048525174901",
+        "emit_qpc": "00000010048525174641",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048525176567",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 2,
+        "accepted_qpc": "10048525175567"
+      }
+    },
+    {
+      "observer_qpc": "10048525283247",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 3,
+        "receipt_qpc": "10048525282202",
+        "emit_qpc": "00000010048525281918",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048525284117",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 3,
+        "accepted_qpc": "10048525282947"
+      }
+    },
+    {
+      "observer_qpc": "10048525384887",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 4,
+        "receipt_qpc": "10048525384042",
+        "emit_qpc": "00000010048525383650",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048525385619",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 4,
+        "accepted_qpc": "10048525384910"
+      }
+    },
+    {
+      "observer_qpc": "10048525490490",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 5,
+        "receipt_qpc": "10048525489476",
+        "emit_qpc": "00000010048525489225",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048525491552",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 5,
+        "accepted_qpc": "10048525490024"
+      }
+    },
+    {
+      "observer_qpc": "10048525591033",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 6,
+        "receipt_qpc": "10048525590254",
+        "emit_qpc": "00000010048525590029",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048525591765",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 6,
+        "accepted_qpc": "10048525590719"
+      }
+    },
+    {
+      "observer_qpc": "10048525692106",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 7,
+        "receipt_qpc": "10048525691267",
+        "emit_qpc": "00000010048525690982",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048525692705",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 7,
+        "accepted_qpc": "10048525691981"
+      }
+    },
+    {
+      "observer_qpc": "10048525797648",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 8,
+        "receipt_qpc": "10048525796941",
+        "emit_qpc": "00000010048525796718",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048525798230",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 8,
+        "accepted_qpc": "10048525797443"
+      }
+    },
+    {
+      "observer_qpc": "10048525902349",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 9,
+        "receipt_qpc": "10048525901368",
+        "emit_qpc": "00000010048525901087",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048525903262",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 9,
+        "accepted_qpc": "10048525901847"
+      }
+    },
+    {
+      "observer_qpc": "10048526003282",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 10,
+        "receipt_qpc": "10048526002413",
+        "emit_qpc": "00000010048526002126",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048526004236",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 10,
+        "accepted_qpc": "10048526003042"
+      }
+    },
+    {
+      "observer_qpc": "10048526105318",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 11,
+        "receipt_qpc": "10048526104505",
+        "emit_qpc": "00000010048526104208",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048526106600",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 11,
+        "accepted_qpc": "10048526105150"
+      }
+    },
+    {
+      "observer_qpc": "10048526206264",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 12,
+        "receipt_qpc": "10048526205442",
+        "emit_qpc": "00000010048526205194",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048526207623",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 12,
+        "accepted_qpc": "10048526205961"
+      }
+    },
+    {
+      "observer_qpc": "10048526307278",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 13,
+        "receipt_qpc": "10048526306374",
+        "emit_qpc": "00000010048526306097",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048526308264",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 13,
+        "accepted_qpc": "10048526306919"
+      }
+    },
+    {
+      "observer_qpc": "10048526412789",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 14,
+        "receipt_qpc": "10048526411913",
+        "emit_qpc": "00000010048526411631",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048526413802",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 14,
+        "accepted_qpc": "10048526412554"
+      }
+    },
+    {
+      "observer_qpc": "10048526514240",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 15,
+        "receipt_qpc": "10048526513230",
+        "emit_qpc": "00000010048526512905",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048526518577",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 15,
+        "accepted_qpc": "10048526517967"
+      }
+    },
+    {
+      "observer_qpc": "10048526615425",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 16,
+        "receipt_qpc": "10048526614598",
+        "emit_qpc": "00000010048526614334",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048526618477",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 16,
+        "accepted_qpc": "10048526618018"
+      }
+    },
+    {
+      "observer_qpc": "10048526721192",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 17,
+        "receipt_qpc": "10048526720293",
+        "emit_qpc": "00000010048526719968",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048526722107",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 17,
+        "accepted_qpc": "10048526721036"
+      }
+    },
+    {
+      "observer_qpc": "10048526823167",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 18,
+        "receipt_qpc": "10048526822299",
+        "emit_qpc": "00000010048526821997",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048526824903",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 18,
+        "accepted_qpc": "10048526824272"
+      }
+    },
+    {
+      "observer_qpc": "10048526924209",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 19,
+        "receipt_qpc": "10048526923288",
+        "emit_qpc": "00000010048526922975",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048526925025",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 19,
+        "accepted_qpc": "10048526923966"
+      }
+    },
+    {
+      "observer_qpc": "10048527025082",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 20,
+        "receipt_qpc": "10048527024265",
+        "emit_qpc": "00000010048527023976",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048527026999",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 20,
+        "accepted_qpc": "10048527024899"
+      }
+    },
+    {
+      "observer_qpc": "10048527126298",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 21,
+        "receipt_qpc": "10048527125513",
+        "emit_qpc": "00000010048527125256",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048527127005",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 21,
+        "accepted_qpc": "10048527125942"
+      }
+    },
+    {
+      "observer_qpc": "10048527227350",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 22,
+        "receipt_qpc": "10048527226358",
+        "emit_qpc": "00000010048527226086",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048527228782",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 22,
+        "accepted_qpc": "10048527227047"
+      }
+    },
+    {
+      "observer_qpc": "10048527333413",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 23,
+        "receipt_qpc": "10048527332241",
+        "emit_qpc": "00000010048527331834",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048527335414",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 23,
+        "accepted_qpc": "10048527333089"
+      }
+    },
+    {
+      "observer_qpc": "10048527438729",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 24,
+        "receipt_qpc": "10048527437722",
+        "emit_qpc": "00000010048527437405",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048527439392",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 24,
+        "accepted_qpc": "10048527438380"
+      }
+    },
+    {
+      "observer_qpc": "10048527541124",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 25,
+        "receipt_qpc": "10048527540228",
+        "emit_qpc": "00000010048527539919",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048527542089",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 25,
+        "accepted_qpc": "10048527540910"
+      }
+    },
+    {
+      "observer_qpc": "10048527642776",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 26,
+        "receipt_qpc": "10048527641798",
+        "emit_qpc": "00000010048527641506",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048527643733",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 26,
+        "accepted_qpc": "10048527642525"
+      }
+    },
+    {
+      "observer_qpc": "10048527744975",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 27,
+        "receipt_qpc": "10048527744059",
+        "emit_qpc": "00000010048527743764",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048527746418",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 27,
+        "accepted_qpc": "10048527744622"
+      }
+    },
+    {
+      "observer_qpc": "10048527847373",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 28,
+        "receipt_qpc": "10048527846317",
+        "emit_qpc": "00000010048527846018",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048527849534",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 28,
+        "accepted_qpc": "10048527847057"
+      }
+    },
+    {
+      "observer_qpc": "10048527952555",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 29,
+        "receipt_qpc": "10048527951835",
+        "emit_qpc": "00000010048527951574",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048527954020",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 29,
+        "accepted_qpc": "10048527952259"
+      }
+    },
+    {
+      "observer_qpc": "10048528055783",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 30,
+        "receipt_qpc": "10048528054656",
+        "emit_qpc": "00000010048528054275",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048528057427",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 30,
+        "accepted_qpc": "10048528055393"
+      }
+    },
+    {
+      "observer_qpc": "10048528157408",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 31,
+        "receipt_qpc": "10048528156457",
+        "emit_qpc": "00000010048528156154",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048528158272",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 31,
+        "accepted_qpc": "10048528157102"
+      }
+    },
+    {
+      "observer_qpc": "10048528263209",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 32,
+        "receipt_qpc": "10048528262296",
+        "emit_qpc": "00000010048528261999",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048528264970",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 32,
+        "accepted_qpc": "10048528262964"
+      }
+    },
+    {
+      "observer_qpc": "10048528365027",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 33,
+        "receipt_qpc": "10048528364031",
+        "emit_qpc": "00000010048528363732",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048528366101",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 33,
+        "accepted_qpc": "10048528364711"
+      }
+    },
+    {
+      "observer_qpc": "10048528466948",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 34,
+        "receipt_qpc": "10048528465969",
+        "emit_qpc": "00000010048528465653",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048528467887",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 34,
+        "accepted_qpc": "10048528466655"
+      }
+    },
+    {
+      "observer_qpc": "10048528571973",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 35,
+        "receipt_qpc": "10048528571207",
+        "emit_qpc": "00000010048528570978",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048528573395",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 35,
+        "accepted_qpc": "10048528571761"
+      }
+    },
+    {
+      "observer_qpc": "10048528677792",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 36,
+        "receipt_qpc": "10048528676921",
+        "emit_qpc": "00000010048528676655",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048528678623",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 36,
+        "accepted_qpc": "10048528677519"
+      }
+    },
+    {
+      "observer_qpc": "10048528779159",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 37,
+        "receipt_qpc": "10048528778355",
+        "emit_qpc": "00000010048528778071",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048528780706",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 37,
+        "accepted_qpc": "10048528779646"
+      }
+    },
+    {
+      "observer_qpc": "10048528884956",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 38,
+        "receipt_qpc": "10048528884044",
+        "emit_qpc": "00000010048528883789",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048528886632",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 38,
+        "accepted_qpc": "10048528884642"
+      }
+    },
+    {
+      "observer_qpc": "10048528986845",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 39,
+        "receipt_qpc": "10048528985891",
+        "emit_qpc": "00000010048528985568",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048528987727",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 39,
+        "accepted_qpc": "10048528986476"
+      }
+    },
+    {
+      "observer_qpc": "10048529088313",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 40,
+        "receipt_qpc": "10048529087394",
+        "emit_qpc": "00000010048529087127",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048529090028",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 40,
+        "accepted_qpc": "10048529087999"
+      }
+    },
+    {
+      "observer_qpc": "10048529189921",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 41,
+        "receipt_qpc": "10048529189066",
+        "emit_qpc": "00000010048529188787",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048529190677",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 41,
+        "accepted_qpc": "10048529189728"
+      }
+    },
+    {
+      "observer_qpc": "10048529291465",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 42,
+        "receipt_qpc": "10048529290585",
+        "emit_qpc": "00000010048529290291",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048529292417",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 42,
+        "accepted_qpc": "10048529291187"
+      }
+    },
+    {
+      "observer_qpc": "10048529392867",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 43,
+        "receipt_qpc": "10048529391956",
+        "emit_qpc": "00000010048529391653",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048529394356",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 43,
+        "accepted_qpc": "10048529392536"
+      }
+    },
+    {
+      "observer_qpc": "10048529495217",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 44,
+        "receipt_qpc": "10048529494309",
+        "emit_qpc": "00000010048529493999",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048529496104",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 44,
+        "accepted_qpc": "10048529494999"
+      }
+    },
+    {
+      "observer_qpc": "10048529597761",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 45,
+        "receipt_qpc": "10048529596791",
+        "emit_qpc": "00000010048529596481",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048529599378",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 45,
+        "accepted_qpc": "10048529597455"
+      }
+    },
+    {
+      "observer_qpc": "10048529703690",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 46,
+        "receipt_qpc": "10048529702644",
+        "emit_qpc": "00000010048529702366",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048529708354",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 46,
+        "accepted_qpc": "10048529707740"
+      }
+    },
+    {
+      "observer_qpc": "10048529806055",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 47,
+        "receipt_qpc": "10048529805270",
+        "emit_qpc": "00000010048529805049",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048529806744",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 47,
+        "accepted_qpc": "10048529805786"
+      }
+    },
+    {
+      "observer_qpc": "10048529909569",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 48,
+        "receipt_qpc": "10048529908602",
+        "emit_qpc": "00000010048529908314",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048529910440",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 48,
+        "accepted_qpc": "10048529909412"
+      }
+    },
+    {
+      "observer_qpc": "10048530010696",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 49,
+        "receipt_qpc": "10048530009872",
+        "emit_qpc": "00000010048530009599",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048530012240",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 49,
+        "accepted_qpc": "10048530010533"
+      }
+    },
+    {
+      "observer_qpc": "10048530113322",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 50,
+        "receipt_qpc": "10048530112397",
+        "emit_qpc": "00000010048530112131",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048530115010",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 50,
+        "accepted_qpc": "10048530112998"
+      }
+    },
+    {
+      "observer_qpc": "10048530214528",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 51,
+        "receipt_qpc": "10048530213522",
+        "emit_qpc": "00000010048530213263",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048530215608",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 51,
+        "accepted_qpc": "10048530214083"
+      }
+    },
+    {
+      "observer_qpc": "10048530315696",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 52,
+        "receipt_qpc": "10048530314772",
+        "emit_qpc": "00000010048530314483",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048530316678",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 52,
+        "accepted_qpc": "10048530315582"
+      }
+    },
+    {
+      "observer_qpc": "10048530417641",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 53,
+        "receipt_qpc": "10048530416640",
+        "emit_qpc": "00000010048530416211",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048530418793",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 53,
+        "accepted_qpc": "10048530417346"
+      }
+    },
+    {
+      "observer_qpc": "10048530521474",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 54,
+        "receipt_qpc": "10048530520521",
+        "emit_qpc": "00000010048530520241",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048530522479",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 54,
+        "accepted_qpc": "10048530521127"
+      }
+    },
+    {
+      "observer_qpc": "10048530623385",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 55,
+        "receipt_qpc": "10048530622492",
+        "emit_qpc": "00000010048530622195",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048530625019",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 55,
+        "accepted_qpc": "10048530623216"
+      }
+    },
+    {
+      "observer_qpc": "10048530729078",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 56,
+        "receipt_qpc": "10048530728206",
+        "emit_qpc": "00000010048530727925",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048530730045",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 56,
+        "accepted_qpc": "10048530728792"
+      }
+    },
+    {
+      "observer_qpc": "10048530830193",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 57,
+        "receipt_qpc": "10048530829174",
+        "emit_qpc": "00000010048530828777",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048530834299",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 57,
+        "accepted_qpc": "10048530833653"
+      }
+    },
+    {
+      "observer_qpc": "10048530935789",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 58,
+        "receipt_qpc": "10048530934844",
+        "emit_qpc": "00000010048530934528",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048530937418",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 58,
+        "accepted_qpc": "10048530935494"
+      }
+    },
+    {
+      "observer_qpc": "10048531037286",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 59,
+        "receipt_qpc": "10048531036246",
+        "emit_qpc": "00000010048531035940",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048531038256",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 59,
+        "accepted_qpc": "10048531036958"
+      }
+    },
+    {
+      "observer_qpc": "10048531139231",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 60,
+        "receipt_qpc": "10048531138222",
+        "emit_qpc": "00000010048531137895",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048531140889",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 60,
+        "accepted_qpc": "10048531138997"
+      }
+    },
+    {
+      "observer_qpc": "10048531244707",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 61,
+        "receipt_qpc": "10048531243663",
+        "emit_qpc": "00000010048531243103",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048531246563",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 61,
+        "accepted_qpc": "10048531244428"
+      }
+    },
+    {
+      "observer_qpc": "10048531350138",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 62,
+        "receipt_qpc": "10048531349196",
+        "emit_qpc": "00000010048531348900",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048531351166",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 62,
+        "accepted_qpc": "10048531349953"
+      }
+    },
+    {
+      "observer_qpc": "10048531452827",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 63,
+        "receipt_qpc": "10048531451906",
+        "emit_qpc": "00000010048531451582",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048531455311",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 63,
+        "accepted_qpc": "10048531454691"
+      }
+    },
+    {
+      "observer_qpc": "10048531554691",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 64,
+        "receipt_qpc": "10048531553605",
+        "emit_qpc": "00000010048531553216",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048531557086",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 64,
+        "accepted_qpc": "10048531554340"
+      }
+    },
+    {
+      "observer_qpc": "10048531655829",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 65,
+        "receipt_qpc": "10048531654761",
+        "emit_qpc": "00000010048531654305",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048531657961",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 65,
+        "accepted_qpc": "10048531655590"
+      }
+    },
+    {
+      "observer_qpc": "10048531756645",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 66,
+        "receipt_qpc": "10048531755633",
+        "emit_qpc": "00000010048531755343",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048531758538",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 66,
+        "accepted_qpc": "10048531756346"
+      }
+    },
+    {
+      "observer_qpc": "10048531858431",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 67,
+        "receipt_qpc": "10048531857449",
+        "emit_qpc": "00000010048531857128",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048531859246",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 67,
+        "accepted_qpc": "10048531858395"
+      }
+    },
+    {
+      "observer_qpc": "10048531959821",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 68,
+        "receipt_qpc": "10048531959024",
+        "emit_qpc": "00000010048531958798",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048531960520",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 68,
+        "accepted_qpc": "10048531959545"
+      }
+    },
+    {
+      "observer_qpc": "10048532061168",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 69,
+        "receipt_qpc": "10048532060232",
+        "emit_qpc": "00000010048532059919",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048532061849",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 69,
+        "accepted_qpc": "10048532060893"
+      }
+    },
+    {
+      "observer_qpc": "10048532163620",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 70,
+        "receipt_qpc": "10048532162798",
+        "emit_qpc": "00000010048532162565",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048532165293",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 70,
+        "accepted_qpc": "10048532163377"
+      }
+    },
+    {
+      "observer_qpc": "10048532269253",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 71,
+        "receipt_qpc": "10048532268500",
+        "emit_qpc": "00000010048532268226",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048532269866",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 71,
+        "accepted_qpc": "10048532268892"
+      }
+    },
+    {
+      "observer_qpc": "10048532370852",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 72,
+        "receipt_qpc": "10048532370119",
+        "emit_qpc": "00000010048532369861",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048532371546",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 72,
+        "accepted_qpc": "10048532370653"
+      }
+    },
+    {
+      "observer_qpc": "10048532472532",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 73,
+        "receipt_qpc": "10048532471790",
+        "emit_qpc": "00000010048532471573",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048532473245",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 73,
+        "accepted_qpc": "10048532472307"
+      }
+    },
+    {
+      "observer_qpc": "10048532578728",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 74,
+        "receipt_qpc": "10048532577718",
+        "emit_qpc": "00000010048532577408",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048532579673",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 74,
+        "accepted_qpc": "10048532578403"
+      }
+    },
+    {
+      "observer_qpc": "10048532683217",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 75,
+        "receipt_qpc": "10048532682347",
+        "emit_qpc": "00000010048532682064",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048532685075",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 75,
+        "accepted_qpc": "10048532682974"
+      }
+    },
+    {
+      "observer_qpc": "10048532788342",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 76,
+        "receipt_qpc": "10048532787602",
+        "emit_qpc": "00000010048532787378",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048532789036",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 76,
+        "accepted_qpc": "10048532788190"
+      }
+    },
+    {
+      "observer_qpc": "10048532891078",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 77,
+        "receipt_qpc": "10048532890323",
+        "emit_qpc": "00000010048532890053",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048532892640",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 77,
+        "accepted_qpc": "10048532891867"
+      }
+    },
+    {
+      "observer_qpc": "10048532992913",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 78,
+        "receipt_qpc": "10048532992172",
+        "emit_qpc": "00000010048532991953",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048532994493",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 78,
+        "accepted_qpc": "10048532992720"
+      }
+    },
+    {
+      "observer_qpc": "10048533095716",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 79,
+        "receipt_qpc": "10048533094920",
+        "emit_qpc": "00000010048533094697",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048533097424",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 79,
+        "accepted_qpc": "10048533095444"
+      }
+    },
+    {
+      "observer_qpc": "10048533197214",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 80,
+        "receipt_qpc": "10048533196488",
+        "emit_qpc": "00000010048533196259",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048533197927",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 80,
+        "accepted_qpc": "10048533196931"
+      }
+    },
+    {
+      "observer_qpc": "10048533298460",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 81,
+        "receipt_qpc": "10048533297740",
+        "emit_qpc": "00000010048533297505",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048533299137",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 81,
+        "accepted_qpc": "10048533298311"
+      }
+    },
+    {
+      "observer_qpc": "10048533400016",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 82,
+        "receipt_qpc": "10048533399294",
+        "emit_qpc": "00000010048533399076",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048533400710",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 82,
+        "accepted_qpc": "10048533399790"
+      }
+    },
+    {
+      "observer_qpc": "10048533501520",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 83,
+        "receipt_qpc": "10048533500794",
+        "emit_qpc": "00000010048533500569",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048533502215",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 83,
+        "accepted_qpc": "10048533501227"
+      }
+    },
+    {
+      "observer_qpc": "10048533602630",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 84,
+        "receipt_qpc": "10048533601769",
+        "emit_qpc": "00000010048533601513",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048533603287",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 84,
+        "accepted_qpc": "10048533602281"
+      }
+    },
+    {
+      "observer_qpc": "10048533703955",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 85,
+        "receipt_qpc": "10048533703163",
+        "emit_qpc": "00000010048533702938",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048533704701",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 85,
+        "accepted_qpc": "10048533703763"
+      }
+    },
+    {
+      "observer_qpc": "10048533806054",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 86,
+        "receipt_qpc": "10048533805012",
+        "emit_qpc": "00000010048533804759",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048533806755",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 86,
+        "accepted_qpc": "10048533805830"
+      }
+    },
+    {
+      "observer_qpc": "10048533907656",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 87,
+        "receipt_qpc": "10048533906862",
+        "emit_qpc": "00000010048533906600",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048533908313",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 87,
+        "accepted_qpc": "10048533907377"
+      }
+    },
+    {
+      "observer_qpc": "10048534012403",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 88,
+        "receipt_qpc": "10048534011598",
+        "emit_qpc": "00000010048534011386",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048534013826",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 88,
+        "accepted_qpc": "10048534012115"
+      }
+    },
+    {
+      "observer_qpc": "10048534113946",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 89,
+        "receipt_qpc": "10048534113239",
+        "emit_qpc": "00000010048534113008",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048534114596",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 89,
+        "accepted_qpc": "10048534113739"
+      }
+    },
+    {
+      "observer_qpc": "10048534215368",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 90,
+        "receipt_qpc": "10048534214644",
+        "emit_qpc": "00000010048534214416",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048534216076",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 90,
+        "accepted_qpc": "10048534215146"
+      }
+    },
+    {
+      "observer_qpc": "10048534316600",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 91,
+        "receipt_qpc": "10048534315885",
+        "emit_qpc": "00000010048534315673",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048534317271",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 91,
+        "accepted_qpc": "10048534316393"
+      }
+    },
+    {
+      "observer_qpc": "10048534417835",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 92,
+        "receipt_qpc": "10048534417119",
+        "emit_qpc": "00000010048534416888",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048534418725",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 92,
+        "accepted_qpc": "10048534417613"
+      }
+    },
+    {
+      "observer_qpc": "10048534519507",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 93,
+        "receipt_qpc": "10048534518784",
+        "emit_qpc": "00000010048534518565",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048534520248",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 93,
+        "accepted_qpc": "10048534519292"
+      }
+    },
+    {
+      "observer_qpc": "10048534620784",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 94,
+        "receipt_qpc": "10048534620065",
+        "emit_qpc": "00000010048534619855",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048534621434",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 94,
+        "accepted_qpc": "10048534620501"
+      }
+    },
+    {
+      "observer_qpc": "10048534722720",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 95,
+        "receipt_qpc": "10048534721779",
+        "emit_qpc": "00000010048534721534",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048534723612",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 95,
+        "accepted_qpc": "10048534722348"
+      }
+    },
+    {
+      "observer_qpc": "10048534824793",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 96,
+        "receipt_qpc": "10048534823922",
+        "emit_qpc": "00000010048534823624",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048534826913",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 96,
+        "accepted_qpc": "10048534824614"
+      }
+    },
+    {
+      "observer_qpc": "10048534925847",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 97,
+        "receipt_qpc": "10048534924933",
+        "emit_qpc": "00000010048534924602",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048534926870",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 97,
+        "accepted_qpc": "10048534925689"
+      }
+    },
+    {
+      "observer_qpc": "10048535028805",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 98,
+        "receipt_qpc": "10048535027825",
+        "emit_qpc": "00000010048535027560",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048535030679",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 98,
+        "accepted_qpc": "10048535028447"
+      }
+    },
+    {
+      "observer_qpc": "10048535129489",
+      "event": {
+        "event": "frame_received",
+        "request_id": 1,
+        "seq": 99,
+        "receipt_qpc": "10048535128649",
+        "emit_qpc": "00000010048535128397",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048535131282",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 1,
+        "seq": 99,
+        "accepted_qpc": "10048535129302"
+      }
+    },
+    {
+      "observer_qpc": "10048535158166",
+      "event": {
+        "event": "terminal",
+        "request_id": 1,
+        "kind": "complete",
+        "last_seq": 99,
+        "qpc": "10048535157532"
+      }
+    },
+    {
+      "observer_qpc": "10048598309074",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 0,
+        "receipt_qpc": "10048598308460",
+        "emit_qpc": "00000010048598308259",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048598321575",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 0,
+        "accepted_qpc": "10048598320329"
+      }
+    },
+    {
+      "observer_qpc": "10048598410545",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 1,
+        "receipt_qpc": "10048598409682",
+        "emit_qpc": "00000010048598409408",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048598412020",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 1,
+        "accepted_qpc": "10048598410195"
+      }
+    },
+    {
+      "observer_qpc": "10048598512241",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 2,
+        "receipt_qpc": "10048598511439",
+        "emit_qpc": "00000010048598511224",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048598512943",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 2,
+        "accepted_qpc": "10048598511955"
+      }
+    },
+    {
+      "observer_qpc": "10048598613478",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 3,
+        "receipt_qpc": "10048598612741",
+        "emit_qpc": "00000010048598612525",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048598614207",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 3,
+        "accepted_qpc": "10048598613154"
+      }
+    },
+    {
+      "observer_qpc": "10048598716786",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 4,
+        "receipt_qpc": "10048598716040",
+        "emit_qpc": "00000010048598715790",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048598717493",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 4,
+        "accepted_qpc": "10048598716516"
+      }
+    },
+    {
+      "observer_qpc": "10048598822242",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 5,
+        "receipt_qpc": "10048598821482",
+        "emit_qpc": "00000010048598821269",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048598822927",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 5,
+        "accepted_qpc": "10048598821988"
+      }
+    },
+    {
+      "observer_qpc": "10048598928049",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 6,
+        "receipt_qpc": "10048598926977",
+        "emit_qpc": "00000010048598926676",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048598930145",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 6,
+        "accepted_qpc": "10048598929666"
+      }
+    },
+    {
+      "observer_qpc": "10048599033365",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 7,
+        "receipt_qpc": "10048599032396",
+        "emit_qpc": "00000010048599032144",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048599034938",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 7,
+        "accepted_qpc": "10048599033036"
+      }
+    },
+    {
+      "observer_qpc": "10048599134748",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 8,
+        "receipt_qpc": "10048599133861",
+        "emit_qpc": "00000010048599133544",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048599136319",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 8,
+        "accepted_qpc": "10048599134498"
+      }
+    },
+    {
+      "observer_qpc": "10048599235118",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 9,
+        "receipt_qpc": "10048599234352",
+        "emit_qpc": "00000010048599234092",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048599239998",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 9,
+        "accepted_qpc": "10048599239470"
+      }
+    },
+    {
+      "observer_qpc": "10048599340971",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 10,
+        "receipt_qpc": "10048599339567",
+        "emit_qpc": "00000010048599339264",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048599342006",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 10,
+        "accepted_qpc": "10048599340271"
+      }
+    },
+    {
+      "observer_qpc": "10048599441607",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 11,
+        "receipt_qpc": "10048599440779",
+        "emit_qpc": "00000010048599440530",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048599442404",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 11,
+        "accepted_qpc": "10048599441314"
+      }
+    },
+    {
+      "observer_qpc": "10048599543759",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 12,
+        "receipt_qpc": "10048599542787",
+        "emit_qpc": "00000010048599542474",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048599545270",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 12,
+        "accepted_qpc": "10048599544808"
+      }
+    },
+    {
+      "observer_qpc": "10048599644530",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 13,
+        "receipt_qpc": "10048599643817",
+        "emit_qpc": "00000010048599643559",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048599646865",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 13,
+        "accepted_qpc": "10048599644319"
+      }
+    },
+    {
+      "observer_qpc": "10048599746287",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 14,
+        "receipt_qpc": "10048599745443",
+        "emit_qpc": "00000010048599745141",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048599747179",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 14,
+        "accepted_qpc": "10048599746010"
+      }
+    },
+    {
+      "observer_qpc": "10048599847060",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 15,
+        "receipt_qpc": "10048599846312",
+        "emit_qpc": "00000010048599846100",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048599848400",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 15,
+        "accepted_qpc": "10048599847474"
+      }
+    },
+    {
+      "observer_qpc": "10048599948820",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 16,
+        "receipt_qpc": "10048599947952",
+        "emit_qpc": "00000010048599947685",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048599949710",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 16,
+        "accepted_qpc": "10048599948448"
+      }
+    },
+    {
+      "observer_qpc": "10048600051088",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 17,
+        "receipt_qpc": "10048600050203",
+        "emit_qpc": "00000010048600049968",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048600052591",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 17,
+        "accepted_qpc": "10048600050746"
+      }
+    },
+    {
+      "observer_qpc": "10048600152375",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 18,
+        "receipt_qpc": "10048600151415",
+        "emit_qpc": "00000010048600151169",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048600154199",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 18,
+        "accepted_qpc": "10048600153683"
+      }
+    },
+    {
+      "observer_qpc": "10048600253576",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 19,
+        "receipt_qpc": "10048600252705",
+        "emit_qpc": "00000010048600252415",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048600254526",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 19,
+        "accepted_qpc": "10048600253259"
+      }
+    },
+    {
+      "observer_qpc": "10048600354537",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 20,
+        "receipt_qpc": "10048600353772",
+        "emit_qpc": "00000010048600353561",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048600355908",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 20,
+        "accepted_qpc": "10048600354270"
+      }
+    },
+    {
+      "observer_qpc": "10048600455814",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 21,
+        "receipt_qpc": "10048600455062",
+        "emit_qpc": "00000010048600454787",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048600456531",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 21,
+        "accepted_qpc": "10048600455672"
+      }
+    },
+    {
+      "observer_qpc": "10048600557495",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 22,
+        "receipt_qpc": "10048600556597",
+        "emit_qpc": "00000010048600556348",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048600558371",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 22,
+        "accepted_qpc": "10048600557200"
+      }
+    },
+    {
+      "observer_qpc": "10048600660358",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 23,
+        "receipt_qpc": "10048600659521",
+        "emit_qpc": "00000010048600659248",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048600661321",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 23,
+        "accepted_qpc": "10048600660077"
+      }
+    },
+    {
+      "observer_qpc": "10048600762119",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 24,
+        "receipt_qpc": "10048600761283",
+        "emit_qpc": "00000010048600760978",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048600763557",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 24,
+        "accepted_qpc": "10048600761936"
+      }
+    },
+    {
+      "observer_qpc": "10048600863655",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 25,
+        "receipt_qpc": "10048600862640",
+        "emit_qpc": "00000010048600862369",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048600865399",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 25,
+        "accepted_qpc": "10048600863224"
+      }
+    },
+    {
+      "observer_qpc": "10048600965821",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 26,
+        "receipt_qpc": "10048600964936",
+        "emit_qpc": "00000010048600964196",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048600966568",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 26,
+        "accepted_qpc": "10048600965568"
+      }
+    },
+    {
+      "observer_qpc": "10048601067696",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 27,
+        "receipt_qpc": "10048601066814",
+        "emit_qpc": "00000010048601066510",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048601069262",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 27,
+        "accepted_qpc": "10048601067398"
+      }
+    },
+    {
+      "observer_qpc": "10048601169040",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 28,
+        "receipt_qpc": "10048601168272",
+        "emit_qpc": "00000010048601167956",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048601169815",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 28,
+        "accepted_qpc": "10048601168907"
+      }
+    },
+    {
+      "observer_qpc": "10048601274663",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 29,
+        "receipt_qpc": "10048601273834",
+        "emit_qpc": "00000010048601273567",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048601275571",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 29,
+        "accepted_qpc": "10048601274526"
+      }
+    },
+    {
+      "observer_qpc": "10048601380715",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 30,
+        "receipt_qpc": "10048601379796",
+        "emit_qpc": "00000010048601379511",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048601382595",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 30,
+        "accepted_qpc": "10048601381470"
+      }
+    },
+    {
+      "observer_qpc": "10048601481845",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 31,
+        "receipt_qpc": "10048601480969",
+        "emit_qpc": "00000010048601480689",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048601483460",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 31,
+        "accepted_qpc": "10048601481531"
+      }
+    },
+    {
+      "observer_qpc": "10048601584228",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 32,
+        "receipt_qpc": "10048601583360",
+        "emit_qpc": "00000010048601583078",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048601585778",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 32,
+        "accepted_qpc": "10048601583947"
+      }
+    },
+    {
+      "observer_qpc": "10048601686523",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 33,
+        "receipt_qpc": "10048601685609",
+        "emit_qpc": "00000010048601685307",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048601687348",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 33,
+        "accepted_qpc": "10048601686248"
+      }
+    },
+    {
+      "observer_qpc": "10048601788466",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 34,
+        "receipt_qpc": "10048601787627",
+        "emit_qpc": "00000010048601787347",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048601789990",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 34,
+        "accepted_qpc": "10048601788149"
+      }
+    },
+    {
+      "observer_qpc": "10048601889619",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 35,
+        "receipt_qpc": "10048601888747",
+        "emit_qpc": "00000010048601888456",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048601890509",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 35,
+        "accepted_qpc": "10048601889526"
+      }
+    },
+    {
+      "observer_qpc": "10048601991146",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 36,
+        "receipt_qpc": "10048601990157",
+        "emit_qpc": "00000010048601989779",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048601992801",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 36,
+        "accepted_qpc": "10048601990871"
+      }
+    },
+    {
+      "observer_qpc": "10048602094023",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 37,
+        "receipt_qpc": "10048602093090",
+        "emit_qpc": "00000010048602092773",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048602095094",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 37,
+        "accepted_qpc": "10048602093754"
+      }
+    },
+    {
+      "observer_qpc": "10048602195526",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 38,
+        "receipt_qpc": "10048602194424",
+        "emit_qpc": "00000010048602194124",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048602196743",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 38,
+        "accepted_qpc": "10048602195110"
+      }
+    },
+    {
+      "observer_qpc": "10048602300957",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 39,
+        "receipt_qpc": "10048602299922",
+        "emit_qpc": "00000010048602299616",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048602302653",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 39,
+        "accepted_qpc": "10048602300633"
+      }
+    },
+    {
+      "observer_qpc": "10048602403351",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 40,
+        "receipt_qpc": "10048602402333",
+        "emit_qpc": "00000010048602402050",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048602405750",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 40,
+        "accepted_qpc": "10048602403007"
+      }
+    },
+    {
+      "observer_qpc": "10048602506093",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 41,
+        "receipt_qpc": "10048602505082",
+        "emit_qpc": "00000010048602504781",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048602508191",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 41,
+        "accepted_qpc": "10048602505799"
+      }
+    },
+    {
+      "observer_qpc": "10048602611430",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 42,
+        "receipt_qpc": "10048602607610",
+        "emit_qpc": "00000010048602607315",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048602612119",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 42,
+        "accepted_qpc": "10048602608456"
+      }
+    },
+    {
+      "observer_qpc": "10048602710129",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 43,
+        "receipt_qpc": "10048602709097",
+        "emit_qpc": "00000010048602708713",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048602711779",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 43,
+        "accepted_qpc": "10048602709836"
+      }
+    },
+    {
+      "observer_qpc": "10048602814826",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 44,
+        "receipt_qpc": "10048602813232",
+        "emit_qpc": "00000010048602812914",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048602817542",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 44,
+        "accepted_qpc": "10048602814318"
+      }
+    },
+    {
+      "observer_qpc": "10048602917515",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 45,
+        "receipt_qpc": "10048602916469",
+        "emit_qpc": "00000010048602916152",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048602918684",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 45,
+        "accepted_qpc": "10048602917079"
+      }
+    },
+    {
+      "observer_qpc": "10048603018664",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 46,
+        "receipt_qpc": "10048603017572",
+        "emit_qpc": "00000010048603017275",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048603021118",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 46,
+        "accepted_qpc": "10048603018341"
+      }
+    },
+    {
+      "observer_qpc": "10048603120744",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 47,
+        "receipt_qpc": "10048603119866",
+        "emit_qpc": "00000010048603119567",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048603121694",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 47,
+        "accepted_qpc": "10048603120380"
+      }
+    },
+    {
+      "observer_qpc": "10048603222094",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 48,
+        "receipt_qpc": "10048603221313",
+        "emit_qpc": "00000010048603221082",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048603222828",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 48,
+        "accepted_qpc": "10048603221885"
+      }
+    },
+    {
+      "observer_qpc": "10048603328112",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 49,
+        "receipt_qpc": "10048603327162",
+        "emit_qpc": "00000010048603326811",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048603328941",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 49,
+        "accepted_qpc": "10048603327828"
+      }
+    },
+    {
+      "observer_qpc": "10048603433656",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 50,
+        "receipt_qpc": "10048603432714",
+        "emit_qpc": "00000010048603432412",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048603434479",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 50,
+        "accepted_qpc": "10048603433363"
+      }
+    },
+    {
+      "observer_qpc": "10048603539466",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 51,
+        "receipt_qpc": "10048603538515",
+        "emit_qpc": "00000010048603538207",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048603541188",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 51,
+        "accepted_qpc": "10048603539212"
+      }
+    },
+    {
+      "observer_qpc": "10048603641356",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 52,
+        "receipt_qpc": "10048603640429",
+        "emit_qpc": "00000010048603640136",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048603643179",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 52,
+        "accepted_qpc": "10048603641398"
+      }
+    },
+    {
+      "observer_qpc": "10048603743084",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 53,
+        "receipt_qpc": "10048603742300",
+        "emit_qpc": "00000010048603742089",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048603744057",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 53,
+        "accepted_qpc": "10048603742791"
+      }
+    },
+    {
+      "observer_qpc": "10048603849588",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 54,
+        "receipt_qpc": "10048603848574",
+        "emit_qpc": "00000010048603848120",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048603850644",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 54,
+        "accepted_qpc": "10048603849396"
+      }
+    },
+    {
+      "observer_qpc": "10048603954539",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 55,
+        "receipt_qpc": "10048603953702",
+        "emit_qpc": "00000010048603953431",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048603956486",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 55,
+        "accepted_qpc": "10048603954588"
+      }
+    },
+    {
+      "observer_qpc": "10048604057474",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 56,
+        "receipt_qpc": "10048604056441",
+        "emit_qpc": "00000010048604055925",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048604058343",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 56,
+        "accepted_qpc": "10048604057076"
+      }
+    },
+    {
+      "observer_qpc": "10048604162538",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 57,
+        "receipt_qpc": "10048604161635",
+        "emit_qpc": "00000010048604161368",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048604163598",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 57,
+        "accepted_qpc": "10048604162287"
+      }
+    },
+    {
+      "observer_qpc": "10048604266748",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 58,
+        "receipt_qpc": "10048604265824",
+        "emit_qpc": "00000010048604265480",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048604267639",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 58,
+        "accepted_qpc": "10048604266390"
+      }
+    },
+    {
+      "observer_qpc": "10048604369310",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 59,
+        "receipt_qpc": "10048604366967",
+        "emit_qpc": "00000010048604366666",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048604370208",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 59,
+        "accepted_qpc": "10048604367714"
+      }
+    },
+    {
+      "observer_qpc": "10048604469546",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 60,
+        "receipt_qpc": "10048604468865",
+        "emit_qpc": "00000010048604468587",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048604470213",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 60,
+        "accepted_qpc": "10048604469412"
+      }
+    },
+    {
+      "observer_qpc": "10048604571992",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 61,
+        "receipt_qpc": "10048604571214",
+        "emit_qpc": "00000010048604570985",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048604573569",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 61,
+        "accepted_qpc": "10048604571759"
+      }
+    },
+    {
+      "observer_qpc": "10048604677799",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 62,
+        "receipt_qpc": "10048604676967",
+        "emit_qpc": "00000010048604676696",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048604678675",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 62,
+        "accepted_qpc": "10048604677494"
+      }
+    },
+    {
+      "observer_qpc": "10048604780043",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 63,
+        "receipt_qpc": "10048604779238",
+        "emit_qpc": "00000010048604778869",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048604780813",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 63,
+        "accepted_qpc": "10048604779915"
+      }
+    },
+    {
+      "observer_qpc": "10048604881515",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 64,
+        "receipt_qpc": "10048604880503",
+        "emit_qpc": "00000010048604880182",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048604883788",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 64,
+        "accepted_qpc": "10048604881332"
+      }
+    },
+    {
+      "observer_qpc": "10048604987084",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 65,
+        "receipt_qpc": "10048604986302",
+        "emit_qpc": "00000010048604985987",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048604987940",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 65,
+        "accepted_qpc": "10048604986785"
+      }
+    },
+    {
+      "observer_qpc": "10048605089007",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 66,
+        "receipt_qpc": "10048605088121",
+        "emit_qpc": "00000010048605087830",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048605090534",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 66,
+        "accepted_qpc": "10048605090106"
+      }
+    },
+    {
+      "observer_qpc": "10048605190380",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 67,
+        "receipt_qpc": "10048605189564",
+        "emit_qpc": "00000010048605189283",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048605191092",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 67,
+        "accepted_qpc": "10048605190230"
+      }
+    },
+    {
+      "observer_qpc": "10048605292062",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 68,
+        "receipt_qpc": "10048605291209",
+        "emit_qpc": "00000010048605290964",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048605292826",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 68,
+        "accepted_qpc": "10048605291778"
+      }
+    },
+    {
+      "observer_qpc": "10048605398688",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 69,
+        "receipt_qpc": "10048605397815",
+        "emit_qpc": "00000010048605397500",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048605401147",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 69,
+        "accepted_qpc": "10048605400698"
+      }
+    },
+    {
+      "observer_qpc": "10048605504779",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 70,
+        "receipt_qpc": "10048605503843",
+        "emit_qpc": "00000010048605503564",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048605505595",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 70,
+        "accepted_qpc": "10048605504455"
+      }
+    },
+    {
+      "observer_qpc": "10048605610154",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 71,
+        "receipt_qpc": "10048605609385",
+        "emit_qpc": "00000010048605609147",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048605610894",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 71,
+        "accepted_qpc": "10048605609928"
+      }
+    },
+    {
+      "observer_qpc": "10048605711854",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 72,
+        "receipt_qpc": "10048605711051",
+        "emit_qpc": "00000010048605710840",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048605713518",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 72,
+        "accepted_qpc": "10048605711488"
+      }
+    },
+    {
+      "observer_qpc": "10048605813132",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 73,
+        "receipt_qpc": "10048605812271",
+        "emit_qpc": "00000010048605812028",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048605813990",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 73,
+        "accepted_qpc": "10048605812832"
+      }
+    },
+    {
+      "observer_qpc": "10048605918843",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 74,
+        "receipt_qpc": "10048605917938",
+        "emit_qpc": "00000010048605917684",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048605919754",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 74,
+        "accepted_qpc": "10048605918529"
+      }
+    },
+    {
+      "observer_qpc": "10048606020055",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 75,
+        "receipt_qpc": "10048606019112",
+        "emit_qpc": "00000010048606018819",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048606020895",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 75,
+        "accepted_qpc": "10048606019623"
+      }
+    },
+    {
+      "observer_qpc": "10048606122913",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 76,
+        "receipt_qpc": "10048606122042",
+        "emit_qpc": "00000010048606121787",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048606124628",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 76,
+        "accepted_qpc": "10048606122613"
+      }
+    },
+    {
+      "observer_qpc": "10048606227757",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 77,
+        "receipt_qpc": "10048606226980",
+        "emit_qpc": "00000010048606226740",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048606228537",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 77,
+        "accepted_qpc": "10048606227592"
+      }
+    },
+    {
+      "observer_qpc": "10048606333308",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 78,
+        "receipt_qpc": "10048606332507",
+        "emit_qpc": "00000010048606332278",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048606334000",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 78,
+        "accepted_qpc": "10048606332930"
+      }
+    },
+    {
+      "observer_qpc": "10048606434575",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 79,
+        "receipt_qpc": "10048606433782",
+        "emit_qpc": "00000010048606433553",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048606435292",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 79,
+        "accepted_qpc": "10048606434288"
+      }
+    },
+    {
+      "observer_qpc": "10048606535856",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 80,
+        "receipt_qpc": "10048606535086",
+        "emit_qpc": "00000010048606534860",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048606536557",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 80,
+        "accepted_qpc": "10048606535544"
+      }
+    },
+    {
+      "observer_qpc": "10048606641659",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 81,
+        "receipt_qpc": "10048606640630",
+        "emit_qpc": "00000010048606640322",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048606642528",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 81,
+        "accepted_qpc": "10048606641298"
+      }
+    },
+    {
+      "observer_qpc": "10048606742763",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 82,
+        "receipt_qpc": "10048606741972",
+        "emit_qpc": "00000010048606741754",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048606743472",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 82,
+        "accepted_qpc": "10048606742491"
+      }
+    },
+    {
+      "observer_qpc": "10048606844017",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 83,
+        "receipt_qpc": "10048606843234",
+        "emit_qpc": "00000010048606842946",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048606844738",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 83,
+        "accepted_qpc": "10048606843663"
+      }
+    },
+    {
+      "observer_qpc": "10048606945825",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 84,
+        "receipt_qpc": "10048606944778",
+        "emit_qpc": "00000010048606944406",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048606946957",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 84,
+        "accepted_qpc": "10048606945349"
+      }
+    },
+    {
+      "observer_qpc": "10048607046933",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 85,
+        "receipt_qpc": "10048607046097",
+        "emit_qpc": "00000010048607045858",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048607047863",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 85,
+        "accepted_qpc": "10048607046650"
+      }
+    },
+    {
+      "observer_qpc": "10048607149320",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 86,
+        "receipt_qpc": "10048607148524",
+        "emit_qpc": "00000010048607148264",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048607150042",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 86,
+        "accepted_qpc": "10048607149041"
+      }
+    },
+    {
+      "observer_qpc": "10048607255193",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 87,
+        "receipt_qpc": "10048607254441",
+        "emit_qpc": "00000010048607254178",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048607256981",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 87,
+        "accepted_qpc": "10048607256513"
+      }
+    },
+    {
+      "observer_qpc": "10048607356175",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 88,
+        "receipt_qpc": "10048607355366",
+        "emit_qpc": "00000010048607355132",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048607356906",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 88,
+        "accepted_qpc": "10048607355904"
+      }
+    },
+    {
+      "observer_qpc": "10048607458128",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 89,
+        "receipt_qpc": "10048607457344",
+        "emit_qpc": "00000010048607457118",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048607459644",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 89,
+        "accepted_qpc": "10048607457851"
+      }
+    },
+    {
+      "observer_qpc": "10048607559727",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 90,
+        "receipt_qpc": "10048607558745",
+        "emit_qpc": "00000010048607558412",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048607562772",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 90,
+        "accepted_qpc": "10048607561173"
+      }
+    },
+    {
+      "observer_qpc": "10048607661057",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 91,
+        "receipt_qpc": "10048607660126",
+        "emit_qpc": "00000010048607659848",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048607662629",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 91,
+        "accepted_qpc": "10048607660641"
+      }
+    },
+    {
+      "observer_qpc": "10048607766704",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 92,
+        "receipt_qpc": "10048607765795",
+        "emit_qpc": "00000010048607765552",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048607767731",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 92,
+        "accepted_qpc": "10048607766313"
+      }
+    },
+    {
+      "observer_qpc": "10048607873086",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 93,
+        "receipt_qpc": "10048607872108",
+        "emit_qpc": "00000010048607871751",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048607875695",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 93,
+        "accepted_qpc": "10048607875150"
+      }
+    },
+    {
+      "observer_qpc": "10048607978371",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 94,
+        "receipt_qpc": "10048607977581",
+        "emit_qpc": "00000010048607977357",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048607979146",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 94,
+        "accepted_qpc": "10048607978095"
+      }
+    },
+    {
+      "observer_qpc": "10048608080356",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 95,
+        "receipt_qpc": "10048608079246",
+        "emit_qpc": "00000010048608078998",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048608081466",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 95,
+        "accepted_qpc": "10048608079905"
+      }
+    },
+    {
+      "observer_qpc": "10048608182067",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 96,
+        "receipt_qpc": "10048608181295",
+        "emit_qpc": "00000010048608181055",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048608182803",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 96,
+        "accepted_qpc": "10048608181832"
+      }
+    },
+    {
+      "observer_qpc": "10048608283487",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 97,
+        "receipt_qpc": "10048608282713",
+        "emit_qpc": "00000010048608282470",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048608285422",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 97,
+        "accepted_qpc": "10048608283237"
+      }
+    },
+    {
+      "observer_qpc": "10048608389595",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 98,
+        "receipt_qpc": "10048608388300",
+        "emit_qpc": "00000010048608388081",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048608390343",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 98,
+        "accepted_qpc": "10048608388807"
+      }
+    },
+    {
+      "observer_qpc": "10048608494753",
+      "event": {
+        "event": "frame_received",
+        "request_id": 2,
+        "seq": 99,
+        "receipt_qpc": "10048608494038",
+        "emit_qpc": "00000010048608493812",
+        "qpc_frequency": 10000000
+      }
+    },
+    {
+      "observer_qpc": "10048608495705",
+      "event": {
+        "event": "chunk_accepted",
+        "request_id": 2,
+        "seq": 99,
+        "accepted_qpc": "10048608494493"
+      }
+    },
+    {
+      "observer_qpc": "10048608531850",
+      "event": {
+        "event": "terminal",
+        "request_id": 2,
+        "kind": "complete",
+        "last_seq": 99,
+        "qpc": "10048608531281"
+      }
+    }
+  ],
+  "provider_lifetimes": [],
+  "error": null,
+  "scope": "Text/window acceptance via physical input; provider P-cases are covered separately by verify_provider_regression.py",
+  "utc_started": "2026-09-28T06:40:20.225503+00:00",
+  "launch_point": [
+    4352,
+    384
+  ],
+  "cleanup": [],
+  "cleanup_errors": [],
+  "reader_errors": [],
+  "utc_finished": "2026-09-28T06:40:49.070301+00:00",
+  "status": "PASS_WITH_UNTESTED"
+}

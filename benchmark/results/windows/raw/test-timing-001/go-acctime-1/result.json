@@ -1,0 +1,179 @@
+{
+  "schema": "mascot-acceptance-1",
+  "candidate": "go",
+  "cases": [
+    {
+      "case": "T1",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "t1-typed.png"
+    },
+    {
+      "case": "T2",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T3",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T4",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T5",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T6",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T7",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T8",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T9",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T9b-cancel",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T10",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T11",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T12-F7",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T12-F8",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T13",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "T14",
+      "status": "FAIL",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "AssertionError('T2 typed text mismatch')"
+    },
+    {
+      "case": "W1",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": {
+        "capture": "w1-transparency.png",
+        "hit_transparent": [
+          4368,
+          400
+        ],
+        "hit_opaque": [
+          4398,
+          409
+        ]
+      }
+    },
+    {
+      "case": "W4",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": {
+        "message": 161,
+        "x": 4368,
+        "y": 400
+      }
+    },
+    {
+      "case": "W3",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "W9",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "W5",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "W6",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "W8",
+      "status": "PASS",
+      "fixture_version": "windows-v1.0.2"
+    },
+    {
+      "case": "W2",
+      "status": "UNTESTED",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "--with-hidpi not enabled"
+    },
+    {
+      "case": "W7",
+      "status": "UNTESTED",
+      "fixture_version": "windows-v1.0.2",
+      "evidence": "--with-hidpi not enabled"
+    }
+  ],
+  "event_observations": [],
+  "provider_lifetimes": [],
+  "error": "AssertionError('T2 typed text mismatch')",
+  "scope": "Text/window acceptance via physical input; provider P-cases are covered separately by verify_provider_regression.py",
+  "utc_started": "2026-09-28T06:42:01.459594+00:00",
+  "launch_point": [
+    4352,
+    384
+  ],
+  "cleanup": [],
+  "cleanup_errors": [],
+  "reader_errors": [],
+  "utc_finished": "2026-09-28T06:42:13.474717+00:00",
+  "status": "FAIL"
+}

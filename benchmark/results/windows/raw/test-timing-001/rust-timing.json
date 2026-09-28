@@ -1,0 +1,158 @@
+{
+  "incremental_noop_build": {
+    "n": 5,
+    "times_ms": [
+      20520.5,
+      180.2,
+      164.7,
+      164.0,
+      171.1
+    ],
+    "median_ms": 171.1,
+    "min_ms": 164.0,
+    "max_ms": 20520.5,
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "all_pass": true
+  },
+  "incremental_one_file_build": {
+    "n": 3,
+    "times_ms": [
+      9281.6,
+      9083.3,
+      9152.0
+    ],
+    "median_ms": 9152.0,
+    "min_ms": 9083.3,
+    "max_ms": 9281.6,
+    "exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "all_pass": true
+  },
+  "unit_tests": {
+    "n": 5,
+    "times_ms": [
+      11276.3,
+      229.3,
+      215.8,
+      222.3,
+      257.5
+    ],
+    "median_ms": 229.3,
+    "min_ms": 215.8,
+    "max_ms": 11276.3,
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "all_pass": true
+  },
+  "provider_regression": {
+    "n": 5,
+    "times_ms": [
+      11613.4,
+      11582.0,
+      11576.8,
+      11501.6,
+      11564.0
+    ],
+    "median_ms": 11576.8,
+    "min_ms": 11501.6,
+    "max_ms": 11613.4,
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "all_pass": true
+  },
+  "smoke": {
+    "n": 5,
+    "times_ms": [
+      332.2,
+      308.0,
+      326.7,
+      312.3,
+      309.8
+    ],
+    "median_ms": 312.3,
+    "min_ms": 308.0,
+    "max_ms": 332.2,
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "all_pass": true
+  },
+  "acceptance": {
+    "n": 3,
+    "times_ms": [
+      28613.0,
+      28571.8,
+      28611.4
+    ],
+    "median_ms": 28611.4,
+    "min_ms": 28571.8,
+    "max_ms": 28613.0,
+    "exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "all_pass": true
+  },
+  "codex_gate": {
+    "n": 5,
+    "times_ms": [
+      352.7,
+      317.6,
+      318.8,
+      317.5,
+      305.8
+    ],
+    "median_ms": 317.6,
+    "min_ms": 305.8,
+    "max_ms": 352.7,
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "all_pass": true
+  },
+  "edit_build_test_loop": {
+    "n": 3,
+    "times_ms": [
+      10568.8,
+      10640.9,
+      10435.1
+    ],
+    "median_ms": 10568.8,
+    "min_ms": 10435.1,
+    "max_ms": 10640.9,
+    "exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "all_pass": true
+  }
+}

@@ -28,7 +28,7 @@ Fixture `windows-v1.0.2`; tokenizer `tiktoken/o200k_base` v0.12.0; implementatio
 | Benchmark exceptions requested | 0 | 0 | 0 |
 | Correction loops observed | 4 | 4 | 2 |
 | Clean build ms | 16487 | 17635 | 12396 |
-| Incremental build ms | 8581 | 221 | 708 |
+| Incremental build ms (one file) | 8581 | 221 | 708 |
 | Max function lines | 149 | 221 | 157 |
 | Median function lines | 8.0 | 9.0 | 11.0 |
 | Max nesting depth | 7 | 10 | 7 |
@@ -74,6 +74,26 @@ Dependency delegation (mechanism, not hidden cost): Rust delegates PNG decode to
 | Dependencies | windows-sys, serde, serde_json, png, base64 (5 direct) | none (std only; handwritten json.zig + extern declarations) | golang.org/x/sys (1 direct; image/png and encoding/json from stdlib) |
 | Diagnostic notes | rustc caught real bugs (unused assignments, borrow across re-entrant calls); the failing case was a runtime deadline violation visible only under the shared provider gate | compiler caught const-correctness on atomic.Value pointers; shutdown deadline was a runtime violation found by the gate | go vet/build clean; a console-subsystem build mistake (plain go build instead of -H windowsgui via build.ps1) was caught by the provider gate as a stray conhost child |
 | Platform debugging | conhost/NoWindow verified via CREATE_NO_WINDOW; PDH instance naming had to be discovered (process instance strips .exe) | foreground-lock behavior required z-order fix; ~100 MB stable commit reservation measured (arena/queue capacity) | subwindow subclassing needed for Enter/Escape key routing in the RichEdit composer |
+
+## Test execution timing (median ms; n reps; same host/
+power mode; fixture windows-v1.0.2; shared harness overhead
+included identically for all candidates)
+
+| Suite | Rust | Zig | Go |
+|---|---|---|---|
+| Candidate unit/self-tests | 229.3 (range 215.8-11276.3, n=5) | 361.0 (range 354.5-6083.6, n=5) | 531.7 (range 502.1-562.9, n=5) |
+| Provider regression | 11576.8 (range 11501.6-11613.4, n=5) | 11816.5 (range 11613.5-11946.0, n=5) | 11795.1 (range 11777.7-11879.0, n=5) |
+| Smoke | 312.3 (range 308.0-332.2, n=5) | 343.7 (range 333.4-355.8, n=5) | 350.0 (range 348.0-354.6, n=5) |
+| Full acceptance (UI, W2/W7 untested here) | 28611.4 (range 28571.8-28613.0, n=3) | 28848.2 (range 28751.2-28983.0, n=3) | 28659.9 (range 28650.8-28755.0, n=3) |
+| Codex compatibility gate | 317.6 (range 305.8-352.7, n=5) | 139.3 (range 135.1-152.5, n=5) | 275.7 (range 268.8-280.2, n=5) |
+| No-op incremental build | 171.1 (range 164.0-20520.5, n=5) | 264.7 (range 225.2-284.7, n=5) | 796.1 (range 712.8-1012.4, n=5) |
+| One-file incremental build | 9152.0 (range 9083.3-9281.6, n=3) | 282.0 (range 265.0-311.0, n=3) | 696.9 (range 684.0-699.2, n=3) |
+| Edit -> build -> unit-test loop | 10568.8 (range 10435.1-10640.9, n=3) | 612.8 (range 594.7-629.0, n=3) | 1229.8 (range 1193.0-1390.1, n=3) |
+
+Cold-vs-warm: first unit-test rep includes compiling the test binary (rust ~11.3s, zig ~6.1s cold vs ~230/~360 ms warm). Rust no-op rep0 (~20.5 s) re-linked after a prior clean; warm no-op is ~170 ms. Go's no-op (~0.7-0.8 s) is dominated by link + vet-style checks each run.
+
+Notes: two acceptance reps in the raw timing dir failed because an orphaned candidate still held the global hotkey (recorded as excluded reps in `*-timing.json` notes); all reported times are passing runs. Provider regression time is dominated by the shared mock-provider protocol script (~11.5-11.8 s), i.e. shared fixture cost, not candidate cost. Acceptance (~28.6-28.8 s) is dominated by IME/input injection waits and screen capture, also shared.
+
 
 ### Project-maintained workarounds
 

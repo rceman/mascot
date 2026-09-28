@@ -1,0 +1,22 @@
+{"sent_qpc": "10046672165280", "command": {"token": 1, "command": "state"}}
+{"sent_qpc": "10046672579337", "command": {"token": 2, "command": "show"}}
+{"sent_qpc": "10046672989581", "command": {"token": 3, "command": "state"}}
+{"sent_qpc": "10046675096331", "command": {"token": 4, "command": "state"}}
+{"sent_qpc": "10046675103019", "command": {"token": 5, "command": "set_text", "text": ""}}
+{"sent_qpc": "10046675128906", "command": {"token": 6, "command": "state"}}
+{"sent_qpc": "10046678797953", "command": {"token": 7, "command": "text"}}
+{"sent_qpc": "10046678802781", "command": {"token": 8, "command": "state"}}
+{"sent_qpc": "10046680217104", "command": {"token": 9, "command": "set_text", "text": ""}}
+{"sent_qpc": "10046680255399", "command": {"token": 10, "command": "state"}}
+{"sent_qpc": "10046684082972", "command": {"token": 11, "command": "text"}}
+{"sent_qpc": "10046684087093", "command": {"token": 12, "command": "state"}}
+{"sent_qpc": "10046685523461", "command": {"token": 13, "command": "set_text", "text": "AéB"}}
+{"sent_qpc": "10046685566517", "command": {"token": 14, "command": "state"}}
+{"sent_qpc": "10046693866129", "command": {"token": 15, "command": "text"}}
+{"sent_qpc": "10046693869690", "command": {"token": 16, "command": "state"}}
+{"sent_qpc": "10046695404037", "command": {"token": 17, "command": "set_text", "text": "AéB"}}
+{"sent_qpc": "10046695435699", "command": {"token": 18, "command": "state"}}
+{"sent_qpc": "10046703834796", "command": {"token": 19, "command": "text"}}
+{"sent_qpc": "10046703842358", "command": {"token": 20, "command": "state"}}
+{"sent_qpc": "10046703846156", "command": {"token": 21, "command": "hide"}}
+{"sent_qpc": "10046752765748", "command": {"token": 22, "command": "shutdown"}}
