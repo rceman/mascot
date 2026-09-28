@@ -43,7 +43,9 @@ Do not reset away Planner documentation commits.
 
 ## Product direction
 
-Build a small native black/white/neutral UI inspired by the restraint of shadcn-style components and the clean monochrome feel of Devin-like product surfaces.
+Build a small native black/white/neutral UI using a **shadcn-first visual direction**, combined with the clean monochrome feel of Devin-like product surfaces.
+
+Shadcn is the primary visual reference for component proportions, spacing, borders, radii, neutral surfaces, hover/focus states and control density. Implement that visual grammar natively; do not import the web stack.
 
 Do not copy external branding or website layout.
 
@@ -101,7 +103,7 @@ Use a small project-owned UI layer only for the primitives actually required.
 
 Implement a small typed icon vocabulary using compact native vector paths.
 
-Use shadcn-compatible/Lucide-style visual vocabulary where licensing permits.
+**Lucide is the canonical icon source for this task.** Use the actual upstream Lucide geometry for required icons, converted to native path data. Do not draw approximate Lucide-style substitutes or mix icon families without a documented reason.
 
 No runtime SVG parser and no icon font.
 
