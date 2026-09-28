@@ -6,13 +6,14 @@ use objc2::runtime::{AnyObject, Bool, ProtocolObject};
 use objc2::{AnyThread, DefinedClass, MainThreadOnly, define_class, msg_send, sel};
 use objc2_app_kit::{
     NSApplication, NSApplicationActivationPolicy, NSBackingStoreType, NSBezelStyle, NSBitmapImageRep,
-    NSBorderType, NSButton, NSColor, NSEvent, NSEventModifierFlags, NSFloatingWindowLevel, NSFont,
-    NSImage, NSPanel, NSScreen, NSScrollView, NSTextDelegate, NSTextField, NSTextInputClient,
-    NSTextView, NSTextViewDelegate, NSView, NSWindow, NSWindowCollectionBehavior, NSWindowDelegate,
-    NSWindowStyleMask,
+    NSBorderType, NSButton, NSColor, NSEvent, NSEventMask, NSEventModifierFlags, NSEventType,
+    NSEventTrackingRunLoopMode, NSFloatingWindowLevel, NSFont, NSImage, NSPanel, NSScreen,
+    NSScrollView, NSTextDelegate, NSTextField, NSTextInputClient, NSTextView, NSTextViewDelegate,
+    NSView, NSWindow, NSWindowCollectionBehavior, NSWindowDelegate, NSWindowStyleMask,
 };
 use objc2_foundation::{
-    MainThreadMarker, NSObject, NSObjectProtocol, NSPoint, NSRange, NSRect, NSSize, NSString,
+    MainThreadMarker, NSNotification, NSObject, NSObjectProtocol, NSPoint, NSRange, NSRect, NSSize,
+    NSString,
 };
 use serde_json::{Value, json};
 use std::cell::{Cell, RefCell};
@@ -30,6 +31,9 @@ const CONTROL_KEY: u32 = 0x1000;
 const OPTION_KEY: u32 = 0x0800;
 const HOTKEY_TOGGLE_ID: u32 = 1;
 const HOTKEY_CANCEL_ID: u32 = 2;
+// Overlap in points so the mascot appears seated on the composer top edge
+// rather than floating above it.
+const MASCOT_PERCH_OVERLAP: f64 = 6.0;
 
 #[repr(C)]
 struct EventHotKeyID {
@@ -427,7 +431,35 @@ impl Ui {
         composer
             .window
             .makeFirstResponder(Some(&*composer.input));
+        drop(composer);
+        self.perch_mascot();
         Ok(())
+    }
+
+    // The mascot perches on the composer top edge while the composer is
+    // visible; composer moves/resizes re-anchor it through this method.
+    pub fn perch_mascot(&self) {
+        let mascot = self.mascot.get();
+        if mascot.is_null() {
+            return;
+        }
+        let borrowed = self.composer.borrow();
+        let Some(composer) = borrowed.as_ref() else {
+            return;
+        };
+        if !composer.window.isVisible() {
+            return;
+        }
+        let frame = composer.window.frame();
+        let dip = self.config.manifest.asset.logical_width_dip as f64;
+        let origin = NSPoint::new(
+            frame.origin.x + (frame.size.width - dip) * 0.5,
+            frame.origin.y + frame.size.height - MASCOT_PERCH_OVERLAP,
+        );
+        drop(borrowed);
+        unsafe {
+            let _: () = msg_send![mascot as *mut AnyObject, setFrameOrigin: origin];
+        }
     }
 
     pub fn hide_composer(&self) {
@@ -1022,8 +1054,66 @@ define_class!(
 
         #[unsafe(method(mouseDown:))]
         fn mouse_down(&self, event: &NSEvent) {
-            if let Some(window) = self.window() {
+            let ui = unsafe { &*(self.ivars().ui as *const Ui) };
+            let Some(window) = self.window() else {
+                return;
+            };
+            let anchored = {
+                let borrowed = ui.composer.borrow();
+                borrowed.as_ref().is_some_and(|c| c.window.isVisible())
+            };
+            if !anchored {
                 window.performWindowDragWithEvent(event);
+                return;
+            }
+            // Anchored drag: while the mascot is perched on the composer, a
+            // mascot drag moves the composer by the same delta and the
+            // composer move re-perches the mascot through windowDidMove.
+            let composer_start = {
+                let borrowed = ui.composer.borrow();
+                borrowed.as_ref().map(|c| c.window.frame())
+            };
+            let Some(composer_start) = composer_start else {
+                window.performWindowDragWithEvent(event);
+                return;
+            };
+            let start_frame = window.frame();
+            let down = event.locationInWindow();
+            let start = NSPoint::new(
+                start_frame.origin.x + down.x,
+                start_frame.origin.y + down.y,
+            );
+            let mask = NSEventMask::LeftMouseDragged | NSEventMask::LeftMouseUp;
+            loop {
+                let Some(next) = (unsafe {
+                    window.nextEventMatchingMask_untilDate_inMode_dequeue(
+                        mask,
+                        None,
+                        NSEventTrackingRunLoopMode,
+                        true,
+                    )
+                }) else {
+                    break;
+                };
+                if next.r#type() == NSEventType::LeftMouseUp {
+                    break;
+                }
+                let local = next.locationInWindow();
+                let current = window.frame();
+                let now = NSPoint::new(current.origin.x + local.x, current.origin.y + local.y);
+                let dx = now.x - start.x;
+                let dy = now.y - start.y;
+                let composer_origin = NSPoint::new(
+                    composer_start.origin.x + dx,
+                    composer_start.origin.y + dy,
+                );
+                {
+                    let borrowed = ui.composer.borrow();
+                    if let Some(composer) = borrowed.as_ref() {
+                        composer.window.setFrameOrigin(composer_origin);
+                    }
+                }
+                ui.perch_mascot();
             }
         }
 
@@ -1168,6 +1258,18 @@ define_class!(
             let ui = unsafe { &*(self.ivars().ui as *const Ui) };
             ui.hide_composer();
             false
+        }
+
+        #[unsafe(method(windowDidMove:))]
+        fn window_did_move(&self, _notification: &NSNotification) {
+            let ui = unsafe { &*(self.ivars().ui as *const Ui) };
+            ui.perch_mascot();
+        }
+
+        #[unsafe(method(windowDidResize:))]
+        fn window_did_resize(&self, _notification: &NSNotification) {
+            let ui = unsafe { &*(self.ivars().ui as *const Ui) };
+            ui.perch_mascot();
         }
     }
 

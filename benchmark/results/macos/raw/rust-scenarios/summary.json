@@ -1,0 +1,137 @@
+{
+  "candidate": "rust",
+  "binary": "/Users/therceman/Documents/git/mascot/rust/packaging/MascotRust.app/Contents/MacOS/mascot",
+  "manifest": "/Users/therceman/Documents/git/mascot/benchmark/manifest/fixture.darwin-arm64.json",
+  "elapsed_s": 8.45,
+  "exit_code": 0,
+  "results": [
+    {
+      "scenario": "normal",
+      "expected_terminal": "complete",
+      "ok": true,
+      "details": {
+        "terminal_kind": "complete",
+        "terminal_last_seq": 99,
+        "provider_state": "complete",
+        "last_seq": 99,
+        "response_utf8_bytes": 5050,
+        "stderr_total_bytes": 0,
+        "run_invalid": null
+      }
+    },
+    {
+      "scenario": "cancel",
+      "expected_terminal": "cancelled",
+      "ok": true,
+      "details": {
+        "terminal_kind": "cancelled",
+        "terminal_last_seq": 49,
+        "provider_state": "cancelled",
+        "last_seq": 49,
+        "response_utf8_bytes": 2531,
+        "stderr_total_bytes": 0,
+        "run_invalid": null
+      }
+    },
+    {
+      "scenario": "client_request",
+      "expected_terminal": "complete",
+      "ok": true,
+      "details": {
+        "terminal_kind": "complete",
+        "terminal_last_seq": 99,
+        "provider_state": "complete",
+        "last_seq": 99,
+        "response_utf8_bytes": 5050,
+        "stderr_total_bytes": 0,
+        "run_invalid": null
+      }
+    },
+    {
+      "scenario": "backpressure",
+      "expected_terminal": "complete",
+      "ok": true,
+      "details": {
+        "terminal_kind": "complete",
+        "terminal_last_seq": 255,
+        "provider_state": "complete",
+        "last_seq": 255,
+        "response_utf8_bytes": 12928,
+        "stderr_total_bytes": 0,
+        "run_invalid": null
+      }
+    },
+    {
+      "scenario": "maximum",
+      "expected_terminal": "complete",
+      "ok": true,
+      "details": {
+        "terminal_kind": "complete",
+        "terminal_last_seq": 0,
+        "provider_state": "complete",
+        "last_seq": 0,
+        "response_utf8_bytes": 65460,
+        "stderr_total_bytes": 0,
+        "run_invalid": null
+      }
+    },
+    {
+      "scenario": "oversized",
+      "expected_terminal": "failed",
+      "ok": true,
+      "details": {
+        "terminal_kind": "failed",
+        "terminal_last_seq": -1,
+        "provider_state": "failed",
+        "last_seq": -1,
+        "response_utf8_bytes": 0,
+        "stderr_total_bytes": 0,
+        "run_invalid": null
+      }
+    },
+    {
+      "scenario": "unexpected_exit",
+      "expected_terminal": "failed",
+      "ok": true,
+      "details": {
+        "terminal_kind": "failed",
+        "terminal_last_seq": 6,
+        "provider_state": "failed",
+        "last_seq": 6,
+        "response_utf8_bytes": 366,
+        "stderr_total_bytes": 0,
+        "run_invalid": null
+      }
+    },
+    {
+      "scenario": "stderr",
+      "expected_terminal": "complete",
+      "ok": true,
+      "details": {
+        "terminal_kind": "complete",
+        "terminal_last_seq": 99,
+        "provider_state": "complete",
+        "last_seq": 99,
+        "response_utf8_bytes": 5050,
+        "stderr_total_bytes": 262144,
+        "run_invalid": null
+      }
+    },
+    {
+      "scenario": "fragmented",
+      "expected_terminal": "complete",
+      "ok": true,
+      "details": {
+        "terminal_kind": "complete",
+        "terminal_last_seq": 99,
+        "provider_state": "complete",
+        "last_seq": 99,
+        "response_utf8_bytes": 5050,
+        "stderr_total_bytes": 0,
+        "run_invalid": null
+      }
+    }
+  ],
+  "passed": 9,
+  "total": 9
+}

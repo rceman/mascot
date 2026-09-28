@@ -7,6 +7,11 @@
 #include <string.h>
 #include "mascot_darwin.h"
 
+// Forward declarations for the perch anchor used inside MascotView.
+static void perch_mascot(void);
+static NSPanel *gMascotPanel;
+static NSWindow *gComposerWindow;
+
 // ---------------------------------------------------------------- mascot view
 
 @interface MascotView : NSView {
@@ -41,7 +46,38 @@
 }
 
 - (void)mouseDown:(NSEvent *)event {
-    [self.window performWindowDragWithEvent:event];
+    NSWindow *window = self.window;
+    if (gComposerWindow != nil && gComposerWindow.visible) {
+        // Anchored drag: a mascot drag while perched moves the composer by
+        // the same delta; the composer move re-perches the mascot.
+        NSRect cStart = gComposerWindow.frame;
+        NSPoint down = event.locationInWindow;
+        NSRect wStart = window.frame;
+        NSPoint start = NSMakePoint(wStart.origin.x + down.x,
+                                    wStart.origin.y + down.y);
+        while (YES) {
+            NSEvent *e =
+                [window nextEventMatchingMask:NSEventMaskLeftMouseDragged |
+                                              NSEventMaskLeftMouseUp
+                                    untilDate:[NSDate distantFuture]
+                                       inMode:NSEventTrackingRunLoopMode
+                                      dequeue:YES];
+            if (e == nil || e.type == NSEventTypeLeftMouseUp) {
+                break;
+            }
+            NSPoint local = e.locationInWindow;
+            NSRect cur = window.frame;
+            NSPoint now = NSMakePoint(cur.origin.x + local.x,
+                                      cur.origin.y + local.y);
+            CGFloat dx = now.x - start.x;
+            CGFloat dy = now.y - start.y;
+            [gComposerWindow setFrameOrigin:NSMakePoint(cStart.origin.x + dx,
+                                                      cStart.origin.y + dy)];
+            perch_mascot();
+        }
+        return;
+    }
+    [window performWindowDragWithEvent:event];
 }
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)event {
@@ -125,6 +161,16 @@
     return goUIWindowShouldClose() ? YES : NO;
 }
 
+- (void)windowDidMove:(NSNotification *)notification {
+    (void)notification;
+    perch_mascot();
+}
+
+- (void)windowDidResize:(NSNotification *)notification {
+    (void)notification;
+    perch_mascot();
+}
+
 - (BOOL)textView:(NSTextView *)textView
     shouldChangeTextInRange:(NSRange)affectedCharRange
           replacementString:(NSString *)replacementString {
@@ -153,6 +199,23 @@ static NSTextView *gInputView;
 static EventHotKeyRef gToggleKey;
 static EventHotKeyRef gCancelKey;
 static EventHandlerRef gHotkeyHandler;
+
+// Overlap in points so the mascot appears seated on the composer top edge
+// rather than floating above it.
+static const CGFloat kPerchOverlap = 6.0;
+
+// The mascot perches centered on the composer top edge while the composer is
+// visible. Composer moves/resizes re-anchor it through this helper.
+static void perch_mascot(void) {
+    if (gMascotPanel == nil || gComposerWindow == nil || !gComposerWindow.visible) {
+        return;
+    }
+    NSRect cf = gComposerWindow.frame;
+    NSRect mf = gMascotPanel.frame;
+    [gMascotPanel setFrameOrigin:NSMakePoint(
+        cf.origin.x + (cf.size.width - mf.size.width) * 0.5,
+        NSMaxY(cf) - kPerchOverlap)];
+}
 
 static void pump_ui(void *ctx) {
     (void)ctx;
@@ -239,6 +302,7 @@ void *mascot_create_mascot(const unsigned char *rgba, int src_w, int src_h, doub
     view->maskW = src_w;
     view->maskH = src_h;
     panel.contentView = view;
+    gMascotPanel = panel;
     return (__bridge_retained void *)panel;
 }
 
@@ -306,6 +370,7 @@ MascotComposer mascot_create_composer(void *panel, double width, double height,
 
     gDelegate = [[MascotComposerDelegate alloc] init];
     window.delegate = gDelegate;
+    gComposerWindow = window;
 
     NSView *content = window.contentView;
     double input_top = height - margin - input_h;
@@ -367,6 +432,7 @@ void mascot_show_composer(MascotComposer c) {
     [NSApp activateIgnoringOtherApps:YES];
     [window makeKeyAndOrderFront:nil];
     [window makeFirstResponder:input];
+    perch_mascot();
 }
 
 void mascot_hide_composer(MascotComposer c) {
@@ -485,4 +551,6 @@ void mascot_teardown(MascotComposer c, void *panel) {
     }
     gDelegate = nil;
     gInputView = nil;
+    gMascotPanel = nil;
+    gComposerWindow = nil;
 }
