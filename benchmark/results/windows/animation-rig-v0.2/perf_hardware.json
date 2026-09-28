@@ -1,0 +1,128 @@
+{
+  "active": {
+    "cpu_percent_of_one_core": 0.554831340371761,
+    "cpu_seconds": 0.0625,
+    "end": {
+      "frames_total": 1065,
+      "gdi_objects": 13,
+      "handles": 467,
+      "private_mib": 97.2421875,
+      "threads": 37,
+      "user_objects": 44,
+      "working_set_mib": 51.125
+    },
+    "fps": 94.4544873848886,
+    "frames_rendered": 1064,
+    "seconds": 11.2646845
+  },
+  "adapter": "NVIDIA GeForce RTX 4070",
+  "device": "Hardware",
+  "frame_cadence_ms": {
+    "frames": 1064,
+    "max": 75.22580000000012,
+    "mean": 10.550972060206952,
+    "min": 1.3784999999995051,
+    "p50": 10.417799999999033,
+    "p95": 10.602799999999135,
+    "p99": 10.693599999999748
+  },
+  "idle": {
+    "cpu_percent_of_one_core": 0.46673065714073464,
+    "cpu_seconds": 0.046875,
+    "end": {
+      "frames_total": 1,
+      "gdi_objects": 13,
+      "handles": 455,
+      "private_mib": 101.9765625,
+      "threads": 36,
+      "user_objects": 41,
+      "working_set_mib": 55.37890625
+    },
+    "fps": 0.0,
+    "frames_rendered": 0,
+    "seconds": 10.0432657
+  },
+  "post_animation_idle": {
+    "cpu_percent_of_one_core": 0.6220941298889345,
+    "cpu_seconds": 0.0625,
+    "end": {
+      "frames_total": 1065,
+      "gdi_objects": 13,
+      "handles": 467,
+      "private_mib": 97.26171875,
+      "threads": 38,
+      "user_objects": 44,
+      "working_set_mib": 51.1640625
+    },
+    "fps": 0.0,
+    "frames_rendered": 0,
+    "seconds": 10.0467111
+  },
+  "snapshots": [
+    {
+      "label": "idle_start",
+      "sample": {
+        "frames_total": 1,
+        "gdi_objects": 13,
+        "handles": 453,
+        "private_mib": 101.88671875,
+        "threads": 35,
+        "user_objects": 41,
+        "working_set_mib": 55.30859375
+      }
+    },
+    {
+      "label": "idle_end",
+      "sample": {
+        "frames_total": 1,
+        "gdi_objects": 13,
+        "handles": 455,
+        "private_mib": 101.9765625,
+        "threads": 36,
+        "user_objects": 41,
+        "working_set_mib": 55.37890625
+      }
+    },
+    {
+      "label": "active_start",
+      "sample": {
+        "frames_total": 1,
+        "gdi_objects": 13,
+        "handles": 455,
+        "private_mib": 101.9765625,
+        "threads": 36,
+        "user_objects": 41,
+        "working_set_mib": 55.37890625
+      }
+    },
+    {
+      "label": "active_end",
+      "sample": {
+        "frames_total": 1065,
+        "gdi_objects": 13,
+        "handles": 467,
+        "private_mib": 97.2421875,
+        "threads": 37,
+        "user_objects": 44,
+        "working_set_mib": 51.125
+      }
+    },
+    {
+      "label": "post_idle_end",
+      "sample": {
+        "frames_total": 1065,
+        "gdi_objects": 13,
+        "handles": 467,
+        "private_mib": 97.26171875,
+        "threads": 38,
+        "user_objects": 44,
+        "working_set_mib": 51.1640625
+      }
+    }
+  ],
+  "tool": "mascot-animation-lab --perf",
+  "window_client_px": [
+    992,
+    853
+  ]
+}

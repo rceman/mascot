@@ -1,0 +1,19 @@
+[package]
+name = "mascot-render-win32"
+description = "Direct2D renderer for mascot rig v0.2: fill composite, runtime outline, runtime shadow"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+mascot-animation.workspace = true
+png.workspace = true
+serde_json.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows.workspace = true
+windows-numerics.workspace = true
+
+[[bin]]
+name = "mascot-rig-stress"
+path = "src/bin/stress.rs"

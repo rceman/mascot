@@ -1,0 +1,18 @@
+[
+  {"id": "neck_seam", "bone": "chest", "center_canvas": [560, 600], "radius": 45,
+   "drives": [["head", [-10, 10]]], "min_coverage": 0.995},
+  {"id": "ear_near_root", "bone": "head", "center_canvas": [505, 372], "radius": 24,
+   "drives": [["ear_near", [-12, 12]]], "min_coverage": 0.995},
+  {"id": "ear_far_root", "bone": "head", "center_canvas": [845, 335], "radius": 24,
+   "drives": [["ear_far", [-12, 12]]], "min_coverage": 0.995},
+  {"id": "shoulder_near", "bone": "chest", "center_canvas": [450, 705], "radius": 40,
+   "drives": [["arm_near_upper", [-15, 15]]], "min_coverage": 0.995},
+  {"id": "shoulder_far", "bone": "chest", "center_canvas": [760, 700], "radius": 30,
+   "drives": [["arm_far_upper", [-15, 15]]], "min_coverage": 0.995},
+  {"id": "hip_near", "bone": "body", "center_canvas": [480, 980], "radius": 45,
+   "drives": [["leg_near_upper", [-15, 15]]], "min_coverage": 0.995},
+  {"id": "hip_far", "bone": "body", "center_canvas": [650, 960], "radius": 40,
+   "drives": [["leg_far_upper", [-15, 15]]], "min_coverage": 0.995},
+  {"id": "tail_root", "bone": "body", "center_canvas": [405, 1010], "radius": 40,
+   "drives": [["tail", [-20, 20]]], "min_coverage": 0.995}
+]

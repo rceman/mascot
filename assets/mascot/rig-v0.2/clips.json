@@ -1,0 +1,134 @@
+{
+  "format": "mascot-clips/0.2",
+  "conventions": "times in seconds; x/y offsets in parent-local pixels; rotation offsets in degrees (positive = clockwise on screen); scale/opacity are multipliers; non-looping clips start and end at rest",
+  "clips": [
+    {
+      "name": "blink", "duration": 0.26, "description": "single blink (eye scale_y)",
+      "tracks": [
+        {"target": "eye_left", "property": "scale_y", "keys": [
+          {"t": 0.0, "v": 1.0, "ease": "in_quad"}, {"t": 0.08, "v": 0.08, "ease": "linear"},
+          {"t": 0.12, "v": 0.08, "ease": "out_quad"}, {"t": 0.26, "v": 1.0}]},
+        {"target": "eye_right", "property": "scale_y", "keys": [
+          {"t": 0.0, "v": 1.0, "ease": "in_quad"}, {"t": 0.08, "v": 0.08, "ease": "linear"},
+          {"t": 0.12, "v": 0.08, "ease": "out_quad"}, {"t": 0.26, "v": 1.0}]}
+      ]
+    },
+    {
+      "name": "double_blink", "duration": 0.62, "description": "two quick blinks",
+      "tracks": [
+        {"target": "eye_left", "property": "scale_y", "keys": [
+          {"t": 0.0, "v": 1.0, "ease": "in_quad"}, {"t": 0.07, "v": 0.08, "ease": "linear"},
+          {"t": 0.1, "v": 0.08, "ease": "out_quad"}, {"t": 0.22, "v": 1.0, "ease": "linear"},
+          {"t": 0.32, "v": 1.0, "ease": "in_quad"}, {"t": 0.39, "v": 0.08, "ease": "linear"},
+          {"t": 0.42, "v": 0.08, "ease": "out_quad"}, {"t": 0.62, "v": 1.0}]},
+        {"target": "eye_right", "property": "scale_y", "keys": [
+          {"t": 0.0, "v": 1.0, "ease": "in_quad"}, {"t": 0.07, "v": 0.08, "ease": "linear"},
+          {"t": 0.1, "v": 0.08, "ease": "out_quad"}, {"t": 0.22, "v": 1.0, "ease": "linear"},
+          {"t": 0.32, "v": 1.0, "ease": "in_quad"}, {"t": 0.39, "v": 0.08, "ease": "linear"},
+          {"t": 0.42, "v": 0.08, "ease": "out_quad"}, {"t": 0.62, "v": 1.0}]}
+      ]
+    },
+    {
+      "name": "look_left", "duration": 1.7, "description": "eyes and head turn toward screen-left, hold, return",
+      "tracks": [
+        {"target": "head", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.4, "v": -5.0, "ease": "linear"}, {"t": 1.2, "v": -5.0}, {"t": 1.7, "v": 0.0}]},
+        {"target": "eye_left", "property": "x", "keys": [
+          {"t": 0.0, "v": 0.0, "ease": "out_quad"}, {"t": 0.22, "v": -9.0, "ease": "linear"}, {"t": 1.25, "v": -9.0}, {"t": 1.6, "v": 0.0}]},
+        {"target": "eye_right", "property": "x", "keys": [
+          {"t": 0.0, "v": 0.0, "ease": "out_quad"}, {"t": 0.22, "v": -9.0, "ease": "linear"}, {"t": 1.25, "v": -9.0}, {"t": 1.6, "v": 0.0}]},
+        {"target": "ear_near", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.5, "v": -4.0, "ease": "linear"}, {"t": 1.2, "v": -4.0}, {"t": 1.7, "v": 0.0}]}
+      ]
+    },
+    {
+      "name": "look_right", "duration": 1.7, "description": "eyes and head turn toward screen-right, hold, return",
+      "tracks": [
+        {"target": "head", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.4, "v": 5.0, "ease": "linear"}, {"t": 1.2, "v": 5.0}, {"t": 1.7, "v": 0.0}]},
+        {"target": "eye_left", "property": "x", "keys": [
+          {"t": 0.0, "v": 0.0, "ease": "out_quad"}, {"t": 0.22, "v": 9.0, "ease": "linear"}, {"t": 1.25, "v": 9.0}, {"t": 1.6, "v": 0.0}]},
+        {"target": "eye_right", "property": "x", "keys": [
+          {"t": 0.0, "v": 0.0, "ease": "out_quad"}, {"t": 0.22, "v": 9.0, "ease": "linear"}, {"t": 1.25, "v": 9.0}, {"t": 1.6, "v": 0.0}]},
+        {"target": "ear_far", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.5, "v": 4.0, "ease": "linear"}, {"t": 1.2, "v": 4.0}, {"t": 1.7, "v": 0.0}]}
+      ]
+    },
+    {
+      "name": "small_head_tilt", "duration": 1.5, "description": "curious tilt with ear counter-motion",
+      "tracks": [
+        {"target": "head", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.45, "v": 8.0, "ease": "linear"}, {"t": 0.95, "v": 8.0}, {"t": 1.5, "v": 0.0}]},
+        {"target": "neck", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.5, "v": 2.0, "ease": "linear"}, {"t": 0.95, "v": 2.0}, {"t": 1.5, "v": 0.0}]},
+        {"target": "ear_near", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.55, "v": -6.0, "ease": "linear"}, {"t": 0.95, "v": -6.0}, {"t": 1.5, "v": 0.0}]},
+        {"target": "ear_far", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.55, "v": -5.0, "ease": "linear"}, {"t": 0.95, "v": -5.0}, {"t": 1.5, "v": 0.0}]}
+      ]
+    },
+    {
+      "name": "ear_twitch", "duration": 0.5, "description": "near ear flicks, far ear follows",
+      "tracks": [
+        {"target": "ear_near", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0, "ease": "out_quad"}, {"t": 0.07, "v": -11.0, "ease": "in_out_quad"},
+          {"t": 0.17, "v": 7.0, "ease": "in_out_quad"}, {"t": 0.28, "v": -4.0, "ease": "in_out_quad"}, {"t": 0.5, "v": 0.0}]},
+        {"target": "ear_far", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.05, "v": 0.0, "ease": "out_quad"}, {"t": 0.13, "v": 6.0, "ease": "in_out_quad"},
+          {"t": 0.26, "v": -3.0, "ease": "in_out_quad"}, {"t": 0.5, "v": 0.0}]}
+      ]
+    },
+    {
+      "name": "tail_flick", "duration": 0.95, "description": "tail flick with damped overshoot",
+      "tracks": [
+        {"target": "tail", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0, "ease": "out_quad"}, {"t": 0.18, "v": -18.0, "ease": "in_out_quad"},
+          {"t": 0.42, "v": 12.0, "ease": "in_out_quad"}, {"t": 0.64, "v": -5.0, "ease": "in_out_quad"}, {"t": 0.95, "v": 0.0}]}
+      ]
+    },
+    {
+      "name": "posture_adjust", "duration": 1.6, "description": "small settle: torso leans, head compensates, paw shifts",
+      "tracks": [
+        {"target": "body", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.5, "v": -2.0, "ease": "linear"}, {"t": 0.9, "v": -2.0}, {"t": 1.6, "v": 0.0}]},
+        {"target": "chest", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.55, "v": -1.5, "ease": "linear"}, {"t": 0.9, "v": -1.5}, {"t": 1.6, "v": 0.0}]},
+        {"target": "head", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.6, "v": 3.5, "ease": "linear"}, {"t": 0.95, "v": 3.5}, {"t": 1.6, "v": 0.0}]},
+        {"target": "root", "property": "y", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.3, "v": -6.0, "ease": "out_back"}, {"t": 0.7, "v": 0.0}, {"t": 1.6, "v": 0.0}]},
+        {"target": "arm_near_upper", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.6, "v": -5.0, "ease": "linear"}, {"t": 0.95, "v": -5.0}, {"t": 1.6, "v": 0.0}]},
+        {"target": "tail", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.6, "v": 6.0, "ease": "linear"}, {"t": 0.9, "v": 6.0}, {"t": 1.6, "v": 0.0}]}
+      ]
+    },
+    {
+      "name": "stretch", "duration": 2.6, "description": "arms lift, head tips back, eyes squint, tail and legs extend",
+      "tracks": [
+        {"target": "arm_near_upper", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.8, "v": -14.0, "ease": "linear"}, {"t": 1.6, "v": -14.0}, {"t": 2.6, "v": 0.0}]},
+        {"target": "arm_far_upper", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.85, "v": -12.0, "ease": "linear"}, {"t": 1.6, "v": -12.0}, {"t": 2.6, "v": 0.0}]},
+        {"target": "chest", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.8, "v": -2.0, "ease": "linear"}, {"t": 1.6, "v": -2.0}, {"t": 2.6, "v": 0.0}]},
+        {"target": "head", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.9, "v": -8.0, "ease": "linear"}, {"t": 1.6, "v": -8.0}, {"t": 2.6, "v": 0.0}]},
+        {"target": "ear_near", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.9, "v": -9.0, "ease": "linear"}, {"t": 1.6, "v": -9.0}, {"t": 2.6, "v": 0.0}]},
+        {"target": "ear_far", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.9, "v": 8.0, "ease": "linear"}, {"t": 1.6, "v": 8.0}, {"t": 2.6, "v": 0.0}]},
+        {"target": "eye_left", "property": "scale_y", "keys": [
+          {"t": 0.0, "v": 1.0}, {"t": 0.8, "v": 0.3, "ease": "linear"}, {"t": 1.6, "v": 0.3}, {"t": 2.2, "v": 1.0}, {"t": 2.6, "v": 1.0}]},
+        {"target": "eye_right", "property": "scale_y", "keys": [
+          {"t": 0.0, "v": 1.0}, {"t": 0.8, "v": 0.3, "ease": "linear"}, {"t": 1.6, "v": 0.3}, {"t": 2.2, "v": 1.0}, {"t": 2.6, "v": 1.0}]},
+        {"target": "tail", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.9, "v": -14.0, "ease": "linear"}, {"t": 1.6, "v": -14.0}, {"t": 2.6, "v": 0.0}]},
+        {"target": "leg_near_upper", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.9, "v": -8.0, "ease": "linear"}, {"t": 1.6, "v": -8.0}, {"t": 2.6, "v": 0.0}]},
+        {"target": "leg_far_upper", "property": "rotation", "keys": [
+          {"t": 0.0, "v": 0.0}, {"t": 0.95, "v": -6.0, "ease": "linear"}, {"t": 1.6, "v": -6.0}, {"t": 2.6, "v": 0.0}]}
+      ]
+    }
+  ]
+}

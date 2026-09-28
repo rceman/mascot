@@ -1,0 +1,53 @@
+device: Warp; rig: 25 bones, 28 attachments
+pose rest                   enclosed_gap_px 0
+pose head_-10               enclosed_gap_px 1
+pose head_-5                enclosed_gap_px 0
+pose head_+5                enclosed_gap_px 0
+pose head_+10               enclosed_gap_px 0
+pose ear_near_-12           enclosed_gap_px 1
+pose ear_near_-6            enclosed_gap_px 0
+pose ear_near_+6            enclosed_gap_px 0
+pose ear_near_+12           enclosed_gap_px 0
+pose ear_far_-12            enclosed_gap_px 0
+pose ear_far_-6             enclosed_gap_px 0
+pose ear_far_+6             enclosed_gap_px 0
+pose ear_far_+12            enclosed_gap_px 0
+pose arm_near_-15           enclosed_gap_px 0
+pose arm_near_-10           enclosed_gap_px 0
+pose arm_near_+10           enclosed_gap_px 0
+pose arm_near_+15           enclosed_gap_px 0
+pose arm_far_-15            enclosed_gap_px 0
+pose arm_far_-10            enclosed_gap_px 0
+pose arm_far_+10            enclosed_gap_px 0
+pose arm_far_+15            enclosed_gap_px 0
+pose leg_near_-15           enclosed_gap_px 0
+pose leg_near_-10           enclosed_gap_px 0
+pose leg_near_+10           enclosed_gap_px 0
+pose leg_near_+15           enclosed_gap_px 0
+pose leg_far_-15            enclosed_gap_px 0
+pose leg_far_-10            enclosed_gap_px 0
+pose leg_far_+10            enclosed_gap_px 0
+pose leg_far_+15            enclosed_gap_px 0
+pose tail_-20               enclosed_gap_px 0
+pose tail_-10               enclosed_gap_px 0
+pose tail_+10               enclosed_gap_px 0
+pose tail_+20               enclosed_gap_px 0
+pose mixed_greeting         enclosed_gap_px 1
+pose mixed_posture          enclosed_gap_px 0
+pose mixed_curious          enclosed_gap_px 0
+pose mixed_stretch          enclosed_gap_px 0
+pose mixed_extremes_a       enclosed_gap_px 0
+pose mixed_extremes_b       enclosed_gap_px 0
+pose mirror_rest            enclosed_gap_px 0
+pose mirror_greeting        enclosed_gap_px 1
+pose mirror_extremes_a      enclosed_gap_px 0
+guard neck_seam        head             min coverage 1.0000 (need 0.995) PASS
+guard ear_near_root    ear_near         min coverage 1.0000 (need 0.995) PASS
+guard ear_far_root     ear_far          min coverage 1.0000 (need 0.995) PASS
+guard shoulder_near    arm_near_upper   min coverage 1.0000 (need 0.995) PASS
+guard shoulder_far     arm_far_upper    min coverage 1.0000 (need 0.995) PASS
+guard hip_near         leg_near_upper   min coverage 1.0000 (need 0.995) PASS
+guard hip_far          leg_far_upper    min coverage 1.0000 (need 0.995) PASS
+guard tail_root        tail             min coverage 1.0000 (need 0.995) PASS
+rest: {"alpha_diff_gt64_px":1548,"canvas_px":1572516.0,"rgb_absdiff_mean_over_white":1.0808125322731215,"rgb_diff_gt32_px":7407,"rgb_diff_gt96_px":1753}
+guards pass: true; max enclosed-gap delta vs rest: 1px; 26.0s

@@ -6,3 +6,5 @@
 /scratch/
 **/__pycache__/
 *.Zone.Identifier
+/target/
+/lab-screenshots/

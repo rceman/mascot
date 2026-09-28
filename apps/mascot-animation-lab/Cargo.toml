@@ -1,0 +1,14 @@
+[package]
+name = "mascot-animation-lab"
+description = "Windows developer lab for mascot rig v0.2 (Win32 + Direct2D, event-driven)"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+mascot-animation.workspace = true
+mascot-render-win32.workspace = true
+serde_json.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows = { workspace = true, features = ["Win32_Storage_Xps", "Win32_Graphics_Dxgi"] }
