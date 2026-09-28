@@ -89,6 +89,8 @@ No fallback to browser/WebView UI.
 
 ## Gate 9 — Deterministic Semantics & Stable Contracts
 
+The visual contract for M1A is shadcn-first and the canonical icon family is Lucide. A different visual/icon system requires explicit Planner approval.
+
 Document and test:
 
 - DIP coordinate semantics;
@@ -211,7 +213,7 @@ Automatically applies to claims such as:
 - no browser/WebView/framework dependency;
 - no wgpu;
 - no continuous idle redraw;
-- all icons use native vector path data;
+- all required icons originate from the canonical Lucide source and use native vector path data;
 - all required states have evidence;
 - all required DPI variants are validated;
 - no runtime SVG parser;
