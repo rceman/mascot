@@ -49,11 +49,13 @@ The Windows results are evidence, not a specification to copy blindly.
 
 ### Prototype mascot/composer relationship
 
-For this Stage B prototype, preserve the current interaction/layout rule:
+For this Stage B prototype, preserve the current visual/layout rule:
 
-- the mascot must remain visually **above/on top of the composer window**
+- the mascot should look like it is **sitting on the top edge of the composer window**
+- the mascot window may remain technically separate, but its position must be anchored to the composer so the character visually perches on the window rather than merely floating somewhere above it
 - opening the composer must not cover or replace the mascot
-- when the composer moves/repositions because of screen-edge constraints, keep the mascot-composer relationship coherent
+- moving/repositioning the composer must keep the mascot attached to that top-edge relationship
+- when screen-edge constraints force repositioning, preserve the perched composition as closely as possible
 - treat this as a prototype requirement only; the final product design may change later
 
 Implement the smallest realistic **native macOS critical slice** for Rust and Go that demonstrates:
