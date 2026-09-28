@@ -195,17 +195,46 @@ No second numbered gate taxonomy.
 
 ## Git / platform workflow
 
-For native Windows validation, preserve the repository's established workflow:
+The authoritative repository already exists in WSL at:
 
-- WSL checkout is authoritative Git state;
-- native Windows is used for build/run/render/performance validation;
-- do not copy/replace `.git`;
-- sync intended source/evidence only;
-- review status/diff in WSL;
-- commit/push from WSL;
-- leave authoritative WSL worktree clean.
+    ~/git/mascot
 
-If the exact WSL checkout path is not available, ask only for that path before performing the WSL/Windows sync workflow.
+That WSL checkout is the **only Git authority** for this task.
+
+Native Windows is the implementation/build/run/render/performance environment.
+
+Required workflow:
+
+1. In WSL, verify:
+   - repository: `~/git/mascot`;
+   - branch: `agent/native-ui-foundation-v0.1-swe2`;
+   - expected Planner baseline / current origin state;
+   - clean or explicitly understood worktree.
+2. Create a dedicated native-Windows working copy under `devin_folder`.
+   - Use a task-specific directory, for example:
+         W:\\devin_folder\\mascot-ui-v01
+   - Copy/sync repository source from the authoritative WSL checkout into that Windows working directory.
+   - Do **not** copy `.git`.
+3. Perform implementation, builds, native UI execution, screenshot capture, DPI checks and performance measurements from the Windows working copy.
+4. Treat the Windows copy as disposable working state, not as a Git repository and not as source-of-truth history.
+5. When source/evidence is ready to commit:
+   - sync only intended source/assets/docs/evidence from the Windows working copy back to `~/git/mascot` in WSL;
+   - never sync `.git`, build caches, `target/`, temporary capture directories or unrelated local files;
+   - preserve sensible LF/text modes and file permissions;
+   - do not overwrite unrelated WSL changes.
+6. In WSL:
+   - inspect `git status`;
+   - inspect the complete diff;
+   - run/re-run any verification that is required against the final synced candidate;
+   - stage intentionally;
+   - commit;
+   - push the task branch.
+7. Final state:
+   - WSL branch pushed;
+   - WSL worktree clean;
+   - Windows copy may remain as working/cache state, but it is not authoritative.
+
+Do not commit or push from the Windows working copy.
 
 Do not add CI.
 
