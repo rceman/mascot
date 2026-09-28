@@ -323,7 +323,39 @@ Do not implement:
 - macOS implementation;
 - Linux implementation.
 
-## 17. Completion
+## 17. Authoritative WSL / native Windows workflow
+
+For this task:
+
+    authoritative Git checkout: ~/git/mascot
+    native Windows working area: devin_folder
+
+The agent MUST:
+
+- verify the correct task branch in `~/git/mascot`;
+- copy/sync source into a dedicated task directory under Windows `devin_folder`;
+- work/build/run/capture/profile natively on Windows;
+- keep `.git` only in the authoritative WSL checkout;
+- treat the Windows tree as disposable implementation state;
+- sync only intended source/assets/docs/evidence back to `~/git/mascot` when ready;
+- review the final diff from WSL;
+- commit and push from WSL only;
+- leave the WSL task branch clean and pushed.
+
+Do not commit from the Windows working copy.
+
+Do not copy `.git` into or out of `devin_folder`.
+
+Avoid syncing:
+
+- `target/`;
+- compiler/build caches;
+- temporary screenshots;
+- scratch files;
+- local tool environments;
+- unrelated machine-specific state.
+
+## 18. Completion
 
 The task is complete only when:
 
