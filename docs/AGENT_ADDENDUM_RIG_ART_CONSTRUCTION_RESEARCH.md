@@ -29,15 +29,40 @@ Bring in relevant knowledge from established 2D skeletal/mesh rigging systems an
 
 Specifically investigate:
 
+- how cel/toon and 2D skeletal systems distinguish external silhouette, contact/separation lines, and intrinsic internal line art;
+- whether runtime-generated internal boundaries from part IDs/masks are appropriate for independently moving touching objects;
+- how pair-specific edge masks or line-ownership metadata should prevent unwanted seams;
 - how artists prepare parts that will rotate away from one another;
 - how much hidden geometry is normally drawn and how to derive it from motion;
 - how pivots/rotation centers are selected;
 - how shoulders/hips/neck are handled when rigid rotation fails;
+- weighted-mesh/skinning topology and weight-authoring strategies for small 2D character joints;
+- mesh quality invariants such as foldover/inversion, stretch and UV continuity;
 - how shared outlines/strokes are split when touching parts separate;
+- when a simple unoutlined pivot underpaint/cap is useful and when it only hides a deeper construction fault;
 - how draw order/slots/occlusion are modeled independently from bone hierarchy;
 - when weighted mesh/deformation is preferable to rigid sprites;
 - how safe ranges are validated;
-- how tooling can prove art readiness before animation authoring.
+- how tooling can prove art readiness before animation authoring;
+- the narrowest Windows renderer approach for the repository's already-existing `Attachment::Mesh` + linear-blend skinning model, noting that the current renderer skips mesh attachments;
+- whether D3D11 textured-triangle interop is preferable to alternatives in this existing renderer architecture.
+
+Also evaluate two explicit prototypes before recommending a final architecture:
+
+1. **dynamic contact-line prototype**
+   - chin/laptop;
+   - paw/laptop;
+   - current baked line vs generated posed boundary;
+   - rest fidelity + motion-extreme comparison.
+
+2. **continuous-anatomy mesh prototype**
+   - choose one failing anatomical joint, preferably hip/upper-leg or shoulder/upper-arm;
+   - small local mesh;
+   - deterministic initial weights;
+   - compare rigid vs skinned motion at the desired range;
+   - measure rest fidelity, foldover/stretch, visual continuity and runtime cost.
+
+Keep prototype artifacts isolated until the research conclusion chooses a direction.
 
 ## Required agent contribution
 
