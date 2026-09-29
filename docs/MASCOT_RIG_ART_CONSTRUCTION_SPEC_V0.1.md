@@ -574,7 +574,234 @@ The agent also reported that near/far arms can pass the detector at ±15° while
 
 ---
 
-## 17. Mandatory agent research pass before structural repair resumes
+## 17. Dynamic line model and continuous-anatomy deformation
+
+The current brainstorm identified a second architectural boundary that MUST be researched before more art surgery: **not every black line in the flattened source should remain baked into a movable part**.
+
+Mascot must classify line art by semantic ownership rather than by source pixels alone.
+
+### 17.1 Three line classes
+
+Every black/dark stroke MUST be classified as one of:
+
+#### A. External silhouette outline
+
+The outer mascot contour.
+
+Current repository behavior already follows the intended model:
+
+    composed fill silhouette
+        -> runtime outline mask
+        -> outline rendered under the color composite
+
+This is preferred over baking a complete outer black contour into each moving part.
+
+The runtime outline must remain composition-derived.
+
+#### B. Contact / separation boundary between independently moving parts or objects
+
+Examples:
+
+- chin / laptop lid;
+- paw / laptop lid;
+- foot / laptop;
+- another pair that touches in rest but may separate in motion.
+
+These lines are candidates for **runtime-generated internal boundary strokes** instead of duplicated baked line fragments.
+
+The purpose is to make the boundary follow the actual posed geometry rather than leaving a cut-off source stroke on one or both parts.
+
+This is an architectural hypothesis requiring research and prototype validation before becoming the final rendering contract.
+
+A likely model is:
+
+    final posed fill layers
+        + part/attachment identity
+        + draw-order / occlusion
+        + pair-specific boundary policy
+        + optional local edge mask
+        -> internal contact boundary
+
+Do NOT blindly outline every part boundary.
+
+Many anatomical overlaps must have no visible internal line.
+
+Per-pair policy and/or local edge masks are required so a shoulder, neck or hip does not receive an artificial seam merely because two attachments meet there.
+
+#### C. Intrinsic line art that belongs to one deforming surface
+
+Examples:
+
+- eyes;
+- nose;
+- mouth;
+- whiskers;
+- laptop logo/details;
+- intentional ear crease;
+- intentional folds/form lines that remain part of one body surface.
+
+These remain authored art and move/deform with their owning attachment.
+
+They are not reconstructed from part boundaries.
+
+### 17.2 Runtime-generated internal contact line prototype
+
+Before adopting runtime-generated contact lines globally, prototype at minimum:
+
+- chin / laptop lid during head motion;
+- near paw / laptop lid during arm motion.
+
+Compare:
+
+1. current baked-line rendering;
+2. generated contact-boundary rendering;
+3. rest-pose fidelity against `assets/mascot.png`;
+4. positive/negative motion extremes;
+5. line continuity and endpoints;
+6. effect on current artifact detector findings.
+
+The prototype must answer:
+
+- how the front/visible boundary is selected;
+- how line thickness is defined;
+- how anti-aliasing behaves;
+- how stylized tapered/end-point strokes are preserved where necessary;
+- how local edge masks are represented;
+- whether a part-ID buffer, pairwise masks, or another representation is simpler;
+- whether the line is drawn under or over relevant color layers;
+- performance cost.
+
+Do not convert all internal lines until the prototype proves a useful visual improvement.
+
+### 17.3 Joint underpaint / pivot seal
+
+A joint may use a simple unoutlined base-color underpaint beneath the rotating connection.
+
+Conceptually:
+
+    parent surface
+        + concealed underpaint around pivot
+        + moving child root
+
+The underpaint may be circular, capsule-like or another conservative shape.
+
+Its purpose is only to prevent transient transparency or tiny uncovered gaps.
+
+It is a **safety layer**, not the primary solution for anatomical continuity.
+
+Requirements:
+
+- no independent outer black outline;
+- stays concealed in the normal safe range where possible;
+- does not introduce an obvious flat-color patch;
+- must not replace correct hidden shading or mesh deformation;
+- its extent must be joint-specific, not one global radius.
+
+If the underpaint becomes visibly flat or changes the intended silhouette, the joint construction is still wrong.
+
+### 17.4 Continuous anatomy requires continuous deformation
+
+When two regions are visually one continuous body surface, a rigid cut between them may be structurally incapable of producing the required motion.
+
+Examples:
+
+- hip / upper leg where the rump contour should flow into the thigh;
+- shoulder / upper arm;
+- tail root / torso;
+- neck / torso or neck / head for larger ranges;
+- possibly ear base where rigid motion produces a visible cut.
+
+In these cases, a generated boundary line cannot solve the core problem.
+
+The surface itself must deform continuously.
+
+Weighted mesh / skinning is the preferred escalation candidate.
+
+The repository already contains:
+
+- `Attachment::Mesh`;
+- mesh vertices / UVs / triangles / per-vertex bone weights;
+- linear-blend skinning in `skin_mesh`;
+- bind-pose/follows-bones tests.
+
+The current Windows renderer does **not** render mesh attachments; mesh slots are currently skipped during bitmap upload/render preparation.
+
+Therefore, do not re-design the animation model to introduce mesh support: the data/runtime model is already present.
+
+The missing work is primarily:
+
+- a renderer path for textured skinned triangles;
+- actual mesh art/topology;
+- practical weight authoring/generation;
+- mesh-specific QA.
+
+The implementation agent MUST research the narrowest suitable renderer path. D3D11 interop is an obvious candidate because the renderer already owns a D3D11 device, but it is not pre-approved as the only implementation.
+
+### 17.5 Mesh authoring rules
+
+If a joint is promoted to weighted mesh:
+
+- the mesh must reproduce the accepted rest pose closely;
+- topology must be denser where deformation gradients are high;
+- weights must sum to 1;
+- influences must remain bounded;
+- weights should vary smoothly across the transition zone unless a hard boundary is intentional;
+- the transition width must be joint-specific;
+- automated initial weights may use bone distance or another deterministic heuristic;
+- the final weights remain explicit inspectable data, not opaque runtime magic.
+
+Do not generate a huge uniform grid over the entire mascot.
+
+Mesh only the region that materially benefits from deformation.
+
+### 17.6 Mesh QA / TDD
+
+For every weighted mesh attachment verify, where practical:
+
+- bind/rest pose identity within tolerance;
+- no triangle inversion inside the verified safe range;
+- no degenerate triangles;
+- bounded stretch/compression;
+- stable UV coverage;
+- no unexpected texture holes;
+- no exposed atlas/background pixels;
+- weight normalization;
+- deterministic vertex output;
+- deterministic draw order;
+- correct external runtime outline from the final deformed silhouette;
+- intrinsic line art deforms with the surface as intended;
+- safe-range visual review at 4x-8x.
+
+The exact stretch/compression thresholds are joint-specific and should be proposed in the agent research addendum.
+
+### 17.7 Architecture decision matrix
+
+Use this as the starting classification:
+
+| Relationship | Preferred starting model |
+|---|---|
+| Separate objects that merely touch, e.g. chin/laptop or paw/laptop | complete independent fills + contact-boundary policy/runtime internal line candidate |
+| Small rigid articulation with concealed root | rigid sprite + correct hidden geometry + optional joint underpaint |
+| Continuous anatomical surface that must bend/flow | weighted mesh / deformable attachment |
+| Long flexible appendage | multi-bone chain, optionally weighted mesh |
+| Intrinsic detail inside one part | authored line art attached/deformed with that surface |
+| Final external silhouette | runtime-generated from final composed/deformed fill |
+
+This table is a research baseline, not permission to skip joint-specific analysis.
+
+### 17.8 Important non-solution
+
+Do not attempt to make a rump/thigh contour "flow" using only a generated black line while the underlying fill still consists of two visibly rigid cut-paper shapes.
+
+Line generation solves line ownership.
+
+Skinning/deformation solves continuous anatomy.
+
+These concerns must remain separate.
+
+---
+
+## 18. Mandatory agent research pass before structural repair resumes
 
 Before making further structural art/joint changes, the implementation agent MUST perform an independent focused research pass.
 
@@ -645,7 +872,7 @@ Only after this research/addendum pass may structural rig-art repair resume.
 
 ---
 
-## 18. Completion effect on the current task
+## 19. Completion effect on the current task
 
 MASCOT-RIG-WIN-002 cannot be complete until:
 
