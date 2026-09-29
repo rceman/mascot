@@ -889,3 +889,124 @@ MASCOT-RIG-WIN-002 cannot be complete until:
 - Universal Gates 1-20 pass.
 
 The construction contract is upstream of animation QA.
+
+---
+
+## Agent Research Addendum
+
+**Source:** `docs/MASCOT_RIG_ART_CONSTRUCTION_RESEARCH_V0.1.md` (MASCOT-RIG-RESEARCH-003). Section references `R§n` point there.
+
+**Status:** agent-proposed. These rules strengthen or specialize the Planner rules above. None of them weakens a Planner MUST/FAIL rule. Numeric thresholds are **proposed starting values** to be confirmed by the prototypes in R§17. They are not verified results.
+
+### A. Conflicts and divergences reported for Planner decision
+
+No existing MUST/FAIL rule in this document is contradicted. One divergence is reported explicitly rather than applied:
+
+- **§1 construction sequence / neutral-master hypothesis.**
+  - §1 starts from "canonical flattened art", and the research-only handoff frames the target as a "purpose-built *neutral* articulated art master".
+  - The research recommends a purpose-built layered master whose **bind pose is the canonical seated 3/4 pose**, not a neutral T/A-pose (R§4–R§5, decision D1).
+  - If D1 is accepted, §1's first step would read `canonical visual identity reference -> purpose-built layered complete-part master (bind = canonical seated pose) -> semantic part inventory -> …`.
+  - This text is **not** changed here; it awaits Planner decision.
+
+### B. Art source
+
+- **AR-1.** The flattened `assets/mascot.png` MUST NOT be the direct source of production rig parts for the next rig revision. It remains the identity and rest-pose reference, and the reconstruction metrics of AR-4 are measured against it.
+- **AR-2.** Production parts MUST come from a layered complete-part master. The master keeps, per part:
+  - a `fill` layer (albedo), with no outer contour;
+  - an optional intrinsic `line` layer (class C only);
+  - optional `mark` layers.
+
+  Runtime part images are derived build output of the master (single canonical source; Universal Gates 7/9).
+- **AR-3.** Non-canonical generated references (e.g. the neutral T-pose image) MAY inform the shape of hidden anatomy. They MUST NOT supply line weight, palette, shading grammar, proportions or new identity features.
+  - **Measured divergences of the current reference:** stroke median ≈15 px vs ≈29 px; inverted shading grammar; an invented cream belly; a mixed 3/4 head on a frontal torso.
+  - Any hidden-anatomy identity choice (belly colour/marking, far-arm/paw shape) is an owner decision.
+- **AR-4.** Rest reconstruction is verified against `assets/mascot.png` with these metrics (targets per R§14, pending D4):
+  - silhouette IoU;
+  - named-landmark error;
+  - per-region albedo ΔE2000;
+  - per-class line-skeleton chamfer distance;
+  - SSIM, full figure and per ROI;
+  - mandatory 1×/4× visual review.
+
+  A single scalar similarity score is not sufficient.
+
+### C. Line ownership (specializes §10 and §17.1–17.2)
+
+- **AR-5.** Every dark component in the master MUST carry a machine-readable class (A external / B contact / C intrinsic) and an owner part. Class B also needs a partner part. An unclassified dark component is a construction FAIL.
+- **AR-6.** Class B composition order is:
+
+      colour(back) → [parts between back and front in z] → line(front,back) → colour(front)
+
+  The line MUST be clipped to the back object's posed coverage, so it can never be drawn over the background, where class A applies. It MUST be restricted by a front-owned local edge mask that moves or deforms with the front object.
+- **AR-7.** The class B edge mask defines both the extent and the thickness profile of the line. Stroke-end taper MUST be geometric (the mask band narrows from full width to 0), not an opacity fade.
+- **AR-8.** A part-ID buffer MUST NOT be used as the class B source: it is aliased and loses the back object's coverage under the front. Pairwise coverage masks are the representation.
+- **AR-9.** Pairs without a class B policy MUST produce no internal line. In particular: shoulder, neck, hip, tail root, torso segments.
+
+### D. Deformation (specializes §8 and §17.4–17.7)
+
+- **AR-10.** Starting deformation classes for the next revision (R§7), subject to joint sweeps:
+
+  | Region | Class |
+  |---|---|
+  | torso (hips/body/chest) | weighted mesh |
+  | near shoulder / upper arm / forearm | weighted mesh chain |
+  | near hip / thigh / knee | weighted mesh chain |
+  | tail | multi-bone chain + weighted mesh |
+  | head | rigid socket over a complete neck continuation reaching about mouth level |
+  | ears | rigid socket with concealed root |
+  | paws, feet, laptop lid | rigid hinge |
+  | far limbs | rigid concealed socket until a sweep proves a visible seam |
+
+- **AR-11.** Large pose changes (standing, walking, dangling while dragged) MUST use attachment substitution (a separate posture family with its own bind meshes, on the same skeleton), not deformation of the seated meshes beyond their verified ranges.
+
+### E. Mesh data and QA (specializes §17.5–17.6)
+
+- **AR-12.** Mesh validation MUST reject rather than silently repair each of these:
+  - any vertex with more than 4 influences;
+  - a negative weight;
+  - weights not summing to 1 (±1e-4);
+  - an out-of-range triangle index;
+  - a bind triangle with minimum interior angle below 15°;
+  - inconsistent winding.
+
+  Normalization and pruning (influences < 0.02) happen in the authoring tool, never at load time.
+  - *Code finding:* `Slot::from_def` currently renormalizes silently. This must change when meshes are first used; that is an implementation-phase change, not made here.
+- **AR-13.** A part's fill and intrinsic line layers MUST share one mesh geometry (same vertices, UVs and weights). Duplicating geometry per layer is prohibited.
+- **AR-14.** Meshes MUST NOT self-overlap. Overlap is expressed by separate slots and explicit z.
+- **AR-15.** Topology and weights (proposed defaults):
+  - hull 2–4 px outside the alpha edge at 1×, in transparent padding;
+  - transition-band vertex spacing 1–1.5× stroke width;
+  - at most 2 influences per single joint, 3 at triple junctions;
+  - deterministic smoothstep initial weights;
+  - band width as a fraction of limb width at the joint: hip 0.4–0.5, shoulder 0.3–0.4, tail root 0.5, torso 0.6.
+
+  The generated mesh data is the single canonical data. The generator's parameters are not a second source.
+- **AR-16.** Stretch thresholds per triangle (σ1 ≥ σ2 = singular values of the bind→posed 2×2 map), over the verified safe range:
+  - det > 0 everywhere;
+  - **fill-only** triangles: area ratio 0.75–1.33, anisotropy ≤ 1.35, posed area ≥ 25% of bind;
+  - **line-covered** triangles: area ratio 0.85–1.18, anisotropy ≤ 1.15, posed area ≥ 50% of bind.
+
+  A joint may tighten these values but MUST NOT loosen them without a Planner decision.
+- **AR-17.** Bind identity: at bind, no pixel inside the mesh region may differ from the accepted reference render by more than 2/255 per channel away from alpha edges.
+
+### F. Renderer (specializes §17.4)
+
+- **AR-18.** Recommended mesh path: a D3D11 textured-triangle pass on the renderer's existing device, drawn into the D2D target bitmaps (via `ID2D1Bitmap1::GetSurface`), interleaved with sprites by z. Requirements:
+  - skinning stays in `mascot-animation` (`skin_mesh`);
+  - premultiplied-alpha blending;
+  - edge anti-aliasing from texture alpha;
+  - meshes contribute to the fill pass, so the external outline and shadow follow deformation.
+
+  Direct2D `FillMesh` is not a valid path (aliased only, single brush transform).
+- **AR-19.** A CPU reference rasterizer is permitted as a QA oracle and prototype harness only. It MUST NOT become a second production render path.
+
+### G. Shading (extends the construction contract; pending D2)
+
+- **AR-20.** Observation: canonical limb highlights are light insets whose lower edges are screen-horizontal.
+  - If runtime shading is adopted, the stylized model is: `highlight = inset(group fill) ∩ screen half-plane anchored to a bone point`.
+  - Albedo, markings and intrinsic lines stay authored.
+  - Until Prototype C and decision D2, small-range rigid parts may keep baked highlights. Meshed regions MUST NOT be approved with baked highlights that visibly tilt or stretch in the 4×–8× review.
+
+### H. Props
+
+- **AR-21.** The laptop MUST become a separate prop rig with a switchable mount relation to the character, not a child bone of `hips`. Body art beneath it MUST be complete. Contacts (chin/lid, paw/lid, foot/base) are declared class B pairs and future IK targets.
