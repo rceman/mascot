@@ -4,10 +4,13 @@
 //!   mascot-ui-lab                  interactive window (Esc to hide, F1 theme,
 //!                                  F2 placement, F3/F4 presets, F5 scale)
 //!   mascot-ui-lab capture --out DIR [--allow-dirty]
+//!   mascot-ui-lab components [--capture DIR] [--allow-dirty]
 //!   mascot-ui-lab perf --out FILE.json [--runs N]
 //!   mascot-ui-lab selftest --out DIR
 
 mod capture;
+mod components;
+mod inventory;
 mod perf;
 mod presets;
 mod selftest;
@@ -76,6 +79,7 @@ fn real_main() -> Result<(), String> {
     let sub = std::env::args().nth(1).unwrap_or_default();
     match sub.as_str() {
         "capture" => capture::run(),
+        "components" => components::run(),
         "perf" => perf::run(),
         "perf-child" => perf::run_child(),
         "selftest" => selftest::run(),

@@ -160,6 +160,35 @@ impl RgbaImage {
         }
     }
 
+    /// Alpha-composites `src` over `self` at (x, y) — straight-alpha
+    /// source-over onto an opaque destination. Unlike [`blit`](Self::blit),
+    /// transparent source pixels leave the destination untouched.
+    pub fn blend_over(&mut self, src: &RgbaImage, x: u32, y: u32) {
+        for row in 0..src.height {
+            let dy = y + row;
+            if dy >= self.height {
+                break;
+            }
+            for col in 0..src.width.min(self.width.saturating_sub(x)) {
+                let s = ((row * src.width + col) * 4) as usize;
+                let a = src.data[s + 3] as u32;
+                if a == 0 {
+                    continue;
+                }
+                let d = ((dy * self.width + x + col) * 4) as usize;
+                if a == 255 {
+                    self.data[d..d + 4].copy_from_slice(&src.data[s..s + 4]);
+                } else {
+                    let inv = 255 - a;
+                    for c in 0..3 {
+                        self.data[d + c] = ((src.data[s + c] as u32 * a + self.data[d + c] as u32 * inv) / 255) as u8;
+                    }
+                    self.data[d + 3] = (a + self.data[d + 3] as u32 * inv / 255).min(255) as u8;
+                }
+            }
+        }
+    }
+
     pub fn fill_rect(&mut self, x: u32, y: u32, w: u32, h: u32, c: [u8; 4]) {
         for yy in y..(y + h).min(self.height) {
             for xx in x..(x + w).min(self.width) {

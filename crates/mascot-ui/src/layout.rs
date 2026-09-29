@@ -1,10 +1,12 @@
-//! Pure layout: [`UiState`] + measured sizes + scale -> [`Layout`].
+//! Pure layout: [`UiState`] + measured sizes + bubble width + scale ->
+//! [`Layout`].
 //!
 //! Everything is DIP (see crate docs). The Win32 layer measures the two text
 //! runs that layout cannot know (editor content height via `TxGetNaturalSize`,
-//! response fixture height via DirectWrite at [`tokens::RESPONSE_TEXT_W`],
+//! response fixture height via DirectWrite at [`response_text_w`],
 //! tooltip text width) and passes them in [`Measured`].
 
+use crate::component::tooltip_size;
 use crate::geom::{Point, Rect};
 use crate::state::{ControlId, Surface, UiState};
 use crate::theme::tokens::*;
@@ -25,7 +27,7 @@ pub struct Measured {
     /// RichEdit natural height of the editor text (`TxGetNaturalSize`).
     pub editor_content_h: f32,
     /// DirectWrite height of the response fixture laid out at
-    /// [`RESPONSE_TEXT_W`].
+    /// [`response_text_w`] for the current bubble width.
     pub response_text_h: f32,
     /// DirectWrite width of the tooltip label for [`UiState::tooltip`]
     /// (ignored when no tooltip is up).
@@ -78,7 +80,19 @@ pub fn composer_height(content_h: f32) -> f32 {
     (content_h + 2.0 * EDITOR_PAD_Y).clamp(COMPOSER_MIN_H, COMPOSER_MAX_H)
 }
 
-fn layout_left(state: &UiState, mascot: &MascotMetrics, m: &Measured) -> Layout {
+/// Response body text width for a bubble width — the width the Win32 layer
+/// measures the response fixture at before layout.
+pub fn response_text_w(bubble_w: f32) -> f32 {
+    bubble_w - 2.0 * BUBBLE_PAD_X
+}
+
+/// Editor text width for a bubble width — one definition shared by layout
+/// (the `editor` rect) and `App::relayout` (the `TxGetNaturalSize` width).
+pub fn editor_w(bubble_w: f32) -> f32 {
+    bubble_w - BUBBLE_PAD_X - COMPOSER_EDGE - PRIMARY_BUTTON - COMPOSER_GAP
+}
+
+fn layout_left(state: &UiState, mascot: &MascotMetrics, m: &Measured, bw: f32) -> Layout {
     let mut l = Layout {
         scale: 1.0,
         window: Rect::default(),
@@ -100,7 +114,7 @@ fn layout_left(state: &UiState, mascot: &MascotMetrics, m: &Measured) -> Layout 
         return l;
     }
 
-    let window_w = BUBBLE_W + 2.0 * SHADOW_MARGIN;
+    let window_w = bw + 2.0 * SHADOW_MARGIN;
     let bubble_x = SHADOW_MARGIN;
     let bubble_y = MASCOT_TOP_PAD + mascot.content_h - MASCOT_OVERLAP;
 
@@ -117,7 +131,7 @@ fn layout_left(state: &UiState, mascot: &MascotMetrics, m: &Measured) -> Layout 
     };
     let bubble_h = response_h + sep_h + composer_h;
 
-    let bubble = Rect::new(bubble_x, bubble_y, BUBBLE_W, bubble_h);
+    let bubble = Rect::new(bubble_x, bubble_y, bw, bubble_h);
     l.bubble = Some(bubble);
     l.window = Rect::new(0.0, 0.0, window_w, bubble.bottom() + SHADOW_MARGIN);
 
@@ -134,7 +148,7 @@ fn layout_left(state: &UiState, mascot: &MascotMetrics, m: &Measured) -> Layout 
         let text = Rect::new(
             bubble.x + BUBBLE_PAD_X,
             y + RESPONSE_PAD_Y,
-            RESPONSE_TEXT_W,
+            response_text_w(bw),
             m.response_text_h,
         );
         let copy = Rect::new(
@@ -176,23 +190,30 @@ fn layout_left(state: &UiState, mascot: &MascotMetrics, m: &Measured) -> Layout 
             ControlId::Editor => l.editor,
         };
         if let Some(a) = anchor {
-            let w = m.tooltip_text_w + 2.0 * TOOLTIP_PAD_X;
-            let h = SMALL_LINE + 2.0 * TOOLTIP_PAD_Y;
-            let x = (a.center().x - w / 2.0).clamp(2.0, window_w - w - 2.0);
-            let ty = a.y - TOOLTIP_GAP - h;
-            l.tooltip = Some(Rect::new(x, ty.max(2.0), w, h));
+            let s = tooltip_size(m.tooltip_text_w);
+            let x = (a.center().x - s.w / 2.0).clamp(2.0, window_w - s.w - 2.0);
+            let ty = a.y - TOOLTIP_GAP - s.h;
+            l.tooltip = Some(Rect::new(x, ty.max(2.0), s.w, s.h));
         }
     }
     l
 }
 
-/// Computes the full layout. [`Placement::Right`] mirrors only the mascot's
-/// position (the sprite itself is mirrored by the renderer so it faces the
-/// bubble) and the window anchor — the bubble internals always stay LTR:
-/// text on the left, Send/Stop on the right, Copy at the right.
-pub fn layout(state: &UiState, mascot: &MascotMetrics, m: &Measured, scale: f32) -> Layout {
+/// Computes the full layout. `bubble_w` is clamped to
+/// [`BUBBLE_W_MIN`..=`BUBBLE_W_MAX`]. [`Placement::Right`] mirrors only the
+/// mascot's position (the sprite itself is mirrored by the renderer so it
+/// faces the bubble) and the window anchor — the bubble internals always stay
+/// LTR: text on the left, Send/Stop on the right, Copy at the right.
+pub fn layout(
+    state: &UiState,
+    mascot: &MascotMetrics,
+    m: &Measured,
+    bubble_w: f32,
+    scale: f32,
+) -> Layout {
     use crate::state::Placement;
-    let mut l = layout_left(state, mascot, m);
+    let bw = bubble_w.clamp(BUBBLE_W_MIN, BUBBLE_W_MAX);
+    let mut l = layout_left(state, mascot, m, bw);
     l.scale = scale;
     if state.placement == Placement::Right {
         l.mascot = l.mascot.mirror(l.window.w);
@@ -300,7 +321,7 @@ mod tests {
     #[test]
     fn perch_overlaps_bubble_top() {
         let s = open(Surface::Composer);
-        let l = layout(&s, &MASCOT, &Measured::default(), 1.0);
+        let l = layout(&s, &MASCOT, &Measured::default(), BUBBLE_W, 1.0);
         let (m, b) = (l.mascot, l.bubble.unwrap());
         assert!(
             (m.bottom() - b.y - MASCOT_OVERLAP).abs() < 1e-4,
@@ -321,8 +342,8 @@ mod tests {
                 response_text_h: 80.0,
                 ..Measured::default()
             };
-            let a = layout(&l_state, &MASCOT, &m, 1.0);
-            let b = layout(&r_state, &MASCOT, &m, 1.0);
+            let a = layout(&l_state, &MASCOT, &m, BUBBLE_W, 1.0);
+            let b = layout(&r_state, &MASCOT, &m, BUBBLE_W, 1.0);
             assert_eq!(a.window, b.window);
             let w = a.window.w;
             // only the mascot mirrors; bubble internals stay LTR
@@ -348,6 +369,7 @@ mod tests {
                 editor_content_h: BODY_LINE,
                 ..Measured::default()
             },
+            BUBBLE_W,
             1.0,
         );
         let (send, comp) = (l.send.unwrap(), l.composer.unwrap());
@@ -371,6 +393,7 @@ mod tests {
                     response_text_h: 80.0,
                     ..Measured::default()
                 },
+                BUBBLE_W,
                 1.0,
             );
             let (e, b) = (l.editor.unwrap(), l.bubble.unwrap());
@@ -390,10 +413,11 @@ mod tests {
                 response_text_h: 80.0,
                 ..Measured::default()
             },
+            BUBBLE_W,
             1.0,
         );
         let t = l.response_text.unwrap();
-        assert!(t.w <= RESPONSE_TEXT_W && t.w > 0.0);
+        assert!(t.w <= response_text_w(BUBBLE_W) && t.w > 0.0);
         let b = l.bubble.unwrap();
         // shadow margin: bubble inset from window edges
         assert!(
@@ -411,7 +435,7 @@ mod tests {
     #[test]
     fn hit_test_orders_controls_mascot_bubble() {
         let s = open(Surface::Composer);
-        let l = layout(&s, &MASCOT, &Measured::default(), 1.0);
+        let l = layout(&s, &MASCOT, &Measured::default(), BUBBLE_W, 1.0);
         assert_eq!(
             hit_test(&s, &l, l.send.unwrap().center()),
             Hit::Control(ControlId::Send)
@@ -439,9 +463,46 @@ mod tests {
     }
 
     #[test]
+    fn bubble_width_parameter_scales_stretchables() {
+        let m = Measured {
+            editor_content_h: BODY_LINE,
+            response_text_h: 80.0,
+            ..Measured::default()
+        };
+        for w in [BUBBLE_W_MIN, BUBBLE_W, BUBBLE_W_MAX] {
+            let s = open(Surface::Response);
+            let l = layout(&s, &MASCOT, &m, w, 1.0);
+            assert_eq!(l.bubble.unwrap().w, w);
+            // send stays right-anchored at the same edge inset
+            assert!(
+                (l.composer.unwrap().right() - l.send.unwrap().right() - COMPOSER_EDGE).abs()
+                    < 1e-4
+            );
+            assert_eq!(l.editor.unwrap().w, editor_w(w));
+            assert_eq!(l.response_text.unwrap().w, response_text_w(w));
+        }
+        // out-of-range widths clamp
+        let s = open(Surface::Composer);
+        assert_eq!(
+            layout(&s, &MASCOT, &Measured::default(), 200.0, 1.0)
+                .bubble
+                .unwrap()
+                .w,
+            BUBBLE_W_MIN
+        );
+        assert_eq!(
+            layout(&s, &MASCOT, &Measured::default(), 900.0, 1.0)
+                .bubble
+                .unwrap()
+                .w,
+            BUBBLE_W_MAX
+        );
+    }
+
+    #[test]
     fn hidden_surface_only_hits_mascot() {
         let s = open(Surface::Hidden);
-        let l = layout(&s, &MASCOT, &Measured::default(), 1.0);
+        let l = layout(&s, &MASCOT, &Measured::default(), BUBBLE_W, 1.0);
         assert!(l.bubble.is_none());
         assert_eq!(hit_test(&s, &l, l.mascot.center()), Hit::Mascot);
         assert_eq!(hit_test(&s, &l, Point::new(0.0, 0.0)), Hit::Outside);

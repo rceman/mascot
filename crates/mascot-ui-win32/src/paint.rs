@@ -10,19 +10,18 @@
 use mascot_ui::geom::Rect;
 use mascot_ui::layout::Layout;
 use mascot_ui::state::{ControlId, Surface, UiState};
-use mascot_ui::theme::{Palette, tokens};
+use mascot_ui::theme::tokens;
 use windows::Win32::Graphics::Direct2D::Common::*;
 use windows::Win32::Graphics::Direct2D::*;
 use windows::Win32::Graphics::DirectWrite::*;
 use windows::core::*;
-use windows_numerics::Vector2;
 
 use crate::edit::Editor;
-use crate::icons::{draw_icon, icon_geometry, icon_stroke_style};
+use crate::icons::{icon_geometry, icon_stroke_style};
 use crate::sprite::Sprite;
 use crate::text::Fonts;
 
-fn cf(c: [f32; 4]) -> D2D1_COLOR_F {
+pub(crate) fn cf(c: [f32; 4]) -> D2D1_COLOR_F {
     D2D1_COLOR_F {
         r: c[0],
         g: c[1],
@@ -31,7 +30,7 @@ fn cf(c: [f32; 4]) -> D2D1_COLOR_F {
     }
 }
 
-fn rr(r: Rect, rad: f32) -> D2D1_ROUNDED_RECT {
+pub(crate) fn rr(r: Rect, rad: f32) -> D2D1_ROUNDED_RECT {
     D2D1_ROUNDED_RECT {
         rect: D2D_RECT_F {
             left: r.x,
@@ -44,7 +43,7 @@ fn rr(r: Rect, rad: f32) -> D2D1_ROUNDED_RECT {
     }
 }
 
-fn dr(r: Rect) -> D2D_RECT_F {
+pub(crate) fn dr(r: Rect) -> D2D_RECT_F {
     D2D_RECT_F {
         left: r.x,
         top: r.y,
@@ -53,7 +52,7 @@ fn dr(r: Rect) -> D2D_RECT_F {
     }
 }
 
-fn mix(a: [f32; 4], b: [f32; 4], t: f32) -> [f32; 4] {
+pub(crate) fn mix(a: [f32; 4], b: [f32; 4], t: f32) -> [f32; 4] {
     [
         a[0] + (b[0] - a[0]) * t,
         a[1] + (b[1] - a[1]) * t,
@@ -62,7 +61,7 @@ fn mix(a: [f32; 4], b: [f32; 4], t: f32) -> [f32; 4] {
     ]
 }
 
-fn brush(ctx: &ID2D1DeviceContext, c: [f32; 4]) -> Result<ID2D1Brush> {
+pub(crate) fn brush(ctx: &ID2D1DeviceContext, c: [f32; 4]) -> Result<ID2D1Brush> {
     unsafe { ctx.CreateSolidColorBrush(&cf(c), None)?.cast() }
 }
 
@@ -74,21 +73,21 @@ pub struct Painter {
     pub sprite: Option<Sprite>,
     /// Bubble drop-shadow bitmap, rebuilt when (window px, bubble rect,
     /// radius, theme) change. Drawn first under the bubble.
-    shadow: Option<ShadowCache>,
+    pub(crate) shadow: Option<ShadowCache>,
 }
 
 #[derive(Clone, Copy, PartialEq)]
-struct ShadowKey {
-    window_px: [u32; 2],
-    scale: u32,
-    bubble: [u32; 4],
-    radius: u32,
-    dark: bool,
+pub(crate) struct ShadowKey {
+    pub window_px: [u32; 2],
+    pub scale: u32,
+    pub bubble: [u32; 4],
+    pub radius: u32,
+    pub dark: bool,
 }
 
-struct ShadowCache {
-    key: ShadowKey,
-    bmp: ID2D1Bitmap1,
+pub(crate) struct ShadowCache {
+    pub key: ShadowKey,
+    pub bmp: ID2D1Bitmap1,
 }
 
 impl Painter {
@@ -107,114 +106,9 @@ impl Painter {
         })
     }
 
-    fn icon(&self, i: mascot_icons::Icon) -> Option<&ID2D1PathGeometry> {
+    pub(crate) fn icon_geom(&self, i: mascot_icons::Icon) -> Option<&ID2D1PathGeometry> {
         let idx = mascot_icons::Icon::ALL.iter().position(|x| *x == i)?;
         self.icons[idx].as_ref()
-    }
-
-    /// Preps resources that need their own draw pass (the shadow bitmap).
-    /// Call before the frame's `BeginDraw`, whenever layout/palette changed.
-    pub fn prepare(
-        &mut self,
-        ctx: &ID2D1DeviceContext,
-        pal: &Palette,
-        layout: &Layout,
-        window_px: [u32; 2],
-    ) -> Result<()> {
-        let Some(b) = layout.bubble else {
-            self.shadow = None;
-            return Ok(());
-        };
-        let key = ShadowKey {
-            window_px,
-            scale: layout.scale.to_bits(),
-            bubble: [b.x, b.y, b.w, b.h].map(|v| v.to_bits()),
-            radius: layout.bubble_radius.to_bits(),
-            dark: pal.surface[0] < 0.2,
-        };
-        if self.shadow.as_ref().is_some_and(|s| s.key == key) {
-            return Ok(());
-        }
-        unsafe {
-            // record the bubble silhouette (DIP space) in a command list
-            let cl = ctx.CreateCommandList()?;
-            let cli: ID2D1Image = cl.cast()?;
-            ctx.SetTarget(&cli);
-            ctx.BeginDraw();
-            ctx.Clear(Some(&cf([0.0, 0.0, 0.0, 0.0])));
-            let white = brush(ctx, [1.0, 1.0, 1.0, 1.0])?;
-            ctx.FillRoundedRectangle(&rr(b, layout.bubble_radius), &white);
-            ctx.EndDraw(None, None)?;
-            cl.Close()?;
-            ctx.SetTarget(None);
-
-            let shadow = ctx.CreateEffect(&CLSID_D2D1Shadow)?;
-            let src: ID2D1Image = cl.cast()?;
-            shadow.SetInput(0, &src, true);
-            // two shadcn layers (0 1 2 a.05, 0 8 24 a.10) approximated by one
-            // shadow at sigma 4 / alpha 0.14 (0.30 dark) offset +4 DIP; tuned
-            // by visual iteration.
-            let alpha = if key.dark { 0.30 } else { 0.14 };
-            let col: [u8; 16] = {
-                let mut v = [0u8; 16];
-                for (i, c) in [pal.shadow[0], pal.shadow[1], pal.shadow[2], alpha]
-                    .iter()
-                    .enumerate()
-                {
-                    v[i * 4..i * 4 + 4].copy_from_slice(&c.to_ne_bytes());
-                }
-                v
-            };
-            shadow.SetValue(
-                D2D1_SHADOW_PROP_COLOR.0 as u32,
-                D2D1_PROPERTY_TYPE_VECTOR4,
-                &col,
-            )?;
-            shadow.SetValue(
-                D2D1_SHADOW_PROP_BLUR_STANDARD_DEVIATION.0 as u32,
-                D2D1_PROPERTY_TYPE_FLOAT,
-                &4.0f32.to_ne_bytes(),
-            )?;
-
-            let bmp = ctx.CreateBitmap(
-                D2D_SIZE_U {
-                    width: window_px[0].max(1),
-                    height: window_px[1].max(1),
-                },
-                None,
-                0,
-                &D2D1_BITMAP_PROPERTIES1 {
-                    pixelFormat: D2D1_PIXEL_FORMAT {
-                        format: windows::Win32::Graphics::Dxgi::Common::DXGI_FORMAT_B8G8R8A8_UNORM,
-                        alphaMode: D2D1_ALPHA_MODE_PREMULTIPLIED,
-                    },
-                    dpiX: 96.0 * layout.scale,
-                    dpiY: 96.0 * layout.scale,
-                    bitmapOptions: D2D1_BITMAP_OPTIONS_TARGET,
-                    colorContext: std::mem::ManuallyDrop::new(None),
-                },
-            )?;
-            let bmp_img: ID2D1Image = bmp.cast()?;
-            ctx.SetTarget(&bmp_img);
-            ctx.SetDpi(96.0 * layout.scale, 96.0 * layout.scale);
-            ctx.BeginDraw();
-            ctx.Clear(Some(&cf([0.0, 0.0, 0.0, 0.0])));
-            let off = Vector2 { X: 0.0, Y: 4.0 };
-            ctx.DrawImage(
-                &shadow.cast::<ID2D1Image>()?,
-                Some(&off),
-                None,
-                D2D1_INTERPOLATION_MODE_LINEAR,
-                D2D1_COMPOSITE_MODE_SOURCE_OVER,
-            );
-            ctx.EndDraw(None, None)?;
-            ctx.SetTarget(None);
-            // leave the context at 96 DPI outside our frames — the shared
-            // Renderer APIs assume it
-            ctx.SetDpi(96.0, 96.0);
-            self.shadow = Some(ShadowCache { key, bmp });
-        }
-        Ok(())
     }
 
     /// Paints one frame into `ctx` (caller owns SetTarget/BeginDraw/EndDraw
@@ -226,63 +120,27 @@ impl Painter {
         layout: &Layout,
         editor: Option<&Editor>,
     ) -> Result<()> {
+        use mascot_ui::component::{ControlVisual, IconButtonKind, TextStyle};
+        use mascot_ui::state::Activity;
         let pal = state.theme.palette();
         unsafe {
             ctx.Clear(Some(&cf([0.0, 0.0, 0.0, 0.0])));
 
-            if let Some(s) = &self.shadow {
-                let dst = dr(layout.window);
-                ctx.DrawBitmap(
-                    &s.bmp.cast::<ID2D1Bitmap>()?,
-                    Some(&dst),
-                    1.0,
-                    D2D1_INTERPOLATION_MODE_LINEAR,
-                    None,
-                    None,
-                );
-            }
+            self.shadow(ctx, layout.window)?;
 
             if let Some(b) = layout.bubble {
-                ctx.FillRoundedRectangle(&rr(b, layout.bubble_radius), &brush(ctx, pal.surface)?);
-                // hairline: snapped outer edge minus half a device pixel.
                 // While the editor holds keyboard focus the border takes the
                 // ring colour (shadcn input focus treatment).
-                let border_c = if state.interaction.focus == Some(ControlId::Editor)
-                    && state.activity == mascot_ui::state::Activity::Idle
-                {
-                    pal.ring
-                } else {
-                    pal.border
-                };
-                let inset = 0.5 / layout.scale;
-                let inner = Rect::new(
-                    b.x + inset,
-                    b.y + inset,
-                    b.w - 2.0 * inset,
-                    b.h - 2.0 * inset,
-                );
-                let w = 1.0 / layout.scale;
-                ctx.DrawRoundedRectangle(
-                    &rr(inner, (layout.bubble_radius - inset).max(1.0)),
-                    &brush(ctx, border_c)?,
-                    w,
-                    None,
-                );
+                let focused = state.interaction.focus == Some(ControlId::Editor)
+                    && state.activity == Activity::Idle;
+                self.surface(ctx, &pal, b, layout.bubble_radius, layout.scale, focused)?;
             }
 
             if let (Some(t), Surface::Response) = (layout.response_text, state.surface) {
-                let text: Vec<u16> = mascot_ui::RESPONSE_FIXTURE.encode_utf16().collect();
-                ctx.DrawText(
-                    &text,
-                    &self.fonts.body,
-                    &dr(t),
-                    &brush(ctx, pal.foreground)?,
-                    D2D1_DRAW_TEXT_OPTIONS_NONE,
-                    DWRITE_MEASURING_MODE_NATURAL,
-                );
+                self.label(ctx, &pal, t, mascot_ui::RESPONSE_FIXTURE, TextStyle::Body)?;
             }
             if let Some(s) = layout.separator {
-                ctx.FillRectangle(&dr(s), &brush(ctx, pal.border)?);
+                self.separator(ctx, &pal, s)?;
             }
 
             if let Some(e_rect) = layout.editor
@@ -324,10 +182,30 @@ impl Painter {
             }
 
             if let Some(send) = layout.send {
-                self.paint_button(ctx, state, send, state.action_control(), &pal)?;
+                let id = state.action_control();
+                self.icon_button(
+                    ctx,
+                    &pal,
+                    send,
+                    id.icon(),
+                    IconButtonKind::Primary,
+                    ControlVisual::of(state, id),
+                )?;
             }
             if let Some(c) = layout.copy {
-                self.paint_button(ctx, state, c, ControlId::Copy, &pal)?;
+                let icon = if state.copied {
+                    mascot_icons::Icon::Check
+                } else {
+                    ControlId::Copy.icon()
+                };
+                self.icon_button(
+                    ctx,
+                    &pal,
+                    c,
+                    icon,
+                    IconButtonKind::Ghost,
+                    ControlVisual::of(state, ControlId::Copy),
+                )?;
             }
 
             if let Some(sp) = &self.sprite {
@@ -339,96 +217,7 @@ impl Painter {
                     ControlId::Copy if state.copied => "Copied",
                     c => c.icon().label(),
                 };
-                ctx.FillRoundedRectangle(&rr(tip, tokens::RADIUS_MD), &brush(ctx, pal.primary)?);
-                let fmt = &self.fonts.small;
-                // measure and centre manually (tooltip rect is fixed size)
-                let wtext: Vec<u16> = label.encode_utf16().collect();
-                if let Ok(tl) = self
-                    .fonts
-                    .dwrite
-                    .CreateTextLayout(&wtext, fmt, tip.w, tip.h)
-                {
-                    tl.SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER)?;
-                    tl.SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER)?;
-                    ctx.DrawTextLayout(
-                        Vector2 { X: tip.x, Y: tip.y },
-                        &tl,
-                        &brush(ctx, pal.primary_fg)?,
-                        D2D1_DRAW_TEXT_OPTIONS_NONE,
-                    );
-                }
-            }
-            Ok(())
-        }
-    }
-
-    fn paint_button(
-        &self,
-        ctx: &ID2D1DeviceContext,
-        state: &UiState,
-        rect: Rect,
-        id: ControlId,
-        pal: &Palette,
-    ) -> Result<()> {
-        let disabled = state.disabled(id);
-        let hover = state.interaction.hover == Some(id) && !disabled;
-        let pressed = state.interaction.pressed == Some(id) && !disabled;
-        let primary = matches!(id, ControlId::Send | ControlId::Stop);
-        let copied = state.copied && id == ControlId::Copy;
-
-        unsafe {
-            let (bg, fg_c): ([f32; 4], [f32; 4]) = if primary {
-                let mut bg = if disabled { pal.muted } else { pal.primary };
-                if hover {
-                    bg = mix(bg, pal.primary_fg, 0.10);
-                }
-                if pressed {
-                    bg = mix(bg, pal.primary_fg, 0.20);
-                }
-                let fg = if disabled {
-                    pal.muted_fg
-                } else {
-                    pal.primary_fg
-                };
-                (bg, fg)
-            } else {
-                let bg = if pressed {
-                    pal.pressed
-                } else if hover {
-                    pal.hover
-                } else {
-                    [0.0, 0.0, 0.0, 0.0]
-                };
-                (bg, pal.foreground)
-            };
-            if bg[3] > 0.0 {
-                ctx.FillRoundedRectangle(&rr(rect, tokens::RADIUS_MD), &brush(ctx, bg)?);
-            }
-            if state.interaction.focus == Some(id) && state.interaction.focus_visible {
-                let ring_a = [pal.ring[0], pal.ring[1], pal.ring[2], 0.5];
-                ctx.DrawRoundedRectangle(
-                    &rr(
-                        rect.grow(tokens::FOCUS_RING_W / 2.0 + 1.0),
-                        tokens::RADIUS_MD + tokens::FOCUS_RING_W / 2.0 + 1.0,
-                    ),
-                    &brush(ctx, ring_a)?,
-                    tokens::FOCUS_RING_W,
-                    None,
-                );
-                ctx.DrawRoundedRectangle(
-                    &rr(rect.grow(0.5), tokens::RADIUS_MD + 0.5),
-                    &brush(ctx, pal.ring)?,
-                    1.0,
-                    None,
-                );
-            }
-            let icon = if copied {
-                mascot_icons::Icon::Check
-            } else {
-                id.icon()
-            };
-            if let Some(g) = self.icon(icon) {
-                draw_icon(ctx, g, rect, &brush(ctx, fg_c)?, &self.icon_style);
+                self.tooltip(ctx, &pal, tip, label)?;
             }
             Ok(())
         }

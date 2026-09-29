@@ -6,6 +6,8 @@
 #[cfg(windows)]
 pub mod app;
 #[cfg(windows)]
+pub mod components;
+#[cfg(windows)]
 pub mod edit;
 #[cfg(windows)]
 pub mod icons;

@@ -39,6 +39,10 @@ pub struct Fonts {
     pub family: String,
     pub body: IDWriteTextFormat,
     pub small: IDWriteTextFormat,
+    /// BODY_SIZE at medium weight (control labels).
+    pub label: IDWriteTextFormat,
+    /// SMALL_SIZE at medium weight (badges, captions).
+    pub caption: IDWriteTextFormat,
 }
 
 impl Fonts {
@@ -46,11 +50,11 @@ impl Fonts {
         let family = resolve_family(dwrite)?;
         unsafe {
             let fam: Vec<u16> = family.encode_utf16().chain(Some(0)).collect();
-            let make = |size_dip: f32| -> Result<IDWriteTextFormat> {
+            let make = |size_dip: f32, weight: DWRITE_FONT_WEIGHT| -> Result<IDWriteTextFormat> {
                 dwrite.CreateTextFormat(
                     PCWSTR(fam.as_ptr()),
                     None,
-                    DWRITE_FONT_WEIGHT_NORMAL,
+                    weight,
                     DWRITE_FONT_STYLE_NORMAL,
                     DWRITE_FONT_STRETCH_NORMAL,
                     size_dip,
@@ -60,9 +64,34 @@ impl Fonts {
             Ok(Fonts {
                 dwrite: dwrite.clone(),
                 family,
-                body: make(mascot_ui::theme::tokens::BODY_SIZE)?,
-                small: make(mascot_ui::theme::tokens::SMALL_SIZE)?,
+                body: make(
+                    mascot_ui::theme::tokens::BODY_SIZE,
+                    DWRITE_FONT_WEIGHT_NORMAL,
+                )?,
+                small: make(
+                    mascot_ui::theme::tokens::SMALL_SIZE,
+                    DWRITE_FONT_WEIGHT_NORMAL,
+                )?,
+                label: make(
+                    mascot_ui::theme::tokens::BODY_SIZE,
+                    DWRITE_FONT_WEIGHT_MEDIUM,
+                )?,
+                caption: make(
+                    mascot_ui::theme::tokens::SMALL_SIZE,
+                    DWRITE_FONT_WEIGHT_MEDIUM,
+                )?,
             })
+        }
+    }
+
+    /// The cached format for a [`TextStyle`].
+    pub fn format(&self, style: mascot_ui::component::TextStyle) -> &IDWriteTextFormat {
+        use mascot_ui::component::TextStyle;
+        match style {
+            TextStyle::Body => &self.body,
+            TextStyle::Muted => &self.small,
+            TextStyle::Label => &self.label,
+            TextStyle::Caption => &self.caption,
         }
     }
 

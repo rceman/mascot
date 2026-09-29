@@ -62,13 +62,17 @@
 //! `Send` -> `Icon::ArrowUp`, `Stop` -> `Icon::Square`, `Copy` -> `Icon::Copy`,
 //! copied state -> `Icon::Check` (label `Icon::label`).
 
+pub mod component;
 pub mod geom;
 pub mod layout;
 pub mod state;
 pub mod theme;
 
-pub use geom::{Point, Rect, snap};
-pub use layout::{Hit, Layout, MascotMetrics, Measured, composer_height, hit_test, layout};
+pub use geom::{Point, Rect, Size, snap};
+pub use layout::{
+    Hit, Layout, MascotMetrics, Measured, composer_height, editor_w, hit_test, layout,
+    response_text_w,
+};
 pub use state::{Activity, ControlId, Interaction, Placement, Surface, UiState};
 pub use theme::{Palette, Theme};
 

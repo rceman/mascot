@@ -59,6 +59,10 @@ pub struct Palette {
     pub primary: [f32; 4],
     /// Text/icon colour on `primary`.
     pub primary_fg: [f32; 4],
+    /// Secondary action fill (shadcn `secondary` — neutral button/badge fill).
+    pub secondary: [f32; 4],
+    /// Text/icon colour on `secondary` (shadcn `secondary-foreground`).
+    pub secondary_fg: [f32; 4],
     /// Hover fill for ghost/subtle controls (shadcn `accent`).
     pub hover: [f32; 4],
     /// Pressed fill: one step stronger than `hover`.
@@ -86,6 +90,8 @@ impl Palette {
         foreground: rgb(0x0a0a0a),
         primary: rgb(0x171717),
         primary_fg: rgb(0xfafafa),
+        secondary: rgb(0xf5f5f5),
+        secondary_fg: rgb(0x171717),
         hover: rgb(0xf5f5f5),
         // deviation from shadcn: shadcn has no distinct pressed token; we reuse
         // the border tone so pressed reads one step stronger than hover #F5F5F5.
@@ -110,6 +116,8 @@ impl Palette {
         foreground: rgb(0xfafafa),
         primary: rgb(0xe5e5e5),
         primary_fg: rgb(0x171717),
+        secondary: rgb(0x262626),
+        secondary_fg: rgb(0xfafafa),
         hover: rgb(0x262626),
         // deviation: pressed = hover brightened one step (shadcn has none).
         pressed: rgba(1.0, 1.0, 1.0, 0.22),
@@ -162,8 +170,12 @@ pub mod tokens {
     pub const SMALL_LINE: f32 = 16.0;
 
     // bubble / composer
-    /// Bubble width (composer and response share it; bounded 320–440 range).
+    /// Bubble width bounds (design-system range 320–440 DIP).
+    pub const BUBBLE_W_MIN: f32 = 320.0;
+    /// Bubble width default (composer and response share it).
     pub const BUBBLE_W: f32 = 380.0;
+    /// Widest practical bubble width.
+    pub const BUBBLE_W_MAX: f32 = 440.0;
     pub const BUBBLE_RADIUS: f32 = RADIUS_XL;
     /// Horizontal inset of bubble content (response text, composer row).
     pub const BUBBLE_PAD_X: f32 = SPACE_LG;
@@ -180,9 +192,6 @@ pub mod tokens {
     /// Outer edge gap for the send button.
     pub const COMPOSER_EDGE: f32 = 10.0;
 
-    /// Response body text width (token constant: the Win32 layer measures the
-    /// fixture at exactly this width before layout).
-    pub const RESPONSE_TEXT_W: f32 = BUBBLE_W - 2.0 * BUBBLE_PAD_X;
     /// Padding above the response text / below the copy row.
     pub const RESPONSE_PAD_Y: f32 = SPACE_LG;
     /// Gap between response text bottom and the copy button row.
@@ -214,6 +223,24 @@ pub mod tokens {
     pub const TOOLTIP_DELAY_MS: u32 = 500;
     /// Vertical gap between a control and its tooltip.
     pub const TOOLTIP_GAP: f32 = 6.0;
+    /// Tooltip content width cap (single-line, ellipsis beyond).
+    pub const TOOLTIP_MAX_W: f32 = 240.0;
+
+    // text buttons / badges
+    /// Small text-button height (shadcn `h-8`).
+    pub const BUTTON_H_SM: f32 = 32.0;
+    /// Small text-button horizontal padding (shadcn `px-3`).
+    pub const BUTTON_PAD_X_SM: f32 = 12.0;
+    /// Default text-button height (shadcn `h-9`).
+    pub const BUTTON_H: f32 = 36.0;
+    /// Default text-button horizontal padding (shadcn `px-4`).
+    pub const BUTTON_PAD_X: f32 = 16.0;
+    /// Badge height — shadcn pill: 1 border + 2 pad + 16 line box, both sides.
+    pub const BADGE_H: f32 = 22.0;
+    /// Badge horizontal padding (shadcn `px-2`).
+    pub const BADGE_PAD_X: f32 = 8.0;
+    /// Badge vertical padding (shadcn `py-0.5`; with 1px border -> 22 tall).
+    pub const BADGE_PAD_Y: f32 = 2.0;
 }
 
 #[cfg(test)]
@@ -247,6 +274,8 @@ mod tests {
                 p.foreground,
                 p.primary,
                 p.primary_fg,
+                p.secondary,
+                p.secondary_fg,
                 p.hover,
                 p.pressed,
                 p.muted,
@@ -278,6 +307,11 @@ mod tests {
                 contrast(p.primary_fg, p.primary) >= 4.5,
                 "{t:?} primary fg/bg {:.2}",
                 contrast(p.primary_fg, p.primary)
+            );
+            assert!(
+                contrast(p.secondary_fg, p.secondary) >= 4.5,
+                "{t:?} secondary fg/bg {:.2}",
+                contrast(p.secondary_fg, p.secondary)
             );
         }
     }

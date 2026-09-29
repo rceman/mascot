@@ -60,8 +60,11 @@ pub struct App {
     pub measured: Measured,
     /// Set when editor content/scale/width may have changed `editor_content_h`.
     measure_editor: bool,
-    /// Cached response fixture height (DIP, scale-independent), measured once.
-    response_h: Option<f32>,
+    /// Cached response fixture height (DIP, scale-independent), keyed by the
+    /// bubble width it was measured at.
+    response_h: Option<(f32, f32)>,
+    /// Bubble width in DIP (clamped to the design range).
+    bubble_w: f32,
     /// Last tooltip width measurement key: (control, copied).
     tooltip_key: Option<(Option<ControlId>, bool)>,
     /// Layout must be recomputed before the next present.
@@ -158,6 +161,7 @@ impl App {
             measured: Measured::default(),
             measure_editor: true,
             response_h: None,
+            bubble_w: tokens::BUBBLE_W,
             tooltip_key: None,
             layout_stale: true,
             present_count: 0,
@@ -206,11 +210,7 @@ impl App {
     /// editor content/scale, Response surface (once), tooltip identity.
     pub fn relayout(&mut self) -> Result<()> {
         if self.measure_editor {
-            let editor_w = tokens::BUBBLE_W
-                - tokens::BUBBLE_PAD_X
-                - tokens::COMPOSER_EDGE
-                - tokens::PRIMARY_BUTTON
-                - tokens::COMPOSER_GAP;
+            let editor_w = mascot_ui::layout::editor_w(self.bubble_w);
             self.measured.editor_content_h = self
                 .editor
                 .natural_size(editor_w)
@@ -219,17 +219,25 @@ impl App {
             self.measure_editor = false;
         }
         let rh = if self.state.surface == Surface::Response {
-            *self.response_h.get_or_insert_with(|| {
-                self.painter
-                    .fonts
-                    .measure(
-                        mascot_ui::RESPONSE_FIXTURE,
-                        tokens::RESPONSE_TEXT_W,
-                        &self.painter.fonts.body,
-                    )
-                    .map(|(_, h)| h)
-                    .unwrap_or(0.0)
-            })
+            // the fixture is laid out at the response text width for the
+            // current bubble width — the cache key is that width
+            match self.response_h {
+                Some((w, h)) if (w - self.bubble_w).abs() < 0.01 => h,
+                _ => {
+                    let h = self
+                        .painter
+                        .fonts
+                        .measure(
+                            mascot_ui::RESPONSE_FIXTURE,
+                            mascot_ui::layout::response_text_w(self.bubble_w),
+                            &self.painter.fonts.body,
+                        )
+                        .map(|(_, h)| h)
+                        .unwrap_or(0.0);
+                    self.response_h = Some((self.bubble_w, h));
+                    h
+                }
+            }
         } else {
             0.0
         };
@@ -252,7 +260,13 @@ impl App {
             };
             self.tooltip_key = tw_key;
         }
-        self.layout = layout(&self.state, &self.metrics, &self.measured, self.scale);
+        self.layout = layout(
+            &self.state,
+            &self.metrics,
+            &self.measured,
+            self.bubble_w,
+            self.scale,
+        );
         // keep the editor's client rect in sync — the editor's coordinate
         // space is DIP (scale-independent)
         if let Some(e) = self.layout.editor {
@@ -300,8 +314,14 @@ impl App {
                 .resize(&self.renderer, px, self.scale)?;
             self.move_window();
         }
-        self.painter
-            .prepare(&self.renderer.ctx, &pal, &self.layout, px)?;
+        self.painter.prepare(
+            &self.renderer.ctx,
+            &pal,
+            self.layout.bubble,
+            self.layout.bubble_radius,
+            self.layout.scale,
+            px,
+        )?;
         let lay = self.layout;
         // split borrows: take the fields we need
         let (state, ed) = (&self.state, Some(&self.editor));
@@ -328,7 +348,14 @@ impl App {
         let pal = self.state.theme.palette();
         let px = self.layout.window_px();
         let ctx = &self.renderer.ctx;
-        self.painter.prepare(ctx, &pal, &self.layout, px)?;
+        self.painter.prepare(
+            ctx,
+            &pal,
+            self.layout.bubble,
+            self.layout.bubble_radius,
+            self.layout.scale,
+            px,
+        )?;
         let bmp = self.renderer.create_target_bitmap(px)?;
         let scale = self.scale;
         unsafe {
@@ -382,6 +409,23 @@ impl App {
         self.relayout().ok();
         self.move_window();
         self.present_if_dirty().ok();
+    }
+
+    /// Current bubble width in DIP.
+    pub fn bubble_w(&self) -> f32 {
+        self.bubble_w
+    }
+
+    /// Sets the bubble width (clamped to the design range). Re-measures the
+    /// editor at the new wrap width and invalidates the width-keyed response
+    /// cache; layout/present follow on the next pump.
+    pub fn set_bubble_w(&mut self, w: f32) {
+        let w = w.clamp(tokens::BUBBLE_W_MIN, tokens::BUBBLE_W_MAX);
+        if (w - self.bubble_w).abs() > 0.01 {
+            self.bubble_w = w;
+            self.measure_editor = true;
+            self.mark_layout();
+        }
     }
 
     /// Gives the editor keyboard focus (used by perf/selftest harnesses).

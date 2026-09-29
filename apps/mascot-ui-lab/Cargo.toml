@@ -12,6 +12,7 @@ mascot-render-win32.workspace = true
 mascot-ui.workspace = true
 mascot-ui-win32.workspace = true
 serde_json.workspace = true
+windows-numerics.workspace = true
 
 [target.'cfg(windows)'.dependencies]
 windows = { workspace = true, features = [

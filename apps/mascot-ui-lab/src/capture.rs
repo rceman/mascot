@@ -153,7 +153,7 @@ pub fn run() -> Result<(), String> {
     Ok(())
 }
 
-fn git_dirty() -> bool {
+pub(crate) fn git_dirty() -> bool {
     let repo = repo_root();
     std::process::Command::new("git")
         .args(["status", "--porcelain"])
@@ -163,7 +163,7 @@ fn git_dirty() -> bool {
         .unwrap_or(true)
 }
 
-fn repo_root() -> PathBuf {
+pub(crate) fn repo_root() -> PathBuf {
     std::process::Command::new("git")
         .args(["rev-parse", "--show-toplevel"])
         .output()
@@ -173,7 +173,7 @@ fn repo_root() -> PathBuf {
         .unwrap_or_else(|| PathBuf::from("."))
 }
 
-fn git(args: &[&str]) -> String {
+pub(crate) fn git(args: &[&str]) -> String {
     std::process::Command::new("git")
         .args(args)
         .current_dir(repo_root())

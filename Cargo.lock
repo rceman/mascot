@@ -107,6 +107,7 @@ dependencies = [
  "mascot-ui-win32",
  "serde_json",
  "windows",
+ "windows-numerics",
 ]
 
 [[package]]
