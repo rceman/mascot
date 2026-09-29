@@ -209,6 +209,9 @@ pub mod tokens {
     // tooltip
     pub const TOOLTIP_PAD_X: f32 = 12.0;
     pub const TOOLTIP_PAD_Y: f32 = 6.0;
+    /// Hover delay before a control tooltip appears — the shadcn/Radix
+    /// `delayDuration` convention.
+    pub const TOOLTIP_DELAY_MS: u32 = 500;
     /// Vertical gap between a control and its tooltip.
     pub const TOOLTIP_GAP: f32 = 6.0;
 }

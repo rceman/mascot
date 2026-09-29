@@ -363,6 +363,158 @@ fn click_editor_reentry() {
     mascot_ui_win32::app::unbind();
 }
 
+/// Hover tooltips via REAL input: SendInput moves the cursor onto a control,
+/// the 500 ms hover delay fires TIMER_TOOLTIP, `state.tooltip` rises, and
+/// moving off the window delivers a genuine WM_MOUSELEAVE that clears it.
+/// (Posted WM_MOUSEMOVE can't fake "cursor is over the window" —
+/// TrackMouseEvent reports a leave immediately.)
+#[test]
+fn hover_tooltip_and_leave() {
+    let mut dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let rig = loop {
+        let cand = dir.join("assets/mascot/rig-v0.2");
+        if cand.join("rig.json").exists() {
+            break mascot_animation::Rig::load(&cand).unwrap();
+        }
+        if !dir.pop() {
+            panic!("rig not found");
+        }
+    };
+    let mut app = mascot_ui_win32::app::App::new(
+        mascot_render_win32::renderer::DeviceKind::Warp,
+        rig,
+        HWND::default(),
+        1.0,
+    )
+    .unwrap();
+    app.open_composer();
+    let app_ptr: *mut mascot_ui_win32::app::App = Box::leak(Box::new(app));
+    // visible (real input needs a hit-testable window), anchored on-screen
+    let hwnd =
+        mascot_ui_win32::app::create_opts(unsafe { &mut *app_ptr }, 100, 460, false).unwrap();
+    let app = app_ptr;
+    let pump_ms = |ms: u64| {
+        let t0 = std::time::Instant::now();
+        while t0.elapsed().as_millis() < ms as u128 {
+            mascot_ui_win32::app::pump_once();
+            std::thread::sleep(std::time::Duration::from_millis(4));
+        }
+    };
+    // absolute cursor move via SendInput -> real WM_MOUSEMOVE/WM_MOUSELEAVE
+    let move_cursor = |cx: i32, cy: i32| unsafe {
+        use windows::Win32::UI::Input::KeyboardAndMouse::*;
+        use windows::Win32::UI::WindowsAndMessaging::{
+            GetSystemMetrics, SM_CXVIRTUALSCREEN, SM_CYVIRTUALSCREEN, SM_XVIRTUALSCREEN,
+            SM_YVIRTUALSCREEN,
+        };
+        let (vx, vy) = (
+            GetSystemMetrics(SM_XVIRTUALSCREEN),
+            GetSystemMetrics(SM_YVIRTUALSCREEN),
+        );
+        let (vw, vh) = (
+            GetSystemMetrics(SM_CXVIRTUALSCREEN),
+            GetSystemMetrics(SM_CYVIRTUALSCREEN),
+        );
+        let mi = MOUSEINPUT {
+            dx: ((cx - vx) * 65535 + (vw - 2)) / (vw - 1),
+            dy: ((cy - vy) * 65535 + (vh - 2)) / (vh - 1),
+            mouseData: 0,
+            dwFlags: MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_VIRTUALDESK,
+            time: 0,
+            dwExtraInfo: 0,
+        };
+        let inp = windows::Win32::UI::Input::KeyboardAndMouse::INPUT {
+            r#type: INPUT_MOUSE,
+            Anonymous: windows::Win32::UI::Input::KeyboardAndMouse::INPUT_0 { mi },
+        };
+        SendInput(&[inp], std::mem::size_of_val(&inp) as i32);
+    };
+    // remember where the user's cursor was so we can put it back
+    let mut saved = windows::Win32::Foundation::POINT::default();
+    unsafe {
+        let _ = GetCursorPos(&mut saved);
+    }
+
+    // reach the Response surface (Copy button exists)
+    let _ = am(app).editor.set_text("probe");
+    am(app).state.editor_empty = false;
+    am(app).submit();
+    am(app).response_arrived();
+    am(app).relayout().unwrap();
+    pump_ms(100);
+
+    // window is borderless: client coords == window-rect offsets; the rect
+    // must be re-read after surface changes (the window resizes)
+    let mut rc = RECT::default();
+    unsafe {
+        let _ = GetWindowRect(hwnd, &mut rc);
+    }
+
+    // hover Copy: inside the delay window the tooltip must NOT be up
+    let e = am(app).layout.copy.unwrap();
+    let (sx, sy) = (
+        rc.left + (e.x + e.w / 2.0) as i32,
+        rc.top + (e.y + e.h / 2.0) as i32,
+    );
+    move_cursor(sx, sy);
+    pump_ms(200);
+    assert_eq!(
+        am(app).state.interaction.hover,
+        Some(mascot_ui::ControlId::Copy),
+        "cursor over Copy must set hover"
+    );
+    assert_eq!(
+        am(app).state.tooltip,
+        None,
+        "tooltip must wait for the hover delay"
+    );
+    // past the delay: tooltip up, and its rect is laid out
+    pump_ms(500);
+    assert_eq!(
+        am(app).state.tooltip,
+        Some(mascot_ui::ControlId::Copy),
+        "tooltip must appear after TOOLTIP_DELAY_MS"
+    );
+    assert!(am(app).layout.tooltip.is_some());
+
+    // move off the window: real WM_MOUSELEAVE clears hover + tooltip + rect
+    move_cursor(rc.right + 60, rc.bottom + 60);
+    pump_ms(150);
+    assert_eq!(am(app).state.interaction.hover, None);
+    assert_eq!(am(app).state.tooltip, None);
+    assert!(am(app).layout.tooltip.is_none());
+
+    // Send on the composer: hover -> tooltip, and its label measures > 0
+    am(app).state.escape();
+    am(app).open_composer();
+    let _ = am(app).editor.set_text("probe");
+    am(app).state.editor_empty = false;
+    am(app).relayout().unwrap();
+    unsafe {
+        let _ = GetWindowRect(hwnd, &mut rc);
+    }
+    pump_ms(50);
+    let s = am(app).layout.send.unwrap();
+    let (sx, sy) = (
+        rc.left + (s.x + s.w / 2.0) as i32,
+        rc.top + (s.y + s.h / 2.0) as i32,
+    );
+    move_cursor(sx, sy);
+    pump_ms(700);
+    assert_eq!(am(app).state.tooltip, Some(mascot_ui::ControlId::Send));
+    assert!(
+        am(app).measured.tooltip_text_w > 0.0,
+        "Send tooltip label must measure a nonzero width"
+    );
+
+    unsafe {
+        let _ = SetCursorPos(saved.x, saved.y);
+        let _ = DestroyWindow(hwnd);
+        while mascot_ui_win32::app::pump_once() {}
+    }
+    mascot_ui_win32::app::unbind();
+}
+
 /// The editor's client rect is in DIPs, so REQRESIZE returns the same size
 /// at every scale for every activation shape — the regression guard for the
 /// stale-dpi bug (a px-space client latched the activation-time dpi).

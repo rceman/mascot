@@ -234,6 +234,24 @@ impl UiState {
         self.tooltip = None; // tooltip re-arms via its delay in the host
     }
 
+    /// Hover-delay timer fired: raise the tooltip for `c` when it is still
+    /// the hovered, enabled, non-Editor control and nothing is pressed. The
+    /// "Copied" indicator (`copied`) owns the Copy tooltip until its revert
+    /// timer clears it. Returns true when the tooltip state changed.
+    pub fn show_tooltip(&mut self, c: ControlId) -> bool {
+        if self.interaction.hover != Some(c)
+            || c == ControlId::Editor
+            || self.disabled(c)
+            || self.interaction.pressed.is_some()
+            || self.copied
+        {
+            return false;
+        }
+        let changed = self.tooltip != Some(c);
+        self.tooltip = Some(c);
+        changed
+    }
+
     /// Move keyboard focus to `c` (or clear). `focus_visible` selects ring.
     pub fn set_focus(&mut self, c: Option<ControlId>, keyboard: bool) {
         let c = c.filter(|c| !self.disabled(*c) || *c == ControlId::Editor);
@@ -363,5 +381,60 @@ mod tests {
         assert!(s.copied);
         s.copy_revert();
         assert!(!s.copied);
+    }
+
+    #[test]
+    fn show_tooltip_requires_hovered_enabled_control() {
+        let mut s = composer_state();
+        // hovered Copy on the response surface -> tooltip shows
+        s.editor_empty = false;
+        s.submit();
+        s.response_arrived();
+        s.set_hover(Some(ControlId::Copy));
+        assert!(s.show_tooltip(ControlId::Copy));
+        assert_eq!(s.tooltip, Some(ControlId::Copy));
+        // second call is a no-op
+        assert!(!s.show_tooltip(ControlId::Copy));
+
+        // hovered enabled Send (composer with text) -> tooltip shows
+        let mut s = composer_state();
+        s.editor_empty = false;
+        s.set_hover(Some(ControlId::Send));
+        assert!(s.show_tooltip(ControlId::Send));
+
+        // rejected: disabled Send (empty editor)
+        let mut s = composer_state();
+        s.set_hover(Some(ControlId::Send));
+        assert!(!s.show_tooltip(ControlId::Send));
+        assert_eq!(s.tooltip, None);
+
+        // rejected: Editor is not a tooltip target
+        s.set_hover(Some(ControlId::Editor));
+        assert!(!s.show_tooltip(ControlId::Editor));
+
+        // rejected: not the hovered control
+        let mut s = composer_state();
+        s.editor_empty = false;
+        s.set_hover(Some(ControlId::Send));
+        assert!(!s.show_tooltip(ControlId::Editor));
+        assert_eq!(s.tooltip, None);
+
+        // rejected: while pressed
+        s.interaction.pressed = Some(ControlId::Send);
+        assert!(!s.show_tooltip(ControlId::Send));
+    }
+
+    #[test]
+    fn show_tooltip_never_clobbers_copied() {
+        let mut s = composer_state();
+        s.editor_empty = false;
+        s.submit();
+        s.response_arrived();
+        s.copy(); // copied indicator owns the Copy tooltip slot
+        s.set_hover(Some(ControlId::Copy));
+        // hover may re-set the Copy tooltip value, but while `copied` the
+        // "Copied" tooltip must not be overwritten by a fresh hover arm
+        assert!(!s.show_tooltip(ControlId::Copy));
+        assert!(s.copied);
     }
 }

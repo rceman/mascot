@@ -49,6 +49,8 @@ pub struct App {
     /// Screen-anchored bottom edge for the composition.
     anchor: POINT,
     drag: Option<Point>,
+    /// TME_LEAVE tracking is armed (reset when WM_MOUSELEAVE arrives).
+    mouse_tracking: bool,
     /// Last input time for the caret blink timeout.
     last_input: std::time::Instant,
     /// Cached `Measured` inputs — `relayout` must not re-query the editor /
@@ -151,6 +153,7 @@ impl App {
             surf: None,
             anchor: POINT { x: 0, y: 0 },
             drag: None,
+            mouse_tracking: false,
             last_input: std::time::Instant::now(),
             measured: Measured::default(),
             measure_editor: true,
@@ -748,6 +751,20 @@ impl App {
             }
             return;
         }
+        // arm WM_MOUSELEAVE tracking once per enter (a leave disarms it)
+        if !self.mouse_tracking {
+            unsafe {
+                let mut tme = TRACKMOUSEEVENT {
+                    cbSize: std::mem::size_of::<TRACKMOUSEEVENT>() as u32,
+                    dwFlags: TME_LEAVE,
+                    hwndTrack: self.hwnd,
+                    dwHoverTime: 0,
+                };
+                if TrackMouseEvent(&mut tme).is_ok() {
+                    self.mouse_tracking = true;
+                }
+            }
+        }
         let h = hit_test(&self.state, &self.layout, p);
         let c = match h {
             Hit::Control(id) => Some(id),
@@ -764,6 +781,28 @@ impl App {
         if had_tooltip && self.state.tooltip.is_none() {
             self.mark_layout();
         }
+        // tooltip arming is hover-scoped: a hover change re-arms the delay.
+        // While `copied` the "Copied" label owns the Copy tooltip; the hover
+        // timer must not overwrite it (show_tooltip also guards).
+        if self.state.interaction.hover != before.hover {
+            unsafe {
+                let _ = KillTimer(Some(self.hwnd), TIMER_TOOLTIP);
+            }
+            if let Some(id) = self.state.interaction.hover
+                && matches!(id, ControlId::Send | ControlId::Stop | ControlId::Copy)
+                && !self.state.disabled(id)
+                && !self.state.copied
+            {
+                unsafe {
+                    let _ = SetTimer(
+                        Some(self.hwnd),
+                        TIMER_TOOLTIP,
+                        mascot_ui::theme::tokens::TOOLTIP_DELAY_MS,
+                        None,
+                    );
+                }
+            }
+        }
         // forward to the editor when hovering its rect (caret cursor);
         // richedit coords are editor-local device px
         if h == Hit::Editor
@@ -779,6 +818,28 @@ impl App {
         self.present_if_dirty().ok();
     }
 
+    /// Cursor left the window (TrackMouseEvent TME_LEAVE): clear hover,
+    /// tooltip and any pending tooltip arm. A held capture means a drag is
+    /// in progress — `pressed` stays so the release still lands correctly.
+    fn wm_mouseleave(&mut self) {
+        self.mouse_tracking = false;
+        unsafe {
+            let _ = KillTimer(Some(self.hwnd), TIMER_TOOLTIP);
+        }
+        if self.state.tooltip.take().is_some() {
+            self.mark_layout();
+        }
+        let before = self.state.interaction;
+        self.state.set_hover(None);
+        if unsafe { GetCapture() } != self.hwnd {
+            self.state.interaction.pressed = None;
+        }
+        if self.state.interaction != before {
+            self.mark_dirty("mouseleave");
+        }
+        self.present_if_dirty().ok();
+    }
+
     fn wm_lbuttondown(&mut self, x: i32, y: i32) {
         let p = self.dip(x, y);
         let h = hit_test(&self.state, &self.layout, p);
@@ -790,6 +851,13 @@ impl App {
                 self.drag = Some(Point::new(x as f32, y as f32)); // client px
             }
             Hit::Control(id) => {
+                // a press dismisses any hover tooltip and its pending arm
+                unsafe {
+                    let _ = KillTimer(Some(self.hwnd), TIMER_TOOLTIP);
+                }
+                if self.state.tooltip.take().is_some() {
+                    self.mark_layout();
+                }
                 self.state.interaction.pressed = Some(id);
                 self.state.set_focus(Some(id), false);
                 self.mark_dirty("press");
@@ -919,9 +987,19 @@ impl App {
                     self.present_if_dirty().ok();
                 }
             }
-            TIMER_TOOLTIP => unsafe {
-                let _ = KillTimer(Some(self.hwnd), TIMER_TOOLTIP);
-            },
+            TIMER_TOOLTIP => {
+                unsafe {
+                    let _ = KillTimer(Some(self.hwnd), TIMER_TOOLTIP);
+                }
+                // one-shot hover delay elapsed: raise the tooltip only if the
+                // hover hasn't moved on since the timer was armed
+                if let Some(id) = self.state.interaction.hover
+                    && self.state.show_tooltip(id)
+                {
+                    self.mark_layout();
+                    self.present_if_dirty().ok();
+                }
+            }
             id if id >= EDIT_TIMER_BASE => {
                 // richedit-requested timer: forward WM_TIMER
                 let _ = self.editor.send(WM_TIMER, id - EDIT_TIMER_BASE, 0);
@@ -1032,6 +1110,10 @@ unsafe extern "system" fn wndproc(hwnd: HWND, msg: u32, w: WPARAM, l: LPARAM) ->
                 .map(|_| 0)
                 .unwrap_or(0) as isize,
             ),
+            windows::Win32::UI::Controls::WM_MOUSELEAVE => {
+                with_app(|a| a.wm_mouseleave());
+                LRESULT(0)
+            }
             WM_LBUTTONDOWN => {
                 with_app(|a| {
                     a.wm_lbuttondown(
