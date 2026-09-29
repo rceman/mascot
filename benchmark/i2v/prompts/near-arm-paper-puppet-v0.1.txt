@@ -1,0 +1,68 @@
+[Generation Goal]
+STRICT 2D paper-puppet motion test.
+
+Keep the supplied character in the EXACT same fixed right-facing 3/4 view.
+
+ONLY the NEAR ARM is allowed to move.
+
+[Locked Elements]
+The following must remain visually stationary for the entire video:
+
+- camera
+- torso
+- head
+- face
+- far arm
+- both legs
+- feet
+- tail
+- ears
+- background
+
+Do not rotate, translate, morph, or redraw these elements.
+
+[Arm Motion]
+Treat the near arm as a flat rigid 2D paper-puppet part attached at the shoulder.
+
+Rotate ONLY this arm in the SCREEN PLANE around the shoulder:
+
+horizontal
+-> slowly rotate upward
+-> pause
+-> return horizontal
+-> slowly rotate downward
+-> pause
+-> return horizontal
+
+The motion is like a flat clock hand rotating around one fixed pivot.
+
+The arm must preserve its exact:
+- length
+- width
+- colors
+- outline
+- paw shape
+
+[Critical Orientation Rules]
+- fixed orthographic camera
+- NO camera movement
+- NO camera rotation
+- NO yaw
+- NO character turn
+- NO front view
+- NO back view
+- NO opposite-side view
+- NO perspective change
+- NO torso rotation
+- NO depth rotation
+- NO body morphing
+- NO anatomy regeneration
+- NO walking
+- NO dancing
+
+If the arm motion would require changing the character view or perspective, keep the original view instead.
+
+[End Condition]
+Return exactly to the original input pose.
+
+The first frame and final frame should visually match the supplied reference image as closely as the model permits.
