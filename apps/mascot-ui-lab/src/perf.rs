@@ -218,8 +218,9 @@ fn cpu_name() -> String {
         .unwrap_or_default()
 }
 
-fn gpu_name(app: &App) -> String {
+fn gpu_name(app: *const App) -> String {
     unsafe {
+        let app = &*app;
         windows::core::Interface::cast::<windows::Win32::Graphics::Dxgi::IDXGIDevice>(
             &app.renderer.d3d,
         )
@@ -318,45 +319,53 @@ pub fn run_child() -> Result<(), String> {
     }
     let app = Box::leak(Box::new(app));
     let app_ptr: *mut App = app;
+
+    /// Fresh app borrow for a single statement. `*app` is also written by
+    /// the wndproc through `APP_PTR` inside `DispatchMessageW`, so a `&mut`
+    /// bound across a pump gives LLVM a `noalias` license to cache field
+    /// loads. Never bind the result across `pump_*`/`pump_once` calls.
+    fn am<'x>(app: *mut App) -> &'x mut App {
+        unsafe { &mut *app }
+    }
     // Non-activating window: the idle measurement is "composer open,
     // UNFOCUSED" — a WS_VISIBLE window would take keyboard focus (timing of
     // the WM_SETFOCUS is what made idle presents flaky).
     let hwnd = app::create_opts(app, ax, ay, true).map_err(|e| e.to_string())?;
-    let app: &mut App = unsafe { &mut *app_ptr };
+    let app = app_ptr;
     // present the first frame now and measure creation->first Present+Commit
-    while app.dirty {
-        app.present_if_dirty().map_err(|e| e.to_string())?;
+    while am(app).dirty {
+        am(app).present_if_dirty().map_err(|e| e.to_string())?;
         app::pump_once();
     }
     let first_show_ms = (filetime_now().saturating_sub(created_ft)) as f64 / 10_000.0;
     stage(&mut stages, "first_show", proc_start);
     // GPU heap trim: IDXGIDevice3::Trim + ID2D1Device::ClearResources —
     // releases driver-side heaps built during init/sprite/first frame.
-    app.trim_gpu();
+    am(app).trim_gpu();
     stage(&mut stages, "after_gpu_trim", proc_start);
     // drain creation/show-time editor events so the idle window starts clean
-    app.process_editor_events();
-    app.dirty = false;
-    app.dirty_reasons.clear();
+    am(app).process_editor_events();
+    am(app).dirty = false;
+    am(app).dirty_reasons.clear();
     let cores = logical_cores();
 
     // -- static idle 10 s, composer open, unfocused --------------------------
-    let (p0, w0, c0) = (app.present_count, app.paint_count, cpu_secs());
-    let r0 = app.present_reasons.len();
+    let (p0, w0, c0) = (am(app).present_count, am(app).paint_count, cpu_secs());
+    let r0 = am(app).present_reasons.len();
     let secs = pump_for(10_000);
-    let idle_presents = app.present_count - p0;
-    let idle_paints = app.paint_count - w0;
+    let idle_presents = am(app).present_count - p0;
+    let idle_paints = am(app).paint_count - w0;
     let idle_cpu_pct = (cpu_secs() - c0) / (secs * cores) * 100.0;
-    let idle_reasons: Vec<String> = app.present_reasons[r0..].to_vec();
+    let idle_reasons: Vec<String> = am(app).present_reasons[r0..].to_vec();
 
     // -- focused idle: blink phase, then post-timeout quiet ------------------
-    app.focus_editor();
+    am(app).focus_editor();
     app::pump_once();
-    let blink_p0 = app.present_count;
-    let blink_r0 = app.present_reasons.len();
+    let blink_p0 = am(app).present_count;
+    let blink_r0 = am(app).present_reasons.len();
     pump_for(2_200); // blink phase: ~4 caret toggles at the 530ms default
-    let blink_frames = app.present_count - blink_p0;
-    let blink_reasons: Vec<String> = app.present_reasons[blink_r0..].to_vec();
+    let blink_frames = am(app).present_count - blink_p0;
+    let blink_reasons: Vec<String> = am(app).present_reasons[blink_r0..].to_vec();
     // wait for the caret timeout to freeze the blink (default 5 s)
     let mut timeout_ms = 5000u32;
     unsafe {
@@ -369,20 +378,20 @@ pub fn run_child() -> Result<(), String> {
         );
     }
     pump_for(timeout_ms as u64 + 800);
-    let quiet_p0 = app.present_count;
-    let quiet_r0 = app.present_reasons.len();
+    let quiet_p0 = am(app).present_count;
+    let quiet_r0 = am(app).present_reasons.len();
     let quiet_secs = pump_for(10_000);
-    let quiet_presents = app.present_count - quiet_p0;
-    let quiet_reasons: Vec<String> = app.present_reasons[quiet_r0..].to_vec();
+    let quiet_presents = am(app).present_count - quiet_p0;
+    let quiet_reasons: Vec<String> = am(app).present_reasons[quiet_r0..].to_vec();
     let _ = quiet_secs;
 
     // -- theme switch x20 (state change -> present returned) ------------------
     let mut theme_ms = Vec::with_capacity(20);
     for _ in 0..20 {
-        app.state.theme = app.state.theme.other();
+        am(app).state.theme = am(app).state.theme.other();
         let t = Instant::now();
-        app.apply_theme();
-        app.present_if_dirty().map_err(|e| e.to_string())?;
+        am(app).apply_theme();
+        am(app).present_if_dirty().map_err(|e| e.to_string())?;
         theme_ms.push(t.elapsed().as_secs_f64() * 1000.0);
         app::pump_once();
     }
@@ -391,16 +400,16 @@ pub fn run_child() -> Result<(), String> {
     // -- submit -> response x20 ----------------------------------------------
     let mut submit_ms = Vec::with_capacity(20);
     for _ in 0..20 {
-        let _ = app.editor.set_text("perf probe: ship the composer");
-        app.state.editor_empty = false;
-        app.focus_editor();
-        app.process_editor_events();
+        let _ = am(app).editor.set_text("perf probe: ship the composer");
+        am(app).state.editor_empty = false;
+        am(app).focus_editor();
+        am(app).process_editor_events();
         let t = Instant::now();
-        app.submit();
-        app.response_arrived();
-        app.present_if_dirty().map_err(|e| e.to_string())?;
+        am(app).submit();
+        am(app).response_arrived();
+        am(app).present_if_dirty().map_err(|e| e.to_string())?;
         submit_ms.push(t.elapsed().as_secs_f64() * 1000.0);
-        app.state.surface = Surface::Composer;
+        am(app).state.surface = Surface::Composer;
         app::pump_once();
     }
     submit_ms.sort_by(|a, b| a.partial_cmp(b).unwrap());
@@ -409,12 +418,12 @@ pub fn run_child() -> Result<(), String> {
     let res_before = snap();
     let mut open_ms = Vec::with_capacity(100);
     for _ in 0..100 {
-        app.escape();
+        am(app).escape();
         app::pump_once();
         let t = Instant::now();
-        app.open_composer();
-        while app.dirty {
-            app.present_if_dirty().map_err(|e| e.to_string())?;
+        am(app).open_composer();
+        while am(app).dirty {
+            am(app).present_if_dirty().map_err(|e| e.to_string())?;
             app::pump_once();
         }
         open_ms.push(t.elapsed().as_secs_f64() * 1000.0);
@@ -425,10 +434,10 @@ pub fn run_child() -> Result<(), String> {
     // -- growth: 1000 open/close cycles, sampled every 100 --------------------
     let mut growth: Vec<serde_json::Value> = Vec::new();
     for i in 0..1000 {
-        app.escape();
-        app.open_composer();
-        while app.dirty {
-            app.present_if_dirty().map_err(|e| e.to_string())?;
+        am(app).escape();
+        am(app).open_composer();
+        while am(app).dirty {
+            am(app).present_if_dirty().map_err(|e| e.to_string())?;
             app::pump_once();
         }
         if (i + 1) % 100 == 0 {
@@ -467,7 +476,7 @@ pub fn run_child() -> Result<(), String> {
         "head": git(&["rev-parse", "HEAD"]),
         "dirty": git_dirty(),
         "profile": if cfg!(debug_assertions) { "dev" } else { "release" },
-        "font": app.painter.fonts.family,
+        "font": am(app).painter.fonts.family,
     });
     let metrics = json!({
         "rig_load_ms": rig_ms,

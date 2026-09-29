@@ -640,7 +640,10 @@ impl App {
                 self.blur_editor();
                 self.state.cycle_focus(shift);
                 if self.state.interaction.focus == Some(ControlId::Editor) {
-                    self.editor.send(WM_SETFOCUS, 0, 0);
+                    // full focus path: arms the caret timer — a nested
+                    // WM_SETFOCUS from TxSetFocus->SetFocus(hwnd) is skipped
+                    // by the re-entry guard
+                    self.focus_editor();
                 }
                 self.present_if_dirty().ok();
                 0
@@ -792,8 +795,10 @@ impl App {
                 self.mark_dirty("press");
             }
             Hit::Editor => {
-                self.state.set_focus(Some(ControlId::Editor), false);
-                self.editor.send(WM_SETFOCUS, 0, 0);
+                // focus_editor also re-arms the caret timer and restarts the
+                // blink countdown — the nested WM_SETFOCUS richedit raises via
+                // TxSetFocus->SetFocus(hwnd) is skipped by the re-entry guard
+                self.focus_editor();
                 if let Some(e) = self.layout.editor {
                     self.editor.send(
                         WM_LBUTTONDOWN,
@@ -956,17 +961,40 @@ fn clipboard_write(text: &str) -> Result<()> {
 
 thread_local! {
     static APP_PTR: RefCell<*mut App> = const { RefCell::new(std::ptr::null_mut()) };
+    /// Set while a `with_app` call is running. A synchronous re-entrant
+    /// message (e.g. `SetFocus(hwnd)` inside richedit's `TxSetFocus`, which
+    /// delivers `WM_SETFOCUS` while `wm_lbuttondown` is still on the stack)
+    /// would otherwise create a second live `&mut App` — UB.
+    static IN_APP: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+    /// Diagnostic counter: how often the re-entry guard fired. Readable by
+    /// tests via `reentry_skips`.
+    static REENTRY_SKIPS: std::cell::Cell<u32> = const { std::cell::Cell::new(0) };
+}
+
+/// Number of wndproc messages skipped because an app call was already on the
+/// stack (see `IN_APP`). Skips are expected-by-design; the outer handler is
+/// responsible for any state the nested call would have set.
+pub fn reentry_skips() -> u32 {
+    REENTRY_SKIPS.with(|c| c.get())
 }
 
 fn with_app<R>(f: impl FnOnce(&mut App) -> R) -> Option<R> {
-    APP_PTR.with(|p| {
+    if IN_APP.replace(true) {
+        // re-entrant sent message during an app call: refuse the second
+        // borrow; the wndproc falls back to its default path
+        REENTRY_SKIPS.with(|c| c.set(c.get() + 1));
+        return None;
+    }
+    let r = APP_PTR.with(|p| {
         let p = *p.borrow();
         if p.is_null() {
             None
         } else {
             Some(unsafe { f(&mut *p) })
         }
-    })
+    });
+    IN_APP.set(false);
+    r
 }
 
 unsafe extern "system" fn wndproc(hwnd: HWND, msg: u32, w: WPARAM, l: LPARAM) -> LRESULT {

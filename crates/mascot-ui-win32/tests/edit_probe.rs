@@ -236,6 +236,13 @@ fn app_scale_switch() {
     );
 }
 
+/// Fresh app borrow for a single statement — `*app` is also written by the
+/// wndproc through `APP_PTR` inside `pump_once`, so a `&mut` bound across a
+/// pump lets LLVM cache field loads (the `enter-submits` stale-read bug).
+fn am<'x>(app: *mut mascot_ui_win32::app::App) -> &'x mut mascot_ui_win32::app::App {
+    unsafe { &mut *app }
+}
+
 /// Caret blink: after focus, the host timer should toggle the caret (presents
 /// during blink), then freeze after SPI_GETCARETTIMEOUT.
 #[test]
@@ -260,27 +267,100 @@ fn caret_blink_presents() {
     app.open_composer();
     let app_ptr: *mut mascot_ui_win32::app::App = Box::leak(Box::new(app));
     let hwnd = mascot_ui_win32::app::create(unsafe { &mut *app_ptr }, 60, 60).unwrap();
-    let app: &mut mascot_ui_win32::app::App = unsafe { &mut *app_ptr };
-    app.focus_editor();
+    let app = app_ptr;
+    am(app).focus_editor();
     for _ in 0..20 {
         mascot_ui_win32::app::pump_once();
         std::thread::sleep(std::time::Duration::from_millis(5));
     }
-    let p0 = app.present_count;
+    let p0 = am(app).present_count;
     let t0 = std::time::Instant::now();
     while t0.elapsed().as_millis() < 1800 {
         mascot_ui_win32::app::pump_once();
         std::thread::sleep(std::time::Duration::from_millis(4));
     }
-    let blink_frames = app.present_count - p0;
-    let (created, pos, size) = app.editor.caret_info();
+    let blink_frames = am(app).present_count - p0;
+    let (created, pos, size) = am(app).editor.caret_info();
     println!("blink_presents={blink_frames} caret=({created} {pos:?} {size:?}) hwnd={hwnd:?}");
     assert!(created, "caret never created");
     assert!(
         blink_frames >= 2,
         "expected blink toggles, got {blink_frames}"
     );
-    let _ = app;
+}
+
+/// Re-entrancy: clicking the editor while the window does NOT have OS focus
+/// makes richedit's `TxSetFocus` call `SetFocus(hwnd)`, which delivers a
+/// synchronous `WM_SETFOCUS` while `wm_lbuttondown` is still on the stack —
+/// a nested `with_app`. The in_app guard must skip it (counted in
+/// `reentry_skips`) and the outer handler must leave focus/caret consistent
+/// itself.
+#[test]
+fn click_editor_reentry() {
+    let mut dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let rig = loop {
+        let cand = dir.join("assets/mascot/rig-v0.2");
+        if cand.join("rig.json").exists() {
+            break mascot_animation::Rig::load(&cand).unwrap();
+        }
+        if !dir.pop() {
+            panic!("rig not found");
+        }
+    };
+    let mut app = mascot_ui_win32::app::App::new(
+        mascot_render_win32::renderer::DeviceKind::Warp,
+        rig,
+        HWND::default(),
+        1.0,
+    )
+    .unwrap();
+    app.open_composer();
+    let app_ptr: *mut mascot_ui_win32::app::App = Box::leak(Box::new(app));
+    // no_activate: the window never takes OS focus, so richedit's
+    // SetFocus(hwnd) inside TxSetFocus is a real focus change
+    let hwnd = mascot_ui_win32::app::create_opts(unsafe { &mut *app_ptr }, 60, 60, true).unwrap();
+    let app = app_ptr;
+    assert_eq!(
+        unsafe { windows::Win32::UI::Input::KeyboardAndMouse::GetFocus() },
+        HWND::default(),
+        "precondition: our window must not already hold focus"
+    );
+    let skips0 = mascot_ui_win32::app::reentry_skips();
+    // click inside the editor rect (scale 1: DIP == px)
+    let e = am(app).layout.editor.unwrap();
+    let (cx, cy) = ((e.x + e.w / 2.0) as i32, (e.y + e.h / 2.0) as i32);
+    let lp = ((cy as u32) << 16 | (cx as u32 & 0xFFFF)) as isize;
+    unsafe {
+        use windows::Win32::Foundation::{LPARAM, WPARAM};
+        use windows::Win32::System::SystemServices::MK_LBUTTON;
+        let _ = PostMessageW(
+            Some(hwnd),
+            WM_LBUTTONDOWN,
+            WPARAM(MK_LBUTTON.0 as usize),
+            LPARAM(lp),
+        );
+        let _ = PostMessageW(Some(hwnd), WM_LBUTTONUP, WPARAM(0), LPARAM(lp));
+    }
+    for _ in 0..10 {
+        mascot_ui_win32::app::pump_once();
+        std::thread::sleep(std::time::Duration::from_millis(5));
+    }
+    let skips1 = mascot_ui_win32::app::reentry_skips();
+    println!(
+        "reentry_skips {skips0} -> {skips1} (delta {})",
+        skips1 - skips0
+    );
+    assert_eq!(
+        am(app).state.interaction.focus,
+        Some(mascot_ui::ControlId::Editor),
+        "click must focus the editor even when the nested WM_SETFOCUS is skipped"
+    );
+    assert!(am(app).editor.caret().is_some(), "caret created+shown");
+    unsafe {
+        let _ = DestroyWindow(hwnd);
+        while mascot_ui_win32::app::pump_once() {}
+    }
+    mascot_ui_win32::app::unbind();
 }
 
 /// The editor's client rect is in DIPs, so REQRESIZE returns the same size

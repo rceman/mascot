@@ -99,7 +99,7 @@ pub fn run() -> Result<(), String> {
     }
 
     let ok = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-        run_checks(unsafe { &mut *app_ptr }, hwnd, &out, &mut checks);
+        run_checks(app_ptr, hwnd, &out, &mut checks);
     }));
     if let Err(e) = ok {
         checks.push(Check {
@@ -195,7 +195,7 @@ extern "system" fn backdrop_proc(hwnd: HWND, msg: u32, w: WPARAM, l: LPARAM) -> 
     unsafe { DefWindowProcW(hwnd, msg, w, l) }
 }
 
-fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec<Check>) {
+fn run_checks(app: *mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec<Check>) {
     pump_for(200);
 
     macro_rules! check {
@@ -241,7 +241,7 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
     // --- ASCII typing ------------------------------------------------------
     send_text("hello");
     drain_input();
-    let t = app.editor.text();
+    let t = am(app).editor.text();
     if t == "hello" {
         check!("ascii-typing", json!({"text": t}));
     } else {
@@ -256,7 +256,7 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
     send_unicode("語");
     send_unicode("\u{1F44B}"); // 👋 surrogate pair
     drain_input();
-    let t = app.editor.text();
+    let t = am(app).editor.text();
     if t == "hello Ü日本語\u{1F44B}" {
         check!("unicode-typing", json!({"text": t}));
     } else {
@@ -265,15 +265,15 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
 
     release_modifiers();
     // --- Home/End/Shift+End/Ctrl nav --------------------------------------
-    app.editor.set_selection(0, 0);
+    am(app).editor.set_selection(0, 0);
     pump_for(30);
     let u16len = t.encode_utf16().count() as i32;
     key_press(VK_END, 0);
-    let ok = pump_until(800, || {
-        let (a, b) = app.editor.selection();
-        a == u16len && b == a
+    let ok = pump_until(app, 800, |a| unsafe {
+        let (s, e) = (*a).editor.selection();
+        s == u16len && e == s
     });
-    let (a, b) = app.editor.selection();
+    let (a, b) = am(app).editor.selection();
     check_or(
         checks,
         "caret-end",
@@ -281,8 +281,8 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
         json!({"sel": [a, b], "u16len": u16len}),
     );
     key_press(VK_HOME, 0);
-    pump_until(300, || app.editor.selection() == (0, 0));
-    let (a, b) = app.editor.selection();
+    pump_until(app, 300, |a| unsafe { (*a).editor.selection() == (0, 0) });
+    let (a, b) = am(app).editor.selection();
     check_or(
         checks,
         "caret-home",
@@ -290,8 +290,10 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
         json!({"sel": [a, b]}),
     );
     chord(&[VK_LSHIFT], VK_END);
-    pump_until(300, || app.editor.selection() == (0, u16len));
-    let (a, b) = app.editor.selection();
+    pump_until(app, 300, |a| unsafe {
+        (*a).editor.selection() == (0, u16len)
+    });
+    let (a, b) = am(app).editor.selection();
     check_or(
         checks,
         "shift-end",
@@ -299,8 +301,8 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
         json!({"sel": [a, b], "u16len": u16len}),
     );
     chord(&[VK_LCONTROL], VK_LEFT);
-    pump_until(300, || app.editor.selection().0 < u16len);
-    let (a, b) = app.editor.selection();
+    pump_until(app, 300, |a| unsafe { (*a).editor.selection().0 < u16len });
+    let (a, b) = am(app).editor.selection();
     check_or(
         checks,
         "ctrl-left-word",
@@ -317,13 +319,13 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
     for _ in 0..4 {
         copy_attempts += 1;
         chord(&[VK_LCONTROL], VK_A);
-        pump_until(300, || {
-            let (a, b) = app.editor.selection();
-            a == 0 && b == u16len
+        pump_until(app, 300, |a| unsafe {
+            let (s, e) = (*a).editor.selection();
+            s == 0 && e == u16len
         });
-        sel_seen = app.editor.selection();
+        sel_seen = am(app).editor.selection();
         chord(&[VK_LCONTROL], VK_C);
-        pump_until(300, || {
+        pump_until(app, 300, |_a| {
             clipboard_read_text().map(|c| c == t).unwrap_or(false)
         });
         clip = clipboard_read_text().unwrap_or_default();
@@ -347,8 +349,8 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
     key_press(VK_END, 0);
     drain_input();
     chord(&[VK_LCONTROL], VK_V);
-    pump_until(400, || app.editor.text().len() > t.len());
-    let t2 = app.editor.text();
+    pump_until(app, 400, |a| unsafe { (*a).editor.text().len() > t.len() });
+    let t2 = am(app).editor.text();
     check_or(
         checks,
         "ctrl-v-paste",
@@ -369,17 +371,17 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
 
     release_modifiers();
     // --- Shift+Enter -> newline, height grows ------------------------------
-    let h0 = app.layout.window.h;
+    let h0 = am(app).layout.window.h;
     chord(&[VK_LSHIFT], VK_RETURN);
-    pump_until(500, || app.editor.text().contains('\r'));
-    let t3 = app.editor.text();
+    pump_until(app, 500, |a| unsafe { (*a).editor.text().contains('\r') });
+    let t3 = am(app).editor.text();
     let mut got_nl = t3.contains('\n');
     if !got_nl {
         // rich edit may report \r internally — accept CR too
         got_nl = t3.contains('\r');
     }
-    app.process_editor_events();
-    app.relayout().ok();
+    am(app).process_editor_events();
+    am(app).relayout().ok();
     check_or(
         checks,
         "shift-enter-newline",
@@ -389,26 +391,26 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
     check_or(
         checks,
         "shift-enter-height-grows",
-        app.layout.window.h > h0,
-        json!({"before": h0, "after": app.layout.window.h}),
+        am(app).layout.window.h > h0,
+        json!({"before": h0, "after": am(app).layout.window.h}),
     );
 
     release_modifiers();
     // --- 12 lines -> clamped at max ---------------------------------------
     let lines = "l1\nl2\nl3\nl4\nl5\nl6\nl7\nl8\nl9\nl10\nl11\nl12";
-    let st_res = app
+    let st_res = am(app)
         .editor
         .set_text(lines)
         .map(|_| "ok".to_string())
         .unwrap_or_else(|e| e.to_string());
-    app.state.editor_empty = false;
-    app.process_editor_events();
-    app.relayout().ok();
+    am(app).state.editor_empty = false;
+    am(app).process_editor_events();
+    am(app).relayout().ok();
     pump_for(60);
-    let text_now = app.editor.text();
-    let nat = app.editor.natural_size(336.0).unwrap_or_default();
+    let text_now = am(app).editor.text();
+    let nat = am(app).editor.natural_size(336.0).unwrap_or_default();
     let max_h = mascot_ui::layout::composer_height(12.0 * mascot_ui::theme::tokens::BODY_LINE);
-    let comp_h = app.layout.composer.unwrap().h;
+    let comp_h = am(app).layout.composer.unwrap().h;
     check_or(
         checks,
         "composer-clamp",
@@ -424,78 +426,41 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
 
     release_modifiers();
     // --- Enter submits -----------------------------------------------------
-    app.focus_editor();
-    app.state.editor_empty = false;
-    app.process_editor_events();
-    let mut pressed = false;
-    let mut enter_attempts = 0u32;
-    let mut enter_log: Vec<serde_json::Value> = Vec::new();
-    let mut submit_at_ms = 0u128;
-    for _ in 0..3 {
-        enter_attempts += 1;
-        let press_t0 = std::time::Instant::now();
-        key_press(VK_RETURN, 0);
-        // 1.5s: SendInput delivery on this VM occasionally lands just past a
-        // 500ms deadline (attempt log showed the submit racing the timeout)
-        if pump_until(1500, || {
-            app.state.activity == mascot_ui::state::Activity::Submitting
-        }) {
-            pressed = true;
-            submit_at_ms = press_t0.elapsed().as_millis();
-            break;
-        }
-        // record when the late submit actually lands (bounded extra wait)
-        let _ = pump_until(3000, || {
-            app.state.activity == mascot_ui::state::Activity::Submitting
-        });
-        if app.state.activity == mascot_ui::state::Activity::Submitting {
-            submit_at_ms = press_t0.elapsed().as_millis();
-        }
-        // why did this attempt not submit? capture concrete evidence:
-        // text tail (a trailing newline = Shift was still latched when the
-        // Enter was processed -> Shift+Enter newline path), queue status,
-        // modifier state and the char trace tail.
-        let tail: String = app.editor.text().chars().rev().take(8).collect();
-        let shift = unsafe { GetKeyState(VK_SHIFT.0 as i32) };
-        let ctrl = unsafe { GetKeyState(VK_CONTROL.0 as i32) };
-        let queue = unsafe { GetQueueStatus(QS_ALLINPUT) };
-        let focus_hwnd = unsafe { GetFocus() };
-        let fg_hwnd = unsafe { GetForegroundWindow() };
-        enter_log.push(json!({
-            "attempt": enter_attempts,
-            "text_tail": tail.chars().rev().collect::<String>(),
-            "newline_appended": tail.starts_with('\n'),
-            "shift_state": shift,
-            "ctrl_state": ctrl,
-            "queue_status": queue,
-            "focus_is_us": focus_hwnd == hwnd,
-            "foreground_is_us": fg_hwnd == hwnd,
-            "activity": format!("{:?}", app.state.activity),
-            "char_trace_tail": &app.char_trace[app.char_trace.len().saturating_sub(4)..],
-            "press_to_submit_ms": press_t0.elapsed().as_millis(),
-        }));
-    }
-    let submitted = pressed;
+    am(app).focus_editor();
+    am(app).state.editor_empty = false;
+    am(app).process_editor_events();
+    let press_t0 = std::time::Instant::now();
+    key_press(VK_RETURN, 0);
+    let submitted = pump_until(app, 500, |a| unsafe {
+        (*a).state.activity == mascot_ui::state::Activity::Submitting
+    });
+    let press_to_submit_ms = press_t0.elapsed().as_millis();
+    // regression guard: injection → Submitting must be fast — a stale poll
+    // read or a real product stall both surface as a violation here
+    check_or(
+        checks,
+        "enter-submit-latency",
+        submitted && press_to_submit_ms < 250,
+        json!({"press_to_submit_ms": press_to_submit_ms}),
+    );
     let norm = |t: &str| t.replace('\r', "\n");
     check_or(
         checks,
         "enter-submits",
-        submitted && norm(&app.last_submitted) == norm(lines),
+        submitted && norm(&am(app).last_submitted) == norm(lines),
         json!({
-            "submitted": app.last_submitted.chars().take(20).collect::<String>(),
-            "editor_empty": app.state.editor_empty,
-            "activity": format!("{:?}", app.state.activity),
-            "focus": format!("{:?}", app.state.interaction.focus),
-            "surface": format!("{:?}", app.state.surface),
-            "char_trace": format!("{:?}", app.char_trace),
-            "attempts": enter_attempts,
-            "attempt_log": enter_log,
-            "submit_at_ms": submit_at_ms,
+            "submitted": am(app).last_submitted.chars().take(20).collect::<String>(),
+            "editor_empty": am(app).state.editor_empty,
+            "activity": format!("{:?}", am(app).state.activity),
+            "focus": format!("{:?}", am(app).state.interaction.focus),
+            "surface": format!("{:?}", am(app).state.surface),
+            "char_trace": format!("{:?}", am(app).char_trace),
+            "press_to_submit_ms": press_to_submit_ms,
         }),
     );
     // simulate response + follow-up empty (the real arrival path restores
     // read-write + undimmed text and clears the composer)
-    app.response_arrived();
+    am(app).response_arrived();
     pump_for(60);
 
     // --- Enter on empty does nothing ---------------------------------------
@@ -505,7 +470,7 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
     check_or(
         checks,
         "enter-empty-noop",
-        app.state.activity != mascot_ui::state::Activity::Submitting,
+        am(app).state.activity != mascot_ui::state::Activity::Submitting,
         json!({}),
     );
 
@@ -514,7 +479,7 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
     // focus may start anywhere (submit leaves it on Stop); Tab until a
     // non-Editor control is focused, since the editor intentionally shows no
     // focus-visible ring
-    let f0 = app.state.interaction.focus;
+    let f0 = am(app).state.interaction.focus;
     let mut seen: Vec<String> = Vec::new();
     let mut tab_attempts = 0usize;
     for _ in 0..6 {
@@ -522,22 +487,22 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
         key_press(VK_TAB, 0);
         // wait for delivery AND state, not just state: a late-arriving Tab
         // must not be counted as a press that did nothing
-        pump_until(800, || app.state.interaction.focus != f0);
-        seen.push(format!("{:?}", app.state.interaction.focus));
-        if app.state.interaction.focus != Some(ControlId::Editor) {
+        pump_until(app, 800, |a| unsafe { (*a).state.interaction.focus != f0 });
+        seen.push(format!("{:?}", am(app).state.interaction.focus));
+        if am(app).state.interaction.focus != Some(ControlId::Editor) {
             break;
         }
     }
-    let f1 = app.state.interaction.focus;
-    let vis1 = app.state.interaction.focus_visible;
+    let f1 = am(app).state.interaction.focus;
+    let vis1 = am(app).state.interaction.focus_visible;
     key_press(VK_TAB, 0);
-    pump_until(300, || app.state.interaction.focus != f1);
-    let f2 = app.state.interaction.focus;
+    pump_until(app, 300, |a| unsafe { (*a).state.interaction.focus != f1 });
+    let f2 = am(app).state.interaction.focus;
     check_or(
         checks,
         "tab-cycle",
         f1.is_some() && f2.is_some() && f1 != f2,
-        json!({"f0": f0.map(|c| format!("{c:?}")), "f1": f1.map(|c| format!("{c:?}")), "f2": f2.map(|c| format!("{c:?}")), "surface": format!("{:?}", app.state.surface)}),
+        json!({"f0": f0.map(|c| format!("{c:?}")), "f1": f1.map(|c| format!("{c:?}")), "f2": f2.map(|c| format!("{c:?}")), "surface": format!("{:?}", am(app).state.surface)}),
     );
     check_or(
         checks,
@@ -545,7 +510,7 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
         vis1,
         json!({"focus_visible_after_tab": vis1, "focus": format!("{f1:?}"), "tab_presses": tab_attempts, "seen": seen}),
     );
-    if app.state.interaction.focus == Some(ControlId::Editor) {
+    if am(app).state.interaction.focus == Some(ControlId::Editor) {
         key_press(VK_TAB, 0); // land on Send (enabled only if text present)
     }
 
@@ -557,12 +522,12 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
     ime_check(app, out, checks);
 
     // --- caret visible + blink timeout --------------------------------------
-    let _ = app.editor.set_text("caret");
-    app.state.editor_empty = false;
-    app.focus_editor();
-    app.relayout().ok();
+    let _ = am(app).editor.set_text("caret");
+    am(app).state.editor_empty = false;
+    am(app).focus_editor();
+    am(app).relayout().ok();
     pump_for(200);
-    let (created, _pos, size) = app.editor.caret_info();
+    let (created, _pos, size) = am(app).editor.caret_info();
     check_or(
         checks,
         "caret-visible",
@@ -583,7 +548,7 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
     check_or(
         checks,
         "caret-blink-timeout",
-        !app.editor.has_timers(),
+        !am(app).editor.has_timers(),
         json!({"timeout_ms": timeout_ms}),
     );
 
@@ -594,12 +559,12 @@ fn run_checks(app: &mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
     check_or(
         checks,
         "esc-closes",
-        app.state.surface == Surface::Hidden,
-        json!({"surface": format!("{:?}", app.state.surface)}),
+        am(app).state.surface == Surface::Hidden,
+        json!({"surface": format!("{:?}", am(app).state.surface)}),
     );
 
     // --- live screen capture over the lab backdrop ---------------------------
-    app.open_composer();
+    am(app).open_composer();
     pump_for(300);
     screen_capture(hwnd, out.join("selftest-screen.png"));
     checks.push(Check {
@@ -625,6 +590,17 @@ fn pump_for(ms: u64) {
         }
         std::thread::sleep(std::time::Duration::from_millis(5));
     }
+}
+
+/// Fresh app borrow for a single statement. `*app` is also written by the
+/// wndproc through `APP_PTR` (a `*mut App`) inside `DispatchMessageW`, so a
+/// `&mut App` bound for longer than one statement gives LLVM a `noalias`
+/// license to hoist/cache field loads — that is exactly what made
+/// `enter-submits` read `Idle` for the whole pump window. Never bind the
+/// result to a `let` across a `pump_*`/`drain_input`/`key_press`/`chord`
+/// call.
+fn am<'x>(app: *mut App) -> &'x mut App {
+    unsafe { &mut *app }
 }
 
 /// Waits until all injected input has been consumed by the message loop:
@@ -655,15 +631,24 @@ fn drain_input() {
 
 /// Pump until `cond` holds or the deadline passes; always drains pending
 /// injected input first so assertions see a settled state.
-fn pump_until(ms: u64, mut cond: impl FnMut() -> bool) -> bool {
+///
+/// `cond` receives the app as a raw pointer: the wndproc mutates the same
+/// `App` through `APP_PTR` (a `*mut App`) inside `DispatchMessageW`, so a
+/// `&mut App`-capturing closure gives the compiler license to hoist the
+/// field load out of this poll loop — the condition then reads the
+/// pre-loop value forever (that is exactly what stalled `enter-submits`
+/// attempt 1 to the timeout). Derefs through the raw pointer are a fresh
+/// memory read on every poll.
+fn pump_until(app: *mut App, ms: u64, mut cond: impl FnMut(*const App) -> bool) -> bool {
+    let app = app as *const App;
     let start = std::time::Instant::now();
     loop {
         drain_input();
-        if cond() {
+        if cond(app) {
             return true;
         }
         if start.elapsed().as_millis() >= ms as u128 {
-            return cond();
+            return cond(app);
         }
         std::thread::sleep(std::time::Duration::from_millis(8));
     }
@@ -888,8 +873,8 @@ fn clipboard_write_text(t: &str) -> windows::core::Result<()> {
     Ok(())
 }
 
-fn save_png(app: &mut App, path: PathBuf) {
-    if let Ok(img) = app.render_offscreen() {
+fn save_png(app: *mut App, path: PathBuf) {
+    if let Ok(img) = am(app).render_offscreen() {
         let _ = img.save(&path);
     }
 }
@@ -944,12 +929,12 @@ fn screen_capture(hwnd: HWND, path: PathBuf) {
 
 /// Dead-key verification using the Latvian (Standard) layout 00020426.
 /// Records a skip detail when the layout is unavailable on this machine.
-fn refocus_editor(app: &mut App) {
-    app.focus_editor();
+fn refocus_editor(app: *mut App) {
+    am(app).focus_editor();
     pump_for(30);
 }
 
-fn dead_key_check(app: &mut App, checks: &mut Vec<Check>) {
+fn dead_key_check(app: *mut App, checks: &mut Vec<Check>) {
     refocus_editor(app);
     unsafe {
         let layout = LoadKeyboardLayoutW(w!("00020426"), KLF_ACTIVATE);
@@ -1010,21 +995,21 @@ fn dead_key_check(app: &mut App, checks: &mut Vec<Check>) {
             ]);
             pump_for(60);
             key_press(VK_A, 0);
-            pump_until(500, || !app.editor.text().is_empty());
-            dead_text = app.editor.text();
+            pump_until(app, 500, |a| !(*a).editor.text().is_empty());
+            dead_text = am(app).editor.text();
             dead_attempts = 1;
             while dead_attempts < 4 && !(dead_text.contains('ā') || dead_text.contains('á')) {
                 dead_attempts += 1;
                 key_press(VIRTUAL_KEY(vk as u16), 0);
                 drain_input();
                 key_press(VK_A, 0);
-                pump_until(300, || {
-                    app.editor.text().len() > dead_text.len() || {
-                        let t = app.editor.text();
+                pump_until(app, 300, |a| {
+                    (*a).editor.text().len() > dead_text.len() || {
+                        let t = (*a).editor.text();
                         t.contains('ā') || t.contains('á')
                     }
                 });
-                dead_text = app.editor.text();
+                dead_text = am(app).editor.text();
             }
             dead_text.contains('ā') || dead_text.contains('á')
         } else {
@@ -1034,7 +1019,7 @@ fn dead_key_check(app: &mut App, checks: &mut Vec<Check>) {
             "dead_vk": dead_vk,
             "text": dead_text,
             "attempts": dead_attempts,
-            "trace_tail": format!("{:x?}", &app.char_trace[app.char_trace.len().saturating_sub(10)..]),
+            "trace_tail": format!("{:x?}", &am(app).char_trace[am(app).char_trace.len().saturating_sub(10)..]),
             "ctrl": GetKeyState(VK_CONTROL.0 as i32),
             "shift": GetKeyState(VK_SHIFT.0 as i32),
             "active_hkl": format!("{:p}", GetKeyboardLayout(0).0),
@@ -1069,9 +1054,9 @@ fn activate_japanese_ime() -> Result<(), String> {
 /// Japanese IME: activate the ja-JP TSF profile, type romaji, verify preedit
 /// renders and Enter commits without submitting. Skipped (pass+note) when the
 /// profile isn't installed.
-fn ime_check(app: &mut App, out: &std::path::Path, checks: &mut Vec<Check>) {
+fn ime_check(app: *mut App, out: &std::path::Path, checks: &mut Vec<Check>) {
     refocus_editor(app);
-    let before = app.editor.text();
+    let before = am(app).editor.text();
     if let Err(e) = activate_japanese_ime() {
         for name in [
             "ime-ja-preedit",
@@ -1126,23 +1111,23 @@ fn ime_check(app: &mut App, out: &std::path::Path, checks: &mut Vec<Check>) {
         pump_for(40);
     }
     pump_for(150);
-    let composing = app.state.composing;
+    let composing = am(app).state.composing;
     save_png(app, out.join("checkpoint-ime-preedit.png"));
     checks.push(Check {
         name: "ime-ja-preedit".into(),
         pass: composing,
         detail: json!({
             "composing": composing,
-            "trace": format!("{:x?}", &app.char_trace[app.char_trace.len().saturating_sub(24)..]),
+            "trace": format!("{:x?}", &am(app).char_trace[am(app).char_trace.len().saturating_sub(24)..]),
             "ctrl": unsafe { GetKeyState(VK_CONTROL.0 as i32) },
             "open": unsafe {
                 use windows::Win32::UI::Input::Ime::*;
-                let himc = ImmGetContext(app.editor.hwnd);
+                let himc = ImmGetContext(am(app).editor.hwnd);
                 let o = ImmGetOpenStatus(himc).as_bool();
                 let mut cm = IME_CONVERSION_MODE::default();
                 let mut sm = IME_SENTENCE_MODE::default();
                 let _ = ImmGetConversionStatus(himc, Some(&mut cm), Some(&mut sm));
-                let _ = ImmReleaseContext(app.editor.hwnd, himc);
+                let _ = ImmReleaseContext(am(app).editor.hwnd, himc);
                 format!("open={o} cmode={:?} smode={:?}", cm.0, sm.0)
             },
         }),
@@ -1151,9 +1136,9 @@ fn ime_check(app: &mut App, out: &std::path::Path, checks: &mut Vec<Check>) {
     // Enter commits the composition (にほん) WITHOUT submitting
     key_press(VK_RETURN, 0);
     pump_for(200);
-    let after = app.editor.text();
+    let after = am(app).editor.text();
     let committed = after != before && !after.is_empty();
-    let submitted = app.state.activity == mascot_ui::state::Activity::Submitting;
+    let submitted = am(app).state.activity == mascot_ui::state::Activity::Submitting;
     checks.push(Check {
         name: "ime-ja-commit".into(),
         pass: committed,
@@ -1171,13 +1156,13 @@ fn ime_check(app: &mut App, out: &std::path::Path, checks: &mut Vec<Check>) {
         pump_for(40);
     }
     pump_for(100);
-    let mid = app.editor.text();
+    let mid = am(app).editor.text();
     key_press(VK_ESCAPE, 0);
     pump_for(150);
-    let post = app.editor.text();
+    let post = am(app).editor.text();
     checks.push(Check {
         name: "ime-ja-esc-cancel".into(),
-        pass: post.len() <= mid.len() && app.state.surface != mascot_ui::state::Surface::Hidden,
+        pass: post.len() <= mid.len() && am(app).state.surface != mascot_ui::state::Surface::Hidden,
         detail: json!({"mid": mid, "post": post}),
     });
 }
