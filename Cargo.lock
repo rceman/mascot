@@ -75,6 +75,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "mascot-icons"
+version = "0.2.0"
+
+[[package]]
 name = "mascot-render-win32"
 version = "0.2.0"
 dependencies = [
@@ -82,6 +86,39 @@ dependencies = [
  "png",
  "serde_json",
  "windows",
+ "windows-numerics",
+]
+
+[[package]]
+name = "mascot-ui"
+version = "0.2.0"
+dependencies = [
+ "mascot-icons",
+]
+
+[[package]]
+name = "mascot-ui-lab"
+version = "0.2.0"
+dependencies = [
+ "mascot-animation",
+ "mascot-icons",
+ "mascot-render-win32",
+ "mascot-ui",
+ "mascot-ui-win32",
+ "serde_json",
+ "windows",
+]
+
+[[package]]
+name = "mascot-ui-win32"
+version = "0.2.0"
+dependencies = [
+ "mascot-animation",
+ "mascot-icons",
+ "mascot-render-win32",
+ "mascot-ui",
+ "windows",
+ "windows-core",
  "windows-numerics",
 ]
 

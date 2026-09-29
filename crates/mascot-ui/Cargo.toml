@@ -1,0 +1,9 @@
+[package]
+name = "mascot-ui"
+description = "Platform-independent Mascot UI semantics: DIP layout, tokens, state model, hit testing"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+mascot-icons.workspace = true

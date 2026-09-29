@@ -1,0 +1,12 @@
+[package]
+name = "mascot-icons"
+description = "Typed icon vocabulary: upstream Lucide geometry baked to compact native path data"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+
+[[bin]]
+name = "mascot-icons-gen"
+path = "src/bin/mascot-icons-gen.rs"

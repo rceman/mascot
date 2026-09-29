@@ -1,0 +1,28 @@
+[package]
+name = "mascot-ui-lab"
+description = "Developer lab for the Mascot native UI foundation (states, capture, perf, selftest)"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+mascot-animation.workspace = true
+mascot-icons.workspace = true
+mascot-render-win32.workspace = true
+mascot-ui.workspace = true
+mascot-ui-win32.workspace = true
+serde_json.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows = { workspace = true, features = [
+    "Win32_System_Ole",
+    "Win32_System_DataExchange",
+    "Win32_System_Memory",
+    "Win32_System_Diagnostics_ToolHelp",
+    "Win32_UI_Input_Ime",
+    "Win32_UI_TextServices",
+    "Win32_System_Variant",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+    "Win32_System_ProcessStatus",
+] }

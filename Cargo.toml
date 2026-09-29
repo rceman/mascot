@@ -2,8 +2,12 @@
 resolver = "3"
 members = [
     "crates/mascot-animation",
+    "crates/mascot-icons",
     "crates/mascot-render-win32",
+    "crates/mascot-ui",
+    "crates/mascot-ui-win32",
     "apps/mascot-animation-lab",
+    "apps/mascot-ui-lab",
 ]
 # The v0.1 prototype app is an independent package with its own lockfile.
 exclude = ["rust"]
@@ -15,11 +19,15 @@ publish = false
 
 [workspace.dependencies]
 mascot-animation = { path = "crates/mascot-animation" }
+mascot-icons = { path = "crates/mascot-icons" }
 mascot-render-win32 = { path = "crates/mascot-render-win32" }
+mascot-ui = { path = "crates/mascot-ui" }
+mascot-ui-win32 = { path = "crates/mascot-ui-win32" }
 serde = { version = "=1.0.228", features = ["derive"] }
 serde_json = "=1.0.150"
 png = "=0.18.1"
 windows-numerics = "=0.3.1"
+windows-core = "=0.62.2"
 windows = { version = "=0.62.2", features = [
     "Win32_Foundation",
     "Win32_Graphics_Direct2D",

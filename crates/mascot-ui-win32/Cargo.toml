@@ -1,0 +1,30 @@
+[package]
+name = "mascot-ui-win32"
+description = "Win32 host for mascot-ui: DComp transparent window, D2D/DWrite painter, windowless RichEdit"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+mascot-animation.workspace = true
+mascot-icons.workspace = true
+mascot-render-win32.workspace = true
+mascot-ui.workspace = true
+windows-core.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows = { workspace = true, features = [
+    "Win32_Graphics_DirectComposition",
+    "Win32_System_Ole",
+    "Win32_UI_Controls_RichEdit",
+    "Win32_UI_Input_Ime",
+    "Win32_System_SystemServices",
+    "Win32_Graphics_Dwm",
+    "Win32_System_DataExchange",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_System_Kernel",
+    "Win32_System_Memory",
+    "Win32_UI_Accessibility",
+    "Win32_System_Variant",
+] }
+windows-numerics.workspace = true
