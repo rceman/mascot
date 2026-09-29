@@ -184,6 +184,39 @@ Before downloading heavyweight checkpoints, write:
 
 Use primary/official sources where possible.
 
+### Read each official Hugging Face model page before installation
+
+For every candidate with an official Hugging Face page/model card:
+
+1. read the model page/model card in full enough to capture installation and inference guidance;
+2. follow its official/recommended local usage path unless there is a documented reason not to;
+3. also inspect the upstream repository README/docs referenced by the model page;
+4. record exact environment expectations before installing anything.
+
+Capture, where specified:
+
+- Python version;
+- PyTorch version;
+- CUDA/runtime version;
+- Diffusers/Transformers/Accelerate versions;
+- xFormers / Flash Attention / custom kernel requirements;
+- model-specific pip packages or source installs;
+- official checkpoint/revision;
+- dtype / FP8 / quantization guidance;
+- offload settings;
+- supported resolutions/frame counts;
+- recommended steps / scheduler / CFG/guidance;
+- official example command/code;
+- known GPU/VRAM caveats.
+
+Do not guess versions that the model page already specifies.
+
+Do not use a random third-party setup as the initial authority when the official Hugging Face page or upstream repository provides a working installation/usage guide.
+
+If official sources conflict, document the conflict before changing environments.
+
+Pin the environment actually used for each backend so another agent can reproduce it.
+
 Research current candidates available at execution time.
 
 Seed candidates to verify:
