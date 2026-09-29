@@ -1010,3 +1010,63 @@ No existing MUST/FAIL rule in this document is contradicted. One divergence is r
 ### H. Props
 
 - **AR-21.** The laptop MUST become a separate prop rig with a switchable mount relation to the character, not a child bone of `hips`. Body art beneath it MUST be complete. Contacts (chin/lid, paw/lid, foot/base) are declared class B pairs and future IK targets.
+
+---
+
+## Architecture Compatibility Addendum
+
+**Source:** `docs/MASCOT_UNIVERSAL_CHARACTER_ARCHITECTURE_V0.1.md` (MASCOT-CHAR-ARCH-004). Section references `UA§n` point there.
+
+**Authority:** `docs/MASCOT_UNIVERSAL_CHARACTER_PIPELINE_V0.1.md` (UCP) decisions D1–D7.
+
+**Status:** agent-proposed, for Planner review. The Agent Research Addendum above is **not rewritten**. This section records, for each agent rule, whether it is compatible with the universal direction, and proposes corrected text where it is not. Where the two differ, the corrected rule applies once Planner approves.
+
+### U-A. Status of the Agent Research Addendum rules
+
+| Rule | Status | Note / corrected rule |
+|---|---|---|
+| §A divergence (seated bind) | **Superseded by UCP D1** | The bind pose is the profile's relaxed right-facing 3/4 neutral pose (`biped-3q-v1`, UA§4–5). The seated/laptop pose is a pose state (UA§11). |
+| AR-1 | Compatible, generalized | "The flattened identity reference of any character (for the current mascot `assets/mascot.png`) MUST NOT be a direct source of production rig parts. Production parts come from that character's CharacterSource over the profile dummy." |
+| AR-2 | Compatible, clarified | The "layered complete-part master" is the character's prepared art (`assets/characters/<id>/art/`), derived from the assembled source plus the exploded parts sheet (UA§7.1). |
+| AR-3 | Compatible, extended | Also: the dummy guide is never identity, style or proportion authority for any character. |
+| AR-4 | **Corrected** | "Identity fidelity of an identity-bound character is verified in its declared identity pose state (for the current mascot: `sit_laptop`) with the multi-metric set. Numeric targets are frozen only after the first real CharacterSource prototype (UCP D4)." The research's default values remain proposals. |
+| AR-5 … AR-9 | Compatible | Generic. In AR-6 the "back object" may be a prop slot. |
+| AR-10 | **Corrected** (it assumed a seated bind and mascot anatomy) | "The RigProfile declares a default deformation class per joint (UA§3.8). A character MAY override any joint's class in its recipe; an override takes effect only after that joint's art-readiness sweep passes. Deformation classes are character data, not engine assumptions." |
+| AR-11 | **Corrected** (mandatory substitution families conflicted with neutral bind) | "No pose may be reached by deformation beyond the verified range of any joint. A pose state MAY declare substitution attachments for specific slots (e.g. a seated thigh), in the character recipe, per slot and per state. Substitution is a data feature of the pack, not a required posture family, and is added only when a sweep shows the verified range cannot reach the state." |
+| AR-12 … AR-17 | Compatible | Apply to every CharacterPack mesh. AR-16 thresholds remain proposed defaults; they may be tightened per joint and loosened only by Planner decision. |
+| AR-18, AR-19 | Compatible | Renderer is character-agnostic. |
+| AR-20 | **Updated by UCP D2** | "Directional shading for moving/deforming regions is runtime-owned. The engine offers a closed, versioned list of stylized shading models (first: `top_light`). Characters select models and parameters in data; no per-character shaders. Authored art may keep only rotation-safe, non-directional AO/material texture." |
+| AR-21 | Compatible, generalized | "Props are separate rigs mounted to profile sockets through pose states; z insertion is relative to profile z bands; contacts are class B pairs declared in the character recipe." |
+
+### U-B. Proposed corrected construction sequence (§1)
+
+This is a proposal only; §1 itself is not changed here:
+
+    RigProfile dummy guide (assembled + exploded)
+        -> CharacterSource (candidate) + provenance
+        -> landmark annotation + CharacterSource validation
+        -> segmentation / complete part art (exploded sheet) / line ownership
+        -> bind parts to profile roles; skeleton derived from landmarks
+        -> joint contracts = profile defaults + character overrides
+        -> z = profile bands + character rules
+        -> deformation class per joint; local meshes/weights where chosen
+        -> joint-local static sweeps -> verified ranges
+        -> ART_READY -> CharacterPack build
+        -> retarget semantic clips -> frame-by-frame animation QA
+
+### U-C. Additional compatible rules
+
+- **UA-1.**
+  - Engine code (animation, renderer, QA engine, pack loader, retargeter) MUST NOT contain character, species or part-identity names or logic outside test fixtures.
+  - Profile-specific knowledge MUST come from RigProfile data.
+  - Enforced by an audit in the project check (UA§15 E-1).
+- **UA-2.** Semantic clips MUST address profile roles or profile groups, never pack part ids. Translations use profile-normalized units (UA§9.1).
+- **UA-3.** Joint contracts (§7) are resolved from the profile default plus the character override. They MUST NOT be hand-duplicated per character outside the recipe.
+- **UA-4.**
+  - CharacterPacks are derived artifacts, carrying a lock of their input hashes.
+  - Landmarks, art, recipe and meshes are the canonical inputs.
+  - No datum may be stored canonically in both the recipe and the pack.
+- **UA-5.**
+  - QA joint ROIs are derived from profile QA anchors and character landmarks.
+  - Hand-maintained per-character joint lists (such as the current `qa.json` joints) are retired when the pack pipeline lands. Hard cut.
+- **UA-6.** Any change to profile role ids, hierarchy, dummy geometry or landmark semantics creates a new profile major version (hard cut; UA§16).
