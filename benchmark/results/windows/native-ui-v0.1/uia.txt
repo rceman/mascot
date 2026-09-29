@@ -1,0 +1,5 @@
+window: Mascot composer ctype=ControlType.Pane
+  ControlType.Custom "Mascot composer"
+  ControlType.Document "RichEdit Control"
+Document Value="Refactor the rig loader to stream parts"
+Document Text="Refactor the rig loader to stream parts"

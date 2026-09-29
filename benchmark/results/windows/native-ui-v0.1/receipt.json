@@ -1,0 +1,326 @@
+{
+  "adapter": "Microsoft Basic Render Driver",
+  "backdrop": {
+    "dark": "#1F1F1F",
+    "light": "#EDEDED"
+  },
+  "device": "warp",
+  "dirty": false,
+  "files": [
+    {
+      "bytes": 16268,
+      "path": "states/light-mascot-only.png"
+    },
+    {
+      "bytes": 22009,
+      "path": "zoomed/light-mascot-only-3x.png"
+    },
+    {
+      "bytes": 20954,
+      "path": "states/light-composer-empty.png"
+    },
+    {
+      "bytes": 29549,
+      "path": "zoomed/light-composer-empty-3x.png"
+    },
+    {
+      "bytes": 21117,
+      "path": "states/light-composer-focused.png"
+    },
+    {
+      "bytes": 29682,
+      "path": "zoomed/light-composer-focused-3x.png"
+    },
+    {
+      "bytes": 21416,
+      "path": "states/light-composer-text.png"
+    },
+    {
+      "bytes": 30048,
+      "path": "zoomed/light-composer-text-3x.png"
+    },
+    {
+      "bytes": 21567,
+      "path": "states/light-composer-text-right.png"
+    },
+    {
+      "bytes": 30618,
+      "path": "zoomed/light-composer-text-right-3x.png"
+    },
+    {
+      "bytes": 24039,
+      "path": "states/light-composer-multiline.png"
+    },
+    {
+      "bytes": 34808,
+      "path": "zoomed/light-composer-multiline-3x.png"
+    },
+    {
+      "bytes": 21631,
+      "path": "states/light-composer-selection.png"
+    },
+    {
+      "bytes": 30397,
+      "path": "zoomed/light-composer-selection-3x.png"
+    },
+    {
+      "bytes": 21360,
+      "path": "states/light-submitting.png"
+    },
+    {
+      "bytes": 29983,
+      "path": "zoomed/light-submitting-3x.png"
+    },
+    {
+      "bytes": 29682,
+      "path": "states/light-response.png"
+    },
+    {
+      "bytes": 45138,
+      "path": "zoomed/light-response-3x.png"
+    },
+    {
+      "bytes": 29827,
+      "path": "states/light-response-right.png"
+    },
+    {
+      "bytes": 45703,
+      "path": "zoomed/light-response-right-3x.png"
+    },
+    {
+      "bytes": 30212,
+      "path": "states/light-response-followup.png"
+    },
+    {
+      "bytes": 45750,
+      "path": "zoomed/light-response-followup-3x.png"
+    },
+    {
+      "bytes": 21283,
+      "path": "states/light-send-hover.png"
+    },
+    {
+      "bytes": 29930,
+      "path": "zoomed/light-send-hover-3x.png"
+    },
+    {
+      "bytes": 21424,
+      "path": "states/light-send-hover-right.png"
+    },
+    {
+      "bytes": 30509,
+      "path": "zoomed/light-send-hover-right-3x.png"
+    },
+    {
+      "bytes": 21282,
+      "path": "states/light-send-pressed.png"
+    },
+    {
+      "bytes": 29928,
+      "path": "zoomed/light-send-pressed-3x.png"
+    },
+    {
+      "bytes": 21754,
+      "path": "states/light-send-focus-visible.png"
+    },
+    {
+      "bytes": 30611,
+      "path": "zoomed/light-send-focus-visible-3x.png"
+    },
+    {
+      "bytes": 21342,
+      "path": "states/light-stop-hover.png"
+    },
+    {
+      "bytes": 29972,
+      "path": "zoomed/light-stop-hover-3x.png"
+    },
+    {
+      "bytes": 30554,
+      "path": "states/light-copy-hover-tooltip.png"
+    },
+    {
+      "bytes": 46357,
+      "path": "zoomed/light-copy-hover-tooltip-3x.png"
+    },
+    {
+      "bytes": 30341,
+      "path": "states/light-copy-copied.png"
+    },
+    {
+      "bytes": 46134,
+      "path": "zoomed/light-copy-copied-3x.png"
+    },
+    {
+      "bytes": 15525,
+      "path": "states/dark-mascot-only.png"
+    },
+    {
+      "bytes": 22009,
+      "path": "zoomed/dark-mascot-only-3x.png"
+    },
+    {
+      "bytes": 19672,
+      "path": "states/dark-composer-empty.png"
+    },
+    {
+      "bytes": 29799,
+      "path": "zoomed/dark-composer-empty-3x.png"
+    },
+    {
+      "bytes": 19838,
+      "path": "states/dark-composer-focused.png"
+    },
+    {
+      "bytes": 29941,
+      "path": "zoomed/dark-composer-focused-3x.png"
+    },
+    {
+      "bytes": 20102,
+      "path": "states/dark-composer-text.png"
+    },
+    {
+      "bytes": 30231,
+      "path": "zoomed/dark-composer-text-3x.png"
+    },
+    {
+      "bytes": 20287,
+      "path": "states/dark-composer-text-right.png"
+    },
+    {
+      "bytes": 30784,
+      "path": "zoomed/dark-composer-text-right-3x.png"
+    },
+    {
+      "bytes": 22694,
+      "path": "states/dark-composer-multiline.png"
+    },
+    {
+      "bytes": 34959,
+      "path": "zoomed/dark-composer-multiline-3x.png"
+    },
+    {
+      "bytes": 20306,
+      "path": "states/dark-composer-selection.png"
+    },
+    {
+      "bytes": 30603,
+      "path": "zoomed/dark-composer-selection-3x.png"
+    },
+    {
+      "bytes": 20037,
+      "path": "states/dark-submitting.png"
+    },
+    {
+      "bytes": 30140,
+      "path": "zoomed/dark-submitting-3x.png"
+    },
+    {
+      "bytes": 28413,
+      "path": "states/dark-response.png"
+    },
+    {
+      "bytes": 45093,
+      "path": "zoomed/dark-response-3x.png"
+    },
+    {
+      "bytes": 28593,
+      "path": "states/dark-response-right.png"
+    },
+    {
+      "bytes": 45627,
+      "path": "zoomed/dark-response-right-3x.png"
+    },
+    {
+      "bytes": 28974,
+      "path": "states/dark-response-followup.png"
+    },
+    {
+      "bytes": 45637,
+      "path": "zoomed/dark-response-followup-3x.png"
+    },
+    {
+      "bytes": 19971,
+      "path": "states/dark-send-hover.png"
+    },
+    {
+      "bytes": 30080,
+      "path": "zoomed/dark-send-hover-3x.png"
+    },
+    {
+      "bytes": 20155,
+      "path": "states/dark-send-hover-right.png"
+    },
+    {
+      "bytes": 30627,
+      "path": "zoomed/dark-send-hover-right-3x.png"
+    },
+    {
+      "bytes": 19965,
+      "path": "states/dark-send-pressed.png"
+    },
+    {
+      "bytes": 30090,
+      "path": "zoomed/dark-send-pressed-3x.png"
+    },
+    {
+      "bytes": 20404,
+      "path": "states/dark-send-focus-visible.png"
+    },
+    {
+      "bytes": 30764,
+      "path": "zoomed/dark-send-focus-visible-3x.png"
+    },
+    {
+      "bytes": 20020,
+      "path": "states/dark-stop-hover.png"
+    },
+    {
+      "bytes": 30118,
+      "path": "zoomed/dark-stop-hover-3x.png"
+    },
+    {
+      "bytes": 29378,
+      "path": "states/dark-copy-hover-tooltip.png"
+    },
+    {
+      "bytes": 46372,
+      "path": "zoomed/dark-copy-hover-tooltip-3x.png"
+    },
+    {
+      "bytes": 29091,
+      "path": "states/dark-copy-copied.png"
+    },
+    {
+      "bytes": 46119,
+      "path": "zoomed/dark-copy-copied-3x.png"
+    },
+    {
+      "bytes": 303181,
+      "path": "contact-sheet-light.png"
+    },
+    {
+      "bytes": 289700,
+      "path": "contact-sheet-dark.png"
+    },
+    {
+      "bytes": 735791,
+      "path": "dpi-contact-sheet.png"
+    },
+    {
+      "bytes": 59649,
+      "path": "icon-sheet.png"
+    }
+  ],
+  "font_family": "Segoe UI Variable Text",
+  "head": "b285fd086f0090a901598a3966703956e704b6b6",
+  "os_build": "10.0.26200.9457",
+  "rig_rev": "2b8b52b649af4c0e8293a7a644e70f04052b3d76",
+  "scales": [
+    1.0,
+    1.25,
+    1.5,
+    2.0
+  ],
+  "tool_version": "0.2.0"
+}

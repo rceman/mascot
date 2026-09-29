@@ -1,0 +1,81 @@
+warning: method `mul` can be confused for the standard trait method `std::ops::Mul::mul`
+  --> crates\mascot-animation\src\math.rs:45:5
+   |
+45 | /     pub fn mul(self, rhs: Affine) -> Affine {
+46 | |         Affine {
+47 | |             a: self.a * rhs.a + self.c * rhs.b,
+48 | |             b: self.b * rhs.a + self.d * rhs.b,
+...  |
+54 | |     }
+   | |_____^
+   |
+   = help: consider implementing the trait `std::ops::Mul` or choosing a less ambiguous method name
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#should_implement_trait
+   = note: `#[warn(clippy::should_implement_trait)]` on by default
+
+warning: method `add` can be confused for the standard trait method `std::ops::Add::add`
+  --> crates\mascot-animation\src\math.rs:82:5
+   |
+82 | /     pub fn add(self, o: Affine) -> Affine {
+83 | |         Affine {
+84 | |             a: self.a + o.a,
+85 | |             b: self.b + o.b,
+...  |
+91 | |     }
+   | |_____^
+   |
+   = help: consider implementing the trait `std::ops::Add` or choosing a less ambiguous method name
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#should_implement_trait
+
+warning: this `impl` can be derived
+  --> crates\mascot-animation\src\skeleton.rs:73:1
+   |
+73 | / impl Default for RootPlacement {
+74 | |     fn default() -> Self {
+75 | |         RootPlacement { mirror: false }
+76 | |     }
+77 | | }
+   | |_^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#derivable_impls
+   = note: `#[warn(clippy::derivable_impls)]` on by default
+help: replace the manual implementation with a derive attribute
+   |
+68 + #[derive(Default)]
+69 | pub struct RootPlacement {
+   |
+
+warning: `mascot-animation` (lib) generated 3 warnings (run `cargo clippy --fix --lib -p mascot-animation` to apply 1 suggestion)
+warning: the loop variable `c` is used to index `acc`
+   --> crates\mascot-render-win32\src\image.rs:132:34
+    |
+132 |                         for c in 0..3 {
+    |                                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_range_loop
+    = note: `#[warn(clippy::needless_range_loop)]` on by default
+help: consider using an iterator and enumerate()
+    |
+132 -                         for c in 0..3 {
+132 +                         for (c, <item>) in acc.iter_mut().enumerate().take(3) {
+    |
+
+warning: this function has too many arguments (8/7)
+   --> crates\mascot-render-win32\src\renderer.rs:350:5
+    |
+350 | /     pub fn render(
+351 | |         &mut self,
+352 | |         target: &ID2D1Bitmap1,
+353 | |         size: [u32; 2],
+...   |
+358 | |         opts: &RenderOptions,
+359 | |     ) -> Result<()> {
+    | |___________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#too_many_arguments
+    = note: `#[warn(clippy::too_many_arguments)]` on by default
+
+warning: `mascot-render-win32` (lib) generated 2 warnings
+    Checking mascot-ui-win32 v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-ui-win32)
+    Checking mascot-ui-lab v0.2.0 (W:\devin_folder\mascot-ui-v01\apps\mascot-ui-lab)
+    Finished `release` profile [optimized] target(s) in 1.44s
