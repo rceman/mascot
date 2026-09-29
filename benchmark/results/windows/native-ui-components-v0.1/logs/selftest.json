@@ -1,0 +1,246 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "hwnd": 8394672
+      },
+      "name": "foreground",
+      "pass": true
+    },
+    {
+      "detail": {
+        "text": "hello"
+      },
+      "name": "ascii-typing",
+      "pass": true
+    },
+    {
+      "detail": {
+        "text": "hello Ü日本語👋"
+      },
+      "name": "unicode-typing",
+      "pass": true
+    },
+    {
+      "detail": {
+        "sel": [
+          12,
+          12
+        ],
+        "u16len": 12
+      },
+      "name": "caret-end",
+      "pass": true
+    },
+    {
+      "detail": {
+        "sel": [
+          0,
+          0
+        ]
+      },
+      "name": "caret-home",
+      "pass": true
+    },
+    {
+      "detail": {
+        "sel": [
+          0,
+          12
+        ],
+        "u16len": 12
+      },
+      "name": "shift-end",
+      "pass": true
+    },
+    {
+      "detail": {
+        "sel": [
+          0,
+          12
+        ],
+        "u16len": 12
+      },
+      "name": "ctrl-left-word",
+      "pass": true
+    },
+    {
+      "detail": {
+        "attempts": 1,
+        "clipboard": "hello Ü日本語👋",
+        "sel": [
+          0,
+          12
+        ]
+      },
+      "name": "ctrl-a-ctrl-c",
+      "pass": true
+    },
+    {
+      "detail": {
+        "after_len": 42
+      },
+      "name": "ctrl-v-paste",
+      "pass": true
+    },
+    {
+      "detail": {},
+      "name": "capture-selection",
+      "pass": true
+    },
+    {
+      "detail": {
+        "text_tail": "\r👋語本日Ü oll"
+      },
+      "name": "shift-enter-newline",
+      "pass": true
+    },
+    {
+      "detail": {
+        "after": 214.0,
+        "before": 196.0
+      },
+      "name": "shift-enter-height-grows",
+      "pass": true
+    },
+    {
+      "detail": {
+        "composer_h": 152.0,
+        "max": 152.0,
+        "natural": 228.0,
+        "set_text": "ok",
+        "text_len": 38
+      },
+      "name": "composer-clamp",
+      "pass": true
+    },
+    {
+      "detail": {},
+      "name": "capture-multiline",
+      "pass": true
+    },
+    {
+      "detail": {
+        "press_to_submit_ms": 52
+      },
+      "name": "enter-submit-latency",
+      "pass": true
+    },
+    {
+      "detail": {
+        "activity": "Submitting",
+        "char_trace": "[50332296, 50332296, 104, 101, 108, 108, 111, 32, 220, 26085, 26412, 35486, 55357, 56395, 1, 3, 22, 1, 13, 13]",
+        "editor_empty": false,
+        "focus": "Some(Stop)",
+        "press_to_submit_ms": 52,
+        "submitted": "l1\rl2\rl3\rl4\rl5\rl6\rl7",
+        "surface": "Composer"
+      },
+      "name": "enter-submits",
+      "pass": true
+    },
+    {
+      "detail": {},
+      "name": "enter-empty-noop",
+      "pass": true
+    },
+    {
+      "detail": {
+        "f0": "Editor",
+        "f1": "Copy",
+        "f2": "Editor",
+        "surface": "Response"
+      },
+      "name": "tab-cycle",
+      "pass": true
+    },
+    {
+      "detail": {
+        "focus": "Some(Copy)",
+        "focus_visible_after_tab": true,
+        "seen": [
+          "Some(Copy)"
+        ],
+        "tab_presses": 1
+      },
+      "name": "focus-visible",
+      "pass": true
+    },
+    {
+      "detail": {
+        "active_hkl": "0xfffffffff0b10426",
+        "attempts": 1,
+        "ctrl": 1,
+        "dead_vk": 222,
+        "shift": 0,
+        "text": "\tā",
+        "trace_tail": "[1, d, d, d, 9, 9, 9, 3000282, 3000282, 101]"
+      },
+      "name": "dead-key-latvian",
+      "pass": true
+    },
+    {
+      "detail": {
+        "composing": true,
+        "ctrl": 1,
+        "open": "open=false cmode=0 smode=0",
+        "trace": "[3000282, 3000282, 101, 3000282, 3000282, 3000288, 3000288, 300010d, 300010f, 3000282, 3000288, 3000288, 3000282, 3000288, 3000288, 300010f, 3000288, 300010f, 3000288, 300010f, 3000288, 300010f, 3000288, 300010f]"
+      },
+      "name": "ime-ja-preedit",
+      "pass": true
+    },
+    {
+      "detail": {
+        "after": "\tāにほん"
+      },
+      "name": "ime-ja-commit",
+      "pass": true
+    },
+    {
+      "detail": {},
+      "name": "ime-ja-enter-no-submit",
+      "pass": true
+    },
+    {
+      "detail": {
+        "mid": "\tāにほんか",
+        "post": "\tāにほん"
+      },
+      "name": "ime-ja-esc-cancel",
+      "pass": true
+    },
+    {
+      "detail": {
+        "caret": [
+          1,
+          19
+        ]
+      },
+      "name": "caret-visible",
+      "pass": true
+    },
+    {
+      "detail": {
+        "timeout_ms": 5000
+      },
+      "name": "caret-blink-timeout",
+      "pass": true
+    },
+    {
+      "detail": {
+        "surface": "Hidden"
+      },
+      "name": "esc-closes",
+      "pass": true
+    },
+    {
+      "detail": {},
+      "name": "capture-live",
+      "pass": true
+    }
+  ],
+  "foreground_guard_blocked_injections": 0,
+  "passed": 28,
+  "retried": {},
+  "total": 28
+}

@@ -1,0 +1,112 @@
+Diff in \\?\W:\devin_folder\mascot-ui-v01\crates\mascot-render-win32\src\image.rs:14:
+ 
+ impl RgbaImage {
+     pub fn new(width: u32, height: u32) -> Self {
+[31m-        RgbaImage { width, height, data: vec![0; (width * height * 4) as usize] }
+[0m[32m+        RgbaImage {
+[0m[32m+            width,
+[0m[32m+            height,
+[0m[32m+            data: vec![0; (width * height * 4) as usize],
+[0m[32m+        }
+[0m     }
+ 
+     pub fn load(path: &Path) -> Result<Self, String> {
+Diff in \\?\W:\devin_folder\mascot-ui-v01\crates\mascot-render-win32\src\image.rs:21:
+         let file = File::open(path).map_err(|e| format!("{}: {e}", path.display()))?;
+         let mut dec = png::Decoder::new(BufReader::new(file));
+[31m-        dec.set_transformations(png::Transformations::normalize_to_color8() | png::Transformations::ALPHA);
+[0m[31m-        let mut reader = dec.read_info().map_err(|e| format!("{}: {e}", path.display()))?;
+[0m[31m-        let size = reader.output_buffer_size().ok_or_else(|| format!("{}: image too large", path.display()))?;
+[0m[32m+        dec.set_transformations(
+[0m[32m+            png::Transformations::normalize_to_color8() | png::Transformations::ALPHA,
+[0m[32m+        );
+[0m[32m+        let mut reader = dec
+[0m[32m+            .read_info()
+[0m[32m+            .map_err(|e| format!("{}: {e}", path.display()))?;
+[0m[32m+        let size = reader
+[0m[32m+            .output_buffer_size()
+[0m[32m+            .ok_or_else(|| format!("{}: image too large", path.display()))?;
+[0m         let mut buf = vec![0; size];
+[31m-        let info = reader.next_frame(&mut buf).map_err(|e| format!("{}: {e}", path.display()))?;
+[0m[32m+        let info = reader
+[0m[32m+            .next_frame(&mut buf)
+[0m[32m+            .map_err(|e| format!("{}: {e}", path.display()))?;
+[0m         buf.truncate(info.buffer_size());
+         let (w, h) = (info.width, info.height);
+         let data = match info.color_type {
+Diff in \\?\W:\devin_folder\mascot-ui-v01\crates\mascot-render-win32\src\image.rs:31:
+             png::ColorType::Rgba => buf,
+[31m-            png::ColorType::GrayscaleAlpha => buf.chunks_exact(2).flat_map(|p| [p[0], p[0], p[0], p[1]]).collect(),
+[0m[31m-            other => return Err(format!("{}: unsupported colour type {other:?}", path.display())),
+[0m[32m+            png::ColorType::GrayscaleAlpha => buf
+[0m[32m+                .chunks_exact(2)
+[0m[32m+                .flat_map(|p| [p[0], p[0], p[0], p[1]])
+[0m[32m+                .collect(),
+[0m[32m+            other => {
+[0m[32m+                return Err(format!(
+[0m[32m+                    "{}: unsupported colour type {other:?}",
+[0m[32m+                    path.display()
+[0m[32m+                ));
+[0m[32m+            }
+[0m         };
+[31m-        Ok(RgbaImage { width: w, height: h, data })
+[0m[32m+        Ok(RgbaImage {
+[0m[32m+            width: w,
+[0m[32m+            height: h,
+[0m[32m+            data,
+[0m[32m+        })
+[0m     }
+ 
+     pub fn save(&self, path: &Path) -> Result<(), String> {
+Diff in \\?\W:\devin_folder\mascot-ui-v01\crates\mascot-render-win32\src\image.rs:71:
+             for (x, p) in row.chunks_exact(4).enumerate() {
+                 let o = &mut img.data[(y * width as usize + x) * 4..][..4];
+                 let a = p[3] as u32;
+[31m-                let un = |c: u8| if a == 0 { 0 } else { ((c as u32 * 255 + a / 2) / a).min(255) as u8 };
+[0m[32m+                let un = |c: u8| {
+[0m[32m+                    if a == 0 {
+[0m[32m+                        0
+[0m[32m+                    } else {
+[0m[32m+                        ((c as u32 * 255 + a / 2) / a).min(255) as u8
+[0m[32m+                    }
+[0m[32m+                };
+[0m                 o[0] = un(p[2]);
+                 o[1] = un(p[1]);
+                 o[2] = un(p[0]);
+Diff in \\?\W:\devin_folder\mascot-ui-v01\crates\mascot-render-win32\src\image.rs:138:
+                 let d = ((y * w + x) * 4) as usize;
+                 let n = f * f;
+                 for c in 0..3 {
+[31m-                    o.data[d + c] = if acc[3] == 0 { 0 } else { (acc[c] / acc[3]) as u8 };
+[0m[32m+                    o.data[d + c] = if acc[3] == 0 {
+[0m[32m+                        0
+[0m[32m+                    } else {
+[0m[32m+                        (acc[c] / acc[3]) as u8
+[0m[32m+                    };
+[0m                 }
+                 o.data[d + 3] = (acc[3] / n) as u8;
+             }
+Diff in \\?\W:\devin_folder\mascot-ui-v01\crates\mascot-render-win32\src\image.rs:181:
+                 } else {
+                     let inv = 255 - a;
+                     for c in 0..3 {
+[31m-                        self.data[d + c] = ((src.data[s + c] as u32 * a + self.data[d + c] as u32 * inv) / 255) as u8;
+[0m[32m+                        self.data[d + c] = ((src.data[s + c] as u32 * a
+[0m[32m+                            + self.data[d + c] as u32 * inv)
+[0m[32m+                            / 255) as u8;
+[0m                     }
+                     self.data[d + 3] = (a + self.data[d + 3] as u32 * inv / 255).min(255) as u8;
+                 }
+Diff in \\?\W:\devin_folder\mascot-ui-v01\crates\mascot-render-win32\src\image.rs:205:
+ 
+     #[test]
+     fn premultiply_round_trip() {
+[31m-        let img = RgbaImage { width: 2, height: 1, data: vec![255, 128, 0, 255, 200, 100, 50, 128] };
+[0m[32m+        let img = RgbaImage {
+[0m[32m+            width: 2,
+[0m[32m+            height: 1,
+[0m[32m+            data: vec![255, 128, 0, 255, 200, 100, 50, 128],
+[0m[32m+        };
+[0m         let bgra = img.to_premultiplied_bgra();
+         assert_eq!(&bgra[0..4], &[0, 128, 255, 255]);
+         let back = RgbaImage::from_premultiplied_bgra(2, 1, 8, &bgra);

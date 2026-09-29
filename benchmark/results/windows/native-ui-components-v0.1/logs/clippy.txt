@@ -1,0 +1,237 @@
+    Checking mascot-icons v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-icons)
+    Checking mascot-animation v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-animation)
+warning: method `mul` can be confused for the standard trait method `std::ops::Mul::mul`
+  --> crates\mascot-animation\src\math.rs:45:5
+   |
+45 | /     pub fn mul(self, rhs: Affine) -> Affine {
+46 | |         Affine {
+47 | |             a: self.a * rhs.a + self.c * rhs.b,
+48 | |             b: self.b * rhs.a + self.d * rhs.b,
+...  |
+54 | |     }
+   | |_____^
+   |
+   = help: consider implementing the trait `std::ops::Mul` or choosing a less ambiguous method name
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#should_implement_trait
+   = note: `#[warn(clippy::should_implement_trait)]` on by default
+
+warning: method `add` can be confused for the standard trait method `std::ops::Add::add`
+  --> crates\mascot-animation\src\math.rs:82:5
+   |
+82 | /     pub fn add(self, o: Affine) -> Affine {
+83 | |         Affine {
+84 | |             a: self.a + o.a,
+85 | |             b: self.b + o.b,
+...  |
+91 | |     }
+   | |_____^
+   |
+   = help: consider implementing the trait `std::ops::Add` or choosing a less ambiguous method name
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#should_implement_trait
+
+warning: this `impl` can be derived
+  --> crates\mascot-animation\src\skeleton.rs:73:1
+   |
+73 | / impl Default for RootPlacement {
+74 | |     fn default() -> Self {
+75 | |         RootPlacement { mirror: false }
+76 | |     }
+77 | | }
+   | |_^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#derivable_impls
+   = note: `#[warn(clippy::derivable_impls)]` on by default
+help: replace the manual implementation with a derive attribute
+   |
+68 + #[derive(Default)]
+69 | pub struct RootPlacement {
+   |
+
+warning: `mascot-animation` (lib test) generated 3 warnings (run `cargo clippy --fix --lib -p mascot-animation --tests` to apply 1 suggestion)
+    Checking mascot-ui v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-ui)
+warning: `mascot-animation` (lib) generated 3 warnings (3 duplicates)
+    Checking mascot-render-win32 v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-render-win32)
+warning: the loop variable `c` is used to index `acc`
+   --> crates\mascot-render-win32\src\image.rs:132:34
+    |
+132 |                         for c in 0..3 {
+    |                                  ^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#needless_range_loop
+    = note: `#[warn(clippy::needless_range_loop)]` on by default
+help: consider using an iterator and enumerate()
+    |
+132 -                         for c in 0..3 {
+132 +                         for (c, <item>) in acc.iter_mut().enumerate().take(3) {
+    |
+
+warning: this function has too many arguments (8/7)
+   --> crates\mascot-render-win32\src\renderer.rs:350:5
+    |
+350 | /     pub fn render(
+351 | |         &mut self,
+352 | |         target: &ID2D1Bitmap1,
+353 | |         size: [u32; 2],
+...   |
+358 | |         opts: &RenderOptions,
+359 | |     ) -> Result<()> {
+    | |___________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#too_many_arguments
+    = note: `#[warn(clippy::too_many_arguments)]` on by default
+
+warning: `mascot-render-win32` (lib test) generated 2 warnings
+warning: `mascot-render-win32` (lib) generated 2 warnings (2 duplicates)
+    Checking mascot-ui-win32 v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-ui-win32)
+    Checking mascot-animation-lab v0.2.0 (W:\devin_folder\mascot-ui-v01\apps\mascot-animation-lab)
+warning: writing `&PathBuf` instead of `&Path` involves a new object where a slice will do
+   --> crates\mascot-render-win32\src\bin\stress.rs:219:53
+    |
+219 | fn probe(rig_dir: &PathBuf, kind: DeviceKind, path: &PathBuf, crop: &[u32], spec: &[String]) {
+    |                                                     ^^^^^^^^ help: change this to: `&Path`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#ptr_arg
+    = note: `#[warn(clippy::ptr_arg)]` on by default
+
+warning: `mascot-render-win32` (bin "mascot-rig-stress") generated 1 warning
+warning: `mascot-render-win32` (bin "mascot-rig-stress" test) generated 1 warning (1 duplicate)
+warning: this `if` statement can be collapsed
+   --> apps\mascot-animation-lab\src\main.rs:143:9
+    |
+143 | /         if let Some(t) = &mut self.target {
+144 | |             if t.size != client {
+145 | |                 let _ = t.resize(&self.renderer, client);
+146 | |             }
+147 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+    = note: `#[warn(clippy::collapsible_if)]` on by default
+help: collapse nested if block
+    |
+143 ~         if let Some(t) = &mut self.target
+144 ~             && t.size != client {
+145 |                 let _ = t.resize(&self.renderer, client);
+146 ~             }
+    |
+
+warning: this `if` statement can be collapsed
+   --> apps\mascot-animation-lab\src\main.rs:161:9
+    |
+161 | /         if let Some(s) = &mut self.script {
+162 | |             if s.active_from.is_some() {
+163 | |                 s.frame_times.push(self.started.elapsed().as_secs_f64());
+164 | |             }
+165 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+161 ~         if let Some(s) = &mut self.script
+162 ~             && s.active_from.is_some() {
+163 |                 s.frame_times.push(self.started.elapsed().as_secs_f64());
+164 ~             }
+    |
+
+warning: this boolean expression can be simplified
+   --> apps\mascot-animation-lab\src\main.rs:177:12
+    |
+177 |         if animating != !self.player.is_static() || self.frames % 15 == 0 || !animating {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `animating == self.player.is_static()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#nonminimal_bool
+    = note: `#[warn(clippy::nonminimal_bool)]` on by default
+
+warning: manual implementation of `.is_multiple_of()`
+   --> apps\mascot-animation-lab\src\main.rs:177:53
+    |
+177 |         if animating != !self.player.is_static() || self.frames % 15 == 0 || !animating {
+    |                                                     ^^^^^^^^^^^^^^^^^^^^^ help: replace with: `self.frames.is_multiple_of(15)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#manual_is_multiple_of
+    = note: `#[warn(clippy::manual_is_multiple_of)]` on by default
+
+warning: this `if` statement can be collapsed
+   --> apps\mascot-animation-lab\src\main.rs:210:9
+    |
+210 | /         if let Some(s) = &mut self.script {
+211 | |             if s.kind == ScriptKind::Perf && s.step == 2 {
+212 | |                 if let Some(next) = s.queue.pop() {
+213 | |                     self.player.play(next);
+...   |
+217 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+210 ~         if let Some(s) = &mut self.script
+211 ~             && s.kind == ScriptKind::Perf && s.step == 2 {
+212 |                 if let Some(next) = s.queue.pop() {
+...
+215 |                 }
+216 ~             }
+    |
+
+warning: this `if` statement can be collapsed
+   --> apps\mascot-animation-lab\src\main.rs:211:13
+    |
+211 | /             if s.kind == ScriptKind::Perf && s.step == 2 {
+212 | |                 if let Some(next) = s.queue.pop() {
+213 | |                     self.player.play(next);
+214 | |                     return;
+215 | |                 }
+216 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+211 ~             if s.kind == ScriptKind::Perf && s.step == 2
+212 ~                 && let Some(next) = s.queue.pop() {
+213 |                     self.player.play(next);
+214 |                     return;
+215 ~                 }
+    |
+
+warning: this `if` statement can be collapsed
+   --> apps\mascot-animation-lab\src\main.rs:317:9
+    |
+317 | /         if let Some((i, d)) = best {
+318 | |             if d < 40.0 {
+319 | |                 self.select_bone(i);
+320 | |             }
+321 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+317 ~         if let Some((i, d)) = best
+318 ~             && d < 40.0 {
+319 |                 self.select_bone(i);
+320 ~             }
+    |
+
+warning: casting to the same type is unnecessary (`u32` -> `u32`)
+   --> apps\mascot-animation-lab\src\main.rs:727:59
+    |
+727 | ...   let slider = mk(TRACKBAR_CLASSW, "", WINDOW_STYLE(TBS_HORZ as u32 | TBS_AUTOTICKS as u32), pad, y, PANEL_W - 2 * pad, 30, ID_...
+    |                                                         ^^^^^^^^^^^^^^^ help: try: `TBS_HORZ`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#unnecessary_cast
+    = note: `#[warn(clippy::unnecessary_cast)]` on by default
+
+warning: casting to the same type is unnecessary (`u32` -> `u32`)
+   --> apps\mascot-animation-lab\src\main.rs:727:77
+    |
+727 | ...   let slider = mk(TRACKBAR_CLASSW, "", WINDOW_STYLE(TBS_HORZ as u32 | TBS_AUTOTICKS as u32), pad, y, PANEL_W - 2 * pad, 30, ID_...
+    |                                                                           ^^^^^^^^^^^^^^^^^^^^ help: try: `TBS_AUTOTICKS`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#unnecessary_cast
+
+warning: `mascot-animation-lab` (bin "mascot-animation-lab") generated 9 warnings (9 duplicates)
+warning: `mascot-animation-lab` (bin "mascot-animation-lab" test) generated 9 warnings (run `cargo clippy --fix --bin "mascot-animation-lab" -p mascot-animation-lab --tests` to apply 9 suggestions)
+    Checking mascot-ui-lab v0.2.0 (W:\devin_folder\mascot-ui-v01\apps\mascot-ui-lab)
+    Finished `release` profile [optimized] target(s) in 3.55s

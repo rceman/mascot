@@ -1,0 +1,345 @@
+{
+  "device": "warp",
+  "dirty": false,
+  "files": [
+    {
+      "bytes": 158819,
+      "path": "component-gallery-light.png"
+    },
+    {
+      "bytes": 158303,
+      "path": "component-gallery-dark.png"
+    },
+    {
+      "bytes": 107210,
+      "path": "component-gallery-sizes.png"
+    },
+    {
+      "bytes": 117080,
+      "path": "component-gallery-dpi.png"
+    },
+    {
+      "bytes": 195108,
+      "path": "component-gallery-shadcn-reference.png"
+    },
+    {
+      "bytes": 147044,
+      "path": "component-gallery-shadcn-reference-2.png"
+    },
+    {
+      "bytes": 183260,
+      "path": "component-gallery-shadcn-reference-3.png"
+    },
+    {
+      "bytes": 299159,
+      "path": "component-gallery-shadcn-reference-4.png"
+    },
+    {
+      "bytes": 104269,
+      "path": "component-gallery-shadcn-reference-5.png"
+    },
+    {
+      "bytes": 2722,
+      "path": "reference/badge-default-dark.png"
+    },
+    {
+      "bytes": 2591,
+      "path": "reference/badge-default-light.png"
+    },
+    {
+      "bytes": 2608,
+      "path": "reference/badge-outline-dark.png"
+    },
+    {
+      "bytes": 2483,
+      "path": "reference/badge-outline-light.png"
+    },
+    {
+      "bytes": 3632,
+      "path": "reference/badge-secondary-dark.png"
+    },
+    {
+      "bytes": 3311,
+      "path": "reference/badge-secondary-light.png"
+    },
+    {
+      "bytes": 2549,
+      "path": "reference/button-default-dark.png"
+    },
+    {
+      "bytes": 2467,
+      "path": "reference/button-default-light.png"
+    },
+    {
+      "bytes": 2361,
+      "path": "reference/button-disabled-dark.png"
+    },
+    {
+      "bytes": 2349,
+      "path": "reference/button-disabled-light.png"
+    },
+    {
+      "bytes": 2549,
+      "path": "reference/button-focus-visible-dark.png"
+    },
+    {
+      "bytes": 2467,
+      "path": "reference/button-focus-visible-light.png"
+    },
+    {
+      "bytes": 2347,
+      "path": "reference/button-ghost-dark.png"
+    },
+    {
+      "bytes": 2642,
+      "path": "reference/button-ghost-hover-dark.png"
+    },
+    {
+      "bytes": 2403,
+      "path": "reference/button-ghost-hover-light.png"
+    },
+    {
+      "bytes": 2210,
+      "path": "reference/button-ghost-light.png"
+    },
+    {
+      "bytes": 2533,
+      "path": "reference/button-hover-dark.png"
+    },
+    {
+      "bytes": 2506,
+      "path": "reference/button-hover-light.png"
+    },
+    {
+      "bytes": 1818,
+      "path": "reference/button-icon-dark.png"
+    },
+    {
+      "bytes": 1818,
+      "path": "reference/button-icon-focus-visible-dark.png"
+    },
+    {
+      "bytes": 1801,
+      "path": "reference/button-icon-focus-visible-light.png"
+    },
+    {
+      "bytes": 1876,
+      "path": "reference/button-icon-hover-dark.png"
+    },
+    {
+      "bytes": 1822,
+      "path": "reference/button-icon-hover-light.png"
+    },
+    {
+      "bytes": 1801,
+      "path": "reference/button-icon-light.png"
+    },
+    {
+      "bytes": 4297,
+      "path": "reference/button-secondary-dark.png"
+    },
+    {
+      "bytes": 4335,
+      "path": "reference/button-secondary-hover-dark.png"
+    },
+    {
+      "bytes": 3922,
+      "path": "reference/button-secondary-hover-light.png"
+    },
+    {
+      "bytes": 3904,
+      "path": "reference/button-secondary-light.png"
+    },
+    {
+      "bytes": 43983,
+      "path": "reference/card-dark.png"
+    },
+    {
+      "bytes": 43820,
+      "path": "reference/card-light.png"
+    },
+    {
+      "bytes": 137618,
+      "path": "reference/provenance.json"
+    },
+    {
+      "bytes": 6474,
+      "path": "reference/PROVENANCE.md"
+    },
+    {
+      "bytes": 425,
+      "path": "reference/separator-dark.png"
+    },
+    {
+      "bytes": 423,
+      "path": "reference/separator-light.png"
+    },
+    {
+      "bytes": 8091,
+      "path": "reference/textarea-default-dark.png"
+    },
+    {
+      "bytes": 8067,
+      "path": "reference/textarea-default-light.png"
+    },
+    {
+      "bytes": 6728,
+      "path": "reference/textarea-disabled-dark.png"
+    },
+    {
+      "bytes": 6504,
+      "path": "reference/textarea-disabled-light.png"
+    },
+    {
+      "bytes": 8091,
+      "path": "reference/textarea-focus-visible-dark.png"
+    },
+    {
+      "bytes": 8067,
+      "path": "reference/textarea-focus-visible-light.png"
+    },
+    {
+      "bytes": 6210,
+      "path": "reference/tooltip-open-dark.png"
+    },
+    {
+      "bytes": 6175,
+      "path": "reference/tooltip-open-light.png"
+    },
+    {
+      "bytes": 5812,
+      "path": "reference/typography-muted-dark.png"
+    },
+    {
+      "bytes": 5760,
+      "path": "reference/typography-muted-light.png"
+    },
+    {
+      "bytes": 21852,
+      "path": "reference/typography-p-dark.png"
+    },
+    {
+      "bytes": 21070,
+      "path": "reference/typography-p-light.png"
+    },
+    {
+      "bytes": 3581,
+      "path": "reference/typography-small-dark.png"
+    },
+    {
+      "bytes": 3388,
+      "path": "reference/typography-small-light.png"
+    },
+    {
+      "bytes": 23193,
+      "path": "component-inventory.json"
+    },
+    {
+      "bytes": 42091,
+      "path": "shadcn-comparison.md"
+    }
+  ],
+  "font_family": "Segoe UI Variable Text",
+  "head": "03eae71c30b1399d540cf3d354a5e53f021b375d",
+  "os_build": "10.0.26200.9457",
+  "painters": "mascot_ui_win32::components (production) + App::render_offscreen",
+  "reference_files_used": [
+    "button-icon-light.png",
+    "button-icon-hover-light.png",
+    "button-icon-focus-visible-light.png",
+    "button-icon-dark.png",
+    "button-icon-hover-dark.png",
+    "button-icon-focus-visible-dark.png",
+    "tooltip-open-light.png",
+    "tooltip-open-dark.png",
+    "badge-default-light.png",
+    "badge-secondary-light.png",
+    "badge-outline-light.png",
+    "badge-default-dark.png",
+    "badge-secondary-dark.png",
+    "badge-outline-dark.png",
+    "button-default-light.png",
+    "button-hover-light.png",
+    "button-focus-visible-light.png",
+    "button-disabled-light.png",
+    "button-secondary-light.png",
+    "button-secondary-hover-light.png",
+    "button-ghost-light.png",
+    "button-ghost-hover-light.png",
+    "button-default-dark.png",
+    "button-hover-dark.png",
+    "button-focus-visible-dark.png",
+    "button-disabled-dark.png",
+    "button-secondary-dark.png",
+    "button-secondary-hover-dark.png",
+    "button-ghost-dark.png",
+    "button-ghost-hover-dark.png",
+    "separator-light.png",
+    "separator-dark.png",
+    "card-light.png",
+    "card-dark.png",
+    "typography-p-light.png",
+    "typography-muted-light.png",
+    "typography-small-light.png",
+    "typography-p-dark.png",
+    "typography-muted-dark.png",
+    "typography-small-dark.png",
+    "textarea-default-light.png",
+    "textarea-focus-visible-light.png",
+    "textarea-disabled-light.png",
+    "textarea-default-dark.png",
+    "textarea-focus-visible-dark.png",
+    "textarea-disabled-dark.png"
+  ],
+  "reference_provenance": "reference/provenance.json",
+  "scale": "theme/sizes sheets 100 % (1 px = 1 DIP); comparison sheets 200 % (refs DPR 2)",
+  "sheets": [
+    {
+      "file": "component-gallery-light.png",
+      "height_px": 2323,
+      "width_px": 2568
+    },
+    {
+      "file": "component-gallery-dark.png",
+      "height_px": 2323,
+      "width_px": 2568
+    },
+    {
+      "file": "component-gallery-sizes.png",
+      "height_px": 1771,
+      "width_px": 1308
+    },
+    {
+      "file": "component-gallery-dpi.png",
+      "height_px": 1593,
+      "width_px": 2581
+    },
+    {
+      "file": "component-gallery-shadcn-reference.png",
+      "height_px": 3816,
+      "width_px": 1166
+    },
+    {
+      "file": "component-gallery-shadcn-reference-2.png",
+      "height_px": 3184,
+      "width_px": 1156
+    },
+    {
+      "file": "component-gallery-shadcn-reference-3.png",
+      "height_px": 2892,
+      "width_px": 1920
+    },
+    {
+      "file": "component-gallery-shadcn-reference-4.png",
+      "height_px": 3590,
+      "width_px": 2168
+    },
+    {
+      "file": "component-gallery-shadcn-reference-5.png",
+      "height_px": 2066,
+      "width_px": 2002
+    }
+  ],
+  "tool": "mascot-ui-lab components",
+  "tool_version": "0.2.0"
+}
