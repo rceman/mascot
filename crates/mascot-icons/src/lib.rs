@@ -7,6 +7,7 @@
 //! [`Seg`] list into native path geometry (Direct2D on Windows) stroked with
 //! the icon stroke width and round caps/joins.
 
+#[rustfmt::skip]
 mod generated;
 
 #[cfg(test)]
