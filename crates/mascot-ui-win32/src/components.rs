@@ -16,7 +16,8 @@ use windows::core::*;
 use windows_numerics::Vector2;
 
 use crate::icons::draw_icon;
-use crate::paint::{Painter, ShadowCache, ShadowKey, brush, cf, dr, mix, rr};
+use crate::paint::{Painter, ShadowCache, ShadowKey, brush, cf, dr, rr};
+use mascot_ui::component::{badge_colors, button_colors, icon_button_colors, tooltip_colors};
 
 impl Painter {
     /// Measures `text` in `style`; returns the natural width in DIP.
@@ -242,36 +243,8 @@ impl Painter {
         kind: IconButtonKind,
         v: ControlVisual,
     ) -> Result<()> {
-        let hover = v.hover && !v.disabled;
-        let pressed = v.pressed && !v.disabled;
+        let (bg, fg_c) = icon_button_colors(pal, kind, v);
         unsafe {
-            let (bg, fg_c): ([f32; 4], [f32; 4]) = match kind {
-                IconButtonKind::Primary => {
-                    let mut bg = if v.disabled { pal.muted } else { pal.primary };
-                    if hover {
-                        bg = mix(bg, pal.primary_fg, 0.10);
-                    }
-                    if pressed {
-                        bg = mix(bg, pal.primary_fg, 0.20);
-                    }
-                    let fg = if v.disabled {
-                        pal.muted_fg
-                    } else {
-                        pal.primary_fg
-                    };
-                    (bg, fg)
-                }
-                IconButtonKind::Ghost => {
-                    let bg = if pressed {
-                        pal.pressed
-                    } else if hover {
-                        pal.hover
-                    } else {
-                        [0.0, 0.0, 0.0, 0.0]
-                    };
-                    (bg, pal.foreground)
-                }
-            };
             if bg[3] > 0.0 {
                 ctx.FillRoundedRectangle(&rr(rect, RADIUS_MD), &brush(ctx, bg)?);
             }
@@ -296,63 +269,8 @@ impl Painter {
         variant: ButtonVariant,
         v: ControlVisual,
     ) -> Result<()> {
-        let hover = v.hover && !v.disabled;
-        let pressed = v.pressed && !v.disabled;
+        let (bg, fg_c) = button_colors(pal, variant, v);
         unsafe {
-            let (bg, fg_c): ([f32; 4], [f32; 4]) = match variant {
-                ButtonVariant::Default => {
-                    let mut bg = if v.disabled { pal.muted } else { pal.primary };
-                    if hover {
-                        bg = mix(bg, pal.primary_fg, 0.10);
-                    }
-                    if pressed {
-                        bg = mix(bg, pal.primary_fg, 0.20);
-                    }
-                    (
-                        bg,
-                        if v.disabled {
-                            pal.muted_fg
-                        } else {
-                            pal.primary_fg
-                        },
-                    )
-                }
-                ButtonVariant::Secondary => {
-                    let mut bg = if v.disabled { pal.muted } else { pal.secondary };
-                    if hover {
-                        // shadcn `secondary/80`
-                        bg = mix(bg, pal.surface, 0.20);
-                    }
-                    if pressed {
-                        bg = pal.pressed;
-                    }
-                    (
-                        bg,
-                        if v.disabled {
-                            pal.muted_fg
-                        } else {
-                            pal.secondary_fg
-                        },
-                    )
-                }
-                ButtonVariant::Ghost => {
-                    let bg = if pressed {
-                        pal.pressed
-                    } else if hover {
-                        pal.hover
-                    } else {
-                        [0.0, 0.0, 0.0, 0.0]
-                    };
-                    (
-                        bg,
-                        if v.disabled {
-                            pal.muted_fg
-                        } else {
-                            pal.foreground
-                        },
-                    )
-                }
-            };
             if bg[3] > 0.0 {
                 ctx.FillRoundedRectangle(&rr(rect, RADIUS_MD), &brush(ctx, bg)?);
             }
@@ -376,16 +294,12 @@ impl Painter {
         variant: BadgeVariant,
     ) -> Result<()> {
         unsafe {
-            let (bg, fg_c, stroke) = match variant {
-                BadgeVariant::Default => (pal.primary, pal.primary_fg, false),
-                BadgeVariant::Secondary => (pal.secondary, pal.secondary_fg, false),
-                BadgeVariant::Outline => ([0.0; 4], pal.foreground, true),
-            };
+            let (bg, fg_c, border) = badge_colors(pal, variant);
             // pill: radius = h/2 (shadcn badge is a full pill)
             if bg[3] > 0.0 {
                 ctx.FillRoundedRectangle(&rr(rect, rect.h / 2.0), &brush(ctx, bg)?);
             }
-            if stroke {
+            if let Some(border_c) = border {
                 // 1 DIP border in `border` colour, snapped to device pixels
                 let mut dx = 0.0f32;
                 let mut dy = 0.0f32;
@@ -400,7 +314,7 @@ impl Painter {
                 );
                 ctx.DrawRoundedRectangle(
                     &rr(inner, (inner.h / 2.0 - inset).max(1.0)),
-                    &brush(ctx, pal.border)?,
+                    &brush(ctx, border_c)?,
                     BORDER_W / scale,
                     None,
                 );
@@ -419,8 +333,9 @@ impl Painter {
         rect: Rect,
         label: &str,
     ) -> Result<()> {
+        let (fill, fg) = tooltip_colors(pal);
         unsafe {
-            ctx.FillRoundedRectangle(&rr(rect, RADIUS_MD), &brush(ctx, pal.primary)?);
+            ctx.FillRoundedRectangle(&rr(rect, RADIUS_MD), &brush(ctx, fill)?);
         }
         // the ellipsis layout gets the padded inner rect: max width is
         // `rect.w - 2*TOOLTIP_PAD_X` so a clamped label keeps its padding
@@ -436,7 +351,7 @@ impl Painter {
             inner,
             label,
             TextStyle::Muted, /* 12/400 = small */
-            pal.primary_fg,
+            fg,
         )
     }
 

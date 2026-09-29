@@ -142,8 +142,8 @@ pub fn run() -> Result<(), String> {
         .map_err(|e| e.to_string())?;
     files.push("icon-sheet.png".into());
 
-    // receipt
-    write_receipt(&tmp, &files, &app)?;
+    // receipt — pass the dirty flag sampled before `.partial` existed
+    write_receipt(&tmp, &files, &app, dirty)?;
 
     if out.exists() {
         std::fs::remove_dir_all(&out).map_err(|e| e.to_string())?;
@@ -642,7 +642,7 @@ pub fn os_build() -> String {
     }
 }
 
-fn write_receipt(out: &Path, files: &[String], app: &App) -> Result<(), String> {
+fn write_receipt(out: &Path, files: &[String], app: &App, dirty: bool) -> Result<(), String> {
     let mut file_objs = Vec::new();
     for f in files {
         let p = out.join(f);
@@ -668,7 +668,7 @@ fn write_receipt(out: &Path, files: &[String], app: &App) -> Result<(), String> 
     };
     let receipt = serde_json::json!({
         "head": git(&["rev-parse", "HEAD"]),
-        "dirty": git_dirty(),
+        "dirty": dirty,
         "rig_rev": git(&["rev-parse", "HEAD:assets/mascot/rig-v0.2"]),
         "tool_version": env!("CARGO_PKG_VERSION"),
         "device": "warp",

@@ -52,15 +52,6 @@ pub(crate) fn dr(r: Rect) -> D2D_RECT_F {
     }
 }
 
-pub(crate) fn mix(a: [f32; 4], b: [f32; 4], t: f32) -> [f32; 4] {
-    [
-        a[0] + (b[0] - a[0]) * t,
-        a[1] + (b[1] - a[1]) * t,
-        a[2] + (b[2] - a[2]) * t,
-        a[3] + (b[3] - a[3]) * t,
-    ]
-}
-
 pub(crate) fn brush(ctx: &ID2D1DeviceContext, c: [f32; 4]) -> Result<ID2D1Brush> {
     unsafe { ctx.CreateSolidColorBrush(&cf(c), None)?.cast() }
 }

@@ -5,6 +5,7 @@
 
 use crate::geom::Size;
 use crate::state::{ControlId, UiState};
+use crate::theme::Palette;
 use crate::theme::tokens::*;
 
 /// Icon-button families — the two fixed edges used by the composer.
@@ -135,6 +136,142 @@ pub fn tooltip_size(text_w: f32) -> Size {
     )
 }
 
+// -------------------------------------------------------- colour resolution
+
+/// Per-channel colour mix (linear, straight alpha): `a + (b - a) * t`.
+/// The single source of the painter's hover/pressed blends.
+pub fn mix(a: [f32; 4], b: [f32; 4], t: f32) -> [f32; 4] {
+    [
+        a[0] + (b[0] - a[0]) * t,
+        a[1] + (b[1] - a[1]) * t,
+        a[2] + (b[2] - a[2]) * t,
+        a[3] + (b[3] - a[3]) * t,
+    ]
+}
+
+/// (fill, fg) for a text button in the given visual state.
+/// Disabled: filled variants get muted/muted_fg, ghost gets no fill +
+/// muted_fg — the documented deviation from shadcn `disabled:opacity-50`.
+pub fn button_colors(
+    pal: &Palette,
+    variant: ButtonVariant,
+    v: ControlVisual,
+) -> ([f32; 4], [f32; 4]) {
+    let hover = v.hover && !v.disabled;
+    let pressed = v.pressed && !v.disabled;
+    match variant {
+        ButtonVariant::Default => {
+            let mut bg = if v.disabled { pal.muted } else { pal.primary };
+            if hover {
+                bg = mix(bg, pal.primary_fg, 0.10);
+            }
+            if pressed {
+                bg = mix(bg, pal.primary_fg, 0.20);
+            }
+            (
+                bg,
+                if v.disabled {
+                    pal.muted_fg
+                } else {
+                    pal.primary_fg
+                },
+            )
+        }
+        ButtonVariant::Secondary => {
+            let mut bg = if v.disabled { pal.muted } else { pal.secondary };
+            if hover {
+                // shadcn `secondary/80`
+                bg = mix(bg, pal.surface, 0.20);
+            }
+            if pressed {
+                bg = pal.pressed;
+            }
+            (
+                bg,
+                if v.disabled {
+                    pal.muted_fg
+                } else {
+                    pal.secondary_fg
+                },
+            )
+        }
+        ButtonVariant::Ghost => {
+            let bg = if pressed {
+                pal.pressed
+            } else if hover {
+                pal.hover
+            } else {
+                [0.0; 4]
+            };
+            (
+                bg,
+                if v.disabled {
+                    pal.muted_fg
+                } else {
+                    pal.foreground
+                },
+            )
+        }
+    }
+}
+
+/// (fill, fg) for an icon button in the given visual state.
+pub fn icon_button_colors(
+    pal: &Palette,
+    kind: IconButtonKind,
+    v: ControlVisual,
+) -> ([f32; 4], [f32; 4]) {
+    let hover = v.hover && !v.disabled;
+    let pressed = v.pressed && !v.disabled;
+    match kind {
+        IconButtonKind::Primary => {
+            let mut bg = if v.disabled { pal.muted } else { pal.primary };
+            if hover {
+                bg = mix(bg, pal.primary_fg, 0.10);
+            }
+            if pressed {
+                bg = mix(bg, pal.primary_fg, 0.20);
+            }
+            (
+                bg,
+                if v.disabled {
+                    pal.muted_fg
+                } else {
+                    pal.primary_fg
+                },
+            )
+        }
+        IconButtonKind::Ghost => {
+            let bg = if pressed {
+                pal.pressed
+            } else if hover {
+                pal.hover
+            } else {
+                [0.0; 4]
+            };
+            (bg, pal.foreground)
+        }
+    }
+}
+
+/// (fill, fg, border) for a badge. `border` is `Some(pal.border)` only for
+/// the outline variant; filled variants draw no border.
+pub fn badge_colors(
+    pal: &Palette,
+    variant: BadgeVariant,
+) -> ([f32; 4], [f32; 4], Option<[f32; 4]>) {
+    match variant {
+        BadgeVariant::Default => (pal.primary, pal.primary_fg, None),
+        BadgeVariant::Secondary => (pal.secondary, pal.secondary_fg, None),
+        BadgeVariant::Outline => ([0.0; 4], pal.foreground, Some(pal.border)),
+    }
+}
+
+/// (fill, fg) for a tooltip.
+pub fn tooltip_colors(pal: &Palette) -> ([f32; 4], [f32; 4]) {
+    (pal.primary, pal.primary_fg)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -188,5 +325,67 @@ mod tests {
         s.editor_empty = true;
         let v = ControlVisual::of(&s, ControlId::Send);
         assert!(v.disabled && !v.hover && !v.pressed && v.focus_visible);
+    }
+
+    fn rgb(c: [f32; 4]) -> String {
+        format!(
+            "#{:02X}{:02X}{:02X}",
+            (c[0] * 255.0).round() as u8,
+            (c[1] * 255.0).round() as u8,
+            (c[2] * 255.0).round() as u8
+        )
+    }
+
+    #[test]
+    fn button_colors_known_values() {
+        let l = crate::theme::Theme::Light.palette();
+        let d = crate::theme::Theme::Dark.palette();
+        let idle = ControlVisual::default();
+        // light default = primary #171717 on #FAFAFA text
+        let (f, g) = button_colors(&l, ButtonVariant::Default, idle);
+        assert_eq!(rgb(f), "#171717");
+        assert_eq!(rgb(g), "#FAFAFA");
+        // dark secondary = #262626 fill / #FAFAFA text
+        let (f, _) = button_colors(&l, ButtonVariant::Secondary, idle);
+        assert_eq!(rgb(f), "#F5F5F5");
+        let (f, g) = button_colors(&d, ButtonVariant::Secondary, idle);
+        assert_eq!(rgb(f), "#262626");
+        assert_eq!(rgb(g), "#FAFAFA");
+        // ghost idle is transparent; disabled ghost is muted_fg text
+        let (f, _) = button_colors(&l, ButtonVariant::Ghost, idle);
+        assert_eq!(f[3], 0.0);
+        let (_, g) = button_colors(
+            &l,
+            ButtonVariant::Ghost,
+            ControlVisual {
+                disabled: true,
+                ..ControlVisual::default()
+            },
+        );
+        assert_eq!(rgb(g), "#737373");
+    }
+
+    #[test]
+    fn icon_button_and_badge_colors_known_values() {
+        let l = crate::theme::Theme::Light.palette();
+        let idle = ControlVisual::default();
+        let (f, g) = icon_button_colors(&l, IconButtonKind::Primary, idle);
+        assert_eq!(rgb(f), "#171717");
+        assert_eq!(rgb(g), "#FAFAFA");
+        let (f, g) = icon_button_colors(&l, IconButtonKind::Ghost, idle);
+        assert_eq!(f[3], 0.0);
+        assert_eq!(rgb(g), "#0A0A0A");
+        // badge: outline draws only the border
+        let (f, g, b) = badge_colors(&l, BadgeVariant::Default);
+        assert_eq!(
+            (rgb(f), rgb(g), b.is_some()),
+            ("#171717".into(), "#FAFAFA".into(), false)
+        );
+        let (f, _, b) = badge_colors(&l, BadgeVariant::Outline);
+        assert_eq!(f[3], 0.0);
+        assert_eq!(b.map(rgb).as_deref(), Some("#E5E5E5"));
+        // tooltip = primary on primary_fg
+        let (f, g) = tooltip_colors(&l);
+        assert_eq!((rgb(f), rgb(g)), ("#171717".into(), "#FAFAFA".into()));
     }
 }

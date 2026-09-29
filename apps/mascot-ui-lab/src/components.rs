@@ -19,8 +19,9 @@
 use mascot_render_win32::image::RgbaImage;
 use mascot_render_win32::renderer::{DeviceKind, Renderer};
 use mascot_ui::component::{
-    BadgeVariant, ButtonSize, ButtonVariant, ControlVisual, IconButtonKind, TextStyle, badge_size,
-    button_size, tooltip_size,
+    BadgeVariant, ButtonSize, ButtonVariant, ControlVisual, IconButtonKind, TextStyle,
+    badge_colors, badge_size, button_colors, button_size, icon_button_colors, tooltip_colors,
+    tooltip_size,
 };
 use mascot_ui::geom::Rect;
 use mascot_ui::layout::composer_height;
@@ -118,6 +119,7 @@ pub fn run() -> Result<(), String> {
             },
             &rep,
             &ref_dir,
+            dirty,
         )
     } else {
         // dev preview: write the sheets under target/ first, print paths,
@@ -929,8 +931,10 @@ fn composer_stage(a: &mut App, text: &str, focused: bool) {
     let n1 = a.editor.send(EM_LINEINDEX, last_line as usize, 0);
     let mut p0 = windows::Win32::Foundation::POINTL { x: 0, y: 0 };
     let mut p1 = windows::Win32::Foundation::POINTL { x: 0, y: 0 };
-    a.editor.send(EM_POSFROMCHAR, &mut p0 as *mut _ as usize, n0);
-    a.editor.send(EM_POSFROMCHAR, &mut p1 as *mut _ as usize, n1);
+    a.editor
+        .send(EM_POSFROMCHAR, &mut p0 as *mut _ as usize, n0);
+    a.editor
+        .send(EM_POSFROMCHAR, &mut p1 as *mut _ as usize, n1);
     let line_h = (p1.y - p0.y).max(1);
     let client_h = a
         .layout
@@ -1000,7 +1004,10 @@ fn theme_sheet(app: &mut App, theme: Theme, rep: &mut Report) -> Result<RgbaImag
             let i = ((y * plain.width + x) * 4) as usize;
             let px = &plain.data[i..i + 3];
             let s = rgb8(pal.surface);
-            let darker = px.iter().zip(s.iter()).any(|(a, b)| *b as i32 - *a as i32 > 8);
+            let darker = px
+                .iter()
+                .zip(s.iter())
+                .any(|(a, b)| *b as i32 - *a as i32 > 8);
             if !darker {
                 rep.surface_shadow_violations += 1;
             }
@@ -1306,8 +1313,10 @@ fn theme_sheet(app: &mut App, theme: Theme, rep: &mut Report) -> Result<RgbaImag
                 let n1 = app.editor.send(EM_LINEINDEX, last_line as usize, 0);
                 let mut p0 = windows::Win32::Foundation::POINTL { x: 0, y: 0 };
                 let mut p1 = windows::Win32::Foundation::POINTL { x: 0, y: 0 };
-                app.editor.send(EM_POSFROMCHAR, &mut p0 as *mut _ as usize, n0);
-                app.editor.send(EM_POSFROMCHAR, &mut p1 as *mut _ as usize, n1);
+                app.editor
+                    .send(EM_POSFROMCHAR, &mut p0 as *mut _ as usize, n0);
+                app.editor
+                    .send(EM_POSFROMCHAR, &mut p1 as *mut _ as usize, n1);
                 let line_h = (p1.y - p0.y).max(1);
                 rep.overflow_caret_in_editor = app
                     .layout
@@ -1917,16 +1926,6 @@ fn bg3(p: &Palette) -> [u8; 3] {
     rgb8(p.surface)
 }
 
-/// local copy of the painter's mix for reporting hover/pressed fills.
-fn mix_c(a: [f32; 4], b: [f32; 4], t: f32) -> [f32; 4] {
-    [
-        a[0] + (b[0] - a[0]) * t,
-        a[1] + (b[1] - a[1]) * t,
-        a[2] + (b[2] - a[2]) * t,
-        a[3] + (b[3] - a[3]) * t,
-    ]
-}
-
 /// within ~16 of the target rgb (antialiasing noise).
 fn close3(c: [u8; 3], t: [u8; 3]) -> bool {
     c.iter()
@@ -2140,7 +2139,12 @@ fn ref_rows(key: &str) -> Vec<RefRow> {
         "tooltip" => vec![r("open", "tooltip-open", "tooltip", "Add to library")],
         "badge" => vec![
             r("default", "badge-default", "badge-default", "Badge"),
-            r("secondary", "badge-secondary", "badge-secondary", "Secondary"),
+            r(
+                "secondary",
+                "badge-secondary",
+                "badge-secondary",
+                "Secondary",
+            ),
             r("outline", "badge-outline", "badge-outline", "Outline"),
         ],
         "separator" => vec![r("horizontal", "separator", "separator", "")],
@@ -2171,55 +2175,6 @@ fn ref_rows(key: &str) -> Vec<RefRow> {
     }
 }
 
-/// Painter's button fill for a variant/state — mirrors `Painter::button`.
-fn button_fill(pal: &Palette, variant: ButtonVariant, v: ControlVisual) -> [f32; 4] {
-    let hover = v.hover && !v.disabled;
-    let pressed = v.pressed && !v.disabled;
-    match variant {
-        ButtonVariant::Default => {
-            let mut bg = if v.disabled { pal.muted } else { pal.primary };
-            if hover {
-                bg = mix(bg, pal.primary_fg, 0.10);
-            }
-            if pressed {
-                bg = mix(bg, pal.primary_fg, 0.20);
-            }
-            bg
-        }
-        ButtonVariant::Secondary => {
-            let mut bg = if v.disabled { pal.muted } else { pal.secondary };
-            if hover {
-                bg = mix(bg, pal.surface, 0.20);
-            }
-            if pressed {
-                bg = pal.pressed;
-            }
-            bg
-        }
-        ButtonVariant::Ghost => {
-            if pressed {
-                pal.pressed
-            } else if hover {
-                pal.hover
-            } else {
-                [0.0; 4]
-            }
-        }
-    }
-}
-
-fn button_fg(pal: &Palette, variant: ButtonVariant, disabled: bool) -> [f32; 4] {
-    if disabled {
-        pal.muted_fg
-    } else {
-        match variant {
-            ButtonVariant::Default => pal.primary_fg,
-            ButtonVariant::Secondary => pal.secondary_fg,
-            ButtonVariant::Ghost => pal.foreground,
-        }
-    }
-}
-
 /// Native side of a comparison cell at REF_SCALE, flattened over the band
 /// theme's surface, returning measured values alongside the image.
 fn native_ref_cell(
@@ -2228,8 +2183,13 @@ fn native_ref_cell(
     spec: &str,
     ntext: &str,
     theme: Theme,
-    prov: &ProvEntry,
+    prov: Option<&ProvEntry>,
 ) -> Result<NativeCell, String> {
+    // most cells don't need provenance; the ones that measure against the
+    // reference rect unwrap it
+    let need_prov = |spec: &str| -> Result<&ProvEntry, String> {
+        prov.ok_or_else(|| format!("{spec}: needs reference provenance"))
+    };
     let pal = theme.palette();
     let v = |hover: bool, pressed: bool, focus: bool, dis: bool| ControlVisual {
         hover,
@@ -2270,20 +2230,8 @@ fn native_ref_cell(
                 )
             })?;
             // measured per-control values: ghost 28 (Copy) + primary 32 (Send)
-            let fill_g = if vv.pressed {
-                pal.pressed
-            } else if vv.hover {
-                pal.hover
-            } else {
-                [0.0; 4]
-            };
-            let fill_p = if vv.pressed {
-                mix_c(pal.primary, pal.primary_fg, 0.20)
-            } else if vv.hover {
-                mix_c(pal.primary, pal.primary_fg, 0.10)
-            } else {
-                pal.primary
-            };
+            let fill_g = icon_button_colors(&pal, IconButtonKind::Ghost, vv).0;
+            let fill_p = icon_button_colors(&pal, IconButtonKind::Primary, vv).0;
             Ok(NativeCell {
                 img,
                 fields: vec![],
@@ -2372,9 +2320,9 @@ fn native_ref_cell(
                     "none"
                 },
             )
-            .f("backgroundColor", hex(button_fill(&pal, variant, vv)))
-            .f("color", hex(button_fg(&pal, variant, vv.disabled)))
-            .f("fontFamily", app_font_family())
+            .f("backgroundColor", hex(button_colors(&pal, variant, vv).0))
+            .f("color", hex(button_colors(&pal, variant, vv).1))
+            .f("fontFamily", app.painter.fonts.family.clone())
             .f("fontSize", format!("{} DIP", tokens::BODY_SIZE))
             .f("fontWeight", "500")
             .f("boxShadow", "none"))
@@ -2409,9 +2357,9 @@ fn native_ref_cell(
                 format!("{} x {} DIP", tokens::TOOLTIP_PAD_Y, tokens::TOOLTIP_PAD_X),
             )
             .f("borderRadius", format!("{} DIP", tokens::RADIUS_MD))
-            .f("backgroundColor", hex(pal.primary))
-            .f("color", hex(pal.primary_fg))
-            .f("fontFamily", app_font_family())
+            .f("backgroundColor", hex(tooltip_colors(&pal).0))
+            .f("color", hex(tooltip_colors(&pal).1))
+            .f("fontFamily", app.painter.fonts.family.clone())
             .f("fontSize", format!("{} DIP", tokens::SMALL_SIZE))
             .f("fontWeight", "400")
             .f("boxShadow", "none"))
@@ -2441,20 +2389,10 @@ fn native_ref_cell(
                     )
                 },
             )?;
-            let (fill, fg_c, border_label, border_hex) = match variant {
-                BadgeVariant::Default => (
-                    pal.primary,
-                    pal.primary_fg,
-                    "transparent",
-                    "transparent".to_string(),
-                ),
-                BadgeVariant::Secondary => (
-                    pal.secondary,
-                    pal.secondary_fg,
-                    "transparent",
-                    "transparent".to_string(),
-                ),
-                BadgeVariant::Outline => ([0.0; 4], pal.foreground, "border", hex(pal.border)),
+            let (fill, fg_c, border) = badge_colors(&pal, variant);
+            let (border_label, border_hex) = match border {
+                Some(b) => ("border", hex(b)),
+                None => ("transparent", "transparent".to_string()),
             };
             Ok(NativeCell {
                 img,
@@ -2471,12 +2409,13 @@ fn native_ref_cell(
             .f("borderColor", border_hex)
             .f("backgroundColor", hex(fill))
             .f("color", hex(fg_c))
-            .f("fontFamily", app_font_family())
+            .f("fontFamily", app.painter.fonts.family.clone())
             .f("fontSize", format!("{} DIP", tokens::SMALL_SIZE))
             .f("fontWeight", "500")
             .f("boxShadow", "none"))
         }
         "separator" => {
+            let prov = need_prov(spec)?;
             // same length as the ref element; >= 16 DIP vertical padding so
             // the hairline is visible in context
             let w = (prov.rect_w as f32).max(1.0);
@@ -2500,6 +2439,7 @@ fn native_ref_cell(
             .f("boxShadow", "none"))
         }
         "surface-plain" => {
+            let prov = need_prov(spec)?;
             // render the native Surface at the ref card's CSS border box so
             // radius/border/shadow compare at equal scale
             let w = prov.rect_w as f32;
@@ -2522,6 +2462,7 @@ fn native_ref_cell(
             .f("boxShadow", "composited drop shadow"))
         }
         s if s.starts_with("typo-") => {
+            let prov = need_prov(spec)?;
             // same text, wrapped at the reference's CSS width.
             // mapping: shadcn p -> native body 14/400, muted -> muted 12/400,
             // small -> label 14/500 (shadcn `small` renders bolded small text)
@@ -2558,11 +2499,12 @@ fn native_ref_cell(
             .f("width", format!("{ref_w} DIP (ref wrap width)"))
             .f("height", format!("{:.0} DIP", th))
             .f("color", hex(color))
-            .f("fontFamily", app_font_family())
+            .f("fontFamily", app.painter.fonts.family.clone())
             .f("fontSize", format!("{size} DIP"))
             .f("fontWeight", weight))
         }
         "composer-empty" | "composer-focused" | "composer-submitting" => {
+            let prov = need_prov(spec)?;
             rep.size_pairs
                 .push(("composer w".into(), prov.rect_w, tokens::BUBBLE_W as f64));
             let preset = match spec {
@@ -2660,7 +2602,7 @@ fn app_ref_cell(
     .f("borderColor", hex(pal.border))
     .f("backgroundColor", hex(pal.surface))
     .f("color", hex(pal.foreground))
-    .f("fontFamily", app_font_family())
+    .f("fontFamily", app.painter.fonts.family.clone())
     .f("fontSize", format!("{} DIP", tokens::BODY_SIZE))
     .f("fontWeight", "400")
     .f("lineHeight", format!("{} DIP", tokens::BODY_LINE)))
@@ -2879,14 +2821,7 @@ fn shadcn_sheets(
                             Some(pe),
                         )
                     };
-                    let cell = native_ref_cell(
-                        app,
-                        rep,
-                        row.native,
-                        row.ntext,
-                        *theme,
-                        pe.unwrap_or_else(|| prov_placeholder()),
-                    )?;
+                    let cell = native_ref_cell(app, rep, row.native, row.ntext, *theme, pe)?;
                     if let Some(pe) = pe {
                         rep.native_specs
                             .insert(pe.file.clone(), cell.fields.clone());
@@ -2954,59 +2889,7 @@ fn shadcn_sheets(
     ))
 }
 
-fn prov_placeholder() -> &'static ProvEntry {
-    // only used by non-analogue native cells that never read `prov`
-    static P: std::sync::OnceLock<ProvEntry> = std::sync::OnceLock::new();
-    P.get_or_init(|| ProvEntry {
-        file: String::new(),
-        component: String::new(),
-        example: String::new(),
-        docs_url: String::new(),
-        theme: String::new(),
-        state: String::new(),
-        data_variant: String::new(),
-        data_size: String::new(),
-        element_text: String::new(),
-        rect_w: 0.0,
-        rect_h: 0.0,
-        style_element: String::new(),
-        computed_style: ProvStyle {
-            height: String::new(),
-            width: String::new(),
-            padding: String::new(),
-            border_radius: String::new(),
-            border_width: String::new(),
-            border_color: String::new(),
-            border_color_hex: String::new(),
-            background_color: String::new(),
-            background_color_hex: String::new(),
-            color: String::new(),
-            color_hex: String::new(),
-            font_family: String::new(),
-            font_size: String::new(),
-            font_weight: String::new(),
-            line_height: String::new(),
-            box_shadow: String::new(),
-        },
-    })
-}
-
 // ------------------------------------------------------- shadcn-comparison.md
-
-/// Local copy of the painter's colour mix (linear, straight-alpha first
-/// three channels).
-fn mix(a: [f32; 4], b: [f32; 4], m: f32) -> [f32; 4] {
-    [
-        a[0] * (1.0 - m) + b[0] * m,
-        a[1] * (1.0 - m) + b[1] * m,
-        a[2] * (1.0 - m) + b[2] * m,
-        a[3] * (1.0 - m) + b[3] * m,
-    ]
-}
-
-fn app_font_family() -> String {
-    "Segoe UI Variable Text".to_string()
-}
 
 /// shadcn theme var -> the native palette slot used for the same role.
 type ThemeVarMap = Vec<(&'static str, &'static str, fn(&Palette) -> [f32; 4])>;
@@ -3164,6 +3047,7 @@ fn write_capture(
     sheets: Sheets,
     rep: &Report,
     ref_dir: &Path,
+    dirty: bool,
 ) -> Result<(), String> {
     let tmp = out.with_file_name(format!(
         "{}.partial",
@@ -3247,7 +3131,7 @@ fn write_capture(
         .collect();
     let receipt = serde_json::json!({
         "head": crate::capture::git(&["rev-parse", "HEAD"]),
-        "dirty": crate::capture::git_dirty(),
+        "dirty": dirty,
         "tool": "mascot-ui-lab components",
         "tool_version": env!("CARGO_PKG_VERSION"),
         "device": "warp",
