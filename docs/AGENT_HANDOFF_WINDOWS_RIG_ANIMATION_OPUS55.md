@@ -1,5 +1,24 @@
 # Agent handoff — Windows mascot rig + animation lab (Opus 5.5)
 
+
+> **Planner status update — research-only phase active**
+>
+> Production rig/art/runtime implementation is currently paused.
+> Before doing anything else, read and follow:
+>
+> - `docs/AGENT_HANDOFF_RIG_RESEARCH_ONLY_OPUS55.md`
+> - `docs/MASCOT_NEUTRAL_BIND_POSE_RESEARCH_SPEC_V0.1.md`
+>
+> Those documents supersede any older instruction in this handoff that says to resume implementation after research.
+>
+> During the current phase, do not perform structural art repair, pivot/safe-range changes, renderer implementation, mesh implementation, clip work, or production tooling changes.
+> Complete the research deliverables, commit/push them, then STOP for Planner review.
+>
+> Native Windows Git + SSH is authoritative for the current research phase.
+> Repository: `git@github.com:rceman/mascot.git`
+> Workspace: `W:\devin_folder\mascot-rig-v02`
+> Branch: `agent/windows-rig-animation-lab-v0.2-opus55`
+
 Task ID: MASCOT-RIG-WIN-002
 
 ## Goal
