@@ -1,0 +1,1 @@
+camera movement, camera rotation, camera orbit, character turn, turntable, yaw rotation, front view, back view, opposite side view, perspective change, 3D rotation, torso rotation, head turn, body morphing, anatomy change, limb growth, limb shrinkage, extra limbs, missing limbs, walking, dancing, bouncing, cinematic camera, motion blur, scene change, background change
