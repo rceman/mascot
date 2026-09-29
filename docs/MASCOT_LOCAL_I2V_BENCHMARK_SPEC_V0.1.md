@@ -196,6 +196,43 @@ Before downloading large checkpoints, research current open/open-weight I2V opti
 
     docs/MASCOT_LOCAL_I2V_CANDIDATE_RESEARCH_V0.1.md
 
+### 9.1 Model-page / upstream installation authority
+
+For every candidate, inspect the model's **official Hugging Face model page/model card first** when one exists, together with the upstream repository documentation.
+
+Treat those pages as the primary source for the intended local setup and usage path.
+
+Before installing or running a candidate, record from the official model page / upstream docs where available:
+
+- exact checkpoint/revision to use;
+- recommended inference entry point;
+- official example command/code;
+- supported image/video modes;
+- Python version requirements or tested Python version;
+- PyTorch version requirements;
+- CUDA/runtime requirements;
+- `transformers` / `diffusers` / `accelerate` / `xformers` / `flash-attn` / other required package versions;
+- any model-specific custom package or repo checkout requirement;
+- dtype/quantization guidance;
+- CPU/GPU offload guidance;
+- expected VRAM/RAM notes;
+- supported resolution/frame constraints;
+- recommended steps / scheduler / guidance;
+- known hardware caveats;
+- license and usage restrictions.
+
+Do not guess dependency versions when the official model card or upstream README specifies them.
+
+Do not start by adapting a random community ComfyUI workflow if an official Python/CLI path exists.
+
+If the Hugging Face page and upstream repository disagree:
+
+1. record both;
+2. prefer the newer explicit model-specific instruction when provenance/date is clear;
+3. otherwise stop before mutating the environment and document the ambiguity.
+
+Pin the actual environment used for each successful backend so it can be reproduced later.
+
 For each candidate record:
 
 - model/checkpoint exact name;
