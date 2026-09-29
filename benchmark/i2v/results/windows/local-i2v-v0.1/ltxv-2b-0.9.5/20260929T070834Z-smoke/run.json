@@ -1,0 +1,72 @@
+{
+  "schema_version": "mascot-i2v-run/1",
+  "run_id": "20260929T070834Z-smoke",
+  "profile": "ltxv-2b-0.9.5",
+  "mode": "smoke",
+  "scored_articulation_comparison": true,
+  "timestamp_utc": "2026-09-29T07:08:34Z",
+  "git_commit": "4ba00bf2ebaa4e780cc99dd693f47e020d13b3c8",
+  "env": {
+    "hostname": "DESKTOP-TU6TPPD",
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.4",
+    "torch": "2.11.0+cu128",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 4070",
+    "driver_version": "596.36",
+    "gpu_memory_total": "12282 MiB",
+    "diffusers": "0.40.0",
+    "transformers": "5.17.0"
+  },
+  "model": {
+    "id": "Lightricks/LTX-Video-0.9.5",
+    "revision": "e58e28c39631af4d1468ee57a853764e11c1d37e",
+    "backend": "ltx",
+    "dtype": "bf16",
+    "quantization": "text_encoder int8 (bnb); transformer/vae bf16"
+  },
+  "input": {
+    "path": "assets\\i2v\\neutral-tpose-480x480.png",
+    "sha256": "20c5cf61b1cfd2b22d078e0392b576b37d3015fd6717544ee39e3910d8479137"
+  },
+  "resolution": {
+    "width": 480,
+    "height": 480,
+    "mode": "comparable_480p",
+    "cross_model_resolution_comparable": true
+  },
+  "frames": 33,
+  "output_fps": 24,
+  "seed": 42,
+  "steps": 10,
+  "guidance": 3.0,
+  "offload_strategy": "component_gpu_int8_encoder",
+  "prompt": {
+    "path": "benchmark\\i2v\\prompts\\near-arm-paper-puppet-v0.1.txt",
+    "sha256": "dfe4503c6b3dcfd38bf35e193bfd8b10152512c4a0483764ca6b6b894f734cbd"
+  },
+  "negative_prompt": {
+    "path": "benchmark\\i2v\\prompts\\near-arm-paper-puppet-v0.1-negative.txt",
+    "sha256": "a5e1c7f647090acddb0ce6f90246a32cccba1a2edf2242daf91ac3cc4a77a492"
+  },
+  "deviations": [
+    "fps 24 != benchmark target 16 (model native rate)"
+  ],
+  "success": false,
+  "error": "RuntimeError: mat1 and mat2 must have the same dtype, but got Float and BFloat16",
+  "traceback_tail": "Traceback (most recent call last):\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\src\\i2v_bench\\runner.py\", line 101, in run\n    frames_out, info = backend.generate(\n                       ^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\src\\i2v_bench\\backends\\ltx.py\", line 48, in generate\n    out = pipe(\n          ^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\torch\\utils\\_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\diffusers\\pipelines\\ltx\\pipeline_ltx_condition.py\", line 1202, in __call__\n    noise_pred = self.transformer(\n                 ^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\diffusers\\utils\\peft_utils.py\", line 323, in wrapper\n    result = forward_fn(self, *args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\diffusers\\models\\transformers\\transformer_ltx.py\", line 551, in forward\n    hidden_states = self.proj_in(hidden_states)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\torch\\nn\\modules\\linear.py\", line 134, in forward\n    return F.linear(input, self.weight, self.bias)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: mat1 and mat2 must have the same dtype, but got Float and BFloat16\n",
+  "resources": {
+    "baseline_vram_mb": 2453,
+    "peak_vram_mb": 11808,
+    "peak_process_rss_mb": 13432,
+    "vram_sample_count": 101,
+    "vram_sampler": "nvidia-smi poll 0.5s (whole-GPU, incl. desktop baseline)"
+  },
+  "timing_s": {
+    "model_load": 66.2,
+    "generation": 0.0,
+    "frame_save_encode_sheet": 0.0,
+    "total_wall": 73.61
+  }
+}

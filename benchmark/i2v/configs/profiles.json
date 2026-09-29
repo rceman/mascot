@@ -1,0 +1,85 @@
+{
+  "schema_version": "mascot-i2v-profiles/1",
+  "profiles": {
+    "wan21-vace-1.3b": {
+      "dir_name": "wan21-vace-1.3b",
+      "backend": "wan_vace",
+      "hf_repo": "Wan-AI/Wan2.1-VACE-1.3B-diffusers",
+      "hf_revision": "ec4d2cb062b548996b179d493fdd05340de702a1",
+      "dtype": "bf16 + fp32 VAE",
+      "quantization": "text_encoder int8 (bnb); transformer bf16; VAE fp32",
+      "width": 480,
+      "height": 480,
+      "resolution_mode": "comparable_480p",
+      "frames": 33,
+      "fps": 16,
+      "seed": 42,
+      "offload": "encode_subprocess",
+      "flow_shift": 3.0,
+      "modes": {
+        "smoke": {
+          "steps": 10,
+          "guidance": 5.0
+        },
+        "compare": {
+          "steps": 30,
+          "guidance": 5.0
+        }
+      },
+      "notes": "RESULT: unsupported at 480x480 - VACE conditioning stream corrupts output (block-mosaic) at 1:1; same pipeline coherent at native 832x480 diagnostic and T2V 480x480. Official profile ~480x832 only."
+    },
+    "wan22-ti2v-5b": {
+      "dir_name": "wan22-ti2v-5b",
+      "backend": "wan_ti2v",
+      "hf_repo": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+      "hf_revision": "b8fff7315c768468a5333511427288870b2e9635",
+      "dtype": "bf16",
+      "quantization": "text_encoder+transformer int8 (bnb); VAE fp32",
+      "width": 480,
+      "height": 480,
+      "resolution_mode": "comparable_480p",
+      "frames": 33,
+      "fps": 24,
+      "seed": 42,
+      "offload": "encode_subprocess",
+      "transformer_int8": true,
+      "modes": {
+        "smoke": {
+          "steps": 8,
+          "guidance": 5.0
+        },
+        "compare": {
+          "steps": 30,
+          "guidance": 5.0
+        }
+      },
+      "notes": "RESULT: valid 480x480 run via WanImageToVideoPipeline + expand_timesteps (diffusers PR12006 path); int8 transformer ~5.3GB (bf16 ~9.3GB too big with desktop overhead); Wan22Image2Video modular blocks are for A14B, not TI2V-5B."
+    },
+    "ltxv-2b-0.9.5": {
+      "dir_name": "ltxv-2b-0.9.5",
+      "backend": "ltx",
+      "hf_repo": "Lightricks/LTX-Video-0.9.5",
+      "hf_revision": "e58e28c39631af4d1468ee57a853764e11c1d37e",
+      "dtype": "bf16",
+      "quantization": "text_encoder int8 (bnb); transformer/vae bf16",
+      "width": 480,
+      "height": 480,
+      "resolution_mode": "comparable_480p",
+      "frames": 33,
+      "fps": 24,
+      "seed": 42,
+      "offload": "encode_subprocess",
+      "modes": {
+        "smoke": {
+          "steps": 10,
+          "guidance": 3.0
+        },
+        "compare": {
+          "steps": 30,
+          "guidance": 3.0
+        }
+      },
+      "notes": "RESULT: works at 480x480 - strongest fit for 1:1. 10-step smoke 3.8s gen after subprocess-encode fix; prompt cap 256 tokens (benchmark prompt truncated). 0.9.7-distilled repo is ~10B/20GB - not used."
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema_version": "mascot-i2v-run/1",
+  "run_id": "20260929T100234Z-compare",
+  "profile": "wan22-ti2v-5b",
+  "mode": "compare",
+  "scored_articulation_comparison": true,
+  "timestamp_utc": "2026-09-29T10:02:34Z",
+  "git_commit": "6c6ccee84bc3090b30e89e93c495ab8cb0eaf52f",
+  "env": {
+    "hostname": "DESKTOP-TU6TPPD",
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.4",
+    "torch": "2.11.0+cu128",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 4070",
+    "driver_version": "596.36",
+    "gpu_memory_total": "12282 MiB",
+    "diffusers": "0.40.0",
+    "transformers": "5.17.0"
+  },
+  "model": {
+    "id": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "revision": "b8fff7315c768468a5333511427288870b2e9635",
+    "backend": "wan_ti2v",
+    "dtype": "bf16",
+    "quantization": "text_encoder+transformer int8 (bnb); VAE fp32"
+  },
+  "input": {
+    "path": "assets\\i2v\\neutral-tpose-480x480.png",
+    "sha256": "20c5cf61b1cfd2b22d078e0392b576b37d3015fd6717544ee39e3910d8479137"
+  },
+  "resolution": {
+    "width": 480,
+    "height": 480,
+    "mode": "comparable_480p",
+    "cross_model_resolution_comparable": true
+  },
+  "frames": 33,
+  "output_fps": 24,
+  "seed": 42,
+  "steps": 30,
+  "guidance": 5.0,
+  "offload_strategy": "component_gpu_int8_encoder",
+  "prompt": {
+    "path": "benchmark\\i2v\\prompts\\near-arm-paper-puppet-v0.1.txt",
+    "sha256": "dfe4503c6b3dcfd38bf35e193bfd8b10152512c4a0483764ca6b6b894f734cbd"
+  },
+  "negative_prompt": {
+    "path": "benchmark\\i2v\\prompts\\near-arm-paper-puppet-v0.1-negative.txt",
+    "sha256": "a5e1c7f647090acddb0ce6f90246a32cccba1a2edf2242daf91ac3cc4a77a492"
+  },
+  "deviations": [
+    "fps 24 != benchmark target 16 (model native rate)"
+  ],
+  "success": true,
+  "prompt_embeds": {
+    "path": "W:\\devin_folder\\mascot-i2v-benchmark\\benchmark\\i2v\\results\\windows\\local-i2v-v0.1\\wan22-ti2v-5b\\20260929T100234Z-compare\\prompt-embeds.pt",
+    "sha256": "d9673b7df0907390fa75b4c21d21e81fa1b518e45c82808fdf86e97d448cc695"
+  },
+  "backend_info": {
+    "pipeline": "WanImageToVideoPipeline",
+    "scheduler": "UniPCMultistepScheduler",
+    "negative_prompt_used": true,
+    "conditioning": "first-frame via VAE latent (no CLIP image encoder; TI2V-5B single stage)",
+    "prompt_tokens": 330
+  },
+  "torch_allocator_peak_mb": 12608,
+  "output": {
+    "path": "W:\\devin_folder\\mascot-i2v-benchmark\\benchmark\\i2v\\results\\windows\\local-i2v-v0.1\\wan22-ti2v-5b\\20260929T100234Z-compare\\output.mp4",
+    "sha256": "ec769e5cf5ecc2539ac0f2604f5d024656f8741411cc61da7a3c66011bf7163a",
+    "probe": {
+      "width": 480,
+      "height": 480,
+      "avg_frame_rate": "24/1",
+      "nb_frames": "33"
+    }
+  },
+  "contact_sheet": "W:\\devin_folder\\mascot-i2v-benchmark\\benchmark\\i2v\\results\\windows\\local-i2v-v0.1\\wan22-ti2v-5b\\20260929T100234Z-compare\\contact-sheet.png",
+  "representative_frames": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32
+  ],
+  "resources": {
+    "baseline_vram_mb": 682,
+    "peak_vram_mb": 11982,
+    "peak_process_rss_mb": 6941,
+    "vram_sample_count": 423,
+    "vram_sampler": "nvidia-smi poll 0.5s (whole-GPU, incl. desktop baseline)"
+  },
+  "timing_s": {
+    "prompt_encode": 42.31,
+    "model_load": 27.24,
+    "generation": 173.76,
+    "frame_save_encode_sheet": 1.74,
+    "total_wall": 249.41
+  },
+  "visual_review": {
+    "identity_notes": "Identity preserved across all frames; palette/markings/proportions match reference.",
+    "orientation_drift": "none - fixed view held",
+    "non_target_motion": "no on-target motion; near arm static throughout",
+    "global_drift": "none",
+    "anatomy_regeneration": "none",
+    "limb_geometry": "stable (minor outline wobble on far arm ~f16-20)",
+    "background_drift": "minor paper-grain texture flicker; no stray objects (cleaner than 8-step smoke)",
+    "outline_style_drift": "slight flicker",
+    "local_motion_notes": "requested near-arm rotation not executed at 30 steps either"
+  }
+}

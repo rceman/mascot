@@ -1,0 +1,73 @@
+{
+  "schema_version": "mascot-i2v-run/1",
+  "run_id": "20260929T094226Z-smoke",
+  "profile": "wan22-ti2v-5b",
+  "mode": "smoke",
+  "scored_articulation_comparison": true,
+  "timestamp_utc": "2026-09-29T09:42:26Z",
+  "git_commit": "6c6ccee84bc3090b30e89e93c495ab8cb0eaf52f",
+  "env": {
+    "hostname": "DESKTOP-TU6TPPD",
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.4",
+    "torch": "2.11.0+cu128",
+    "torch_cuda": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 4070",
+    "driver_version": "596.36",
+    "gpu_memory_total": "12282 MiB",
+    "diffusers": "0.40.0",
+    "transformers": "5.17.0"
+  },
+  "model": {
+    "id": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+    "revision": "b8fff7315c768468a5333511427288870b2e9635",
+    "backend": "wan_ti2v",
+    "dtype": "bf16",
+    "quantization": "text_encoder+transformer int8 (bnb); VAE fp32"
+  },
+  "input": {
+    "path": "assets\\i2v\\neutral-tpose-480x480.png",
+    "sha256": "20c5cf61b1cfd2b22d078e0392b576b37d3015fd6717544ee39e3910d8479137"
+  },
+  "resolution": {
+    "width": 480,
+    "height": 480,
+    "mode": "comparable_480p",
+    "cross_model_resolution_comparable": true
+  },
+  "frames": 33,
+  "output_fps": 24,
+  "seed": 42,
+  "steps": 8,
+  "guidance": 5.0,
+  "offload_strategy": "component_gpu_int8_encoder",
+  "prompt": {
+    "path": "benchmark\\i2v\\prompts\\near-arm-paper-puppet-v0.1.txt",
+    "sha256": "dfe4503c6b3dcfd38bf35e193bfd8b10152512c4a0483764ca6b6b894f734cbd"
+  },
+  "negative_prompt": {
+    "path": "benchmark\\i2v\\prompts\\near-arm-paper-puppet-v0.1-negative.txt",
+    "sha256": "a5e1c7f647090acddb0ce6f90246a32cccba1a2edf2242daf91ac3cc4a77a492"
+  },
+  "deviations": [
+    "fps 24 != benchmark target 16 (model native rate)"
+  ],
+  "success": false,
+  "error": "RuntimeError: Sizes of tensors must match except in dimension 1. Expected size 60 but got size 30 for tensor number 1 in the list.",
+  "traceback_tail": "Traceback (most recent call last):\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\src\\i2v_bench\\runner.py\", line 116, in run\n    frames_out, info = backend.generate(\n                       ^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\src\\i2v_bench\\backends\\wan_ti2v.py\", line 54, in generate\n    videos = pipe(\n             ^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\diffusers\\modular_pipelines\\modular_pipeline.py\", line 2927, in __call__\n    _, state = self._blocks(self, state)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\torch\\utils\\_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\diffusers\\modular_pipelines\\modular_pipeline.py\", line 1145, in __call__\n    pipeline, state = block(pipeline, state)\n                      ^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\torch\\utils\\_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\diffusers\\modular_pipelines\\modular_pipeline.py\", line 1145, in __call__\n    pipeline, state = block(pipeline, state)\n                      ^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\torch\\utils\\_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\diffusers\\modular_pipelines\\wan\\denoise.py\", line 435, in __call__\n    components, block_state = self.loop_step(components, block_state, i=i, t=t)\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\diffusers\\modular_pipelines\\modular_pipeline.py\", line 1515, in loop_step\n    components, state = block(components, state, **kwargs)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\torch\\utils\\_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"W:\\devin_folder\\mascot-i2v-benchmark\\tools\\i2v-bench\\.venv\\Lib\\site-packages\\diffusers\\modular_pipelines\\wan\\denoise.py\", line 107, in __call__\n    block_state.latent_model_input = torch.cat(\n                                     ^^^^^^^^^^\nRuntimeError: Sizes of tensors must match except in dimension 1. Expected size 60 but got size 30 for tensor number 1 in the list.\n",
+  "resources": {
+    "baseline_vram_mb": 717,
+    "peak_vram_mb": 11908,
+    "peak_process_rss_mb": 18703,
+    "vram_sample_count": 273,
+    "vram_sampler": "nvidia-smi poll 0.5s (whole-GPU, incl. desktop baseline)"
+  },
+  "timing_s": {
+    "prompt_encode": 0.0,
+    "model_load": 60.89,
+    "generation": 0.0,
+    "frame_save_encode_sheet": 0.0,
+    "total_wall": 174.42
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "source_path": "assets\\mascot.png",
+  "source_sha256": "2c6e6e90aea8d3283912a46c885a763b588e526740ef9fb5a6d8ba0068ba9b37",
+  "derived_path": "assets\\i2v\\mascot-480x480.png",
+  "derived_sha256": "883018d69eac5d0a0fa3c25e9cada55c9ca97aee4fbf971ee12cfc8917ae9a34",
+  "canvas": [
+    480,
+    480
+  ],
+  "margin_frac": 0.1,
+  "placed_size": [
+    384,
+    384
+  ],
+  "background": "white",
+  "source_mode": "RGBA",
+  "source_size": [
+    1254,
+    1254
+  ]
+}

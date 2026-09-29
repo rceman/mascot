@@ -1,0 +1,21 @@
+{
+  "source_path": "assets\\i2v\\mascot-approved-neutral-tpose-1x1-v0.1.png",
+  "source_sha256": "10e7f87cd28b6d2253197350875c81e784b5e88efc30c5920d0c6761f0db76a6",
+  "derived_path": "assets\\i2v\\neutral-tpose-480x480.png",
+  "derived_sha256": "20c5cf61b1cfd2b22d078e0392b576b37d3015fd6717544ee39e3910d8479137",
+  "canvas": [
+    480,
+    480
+  ],
+  "margin_frac": 0.1,
+  "placed_size": [
+    384,
+    384
+  ],
+  "background": "white",
+  "source_mode": "RGBA",
+  "source_size": [
+    1254,
+    1254
+  ]
+}

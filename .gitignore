@@ -8,3 +8,8 @@
 *.Zone.Identifier
 /target/
 /lab-screenshots/
+
+# i2v-bench dev tooling
+tools/i2v-bench/.venv/
+tools/i2v-bench/src/*.egg-info/
+benchmark/i2v/results/**/frames/
