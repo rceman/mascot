@@ -44,6 +44,41 @@ Read in full before editing:
 
 The benchmark spec is authoritative for this task.
 
+## Repository and native Windows workspace
+
+Use exactly this repository:
+
+    git@github.com:rceman/mascot.git
+
+GitHub repository:
+
+    rceman/mascot
+
+Use this dedicated native Windows working directory:
+
+    W:\\devin_folder\\mascot-i2v-benchmark
+
+Do not reuse the paused rig working copy or another Mascot agent's checkout.
+
+Target branch:
+
+    agent/local-i2v-benchmark-rtx4070-swe2
+
+Expected Planner handoff HEAD at task start:
+
+    263210eea53e806d2f97793af6b2672913ead939
+
+Bootstrap from native Windows PowerShell/Git Bash as appropriate:
+
+    cd W:\\devin_folder
+    git clone git@github.com:rceman/mascot.git mascot-i2v-benchmark
+    cd mascot-i2v-benchmark
+    git fetch origin
+    git checkout agent/local-i2v-benchmark-rtx4070-swe2
+    git pull --ff-only origin agent/local-i2v-benchmark-rtx4070-swe2
+
+If `W:\\devin_folder\\mascot-i2v-benchmark` already exists, do not blindly delete or overwrite it. Inspect the existing checkout first. Reuse it only if it is the same repository and its worktree state is clean/understood.
+
 ## Task-specific Git workflow override
 
 The repository's older WSL-authority wording does **not** apply to this task.
@@ -52,13 +87,15 @@ The user has approved native Windows Git + SSH as authoritative.
 
 Required workflow:
 
-1. Clone/fetch the repository natively on Windows.
+1. Use only `rceman/mascot` in `W:\\devin_folder\\mascot-i2v-benchmark`.
 2. Checkout `agent/local-i2v-benchmark-rtx4070-swe2`.
-3. Verify branch/HEAD and inspect the worktree.
-4. Build/install/run everything natively on Windows.
-5. Commit and push directly from native Windows Git over SSH.
-6. Do not create or sync through a WSL authority copy.
-7. Leave the Windows worktree clean and pushed.
+3. Verify the fetched branch contains the Planner handoff commit above or a later Planner-approved commit.
+4. Verify branch/HEAD and inspect the worktree before editing.
+5. Build/install/run everything natively on Windows.
+6. Commit and push directly from native Windows Git over SSH.
+7. Do not create or sync through a WSL authority copy.
+8. Do not write into `W:\\devin_folder\\mascot-rig-v02` or any other agent workspace.
+9. Leave the Windows worktree clean and pushed.
 
 ## No CI
 
