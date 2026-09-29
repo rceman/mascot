@@ -134,22 +134,28 @@ and:
 
 Exact CLI syntax is implementation-owned.
 
-## 480p-only rule
+## 1:1 / 480x480-only rule
 
-Keep v0.1 benchmark generation at 480p-class or lower.
+All Mascot character references and benchmark character inputs are 1:1 square by product contract.
 
-Preferred comparable input/output canvas:
+For this task, use:
 
     480x480
 
-If a model's official/native contract requires another 480p geometry such as:
+for all derived character inputs and scored I2V runs.
+
+Do not prepare or keep extra:
 
     832x480
     480x832
+    16:9
+    portrait
 
-use that native profile and record the run as non-resolution-comparable.
+character variants.
 
-Do not run 720p merely because the checkpoint advertises it.
+If a candidate cannot support the 1:1 480x480 path, mark that candidate unsupported for this benchmark and move on. Do not create extra aspect-ratio workflows merely to make it run.
+
+Do not run 720p merely because a checkpoint advertises it.
 
 Do not add upscaling or frame interpolation to the scored benchmark.
 
@@ -182,8 +188,8 @@ Research current candidates available at execution time.
 
 Seed candidates to verify:
 
-- HunyuanVideo-1.5 480p I2V step-distilled;
-- Wan2.1 VACE-1.3B;
+- HunyuanVideo-1.5 480p I2V step-distilled, only if a valid 1:1 480x480 path exists;
+- Wan2.1 VACE-1.3B, only if a valid 1:1 480x480 path exists;
 - Wan2.2 TI2V-5B if a practical 480p-class local route exists;
 - Wan2.2 I2V A14B quantized/offloaded only as an optional quality reference;
 - LTX-2 or newer open/open-weight I2V alternatives only when the 12 GB path is credible.
