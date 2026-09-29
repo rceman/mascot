@@ -1,0 +1,169 @@
+{
+  "annotation": {
+    "accepted_deviations": [],
+    "appendages": [
+      [
+        "antenna",
+        "socket.head.top.center"
+      ]
+    ],
+    "image_sha256": "ae4e7040e6974c89795c7b1c45de9adbc59a9f435a69b41320a91e9a9e733016",
+    "landmarks": {
+      "chest": [
+        0.49,
+        0.43
+      ],
+      "chin": [
+        0.585,
+        0.3
+      ],
+      "eye.left": [
+        0.64,
+        0.185
+      ],
+      "eye.right": [
+        0.555,
+        0.19
+      ],
+      "foot.left": [
+        0.6,
+        0.87
+      ],
+      "foot.left.heel": [
+        0.58,
+        0.905
+      ],
+      "foot.left.toe": [
+        0.675,
+        0.905
+      ],
+      "foot.right": [
+        0.39,
+        0.88
+      ],
+      "foot.right.heel": [
+        0.37,
+        0.915
+      ],
+      "foot.right.toe": [
+        0.465,
+        0.915
+      ],
+      "hand.left": [
+        0.69,
+        0.6
+      ],
+      "hand.left.tip": [
+        0.705,
+        0.655
+      ],
+      "hand.right": [
+        0.58,
+        0.5
+      ],
+      "hand.right.tip": [
+        0.64,
+        0.5
+      ],
+      "head": [
+        0.51,
+        0.315
+      ],
+      "head.face": [
+        0.69,
+        0.215
+      ],
+      "head.top": [
+        0.53,
+        0.07
+      ],
+      "lower_arm.left": [
+        0.65,
+        0.49
+      ],
+      "lower_arm.right": [
+        0.45,
+        0.47
+      ],
+      "lower_leg.left": [
+        0.585,
+        0.755
+      ],
+      "lower_leg.right": [
+        0.42,
+        0.76
+      ],
+      "neck": [
+        0.495,
+        0.345
+      ],
+      "pelvis": [
+        0.485,
+        0.6
+      ],
+      "root": [
+        0.49,
+        0.91
+      ],
+      "shoulder.left": [
+        0.52,
+        0.365
+      ],
+      "shoulder.right": [
+        0.47,
+        0.37
+      ],
+      "socket.head.top.center": [
+        0.53,
+        0.07
+      ],
+      "socket.head.top.far": [
+        0.585,
+        0.085
+      ],
+      "socket.head.top.near": [
+        0.47,
+        0.1
+      ],
+      "spine": [
+        0.485,
+        0.515
+      ],
+      "upper_arm.left": [
+        0.575,
+        0.375
+      ],
+      "upper_arm.right": [
+        0.415,
+        0.385
+      ],
+      "upper_leg.left": [
+        0.545,
+        0.615
+      ],
+      "upper_leg.right": [
+        0.435,
+        0.62
+      ]
+    },
+    "owner": "agent",
+    "status": "approved"
+  },
+  "character_id": "neg-crossed-arm",
+  "format": "mascot-character-source/1",
+  "generation": null,
+  "image": {
+    "path": "source.png",
+    "sha256": "ae4e7040e6974c89795c7b1c45de9adbc59a9f435a69b41320a91e9a9e733016"
+  },
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0
+  },
+  "provenance": {
+    "created": "2026-09-29",
+    "kind": "synthetic",
+    "note": "synthetic validation fixture",
+    "tool": "mascotctl character synth"
+  }
+}

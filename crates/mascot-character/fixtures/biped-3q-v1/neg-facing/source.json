@@ -1,0 +1,169 @@
+{
+  "annotation": {
+    "accepted_deviations": [],
+    "appendages": [
+      [
+        "antenna",
+        "socket.head.top.center"
+      ]
+    ],
+    "image_sha256": "eadba573bb433e785b65aec73d8912ac088b5cb6c5b36c508480dda9b3d3ce4b",
+    "landmarks": {
+      "chest": [
+        0.51,
+        0.43
+      ],
+      "chin": [
+        0.41500000000000004,
+        0.3
+      ],
+      "eye.left": [
+        0.36,
+        0.185
+      ],
+      "eye.right": [
+        0.44499999999999995,
+        0.19
+      ],
+      "foot.left": [
+        0.4,
+        0.87
+      ],
+      "foot.left.heel": [
+        0.42000000000000004,
+        0.905
+      ],
+      "foot.left.toe": [
+        0.32499999999999996,
+        0.905
+      ],
+      "foot.right": [
+        0.61,
+        0.88
+      ],
+      "foot.right.heel": [
+        0.63,
+        0.915
+      ],
+      "foot.right.toe": [
+        0.5349999999999999,
+        0.915
+      ],
+      "hand.left": [
+        0.31000000000000005,
+        0.6
+      ],
+      "hand.left.tip": [
+        0.29500000000000004,
+        0.655
+      ],
+      "hand.right": [
+        0.7050000000000001,
+        0.61
+      ],
+      "hand.right.tip": [
+        0.72,
+        0.665
+      ],
+      "head": [
+        0.49,
+        0.315
+      ],
+      "head.face": [
+        0.31000000000000005,
+        0.215
+      ],
+      "head.top": [
+        0.47,
+        0.07
+      ],
+      "lower_arm.left": [
+        0.35,
+        0.49
+      ],
+      "lower_arm.right": [
+        0.665,
+        0.5
+      ],
+      "lower_leg.left": [
+        0.41500000000000004,
+        0.755
+      ],
+      "lower_leg.right": [
+        0.5800000000000001,
+        0.76
+      ],
+      "neck": [
+        0.505,
+        0.345
+      ],
+      "pelvis": [
+        0.515,
+        0.6
+      ],
+      "root": [
+        0.51,
+        0.91
+      ],
+      "shoulder.left": [
+        0.48,
+        0.365
+      ],
+      "shoulder.right": [
+        0.53,
+        0.37
+      ],
+      "socket.head.top.center": [
+        0.47,
+        0.07
+      ],
+      "socket.head.top.far": [
+        0.41500000000000004,
+        0.085
+      ],
+      "socket.head.top.near": [
+        0.53,
+        0.1
+      ],
+      "spine": [
+        0.515,
+        0.515
+      ],
+      "upper_arm.left": [
+        0.42500000000000004,
+        0.375
+      ],
+      "upper_arm.right": [
+        0.585,
+        0.385
+      ],
+      "upper_leg.left": [
+        0.45499999999999996,
+        0.615
+      ],
+      "upper_leg.right": [
+        0.565,
+        0.62
+      ]
+    },
+    "owner": "agent",
+    "status": "approved"
+  },
+  "character_id": "neg-facing",
+  "format": "mascot-character-source/1",
+  "generation": null,
+  "image": {
+    "path": "source.png",
+    "sha256": "eadba573bb433e785b65aec73d8912ac088b5cb6c5b36c508480dda9b3d3ce4b"
+  },
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0
+  },
+  "provenance": {
+    "created": "2026-09-29",
+    "kind": "synthetic",
+    "note": "synthetic validation fixture",
+    "tool": "mascotctl character synth"
+  }
+}

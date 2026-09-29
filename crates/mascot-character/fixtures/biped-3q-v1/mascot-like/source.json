@@ -1,0 +1,262 @@
+{
+  "annotation": {
+    "accepted_deviations": [
+      {
+        "landmark": "pelvis",
+        "reason": "compact body"
+      },
+      {
+        "landmark": "spine",
+        "reason": "compact body"
+      },
+      {
+        "landmark": "chest",
+        "reason": "compact body"
+      },
+      {
+        "landmark": "neck",
+        "reason": "short neck, big head"
+      },
+      {
+        "landmark": "head",
+        "reason": "big head"
+      },
+      {
+        "landmark": "shoulder.right",
+        "reason": "chubby body, arms set lower"
+      },
+      {
+        "landmark": "upper_arm.right",
+        "reason": "short hanging arm"
+      },
+      {
+        "landmark": "lower_arm.right",
+        "reason": "short arm"
+      },
+      {
+        "landmark": "hand.right",
+        "reason": "short arm"
+      },
+      {
+        "landmark": "shoulder.left",
+        "reason": "chubby body, arms set lower"
+      },
+      {
+        "landmark": "upper_arm.left",
+        "reason": "short hanging arm"
+      },
+      {
+        "landmark": "lower_arm.left",
+        "reason": "short arm"
+      },
+      {
+        "landmark": "hand.left",
+        "reason": "short arm"
+      },
+      {
+        "landmark": "head.face",
+        "reason": "larger face"
+      },
+      {
+        "landmark": "chin",
+        "reason": "larger face"
+      },
+      {
+        "landmark": "hand.right.tip",
+        "reason": "short arm"
+      },
+      {
+        "landmark": "hand.left.tip",
+        "reason": "short arm"
+      },
+      {
+        "landmark": "eye.right",
+        "reason": "large face"
+      },
+      {
+        "landmark": "eye.left",
+        "reason": "large face"
+      },
+      {
+        "landmark": "mouth",
+        "reason": "large face"
+      }
+    ],
+    "appendages": [
+      [
+        "ear",
+        "socket.head.top.near"
+      ],
+      [
+        "ear",
+        "socket.head.top.far"
+      ],
+      [
+        "tail",
+        "socket.pelvis.back"
+      ]
+    ],
+    "image_sha256": "3af6ebb0cceee576c3b90d8c1fd29f80f02102d51b344db874fbbf19f2cb0012",
+    "landmarks": {
+      "chest": [
+        0.49,
+        0.55
+      ],
+      "chin": [
+        0.58,
+        0.44
+      ],
+      "eye.left": [
+        0.65,
+        0.29
+      ],
+      "eye.right": [
+        0.56,
+        0.3
+      ],
+      "foot.left": [
+        0.585,
+        0.84
+      ],
+      "foot.left.heel": [
+        0.54,
+        0.9
+      ],
+      "foot.left.toe": [
+        0.66,
+        0.9
+      ],
+      "foot.right": [
+        0.4,
+        0.85
+      ],
+      "foot.right.heel": [
+        0.37,
+        0.91
+      ],
+      "foot.right.toe": [
+        0.46,
+        0.91
+      ],
+      "hand.left": [
+        0.705,
+        0.7
+      ],
+      "hand.left.tip": [
+        0.735,
+        0.74
+      ],
+      "hand.right": [
+        0.27,
+        0.74
+      ],
+      "hand.right.tip": [
+        0.24,
+        0.8
+      ],
+      "head": [
+        0.52,
+        0.4
+      ],
+      "head.face": [
+        0.7,
+        0.28
+      ],
+      "head.top": [
+        0.53,
+        0.07
+      ],
+      "lower_arm.left": [
+        0.67,
+        0.61
+      ],
+      "lower_arm.right": [
+        0.31,
+        0.67
+      ],
+      "lower_leg.left": [
+        0.575,
+        0.74
+      ],
+      "lower_leg.right": [
+        0.42,
+        0.75
+      ],
+      "mouth": [
+        0.66,
+        0.36
+      ],
+      "neck": [
+        0.5,
+        0.48
+      ],
+      "pelvis": [
+        0.49,
+        0.66
+      ],
+      "root": [
+        0.49,
+        0.91
+      ],
+      "shoulder.left": [
+        0.54,
+        0.54
+      ],
+      "shoulder.right": [
+        0.44,
+        0.55
+      ],
+      "socket.head.top.far": [
+        0.6,
+        0.08
+      ],
+      "socket.head.top.near": [
+        0.45,
+        0.1
+      ],
+      "socket.pelvis.back": [
+        0.395,
+        0.62
+      ],
+      "spine": [
+        0.485,
+        0.6
+      ],
+      "upper_arm.left": [
+        0.595,
+        0.53
+      ],
+      "upper_arm.right": [
+        0.4,
+        0.56
+      ],
+      "upper_leg.left": [
+        0.54,
+        0.66
+      ],
+      "upper_leg.right": [
+        0.44,
+        0.66
+      ]
+    },
+    "owner": "agent",
+    "status": "approved"
+  },
+  "character_id": "mascot-like",
+  "format": "mascot-character-source/1",
+  "generation": null,
+  "image": {
+    "path": "source.png",
+    "sha256": "3af6ebb0cceee576c3b90d8c1fd29f80f02102d51b344db874fbbf19f2cb0012"
+  },
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0
+  },
+  "provenance": {
+    "created": "2026-09-29",
+    "kind": "synthetic",
+    "note": "synthetic validation fixture",
+    "tool": "mascotctl character synth"
+  }
+}

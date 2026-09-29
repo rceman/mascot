@@ -1,0 +1,65 @@
+{
+  "format": "mascot-character-board/1",
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0,
+    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+  },
+  "guide": {
+    "sha256": "f4fceb489d56b48553703c8bb8fe537bf6d57e9b807f32f7f3f95389e243f42f",
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "style": {
+    "path": "assets/mascot.png",
+    "sha256": "2c6e6e90aea8d3283912a46c885a763b588e526740ef9fb5a6d8ba0068ba9b37",
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "layout": {
+    "size": [
+      2048,
+      1024
+    ],
+    "left": [
+      0,
+      0,
+      1024,
+      1024
+    ],
+    "right": [
+      1024,
+      0,
+      1024,
+      1024
+    ],
+    "style_rect": [
+      1024,
+      0,
+      1024,
+      1024
+    ],
+    "scale": 0.8165869218500797
+  },
+  "board": {
+    "path": "board.png",
+    "sha256": "774fb1b502834b4cf149be155de80aa272d0ba851c6273c209a7b8bca6ab1774",
+    "size": [
+      2048,
+      1024
+    ]
+  },
+  "prompt": {
+    "path": "prompt.txt",
+    "sha256": "89108715e8fae19541946fdba52774625ec1a580a588542cb7635396247be178",
+    "bytes": 1363
+  },
+  "tool": {
+    "name": "mascotctl",
+    "version": "0.2.0"
+  }
+}

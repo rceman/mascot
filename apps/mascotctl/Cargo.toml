@@ -1,0 +1,10 @@
+[package]
+name = "mascotctl"
+description = "mascotctl: character pipeline tooling (profile, guide, board, synth, validate)"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+mascot-character = { path = "../../crates/mascot-character" }
+serde_json.workspace = true

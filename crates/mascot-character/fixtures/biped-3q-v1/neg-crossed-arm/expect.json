@@ -1,0 +1,50 @@
+{
+ "result": "FAIL",
+ "findings": [
+  [
+   "WARN",
+   "envelope.deviation",
+   "hand.right"
+  ],
+  [
+   "WARN",
+   "envelope.deviation",
+   "hand.right.tip"
+  ],
+  [
+   "WARN",
+   "envelope.deviation",
+   "lower_arm.right"
+  ],
+  [
+   "FAIL",
+   "pose.angle",
+   "upper_arm.right->lower_arm.right"
+  ],
+  [
+   "FAIL",
+   "pose.angle",
+   "lower_arm.right->hand.right"
+  ],
+  [
+   "FAIL",
+   "pose.bend",
+   "upper_arm.right,lower_arm.right,hand.right"
+  ],
+  [
+   "FAIL",
+   "topology.crossing",
+   "arm.right.full/trunk"
+  ],
+  [
+   "FAIL",
+   "clearance.gap",
+   "arm.right_torso"
+  ],
+  [
+   "FAIL",
+   "clearance.gap",
+   "arm.left_torso"
+  ]
+ ]
+}

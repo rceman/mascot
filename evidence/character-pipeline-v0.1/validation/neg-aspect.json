@@ -1,0 +1,41 @@
+{
+  "format": "mascot-character-validation/1",
+  "source": "crates/mascot-character/fixtures/biped-3q-v1/neg-aspect/source.json",
+  "character_id": "neg-aspect",
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0,
+    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+  },
+  "image": {
+    "sha256": "95860fb90f6be0c905ae1d70f9be3211ae3a8d2d749e1e1d440e09f003b97a27",
+    "size": [
+      1024,
+      768
+    ]
+  },
+  "result": "FAIL",
+  "counts": {
+    "fail": 2,
+    "warn": 0,
+    "info": 0
+  },
+  "findings": [
+    {
+      "severity": "FAIL",
+      "code": "canvas.not_square",
+      "subject": "1024x768",
+      "message": "canvas must be square"
+    },
+    {
+      "severity": "FAIL",
+      "code": "canvas.too_small",
+      "subject": "1024x768",
+      "message": "canvas smaller than 1024 px"
+    }
+  ],
+  "tool": {
+    "name": "mascotctl",
+    "version": "0.2.0"
+  }
+}

@@ -1,0 +1,539 @@
+{
+ "format": "mascot-character-synth/1",
+ "character_id": "mascot-like",
+ "profile": {
+  "id": "biped-3q-v1",
+  "revision": 0
+ },
+ "canvas": [
+  1024,
+  1024
+ ],
+ "background": "transparent",
+ "mirror_x": false,
+ "landmarks": {
+  "root": [
+   0.49,
+   0.91
+  ],
+  "pelvis": [
+   0.49,
+   0.66
+  ],
+  "spine": [
+   0.485,
+   0.6
+  ],
+  "chest": [
+   0.49,
+   0.55
+  ],
+  "neck": [
+   0.5,
+   0.48
+  ],
+  "head": [
+   0.52,
+   0.4
+  ],
+  "shoulder.right": [
+   0.44,
+   0.55
+  ],
+  "upper_arm.right": [
+   0.4,
+   0.56
+  ],
+  "lower_arm.right": [
+   0.31,
+   0.67
+  ],
+  "hand.right": [
+   0.27,
+   0.74
+  ],
+  "shoulder.left": [
+   0.54,
+   0.54
+  ],
+  "upper_arm.left": [
+   0.595,
+   0.53
+  ],
+  "lower_arm.left": [
+   0.67,
+   0.61
+  ],
+  "hand.left": [
+   0.705,
+   0.7
+  ],
+  "upper_leg.right": [
+   0.44,
+   0.66
+  ],
+  "lower_leg.right": [
+   0.42,
+   0.75
+  ],
+  "foot.right": [
+   0.4,
+   0.85
+  ],
+  "upper_leg.left": [
+   0.54,
+   0.66
+  ],
+  "lower_leg.left": [
+   0.575,
+   0.74
+  ],
+  "foot.left": [
+   0.585,
+   0.84
+  ],
+  "head.top": [
+   0.53,
+   0.07
+  ],
+  "head.face": [
+   0.7,
+   0.28
+  ],
+  "chin": [
+   0.58,
+   0.44
+  ],
+  "hand.right.tip": [
+   0.24,
+   0.8
+  ],
+  "hand.left.tip": [
+   0.735,
+   0.74
+  ],
+  "foot.right.toe": [
+   0.46,
+   0.91
+  ],
+  "foot.right.heel": [
+   0.37,
+   0.91
+  ],
+  "foot.left.toe": [
+   0.66,
+   0.9
+  ],
+  "foot.left.heel": [
+   0.54,
+   0.9
+  ],
+  "eye.right": [
+   0.56,
+   0.3
+  ],
+  "eye.left": [
+   0.65,
+   0.29
+  ],
+  "mouth": [
+   0.66,
+   0.36
+  ],
+  "socket.head.top.near": [
+   0.45,
+   0.1
+  ],
+  "socket.head.top.far": [
+   0.6,
+   0.08
+  ],
+  "socket.pelvis.back": [
+   0.395,
+   0.62
+  ]
+ },
+ "annotate_exclude": [],
+ "appendages": [
+  [
+   "ear",
+   "socket.head.top.near"
+  ],
+  [
+   "ear",
+   "socket.head.top.far"
+  ],
+  [
+   "tail",
+   "socket.pelvis.back"
+  ]
+ ],
+ "accepted_deviations": [
+  {
+   "landmark": "pelvis",
+   "reason": "compact body"
+  },
+  {
+   "landmark": "spine",
+   "reason": "compact body"
+  },
+  {
+   "landmark": "chest",
+   "reason": "compact body"
+  },
+  {
+   "landmark": "neck",
+   "reason": "short neck, big head"
+  },
+  {
+   "landmark": "head",
+   "reason": "big head"
+  },
+  {
+   "landmark": "shoulder.right",
+   "reason": "chubby body, arms set lower"
+  },
+  {
+   "landmark": "upper_arm.right",
+   "reason": "short hanging arm"
+  },
+  {
+   "landmark": "lower_arm.right",
+   "reason": "short arm"
+  },
+  {
+   "landmark": "hand.right",
+   "reason": "short arm"
+  },
+  {
+   "landmark": "shoulder.left",
+   "reason": "chubby body, arms set lower"
+  },
+  {
+   "landmark": "upper_arm.left",
+   "reason": "short hanging arm"
+  },
+  {
+   "landmark": "lower_arm.left",
+   "reason": "short arm"
+  },
+  {
+   "landmark": "hand.left",
+   "reason": "short arm"
+  },
+  {
+   "landmark": "head.face",
+   "reason": "larger face"
+  },
+  {
+   "landmark": "chin",
+   "reason": "larger face"
+  },
+  {
+   "landmark": "hand.right.tip",
+   "reason": "short arm"
+  },
+  {
+   "landmark": "hand.left.tip",
+   "reason": "short arm"
+  },
+  {
+   "landmark": "eye.right",
+   "reason": "large face"
+  },
+  {
+   "landmark": "eye.left",
+   "reason": "large face"
+  },
+  {
+   "landmark": "mouth",
+   "reason": "large face"
+  }
+ ],
+ "annotation": {
+  "status": "approved",
+  "owner": "agent"
+ },
+ "provenance": {
+  "kind": "synthetic",
+  "created": "2026-09-29",
+  "tool": "mascotctl character synth",
+  "note": "synthetic validation fixture"
+ },
+ "generation": null,
+ "layers": [
+  {
+   "name": "tail",
+   "fill": "#E8935A",
+   "line": "#3B2E26",
+   "line_w": 0.012,
+   "shapes": [
+    {
+     "capsule": [
+      [
+       0.4,
+       0.71
+      ],
+      [
+       0.32,
+       0.8
+      ]
+     ],
+     "w": 0.05
+    },
+    {
+     "circle": [
+      0.32,
+      0.8
+     ],
+     "r": 0.026
+    }
+   ]
+  },
+  {
+   "name": "ear.far",
+   "fill": "#E8935A",
+   "line": "#3B2E26",
+   "line_w": 0.012,
+   "shapes": [
+    {
+     "circle": "socket.head.top.far",
+     "r": 0.042
+    },
+    {
+     "circle": [
+      0.615,
+      0.085
+     ],
+     "r": 0.018
+    }
+   ]
+  },
+  {
+   "name": "arm.left",
+   "fill": "#E8935A",
+   "line": "#3B2E26",
+   "line_w": 0.012,
+   "shapes": [
+    {
+     "capsule": [
+      "upper_arm.left",
+      "lower_arm.left"
+     ],
+     "w": 0.05
+    },
+    {
+     "capsule": [
+      "lower_arm.left",
+      "hand.left"
+     ],
+     "w": 0.045
+    },
+    {
+     "capsule": [
+      "hand.left",
+      "hand.left.tip"
+     ],
+     "w": 0.05
+    },
+    {
+     "circle": "hand.left",
+     "r": 0.03
+    }
+   ]
+  },
+  {
+   "name": "leg.left",
+   "fill": "#E8935A",
+   "line": "#3B2E26",
+   "line_w": 0.012,
+   "shapes": [
+    {
+     "capsule": [
+      "upper_leg.left",
+      "lower_leg.left"
+     ],
+     "w": 0.045
+    },
+    {
+     "capsule": [
+      "lower_leg.left",
+      "foot.left"
+     ],
+     "w": 0.04
+    },
+    {
+     "rrect": [
+      0.6,
+      0.875
+     ],
+     "w": 0.13,
+     "h": 0.05,
+     "r": 0.022
+    }
+   ]
+  },
+  {
+   "name": "body",
+   "fill": "#F7E3C8",
+   "line": "#3B2E26",
+   "line_w": 0.012,
+   "shapes": [
+    {
+     "ellipse": [
+      0.49,
+      0.6
+     ],
+     "rx": 0.075,
+     "ry": 0.13
+    },
+    {
+     "capsule": [
+      "neck",
+      [
+       0.5,
+       0.53
+      ]
+     ],
+     "w": 0.07
+    }
+   ]
+  },
+  {
+   "name": "leg.right",
+   "fill": "#E8935A",
+   "line": "#3B2E26",
+   "line_w": 0.012,
+   "shapes": [
+    {
+     "capsule": [
+      "upper_leg.right",
+      "lower_leg.right"
+     ],
+     "w": 0.045
+    },
+    {
+     "capsule": [
+      "lower_leg.right",
+      "foot.right"
+     ],
+     "w": 0.04
+    },
+    {
+     "rrect": [
+      0.415,
+      0.885
+     ],
+     "w": 0.11,
+     "h": 0.05,
+     "r": 0.022
+    }
+   ]
+  },
+  {
+   "name": "head",
+   "fill": "#E8935A",
+   "line": "#3B2E26",
+   "line_w": 0.012,
+   "shapes": [
+    {
+     "ellipse": [
+      0.55,
+      0.26
+     ],
+     "rx": 0.17,
+     "ry": 0.19
+    },
+    {
+     "circle": "socket.head.top.near",
+     "r": 0.052
+    },
+    {
+     "circle": [
+      0.435,
+      0.115
+     ],
+     "r": 0.02
+    }
+   ]
+  },
+  {
+   "name": "arm.right",
+   "fill": "#E8935A",
+   "line": "#3B2E26",
+   "line_w": 0.012,
+   "shapes": [
+    {
+     "capsule": [
+      "upper_arm.right",
+      "lower_arm.right"
+     ],
+     "w": 0.05
+    },
+    {
+     "capsule": [
+      "lower_arm.right",
+      "hand.right"
+     ],
+     "w": 0.045
+    },
+    {
+     "capsule": [
+      "hand.right",
+      "hand.right.tip"
+     ],
+     "w": 0.05
+    },
+    {
+     "circle": "hand.right",
+     "r": 0.03
+    }
+   ]
+  },
+  {
+   "name": "muzzle",
+   "fill": "#F7E3C8",
+   "line": "#3B2E26",
+   "line_w": 0.012,
+   "shapes": [
+    {
+     "ellipse": [
+      0.625,
+      0.375
+     ],
+     "rx": 0.075,
+     "ry": 0.055
+    }
+   ]
+  },
+  {
+   "name": "features",
+   "fill": "#3B2E26",
+   "line": "#3B2E26",
+   "line_w": 0.004,
+   "shapes": [
+    {
+     "circle": "eye.right",
+     "r": 0.02
+    },
+    {
+     "circle": "eye.left",
+     "r": 0.018
+    },
+    {
+     "capsule": [
+      [
+       0.63,
+       0.37
+      ],
+      [
+       0.695,
+       0.355
+      ]
+     ],
+     "w": 0.016
+    }
+   ]
+  }
+ ]
+}

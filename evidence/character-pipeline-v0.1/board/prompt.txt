@@ -1,0 +1,9 @@
+Use the attached reference board. It has two panels with strictly separate roles.
+
+LEFT PANEL = POSE AUTHORITY. Draw the new character in exactly this pose, orientation, joint layout, limb placement and canvas composition: right-facing three-quarter view, relaxed A-pose, arms hanging away from the torso with slightly bent elbows, legs apart with slightly bent knees, both feet flat on the ground and pointing right, every joint visible. The grey mannequin is only a pose guide: do not draw the mannequin itself, its grey colours or its joint circles.
+
+RIGHT PANEL = STYLE AUTHORITY ONLY. Match its line thickness, outline treatment, palette approach, face and eye language and material language. Do NOT copy its pose, props, composition or background.
+
+CHARACTER: Create a compact friendly white service robot.
+
+OUTPUT: exactly one clean square (1:1) image containing one complete character, not cropped, sized and placed like the mannequin in the left panel, on a plain white background. No props, no objects in front of the body, no scenery, no cast shadow, no text. Keep every arm, hand, leg and foot separated from the body and fully visible. Use flat base colours and markings only: no directional light-and-shadow shading, because lighting is added later at runtime. If the character is not naturally a biped, draw a reasonable two-legged interpretation.

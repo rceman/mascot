@@ -1,0 +1,50 @@
+{
+ "result": "FAIL",
+ "findings": [
+  [
+   "FAIL",
+   "landmark.missing",
+   "lower_leg.left"
+  ],
+  [
+   "INFO",
+   "check.skipped",
+   "upper_leg.left->lower_leg.left"
+  ],
+  [
+   "INFO",
+   "check.skipped",
+   "lower_leg.left->foot.left"
+  ],
+  [
+   "INFO",
+   "check.skipped",
+   "upper_leg.left,lower_leg.left,foot.left"
+  ],
+  [
+   "INFO",
+   "check.skipped",
+   "lower_leg.right<lower_leg.left"
+  ],
+  [
+   "INFO",
+   "check.skipped",
+   "leg.right.full/leg.left.full"
+  ],
+  [
+   "INFO",
+   "check.skipped",
+   "arm.left.full/leg.left.full"
+  ],
+  [
+   "INFO",
+   "check.skipped",
+   "prop.leg_length.left"
+  ],
+  [
+   "INFO",
+   "check.skipped",
+   "clearance legs"
+  ]
+ ]
+}

@@ -1,0 +1,28 @@
+{
+  "format": "mascot-guide-receipt/1",
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0,
+    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+  },
+  "outputs": {
+    "dummy-annotated.png": {
+      "size": [
+        2048,
+        2048
+      ],
+      "sha256": "77eff13b86b7efa31d954221b7c2ac4c32eef884e702ce81da21461052fe4205"
+    },
+    "dummy-generation.png": {
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "f4fceb489d56b48553703c8bb8fe537bf6d57e9b807f32f7f3f95389e243f42f"
+    }
+  },
+  "tool": {
+    "name": "mascotctl",
+    "version": "0.2.0"
+  }
+}

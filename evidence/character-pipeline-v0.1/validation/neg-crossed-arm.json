@@ -1,0 +1,83 @@
+{
+  "format": "mascot-character-validation/1",
+  "source": "crates/mascot-character/fixtures/biped-3q-v1/neg-crossed-arm/source.json",
+  "character_id": "neg-crossed-arm",
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0,
+    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+  },
+  "image": {
+    "sha256": "ae4e7040e6974c89795c7b1c45de9adbc59a9f435a69b41320a91e9a9e733016",
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "result": "FAIL",
+  "counts": {
+    "fail": 6,
+    "warn": 3,
+    "info": 0
+  },
+  "findings": [
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "hand.right",
+      "message": "deviation 0.3055 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "hand.right.tip",
+      "message": "deviation 0.3960 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "lower_arm.right",
+      "message": "deviation 0.1188 > 0.050 from dummy"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.angle",
+      "subject": "upper_arm.right->lower_arm.right",
+      "message": "angle 22.4° deviates 57.2° from dummy -34.8° (tol 12°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.angle",
+      "subject": "lower_arm.right->hand.right",
+      "message": "angle 77.0° deviates 97.0° from dummy -20.0° (tol 12°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.bend",
+      "subject": "upper_arm.right,lower_arm.right,hand.right",
+      "message": "flexion 54.6° outside [0,35]°"
+    },
+    {
+      "severity": "FAIL",
+      "code": "topology.crossing",
+      "subject": "arm.right.full/trunk",
+      "message": "chains 'arm.right.full' and 'trunk' intersect"
+    },
+    {
+      "severity": "FAIL",
+      "code": "clearance.gap",
+      "subject": "arm.right_torso",
+      "message": "gap 0.0000 < 0.020"
+    },
+    {
+      "severity": "FAIL",
+      "code": "clearance.gap",
+      "subject": "arm.left_torso",
+      "message": "gap 0.0000 < 0.020"
+    }
+  ],
+  "tool": {
+    "name": "mascotctl",
+    "version": "0.2.0"
+  }
+}

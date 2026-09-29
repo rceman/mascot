@@ -1,0 +1,15 @@
+{
+ "result": "FAIL",
+ "findings": [
+  [
+   "FAIL",
+   "canvas.not_square",
+   "1024x768"
+  ],
+  [
+   "FAIL",
+   "canvas.too_small",
+   "1024x768"
+  ]
+ ]
+}

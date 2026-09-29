@@ -1,0 +1,149 @@
+{
+  "format": "mascot-character-validation/1",
+  "source": "crates/mascot-character/fixtures/biped-3q-v1/mascot-like/source.json",
+  "character_id": "mascot-like",
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0,
+    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+  },
+  "image": {
+    "sha256": "3af6ebb0cceee576c3b90d8c1fd29f80f02102d51b344db874fbbf19f2cb0012",
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "result": "PASS",
+  "counts": {
+    "fail": 0,
+    "warn": 0,
+    "info": 20
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "chest",
+      "message": "deviation 0.1200 > 0.040: compact body"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "chin",
+      "message": "deviation 0.1401 > 0.060: larger face"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "eye.left",
+      "message": "deviation 0.1055 > 0.070: large face"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "eye.right",
+      "message": "deviation 0.1101 > 0.070: large face"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "hand.left",
+      "message": "deviation 0.1011 > 0.060: short arm"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "hand.left.tip",
+      "message": "deviation 0.0901 > 0.060: short arm"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "hand.right",
+      "message": "deviation 0.1324 > 0.060: short arm"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "hand.right.tip",
+      "message": "deviation 0.1408 > 0.060: short arm"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "head",
+      "message": "deviation 0.0856 > 0.040: big head"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "head.face",
+      "message": "deviation 0.0658 > 0.060: larger face"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "lower_arm.left",
+      "message": "deviation 0.1217 > 0.050: short arm"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "lower_arm.right",
+      "message": "deviation 0.1718 > 0.050: short arm"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "mouth",
+      "message": "deviation 0.1079 > 0.070: large face"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "neck",
+      "message": "deviation 0.1351 > 0.040: short neck, big head"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "pelvis",
+      "message": "deviation 0.0602 > 0.040: compact body"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "shoulder.left",
+      "message": "deviation 0.1761 > 0.040: chubby body, arms set lower"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "shoulder.right",
+      "message": "deviation 0.1825 > 0.040: chubby body, arms set lower"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "spine",
+      "message": "deviation 0.0850 > 0.040: compact body"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "upper_arm.left",
+      "message": "deviation 0.1563 > 0.050: short hanging arm"
+    },
+    {
+      "severity": "INFO",
+      "code": "envelope.accepted",
+      "subject": "upper_arm.right",
+      "message": "deviation 0.1756 > 0.050: short hanging arm"
+    }
+  ],
+  "tool": {
+    "name": "mascotctl",
+    "version": "0.2.0"
+  }
+}

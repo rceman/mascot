@@ -3,7 +3,9 @@ resolver = "3"
 members = [
     "crates/mascot-animation",
     "crates/mascot-render-win32",
+    "crates/mascot-character",
     "apps/mascot-animation-lab",
+    "apps/mascotctl",
 ]
 # The v0.1 prototype app is an independent package with its own lockfile.
 exclude = ["rust"]
@@ -19,6 +21,7 @@ mascot-render-win32 = { path = "crates/mascot-render-win32" }
 serde = { version = "=1.0.228", features = ["derive"] }
 serde_json = "=1.0.150"
 png = "=0.18.1"
+sha2 = "=0.10.8"
 windows-numerics = "=0.3.1"
 windows = { version = "=0.62.2", features = [
     "Win32_Foundation",
@@ -46,3 +49,7 @@ windows = { version = "=0.62.2", features = [
 opt-level = 3
 codegen-units = 1
 lto = "thin"
+
+# SDF rasterization is too slow for the ~10s debug-test budget.
+[profile.dev.package.mascot-character]
+opt-level = 2

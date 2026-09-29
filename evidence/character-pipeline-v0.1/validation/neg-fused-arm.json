@@ -1,0 +1,41 @@
+{
+  "format": "mascot-character-validation/1",
+  "source": "crates/mascot-character/fixtures/biped-3q-v1/neg-fused-arm/source.json",
+  "character_id": "neg-fused-arm",
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0,
+    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+  },
+  "image": {
+    "sha256": "e6b46c5096fa002dde3bc95513c626abbff8b5baedb1fd03a27341fea9058c50",
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "result": "FAIL",
+  "counts": {
+    "fail": 2,
+    "warn": 0,
+    "info": 0
+  },
+  "findings": [
+    {
+      "severity": "FAIL",
+      "code": "clearance.gap",
+      "subject": "arm.right_torso",
+      "message": "gap 0.0000 < 0.020"
+    },
+    {
+      "severity": "FAIL",
+      "code": "clearance.gap",
+      "subject": "arm.left_torso",
+      "message": "gap 0.0000 < 0.020"
+    }
+  ],
+  "tool": {
+    "name": "mascotctl",
+    "version": "0.2.0"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "format": "mascot-character-validation/1",
+  "source": "crates/mascot-character/fixtures/biped-3q-v1/neg-missing-landmark/source.json",
+  "character_id": "neg-missing-landmark",
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0,
+    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+  },
+  "image": {
+    "sha256": "ad65d1f848f652ce83c23b5ab504878b26b207223b45211f84468df6710ecff7",
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "result": "FAIL",
+  "counts": {
+    "fail": 1,
+    "warn": 0,
+    "info": 8
+  },
+  "findings": [
+    {
+      "severity": "FAIL",
+      "code": "landmark.missing",
+      "subject": "lower_leg.left",
+      "message": "required landmark not annotated"
+    },
+    {
+      "severity": "INFO",
+      "code": "check.skipped",
+      "subject": "upper_leg.left->lower_leg.left",
+      "message": "skipped: required landmark 'lower_leg.left' not annotated"
+    },
+    {
+      "severity": "INFO",
+      "code": "check.skipped",
+      "subject": "lower_leg.left->foot.left",
+      "message": "skipped: required landmark 'lower_leg.left' not annotated"
+    },
+    {
+      "severity": "INFO",
+      "code": "check.skipped",
+      "subject": "upper_leg.left,lower_leg.left,foot.left",
+      "message": "skipped: required landmark 'lower_leg.left' not annotated"
+    },
+    {
+      "severity": "INFO",
+      "code": "check.skipped",
+      "subject": "lower_leg.right<lower_leg.left",
+      "message": "skipped: required landmark 'lower_leg.left' not annotated"
+    },
+    {
+      "severity": "INFO",
+      "code": "check.skipped",
+      "subject": "leg.right.full/leg.left.full",
+      "message": "skipped: required landmarks not annotated: lower_leg.left"
+    },
+    {
+      "severity": "INFO",
+      "code": "check.skipped",
+      "subject": "arm.left.full/leg.left.full",
+      "message": "skipped: required landmarks not annotated: lower_leg.left"
+    },
+    {
+      "severity": "INFO",
+      "code": "check.skipped",
+      "subject": "prop.leg_length.left",
+      "message": "skipped: required landmarks not annotated: lower_leg.left"
+    },
+    {
+      "severity": "INFO",
+      "code": "check.skipped",
+      "subject": "clearance legs",
+      "message": "skipped: required landmark 'lower_leg.left' not annotated"
+    }
+  ],
+  "tool": {
+    "name": "mascotctl",
+    "version": "0.2.0"
+  }
+}

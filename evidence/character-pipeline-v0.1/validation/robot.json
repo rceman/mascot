@@ -1,0 +1,28 @@
+{
+  "format": "mascot-character-validation/1",
+  "source": "crates/mascot-character/fixtures/biped-3q-v1/robot/source.json",
+  "character_id": "robot",
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0,
+    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+  },
+  "image": {
+    "sha256": "ad65d1f848f652ce83c23b5ab504878b26b207223b45211f84468df6710ecff7",
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "result": "PASS",
+  "counts": {
+    "fail": 0,
+    "warn": 0,
+    "info": 0
+  },
+  "findings": [],
+  "tool": {
+    "name": "mascotctl",
+    "version": "0.2.0"
+  }
+}

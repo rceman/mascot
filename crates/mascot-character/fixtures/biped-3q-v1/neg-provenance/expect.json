@@ -1,0 +1,10 @@
+{
+ "result": "FAIL",
+ "findings": [
+  [
+   "FAIL",
+   "manifest.missing_field",
+   "generation"
+  ]
+ ]
+}

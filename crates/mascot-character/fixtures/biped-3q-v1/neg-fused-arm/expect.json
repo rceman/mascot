@@ -1,0 +1,15 @@
+{
+ "result": "FAIL",
+ "findings": [
+  [
+   "FAIL",
+   "clearance.gap",
+   "arm.right_torso"
+  ],
+  [
+   "FAIL",
+   "clearance.gap",
+   "arm.left_torso"
+  ]
+ ]
+}

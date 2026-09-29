@@ -1,0 +1,317 @@
+{
+  "format": "mascot-character-validation/1",
+  "source": "crates/mascot-character/fixtures/biped-3q-v1/neg-facing/source.json",
+  "character_id": "neg-facing",
+  "profile": {
+    "id": "biped-3q-v1",
+    "revision": 0,
+    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+  },
+  "image": {
+    "sha256": "eadba573bb433e785b65aec73d8912ac088b5cb6c5b36c508480dda9b3d3ce4b",
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "result": "FAIL",
+  "counts": {
+    "fail": 22,
+    "warn": 26,
+    "info": 0
+  },
+  "findings": [
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "chin",
+      "message": "deviation 0.1700 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "eye.left",
+      "message": "deviation 0.2800 > 0.070 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "eye.right",
+      "message": "deviation 0.1100 > 0.070 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "foot.left",
+      "message": "deviation 0.2000 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "foot.left.heel",
+      "message": "deviation 0.1600 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "foot.left.toe",
+      "message": "deviation 0.3500 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "foot.right",
+      "message": "deviation 0.2200 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "foot.right.heel",
+      "message": "deviation 0.2600 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "foot.right.toe",
+      "message": "deviation 0.0700 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "hand.left",
+      "message": "deviation 0.3800 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "hand.left.tip",
+      "message": "deviation 0.4100 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "hand.right",
+      "message": "deviation 0.4100 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "hand.right.tip",
+      "message": "deviation 0.4400 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "head.face",
+      "message": "deviation 0.3800 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "head.top",
+      "message": "deviation 0.0600 > 0.060 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "lower_arm.left",
+      "message": "deviation 0.3000 > 0.050 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "lower_arm.right",
+      "message": "deviation 0.3300 > 0.050 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "lower_leg.left",
+      "message": "deviation 0.1700 > 0.050 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "lower_leg.right",
+      "message": "deviation 0.1600 > 0.050 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "shoulder.left",
+      "message": "deviation 0.0400 > 0.040 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "shoulder.right",
+      "message": "deviation 0.0600 > 0.040 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "socket.head.top.far",
+      "message": "deviation 0.1700 > 0.070 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "upper_arm.left",
+      "message": "deviation 0.1500 > 0.050 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "upper_arm.right",
+      "message": "deviation 0.1700 > 0.050 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "upper_leg.left",
+      "message": "deviation 0.0900 > 0.050 from dummy"
+    },
+    {
+      "severity": "WARN",
+      "code": "envelope.deviation",
+      "subject": "upper_leg.right",
+      "message": "deviation 0.1300 > 0.050 from dummy"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.angle",
+      "subject": "upper_arm.right->lower_arm.right",
+      "message": "angle 34.8° deviates 69.6° from dummy -34.8° (tol 12°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.angle",
+      "subject": "lower_arm.right->hand.right",
+      "message": "angle 20.0° deviates 40.0° from dummy -20.0° (tol 12°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.angle",
+      "subject": "upper_arm.left->lower_arm.left",
+      "message": "angle -33.1° deviates 66.2° from dummy 33.1° (tol 12°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.angle",
+      "subject": "lower_arm.left->hand.left",
+      "message": "angle -20.0° deviates 40.0° from dummy 20.0° (tol 12°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.angle",
+      "subject": "upper_leg.right->lower_leg.right",
+      "message": "angle 6.1° deviates 12.2° from dummy -6.1° (tol 10°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.angle",
+      "subject": "lower_leg.right->foot.right",
+      "message": "angle 14.0° deviates 28.1° from dummy -14.0° (tol 12°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.angle",
+      "subject": "upper_leg.left->lower_leg.left",
+      "message": "angle -15.9° deviates 31.9° from dummy 15.9° (tol 10°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.angle",
+      "subject": "lower_leg.left->foot.left",
+      "message": "angle -7.4° deviates 14.9° from dummy 7.4° (tol 12°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.bend_reversed",
+      "subject": "upper_arm.right,lower_arm.right,hand.right",
+      "message": "bend sign reversed vs dummy (flexion 14.8°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.bend_reversed",
+      "subject": "upper_arm.left,lower_arm.left,hand.left",
+      "message": "bend sign reversed vs dummy (flexion 13.1°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.bend_reversed",
+      "subject": "upper_leg.right,lower_leg.right,foot.right",
+      "message": "bend sign reversed vs dummy (flexion 7.9°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.bend_reversed",
+      "subject": "upper_leg.left,lower_leg.left,foot.left",
+      "message": "bend sign reversed vs dummy (flexion 8.5°)"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.order_x",
+      "subject": "head<head.face",
+      "message": "x gap -0.180 < 0.050"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.order_x",
+      "subject": "eye.right<eye.left",
+      "message": "x gap -0.085 < 0.000"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.order_x",
+      "subject": "foot.right.heel<foot.right.toe",
+      "message": "x gap -0.095 < 0.030"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.order_x",
+      "subject": "foot.left.heel<foot.left.toe",
+      "message": "x gap -0.095 < 0.030"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.order_x",
+      "subject": "upper_arm.right<upper_arm.left",
+      "message": "x gap -0.160 < 0.000"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.order_x",
+      "subject": "lower_arm.right<lower_arm.left",
+      "message": "x gap -0.315 < 0.000"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.order_x",
+      "subject": "hand.right<hand.left",
+      "message": "x gap -0.395 < 0.000"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.order_x",
+      "subject": "upper_leg.right<upper_leg.left",
+      "message": "x gap -0.110 < 0.000"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.order_x",
+      "subject": "lower_leg.right<lower_leg.left",
+      "message": "x gap -0.165 < 0.000"
+    },
+    {
+      "severity": "FAIL",
+      "code": "pose.order_x",
+      "subject": "foot.right<foot.left",
+      "message": "x gap -0.210 < 0.000"
+    }
+  ],
+  "tool": {
+    "name": "mascotctl",
+    "version": "0.2.0"
+  }
+}
