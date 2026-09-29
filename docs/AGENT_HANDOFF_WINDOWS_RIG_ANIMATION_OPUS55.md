@@ -14,6 +14,17 @@ The canonical mascot image is:
 
 The previous benchmark established Rust as the product foundation candidate. This task should therefore use Rust and native Windows graphics.
 
+## Planner pause / new upstream construction contract
+
+Before further structural rig-art repair, read and follow:
+
+- `docs/MASCOT_RIG_ART_CONSTRUCTION_SPEC_V0.1.md`
+- `docs/AGENT_ADDENDUM_RIG_ART_CONSTRUCTION_RESEARCH.md`
+
+Structural repair remains paused until the mandatory independent research pass is completed and the agent has added the required `Agent Research Addendum` to the construction spec.
+
+Do not resume global junction-region tuning or structural art repair before that pass.
+
 ## Read first
 
 Read these documents in full before editing:
