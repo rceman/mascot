@@ -77,31 +77,34 @@ Requirements:
 - do not copy `.git` between environments;
 - final branch must be clean and pushed from Windows.
 
-## 5. Resolution / speed policy
+## 5. Resolution / aspect-ratio / speed policy
 
-All benchmark generations in v0.1 MUST stay at **480p-class or lower**.
+Mascot character assets and benchmark inputs are **1:1 square by product contract**.
 
-The preferred comparable canvas is:
+For v0.1, use exactly:
 
     480 x 480
 
-Use it when the backend genuinely supports that shape without violating its model contract.
+for all scored character I2V runs and derived character inputs.
 
-If a model requires a native 480p profile such as 832x480 / 480x832, use the smallest official/native 480p profile and record:
+Do not create or maintain alternate 16:9 / landscape / portrait character assets such as:
 
-    resolution_mode = native_480p
-    cross_model_resolution_comparable = false
+    832x480
+    480x832
 
-Do not silently force unsupported custom dimensions merely to make tables line up.
+That is unnecessary work for this product and makes model comparison less relevant.
+
+If a backend/checkpoint cannot run a 1:1 480x480 character input/output path without violating its actual model contract, record it as unsupported for this benchmark and move to another candidate. Do not create a second aspect-ratio benchmark lane merely to accommodate that model.
 
 Forbidden in v0.1 unless the Planner explicitly approves it:
 
+- non-1:1 character benchmark assets;
 - 720p benchmark runs;
 - 1024p/1080p runs;
 - upscaling as part of the scored benchmark;
 - frame interpolation as part of the scored benchmark.
 
-The purpose of v0.1 is fast model qualification, not final output quality.
+The purpose of v0.1 is fast qualification for the actual Mascot product format, not general video-model coverage.
 
 ## 6. Temporal benchmark profile
 
@@ -201,7 +204,7 @@ For each candidate record:
 - license identifier/link;
 - parameter count where published;
 - I2V capability;
-- native/recommended 480p support;
+- native/recommended **1:1 480x480** support;
 - first-frame vs first+last-frame support;
 - recommended inference steps;
 - quantization/offload options;
@@ -282,6 +285,7 @@ Minimum fields:
 - source image path + SHA-256;
 - derived input path + SHA-256;
 - width/height;
+- aspect_ratio (must be 1:1 for scored runs);
 - resolution_mode;
 - frame count;
 - output FPS;
@@ -394,7 +398,7 @@ Minimum table columns:
 - model/checkpoint;
 - backend;
 - quantization;
-- resolution;
+- resolution (scored runs: 480x480 only);
 - frames/FPS;
 - steps;
 - peak VRAM;
@@ -440,7 +444,7 @@ The task is complete only when:
 
 - native Windows CLI harness is implemented;
 - no ComfyUI dependency is required for normal execution;
-- all scored runs are 480p-class or lower;
+- all scored character runs are exactly 480x480 (1:1);
 - at least two distinct local I2V candidates successfully generate a short video on RTX 4070 12 GB;
 - exact model/runtime provenance is recorded;
 - seed/config are reproducible where the backend supports determinism;
