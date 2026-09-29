@@ -1,5 +1,23 @@
 # Agent Addendum — Rig Art Construction Research Before Repair
 
+
+> **Current Planner boundary: RESEARCH ONLY**
+>
+> The broader implementation sequence described below is not authorized yet.
+> Read `docs/AGENT_HANDOFF_RIG_RESEARCH_ONLY_OPUS55.md` and
+> `docs/MASCOT_NEUTRAL_BIND_POSE_RESEARCH_SPEC_V0.1.md` first.
+>
+> For the current phase:
+>
+> - research and documentation are allowed;
+> - read-only code/art inspection is allowed;
+> - prototype **designs/specifications** are required;
+> - production code/art/runtime changes are not allowed;
+> - the dynamic-contact-line and weighted-mesh prototypes are to be specified, not implemented;
+> - after research + Agent Research Addendum, STOP and report to Planner.
+>
+> Do not resume the numbered implementation sequence at the end of this file until a new explicit Planner instruction authorizes it.
+
 The current structural/art repair is paused by Planner direction.
 
 Before further structural changes, read:
