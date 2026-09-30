@@ -3645,15 +3645,15 @@ struct MotionStrip {
     ref_frames_px: Vec<(u32, u32, u32, u32)>,
 }
 
+/// (file name, image) per motion sheet, plus the motion.json document.
+type MotionSheets = (Vec<(&'static str, RgbaImage)>, serde_json::Value);
+
 /// Build the motion sheets: `component-gallery-motion.png` (rows 1-4) and
 /// `component-gallery-motion-2.png` (rows 5-8); per sheet a light band then a
 /// dark band; per row a 7-frame strip (t = 0..150 ms) with timestamp captions;
 /// when a shadcn motion reference strip exists it is drawn directly above the
 /// native strip with the same captions. Returns the sheets and motion.json.
-fn motion_sheet(
-    app: &mut App,
-    ref_dir: &Path,
-) -> Result<(Vec<(&'static str, RgbaImage)>, serde_json::Value), String> {
+fn motion_sheet(app: &mut App, ref_dir: &Path) -> Result<MotionSheets, String> {
     use mascot_ui::motion::{TOOLTIP_ANIM_MS, TRANSITION_MS};
     const PAD: u32 = 24;
     const GAP: u32 = 8;
@@ -3926,7 +3926,7 @@ fn motion_sheet(
 
     let mut sheets_out: Vec<(&'static str, RgbaImage)> = Vec::new();
     let mut rows_json = Vec::new();
-    for si in 0..SHEET_FILES.len() {
+    for (si, &sheet_file) in SHEET_FILES.iter().enumerate() {
         let max_strip_w = bands
             .iter()
             .filter(|(i, _, _)| *i == si)
@@ -3993,7 +3993,7 @@ fn motion_sheet(
                     if !s.frames.iter().chain(s.ref_imgs.iter()).any(&has_ink) {
                         return Err(format!(
                             "motion strip '{}' ({}) placed on {} but is entirely blank",
-                            s.label, s.theme_name, SHEET_FILES[si]
+                            s.label, s.theme_name, sheet_file
                         ));
                     }
                 }
@@ -4022,14 +4022,14 @@ fn motion_sheet(
                 if rx + rw > w || ry + rh > h {
                     return Err(format!(
                         "motion strip '{}' rect {:?} escapes sheet {} ({}x{})",
-                        s.label, s.sheet_px, SHEET_FILES[si], w, h
+                        s.label, s.sheet_px, sheet_file, w, h
                     ));
                 }
                 for fr in s.frames_px.iter().chain(s.ref_frames_px.iter()) {
                     if fr.0 + fr.2 > w || fr.1 + fr.3 > h {
                         return Err(format!(
                             "motion strip '{}' frame rect {:?} escapes sheet {}",
-                            s.label, fr, SHEET_FILES[si]
+                            s.label, fr, sheet_file
                         ));
                     }
                 }
@@ -4038,7 +4038,7 @@ fn motion_sheet(
                     "kind": s.kind,
                     "theme": s.theme_name,
                     "reduced": s.reduced,
-                    "sheet": SHEET_FILES[si],
+                    "sheet": sheet_file,
                     "rect_px": s.sheet_px.map(|r| [r.0, r.1, r.2, r.3]),
                     "frames_px": s.frames_px.iter().map(|r| [r.0, r.1, r.2, r.3]).collect::<Vec<_>>(),
                     "ref_frames_px": s.ref_frames_px.iter().map(|r| [r.0, r.1, r.2, r.3]).collect::<Vec<_>>(),
@@ -4047,7 +4047,7 @@ fn motion_sheet(
                 }));
             }
         }
-        sheets_out.push((SHEET_FILES[si], sheet));
+        sheets_out.push((sheet_file, sheet));
     }
 
     // ---- motion.json -----------------------------------------------------

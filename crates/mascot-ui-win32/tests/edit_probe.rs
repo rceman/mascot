@@ -474,7 +474,7 @@ fn hover_tooltip_and_leave() {
         }
     }
     // keep hovering ~250 ms real time, watching whether the tooltip shows
-    let mut elapsed_ms = 0u128;
+    let mut elapsed_ms;
     let t_hover = std::time::Instant::now();
     loop {
         pump_ms(25);
