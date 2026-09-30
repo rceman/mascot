@@ -13,18 +13,18 @@ profile biped-3q-v1
   chains:      10
   sockets:     9
 check: OK
-exit=0 wall=0.07s
+exit=0 wall=0.10s
 
 $ mascotctl profile guide assets/character-templates/biped-3q-v1/profile.json
-dummy-annotated.png: 2048x2048 sha256 77eff13b86b7efa3…
-dummy-generation.png: 1024x1024 sha256 f4fceb489d56b485…
+dummy-annotated.png: 2048x2048 sha256 eb99b3817485d8b0…
+dummy-generation.png: 1024x1024 sha256 8fc955db2040b4e4…
 guide OK -> assets/character-templates/biped-3q-v1\guide
-exit=0 wall=0.37s
+exit=0 wall=0.43s
 
 $ mascotctl character board --profile assets/character-templates/biped-3q-v1/profile.json --style assets/mascot.png --out evidence/character-pipeline-v0.1/board --brief Create a compact friendly white service robot.
-board 2048x1024 sha256 774fb1b502834b4c
+board 2048x1024 sha256 5b430395d4ef3343
 board OK -> evidence/character-pipeline-v0.1/board
-exit=0 wall=0.38s
+exit=0 wall=0.45s
 
 $ mascotctl character validate crates/mascot-character/fixtures/biped-3q-v1\mascot-like\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-aspect\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-crossed-arm\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-facing\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-fused-arm\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-missing-landmark\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-provenance\source.json crates/mascot-character/fixtures/biped-3q-v1\robot\source.json --report-dir evidence/character-pipeline-v0.1/validation
 PASS mascot-like: 0 fail, 0 warn
@@ -32,11 +32,11 @@ FAIL neg-aspect: 2 fail, 0 warn
   FAIL canvas.not_square 1024x768: canvas must be square
   FAIL canvas.too_small 1024x768: canvas smaller than 1024 px
 FAIL neg-crossed-arm: 6 fail, 3 warn
-  WARN envelope.deviation hand.right: deviation 0.3055 > 0.060 from dummy
-  WARN envelope.deviation hand.right.tip: deviation 0.3960 > 0.060 from dummy
-  WARN envelope.deviation lower_arm.right: deviation 0.1188 > 0.050 from dummy
-  FAIL pose.angle upper_arm.right->lower_arm.right: angle 22.4° deviates 57.2° from dummy -34.8° (tol 12°)
-  FAIL pose.angle lower_arm.right->hand.right: angle 77.0° deviates 97.0° from dummy -20.0° (tol 12°)
+  WARN envelope.deviation hand.right: deviation 0.3330 > 0.060 from dummy
+  WARN envelope.deviation hand.right.tip: deviation 0.4285 > 0.060 from dummy
+  WARN envelope.deviation lower_arm.right: deviation 0.1347 > 0.050 from dummy
+  FAIL pose.angle upper_arm.right->lower_arm.right: angle 22.4° deviates 67.4° from dummy -45.0° (tol 12°)
+  FAIL pose.angle lower_arm.right->hand.right: angle 77.0° deviates 106.9° from dummy -29.9° (tol 12°)
   FAIL pose.bend upper_arm.right,lower_arm.right,hand.right: flexion 54.6° outside [0,35]°
   FAIL topology.crossing arm.right.full/trunk: chains 'arm.right.full' and 'trunk' intersect
   FAIL clearance.gap arm.right_torso: gap 0.0000 < 0.020
@@ -45,39 +45,39 @@ FAIL neg-facing: 22 fail, 26 warn
   WARN envelope.deviation chin: deviation 0.1700 > 0.060 from dummy
   WARN envelope.deviation eye.left: deviation 0.2800 > 0.070 from dummy
   WARN envelope.deviation eye.right: deviation 0.1100 > 0.070 from dummy
-  WARN envelope.deviation foot.left: deviation 0.2000 > 0.060 from dummy
-  WARN envelope.deviation foot.left.heel: deviation 0.1600 > 0.060 from dummy
-  WARN envelope.deviation foot.left.toe: deviation 0.3500 > 0.060 from dummy
+  WARN envelope.deviation foot.left: deviation 0.2400 > 0.060 from dummy
+  WARN envelope.deviation foot.left.heel: deviation 0.2000 > 0.060 from dummy
+  WARN envelope.deviation foot.left.toe: deviation 0.3900 > 0.060 from dummy
   WARN envelope.deviation foot.right: deviation 0.2200 > 0.060 from dummy
   WARN envelope.deviation foot.right.heel: deviation 0.2600 > 0.060 from dummy
   WARN envelope.deviation foot.right.toe: deviation 0.0700 > 0.060 from dummy
-  WARN envelope.deviation hand.left: deviation 0.3800 > 0.060 from dummy
-  WARN envelope.deviation hand.left.tip: deviation 0.4100 > 0.060 from dummy
-  WARN envelope.deviation hand.right: deviation 0.4100 > 0.060 from dummy
-  WARN envelope.deviation hand.right.tip: deviation 0.4400 > 0.060 from dummy
+  WARN envelope.deviation hand.left: deviation 0.4620 > 0.060 from dummy
+  WARN envelope.deviation hand.left.tip: deviation 0.5100 > 0.060 from dummy
+  WARN envelope.deviation hand.right: deviation 0.4840 > 0.060 from dummy
+  WARN envelope.deviation hand.right.tip: deviation 0.5320 > 0.060 from dummy
   WARN envelope.deviation head.face: deviation 0.3800 > 0.060 from dummy
   WARN envelope.deviation head.top: deviation 0.0600 > 0.060 from dummy
-  WARN envelope.deviation lower_arm.left: deviation 0.3000 > 0.050 from dummy
-  WARN envelope.deviation lower_arm.right: deviation 0.3300 > 0.050 from dummy
-  WARN envelope.deviation lower_leg.left: deviation 0.1700 > 0.050 from dummy
+  WARN envelope.deviation lower_arm.left: deviation 0.3440 > 0.050 from dummy
+  WARN envelope.deviation lower_arm.right: deviation 0.3680 > 0.050 from dummy
+  WARN envelope.deviation lower_leg.left: deviation 0.2100 > 0.050 from dummy
   WARN envelope.deviation lower_leg.right: deviation 0.1600 > 0.050 from dummy
   WARN envelope.deviation shoulder.left: deviation 0.0400 > 0.040 from dummy
   WARN envelope.deviation shoulder.right: deviation 0.0600 > 0.040 from dummy
   WARN envelope.deviation socket.head.top.far: deviation 0.1700 > 0.070 from dummy
   WARN envelope.deviation upper_arm.left: deviation 0.1500 > 0.050 from dummy
   WARN envelope.deviation upper_arm.right: deviation 0.1700 > 0.050 from dummy
-  WARN envelope.deviation upper_leg.left: deviation 0.0900 > 0.050 from dummy
+  WARN envelope.deviation upper_leg.left: deviation 0.1300 > 0.050 from dummy
   WARN envelope.deviation upper_leg.right: deviation 0.1300 > 0.050 from dummy
-  FAIL pose.angle upper_arm.right->lower_arm.right: angle 34.8° deviates 69.6° from dummy -34.8° (tol 12°)
-  FAIL pose.angle lower_arm.right->hand.right: angle 20.0° deviates 40.0° from dummy -20.0° (tol 12°)
-  FAIL pose.angle upper_arm.left->lower_arm.left: angle -33.1° deviates 66.2° from dummy 33.1° (tol 12°)
-  FAIL pose.angle lower_arm.left->hand.left: angle -20.0° deviates 40.0° from dummy 20.0° (tol 12°)
+  FAIL pose.angle upper_arm.right->lower_arm.right: angle 45.0° deviates 90.0° from dummy -45.0° (tol 12°)
+  FAIL pose.angle lower_arm.right->hand.right: angle 29.9° deviates 59.7° from dummy -29.9° (tol 12°)
+  FAIL pose.angle upper_arm.left->lower_arm.left: angle -45.0° deviates 90.0° from dummy 45.0° (tol 12°)
+  FAIL pose.angle lower_arm.left->hand.left: angle -30.3° deviates 60.6° from dummy 30.3° (tol 12°)
   FAIL pose.angle upper_leg.right->lower_leg.right: angle 6.1° deviates 12.2° from dummy -6.1° (tol 10°)
   FAIL pose.angle lower_leg.right->foot.right: angle 14.0° deviates 28.1° from dummy -14.0° (tol 12°)
   FAIL pose.angle upper_leg.left->lower_leg.left: angle -15.9° deviates 31.9° from dummy 15.9° (tol 10°)
   FAIL pose.angle lower_leg.left->foot.left: angle -7.4° deviates 14.9° from dummy 7.4° (tol 12°)
-  FAIL pose.bend_reversed upper_arm.right,lower_arm.right,hand.right: bend sign reversed vs dummy (flexion 14.8°)
-  FAIL pose.bend_reversed upper_arm.left,lower_arm.left,hand.left: bend sign reversed vs dummy (flexion 13.1°)
+  FAIL pose.bend_reversed upper_arm.right,lower_arm.right,hand.right: bend sign reversed vs dummy (flexion 15.1°)
+  FAIL pose.bend_reversed upper_arm.left,lower_arm.left,hand.left: bend sign reversed vs dummy (flexion 14.7°)
   FAIL pose.bend_reversed upper_leg.right,lower_leg.right,foot.right: bend sign reversed vs dummy (flexion 7.9°)
   FAIL pose.bend_reversed upper_leg.left,lower_leg.left,foot.left: bend sign reversed vs dummy (flexion 8.5°)
   FAIL pose.order_x head<head.face: x gap -0.180 < 0.050
@@ -85,11 +85,11 @@ FAIL neg-facing: 22 fail, 26 warn
   FAIL pose.order_x foot.right.heel<foot.right.toe: x gap -0.095 < 0.030
   FAIL pose.order_x foot.left.heel<foot.left.toe: x gap -0.095 < 0.030
   FAIL pose.order_x upper_arm.right<upper_arm.left: x gap -0.160 < 0.000
-  FAIL pose.order_x lower_arm.right<lower_arm.left: x gap -0.315 < 0.000
-  FAIL pose.order_x hand.right<hand.left: x gap -0.395 < 0.000
-  FAIL pose.order_x upper_leg.right<upper_leg.left: x gap -0.110 < 0.000
-  FAIL pose.order_x lower_leg.right<lower_leg.left: x gap -0.165 < 0.000
-  FAIL pose.order_x foot.right<foot.left: x gap -0.210 < 0.000
+  FAIL pose.order_x lower_arm.right<lower_arm.left: x gap -0.356 < 0.000
+  FAIL pose.order_x hand.right<hand.left: x gap -0.473 < 0.000
+  FAIL pose.order_x upper_leg.right<upper_leg.left: x gap -0.130 < 0.000
+  FAIL pose.order_x lower_leg.right<lower_leg.left: x gap -0.185 < 0.000
+  FAIL pose.order_x foot.right<foot.left: x gap -0.230 < 0.000
 FAIL neg-fused-arm: 2 fail, 0 warn
   FAIL clearance.gap arm.right_torso: gap 0.0000 < 0.020
   FAIL clearance.gap arm.left_torso: gap 0.0000 < 0.020
@@ -98,4 +98,4 @@ FAIL neg-missing-landmark: 1 fail, 0 warn
 FAIL neg-provenance: 1 fail, 0 warn
   FAIL manifest.missing_field generation: kind=generated requires generation{board,prompt}
 PASS robot: 0 fail, 0 warn
-exit=1 wall=0.16s
+exit=1 wall=0.23s

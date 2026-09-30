@@ -4,11 +4,11 @@
   "character_id": "neg-missing-landmark",
   "profile": {
     "id": "biped-3q-v1",
-    "revision": 0,
-    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+    "revision": 1,
+    "sha256": "9455f332ac38376ad237b4dba44e074e963cdc12ec0d79ee34d4a7da479acf65"
   },
   "image": {
-    "sha256": "ad65d1f848f652ce83c23b5ab504878b26b207223b45211f84468df6710ecff7",
+    "sha256": "8c57c966c9cf4c78606dc8c5178116dc8be42b19b50d93de97983e8664229883",
     "size": [
       1024,
       1024

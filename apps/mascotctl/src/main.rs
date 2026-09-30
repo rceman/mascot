@@ -59,13 +59,19 @@ fn main() -> ExitCode {
             Some("synth") => {
                 let Some(path) = args.next() else { usage() };
                 let mut out = None;
+                let mut prof = None;
                 while let Some(a) = args.next() {
                     match a.as_str() {
                         "--out" => out = Some(opt_value(&mut args, "--out").into()),
+                        "--profile" => prof = Some(opt_value(&mut args, "--profile")),
                         other => fatal(&format!("unknown argument {other}")),
                     }
                 }
-                char_synth(Path::new(&path), out.unwrap_or_else(|| usage()))
+                char_synth(
+                    Path::new(&path),
+                    Path::new(&prof.unwrap_or_else(|| usage())),
+                    out.unwrap_or_else(|| usage()),
+                )
             }
             Some("validate") => char_validate(args.collect()),
             _ => usage(),
@@ -170,9 +176,10 @@ fn char_board(args: Vec<String>) -> ExitCode {
     }
 }
 
-fn char_synth(spec_path: &Path, out: PathBuf) -> ExitCode {
+fn char_synth(spec_path: &Path, profile_path: &Path, out: PathBuf) -> ExitCode {
+    let (p, _pb) = mc::Profile::load_checked(profile_path).unwrap_or_else(|e| fatal(&e));
     let spec = mc::synth::SynthSpec::load(spec_path).unwrap_or_else(|e| fatal(&e));
-    match mc::synth::render_synth(&spec, &out) {
+    match mc::synth::render_synth(&spec, &p, &out) {
         Ok((_img, _m)) => {
             println!("synth {} -> {}", spec.character_id, out.display());
             ExitCode::from(0)

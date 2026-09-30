@@ -2,11 +2,11 @@
   "format": "mascot-character-board/1",
   "profile": {
     "id": "biped-3q-v1",
-    "revision": 0,
-    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+    "revision": 1,
+    "sha256": "9455f332ac38376ad237b4dba44e074e963cdc12ec0d79ee34d4a7da479acf65"
   },
   "guide": {
-    "sha256": "f4fceb489d56b48553703c8bb8fe537bf6d57e9b807f32f7f3f95389e243f42f",
+    "sha256": "8fc955db2040b4e4357fefa1be21b0876921d6b2651ea97d230d3aad465a5fe1",
     "size": [
       1024,
       1024
@@ -47,7 +47,7 @@
   },
   "board": {
     "path": "board.png",
-    "sha256": "774fb1b502834b4cf149be155de80aa272d0ba851c6273c209a7b8bca6ab1774",
+    "sha256": "5b430395d4ef3343c0b6d073107a3e9690d733919700e9d534824b6374ee834a",
     "size": [
       2048,
       1024

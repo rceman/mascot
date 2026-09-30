@@ -278,7 +278,7 @@ fn fixtures_stale_and_validate() {
         // re-render into a temp dir; committed files must be byte-identical
         let tmp = std::env::temp_dir().join(format!("mc_fx_{name}"));
         let _ = std::fs::remove_dir_all(&tmp);
-        mc::synth::render_synth(&spec, &tmp).unwrap();
+        mc::synth::render_synth(&spec, &p, &tmp).unwrap();
         for f in ["source.png", "source.json"] {
             assert_eq!(
                 std::fs::read(tmp.join(f)).unwrap(),
@@ -321,6 +321,48 @@ fn fixtures_stale_and_validate() {
             .collect();
         assert_eq!(got, want, "{name} findings differ from expect.json");
     }
+}
+
+// ---------- synth inheritance ----------
+
+#[test]
+fn synth_inherits_dummy_landmarks() {
+    let (p, _) = load_profile();
+    let spec = mc::synth::SynthSpec::load(
+        &repo().join("crates/mascot-character/fixtures/biped-3q-v1/robot/spec.json"),
+    )
+    .unwrap();
+    let resolved = spec.resolved(&p).unwrap();
+    // every profile landmark the spec doesn't exclude resolves to dummy coords
+    for (id, l) in &p.landmarks {
+        if spec.annotate_exclude.contains(id) {
+            continue;
+        }
+        assert_eq!(resolved[id], [l.x, l.y], "{id}");
+    }
+}
+
+#[test]
+fn synth_rejects_bad_profile_and_override() {
+    let (p, _) = load_profile();
+    let spec_json = std::fs::read_to_string(
+        repo().join("crates/mascot-character/fixtures/biped-3q-v1/robot/spec.json"),
+    )
+    .unwrap();
+    // revision mismatch
+    let bad_rev = spec_json.replace("\"revision\": 1", "\"revision\": 99");
+    let tmp = std::env::temp_dir().join("mc_spec_badrev.json");
+    std::fs::write(&tmp, &bad_rev).unwrap();
+    let spec2 = mc::synth::SynthSpec::load(&tmp).unwrap();
+    assert!(spec2.resolved(&p).is_err(), "revision mismatch must error");
+    // unknown override id
+    let bad_lm = spec_json.replace(
+        "\"landmarks\": {}",
+        "\"landmarks\": {\"nope.bogus\": [0.5, 0.5]}",
+    );
+    std::fs::write(&tmp, &bad_lm).unwrap();
+    let spec3 = mc::synth::SynthSpec::load(&tmp).unwrap();
+    assert!(spec3.resolved(&p).is_err(), "unknown override must error");
 }
 
 // ---------- audit: no character-specific tokens in generic code ----------

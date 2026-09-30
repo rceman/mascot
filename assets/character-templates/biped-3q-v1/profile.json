@@ -1,7 +1,7 @@
 {
   "format": "mascot-rig-profile/1",
   "id": "biped-3q-v1",
-  "revision": 0,
+  "revision": 1,
   "status": "prototype",
   "view": {"facing": "+x", "near_side": "right", "far_side": "left", "rotation": "clockwise_positive"},
   "canvas": {
@@ -48,27 +48,27 @@
     "head": ["J", 0.510, 0.315, 0.04],
     "shoulder.right": ["J", 0.470, 0.370, 0.04],
     "upper_arm.right": ["J", 0.415, 0.385, 0.05],
-    "lower_arm.right": ["J", 0.335, 0.500, 0.05],
-    "hand.right": ["J", 0.295, 0.610, 0.06],
+    "lower_arm.right": ["J", 0.316, 0.484, 0.05],
+    "hand.right": ["J", 0.258, 0.585, 0.06],
     "shoulder.left": ["J", 0.520, 0.365, 0.04],
     "upper_arm.left": ["J", 0.575, 0.375, 0.05],
-    "lower_arm.left": ["J", 0.650, 0.490, 0.05],
-    "hand.left": ["J", 0.690, 0.600, 0.06],
+    "lower_arm.left": ["J", 0.672, 0.472, 0.05],
+    "hand.left": ["J", 0.731, 0.573, 0.06],
     "upper_leg.right": ["J", 0.435, 0.620, 0.05],
     "lower_leg.right": ["J", 0.420, 0.760, 0.05],
     "foot.right": ["J", 0.390, 0.880, 0.06],
-    "upper_leg.left": ["J", 0.545, 0.615, 0.05],
-    "lower_leg.left": ["J", 0.585, 0.755, 0.05],
-    "foot.left": ["J", 0.600, 0.870, 0.06],
+    "upper_leg.left": ["J", 0.565, 0.615, 0.05],
+    "lower_leg.left": ["J", 0.605, 0.755, 0.05],
+    "foot.left": ["J", 0.620, 0.870, 0.06],
     "head.top": ["T", 0.530, 0.070, 0.06],
     "head.face": ["T", 0.690, 0.215, 0.06],
     "chin": ["T", 0.585, 0.300, 0.06],
-    "hand.right.tip": ["T", 0.280, 0.665, 0.06],
-    "hand.left.tip": ["T", 0.705, 0.655, 0.06],
+    "hand.right.tip": ["T", 0.234, 0.637, 0.06],
+    "hand.left.tip": ["T", 0.755, 0.625, 0.06],
     "foot.right.toe": ["T", 0.465, 0.915, 0.06],
     "foot.right.heel": ["T", 0.370, 0.915, 0.06],
-    "foot.left.toe": ["T", 0.675, 0.905, 0.06],
-    "foot.left.heel": ["T", 0.580, 0.905, 0.06],
+    "foot.left.toe": ["T", 0.695, 0.905, 0.06],
+    "foot.left.heel": ["T", 0.600, 0.905, 0.06],
     "eye.right": ["F", 0.555, 0.190, 0.07],
     "eye.left": ["F", 0.640, 0.185, 0.07],
     "mouth": ["F", 0.635, 0.255, 0.07],
@@ -77,10 +77,10 @@
     "socket.head.top.center": ["S", 0.530, 0.070, 0.07],
     "socket.chest.back": ["S", 0.420, 0.440, 0.06],
     "socket.pelvis.back": ["S", 0.400, 0.600, 0.06],
-    "socket.hand.right.grip": ["S", 0.285, 0.640, 0.06],
-    "socket.hand.left.grip": ["S", 0.700, 0.630, 0.06],
+    "socket.hand.right.grip": ["S", 0.246, 0.611, 0.06],
+    "socket.hand.left.grip": ["S", 0.743, 0.599, 0.06],
     "socket.foot.right.sole": ["S", 0.415, 0.915, 0.06],
-    "socket.foot.left.sole": ["S", 0.625, 0.905, 0.06]
+    "socket.foot.left.sole": ["S", 0.645, 0.905, 0.06]
   },
   "appendage_types": ["tail", "ear", "antenna", "wing", "accessory", "prop"],
   "sockets": {
@@ -95,7 +95,7 @@
     "socket.foot.left.sole": {"parent": "foot.left", "accepts": ["prop"]}
   },
   "zones": {
-    "tail": [0.04, 0.45, 0.40, 0.93],
+    "tail": [0.04, 0.60, 0.42, 0.93],
     "head_top": [0.36, 0.02, 0.72, 0.16],
     "back": [0.10, 0.25, 0.45, 0.60]
   },
@@ -153,9 +153,9 @@
     {"name": "trunk_length", "chain": "trunk_axis", "range": [0.12, 0.40]}
   ],
   "clearance": [
-    {"name": "arm.right_torso", "at": "lower_arm.right", "toward": "spine", "fail": 0.02, "warn": 0.03},
-    {"name": "arm.left_torso", "at": "lower_arm.left", "toward": "spine", "fail": 0.02, "warn": 0.03},
-    {"name": "legs", "at": "lower_leg.right", "toward": "lower_leg.left", "fail": 0.03, "warn": 0.06}
+    {"name": "arm.right_torso", "at": "lower_arm.right", "toward": "spine", "fail": 0.02, "warn": 0.04},
+    {"name": "arm.left_torso", "at": "lower_arm.left", "toward": "spine", "fail": 0.02, "warn": 0.04},
+    {"name": "legs", "at": "lower_leg.right", "toward": "lower_leg.left", "fail": 0.03, "warn": 0.08}
   ],
   "guide": {
     "sizes": {"generation": 1024, "annotated": 2048},

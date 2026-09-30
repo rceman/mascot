@@ -301,6 +301,8 @@ All sizes are normalized.
 | `socket.foot.right.sole` | S | 0.415 | 0.915 | 0.06 | prop / ground |
 | `socket.foot.left.sole` | S | 0.625 | 0.905 | 0.06 | prop / ground |
 
+> **Revision note (profile revision 1):** `assets/character-templates/biped-3q-v1/profile.json` is the canonical geometry. Revision 1 raises the arms (upper arm 45°, forearm 30°, hand 25° from vertical), widens the stance (far leg +0.020 x), moves the tail zone below the hands and restores the clearance warn thresholds (arms 0.04, legs 0.08). Where this table differs, the profile wins.
+
 **Bone-local sockets** (not bind positions; defined by a parameter along the bone plus an offset):
 
 - `socket.chin`: at the `chin` landmark, owned by `head`.

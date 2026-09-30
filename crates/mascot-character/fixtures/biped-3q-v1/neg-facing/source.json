@@ -7,7 +7,7 @@
         "socket.head.top.center"
       ]
     ],
-    "image_sha256": "eadba573bb433e785b65aec73d8912ac088b5cb6c5b36c508480dda9b3d3ce4b",
+    "image_sha256": "e3281fc68805082e7c9a79f9bccb59df1596115434b558cc05620d4eb7770f6f",
     "landmarks": {
       "chest": [
         0.51,
@@ -26,15 +26,15 @@
         0.19
       ],
       "foot.left": [
-        0.4,
+        0.38,
         0.87
       ],
       "foot.left.heel": [
-        0.42000000000000004,
+        0.4,
         0.905
       ],
       "foot.left.toe": [
-        0.32499999999999996,
+        0.30500000000000005,
         0.905
       ],
       "foot.right": [
@@ -50,20 +50,20 @@
         0.915
       ],
       "hand.left": [
-        0.31000000000000005,
-        0.6
+        0.269,
+        0.573
       ],
       "hand.left.tip": [
-        0.29500000000000004,
-        0.655
+        0.245,
+        0.625
       ],
       "hand.right": [
-        0.7050000000000001,
-        0.61
+        0.742,
+        0.585
       ],
       "hand.right.tip": [
-        0.72,
-        0.665
+        0.766,
+        0.637
       ],
       "head": [
         0.49,
@@ -78,15 +78,15 @@
         0.07
       ],
       "lower_arm.left": [
-        0.35,
-        0.49
+        0.32799999999999996,
+        0.472
       ],
       "lower_arm.right": [
-        0.665,
-        0.5
+        0.6839999999999999,
+        0.484
       ],
       "lower_leg.left": [
-        0.41500000000000004,
+        0.395,
         0.755
       ],
       "lower_leg.right": [
@@ -138,7 +138,7 @@
         0.385
       ],
       "upper_leg.left": [
-        0.45499999999999996,
+        0.43500000000000005,
         0.615
       ],
       "upper_leg.right": [
@@ -154,11 +154,11 @@
   "generation": null,
   "image": {
     "path": "source.png",
-    "sha256": "eadba573bb433e785b65aec73d8912ac088b5cb6c5b36c508480dda9b3d3ce4b"
+    "sha256": "e3281fc68805082e7c9a79f9bccb59df1596115434b558cc05620d4eb7770f6f"
   },
   "profile": {
     "id": "biped-3q-v1",
-    "revision": 0
+    "revision": 1
   },
   "provenance": {
     "created": "2026-09-29",

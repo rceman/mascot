@@ -4,11 +4,11 @@
   "character_id": "neg-facing",
   "profile": {
     "id": "biped-3q-v1",
-    "revision": 0,
-    "sha256": "f749eb998136108a3413db6b64fb738a5ebff193068c103c9de878d145afc02c"
+    "revision": 1,
+    "sha256": "9455f332ac38376ad237b4dba44e074e963cdc12ec0d79ee34d4a7da479acf65"
   },
   "image": {
-    "sha256": "eadba573bb433e785b65aec73d8912ac088b5cb6c5b36c508480dda9b3d3ce4b",
+    "sha256": "e3281fc68805082e7c9a79f9bccb59df1596115434b558cc05620d4eb7770f6f",
     "size": [
       1024,
       1024
@@ -43,19 +43,19 @@
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "foot.left",
-      "message": "deviation 0.2000 > 0.060 from dummy"
+      "message": "deviation 0.2400 > 0.060 from dummy"
     },
     {
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "foot.left.heel",
-      "message": "deviation 0.1600 > 0.060 from dummy"
+      "message": "deviation 0.2000 > 0.060 from dummy"
     },
     {
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "foot.left.toe",
-      "message": "deviation 0.3500 > 0.060 from dummy"
+      "message": "deviation 0.3900 > 0.060 from dummy"
     },
     {
       "severity": "WARN",
@@ -79,25 +79,25 @@
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "hand.left",
-      "message": "deviation 0.3800 > 0.060 from dummy"
+      "message": "deviation 0.4620 > 0.060 from dummy"
     },
     {
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "hand.left.tip",
-      "message": "deviation 0.4100 > 0.060 from dummy"
+      "message": "deviation 0.5100 > 0.060 from dummy"
     },
     {
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "hand.right",
-      "message": "deviation 0.4100 > 0.060 from dummy"
+      "message": "deviation 0.4840 > 0.060 from dummy"
     },
     {
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "hand.right.tip",
-      "message": "deviation 0.4400 > 0.060 from dummy"
+      "message": "deviation 0.5320 > 0.060 from dummy"
     },
     {
       "severity": "WARN",
@@ -115,19 +115,19 @@
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "lower_arm.left",
-      "message": "deviation 0.3000 > 0.050 from dummy"
+      "message": "deviation 0.3440 > 0.050 from dummy"
     },
     {
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "lower_arm.right",
-      "message": "deviation 0.3300 > 0.050 from dummy"
+      "message": "deviation 0.3680 > 0.050 from dummy"
     },
     {
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "lower_leg.left",
-      "message": "deviation 0.1700 > 0.050 from dummy"
+      "message": "deviation 0.2100 > 0.050 from dummy"
     },
     {
       "severity": "WARN",
@@ -169,7 +169,7 @@
       "severity": "WARN",
       "code": "envelope.deviation",
       "subject": "upper_leg.left",
-      "message": "deviation 0.0900 > 0.050 from dummy"
+      "message": "deviation 0.1300 > 0.050 from dummy"
     },
     {
       "severity": "WARN",
@@ -181,25 +181,25 @@
       "severity": "FAIL",
       "code": "pose.angle",
       "subject": "upper_arm.right->lower_arm.right",
-      "message": "angle 34.8° deviates 69.6° from dummy -34.8° (tol 12°)"
+      "message": "angle 45.0° deviates 90.0° from dummy -45.0° (tol 12°)"
     },
     {
       "severity": "FAIL",
       "code": "pose.angle",
       "subject": "lower_arm.right->hand.right",
-      "message": "angle 20.0° deviates 40.0° from dummy -20.0° (tol 12°)"
+      "message": "angle 29.9° deviates 59.7° from dummy -29.9° (tol 12°)"
     },
     {
       "severity": "FAIL",
       "code": "pose.angle",
       "subject": "upper_arm.left->lower_arm.left",
-      "message": "angle -33.1° deviates 66.2° from dummy 33.1° (tol 12°)"
+      "message": "angle -45.0° deviates 90.0° from dummy 45.0° (tol 12°)"
     },
     {
       "severity": "FAIL",
       "code": "pose.angle",
       "subject": "lower_arm.left->hand.left",
-      "message": "angle -20.0° deviates 40.0° from dummy 20.0° (tol 12°)"
+      "message": "angle -30.3° deviates 60.6° from dummy 30.3° (tol 12°)"
     },
     {
       "severity": "FAIL",
@@ -229,13 +229,13 @@
       "severity": "FAIL",
       "code": "pose.bend_reversed",
       "subject": "upper_arm.right,lower_arm.right,hand.right",
-      "message": "bend sign reversed vs dummy (flexion 14.8°)"
+      "message": "bend sign reversed vs dummy (flexion 15.1°)"
     },
     {
       "severity": "FAIL",
       "code": "pose.bend_reversed",
       "subject": "upper_arm.left,lower_arm.left,hand.left",
-      "message": "bend sign reversed vs dummy (flexion 13.1°)"
+      "message": "bend sign reversed vs dummy (flexion 14.7°)"
     },
     {
       "severity": "FAIL",
@@ -283,31 +283,31 @@
       "severity": "FAIL",
       "code": "pose.order_x",
       "subject": "lower_arm.right<lower_arm.left",
-      "message": "x gap -0.315 < 0.000"
+      "message": "x gap -0.356 < 0.000"
     },
     {
       "severity": "FAIL",
       "code": "pose.order_x",
       "subject": "hand.right<hand.left",
-      "message": "x gap -0.395 < 0.000"
+      "message": "x gap -0.473 < 0.000"
     },
     {
       "severity": "FAIL",
       "code": "pose.order_x",
       "subject": "upper_leg.right<upper_leg.left",
-      "message": "x gap -0.110 < 0.000"
+      "message": "x gap -0.130 < 0.000"
     },
     {
       "severity": "FAIL",
       "code": "pose.order_x",
       "subject": "lower_leg.right<lower_leg.left",
-      "message": "x gap -0.165 < 0.000"
+      "message": "x gap -0.185 < 0.000"
     },
     {
       "severity": "FAIL",
       "code": "pose.order_x",
       "subject": "foot.right<foot.left",
-      "message": "x gap -0.210 < 0.000"
+      "message": "x gap -0.230 < 0.000"
     }
   ],
   "tool": {
