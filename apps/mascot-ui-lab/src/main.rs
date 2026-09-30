@@ -6,14 +6,21 @@
 //!   mascot-ui-lab capture --out DIR [--allow-dirty]
 //!   mascot-ui-lab components [--capture DIR] [--allow-dirty]
 //!   mascot-ui-lab perf --out FILE.json [--runs N]
+//!   mascot-ui-lab perf-ab --baseline-exe EXE --baseline-head SHA --out DIR
+//!                          [--rounds 2] [--runs 5] [--allow-dirty]
 //!   mascot-ui-lab selftest --out DIR
+//!   mascot-ui-lab stamp-evidence DIR [DIR...]
+//!   mascot-ui-lab diff-images DIR_A DIR_B [--out FILE]
 
 mod capture;
 mod components;
+mod diff_images;
 mod inventory;
 mod perf;
+mod perf_ab;
 mod presets;
 mod selftest;
+mod stamp_evidence;
 
 use mascot_animation::Rig;
 use mascot_render_win32::renderer::DeviceKind;
@@ -68,6 +75,43 @@ fn has_flag(name: &str) -> bool {
     std::env::args().any(|a| a == name)
 }
 
+/// Positional args (everything that isn't the subcommand, a `--flag`, or a
+/// flag's value).
+fn positional_args() -> Vec<String> {
+    let mut out = Vec::new();
+    let mut it = std::env::args().skip(1).peekable();
+    let _ = it.next(); // subcommand
+    while let Some(a) = it.next() {
+        if a.starts_with("--") {
+            // flags that take a value consume the next arg
+            if !a.contains('=') && matches!(it.peek(), Some(n) if !n.starts_with("--")) {
+                // known valued flags
+                if matches!(
+                    a.as_str(),
+                    "--out"
+                        | "--runs"
+                        | "--rounds"
+                        | "--rig"
+                        | "--capture"
+                        | "--references"
+                        | "--scale"
+                        | "--theme"
+                        | "--placement"
+                        | "--state"
+                        | "--baseline-exe"
+                        | "--baseline-head"
+                ) {
+                    it.next();
+                    continue;
+                }
+            }
+            continue;
+        }
+        out.push(a);
+    }
+    out
+}
+
 fn main() {
     if let Err(e) = real_main() {
         eprintln!("error: {e}");
@@ -82,7 +126,10 @@ fn real_main() -> Result<(), String> {
         "components" => components::run(),
         "perf" => perf::run(),
         "perf-child" => perf::run_child(),
+        "perf-ab" => perf_ab::run(),
         "selftest" => selftest::run(),
+        "stamp-evidence" => stamp_evidence::run(),
+        "diff-images" => diff_images::run(),
         "" | "interactive" | "lab" => interactive(),
         other => Err(format!("unknown subcommand '{other}'")),
     }

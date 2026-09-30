@@ -73,6 +73,38 @@ This is inspiration, not a pixel copy of any website/library. Do not reproduce e
 
 The mascot provides personality. The surrounding UI should remain quiet.
 
+### Shadcn-first motion rule
+
+Shadcn-first is a motion-language contract as well as a visual one. For every implemented component with a direct shadcn analogue, state changes use the motion of the official shadcn component at the pinned reference commit — property set, duration, easing, opacity/transform behavior, and open/close direction — rather than independently invented motion.
+
+Current reference values (shadcn new-york-v4 with Tailwind v4 and tw-animate-css):
+
+- Button / IconButton: `transition-all` — fill, foreground, focus ring and disabled appearance change over 150 ms, `cubic-bezier(0.4, 0, 0.2, 1)`, in both directions.
+- Textarea / Composer: `transition-[color,box-shadow]` — the border colour is not transitioned; only the text colour and focus halo are.
+- Tooltip: open = fade from 0, scale 0.95 → 1 and an 8 DIP slide toward the final position (`slide-in-from-bottom-2` for a tooltip above its trigger); close = fade to 0 and scale 1 → 0.95; 150 ms, CSS `ease`. The Tooltip open delay is an interaction decision, separate from its animation.
+
+Rules:
+
+- no decorative motion, bouncing, overshoot/spring, color cycling, glow pulses or competing simultaneous animations;
+- animation frames exist only while a transition or animation is active; no permanent timer, no hidden 60 Hz loop; the zero-idle-frame invariant (section 16) holds again as soon as motion settles;
+- theme switches and surface changes snap; only interaction-state changes animate;
+- respect the OS reduced-motion preference (Windows "Animation effects" off, `SPI_GETCLIENTAREAANIMATION`): transforms are removed and state changes apply immediately, while state remains visible through shape/icon/text;
+- motion must be verifiable: evidence includes deterministic frame sequences (or captures) of each animated state, not only static screenshots.
+
+### Busy / loading visual rule (permanent invariant)
+
+Any current or future loader, spinner, progress indicator, busy glyph, pending-state animation or animated action-state indicator MUST follow the same shadcn-first visual and motion language as the rest of the UI. This applies even while no loader is implemented.
+
+- Use the closest official shadcn component/behavior as the primary reference where one exists (currently `Spinner`: Lucide `Loader2Icon`, `size-4`, `animate-spin`, `role="status"`, `aria-label="Loading"`).
+- Use Lucide geometry when the shadcn reference uses Lucide.
+- Use the shared Mascot/shadcn theme tokens; no separate loader palette, accent colors, gradients, glow or color cycling.
+- Match stroke weight, size, opacity, motion duration and easing of the reference.
+- Remain coherent in light and dark themes; never encode status through color alone.
+- Animate only while the busy state is active; once inactive there is no animation timer and no continuous redraw; the zero-idle-frame invariant holds.
+- Respect reduced motion with a static or minimally changing indicator that still communicates state through shape/icon/text.
+- When an action control (e.g. Send) changes into a busy state, the replacement preserves the control's dimensions and alignment (no layout shift across `Send -> loading -> Stop/Send`) and keeps the icon size and optical weight of the surrounding Lucide controls.
+- Do not implement a loader solely for gallery completeness. As of the component-gallery v0.1 correction pass the product has no loader (Submitting swaps Send for Stop and dims the submitted text; the mascot is static), so loading/progress remains deferred (Tier B).
+
 ## 3. Color system
 
 Use neutral luminance first.

@@ -267,9 +267,38 @@ pub fn badge_colors(
     }
 }
 
-/// (fill, fg) for a tooltip.
+/// (fill, fg) for a tooltip — shadcn `bg-foreground text-background`.
 pub fn tooltip_colors(pal: &Palette) -> ([f32; 4], [f32; 4]) {
-    (pal.primary, pal.primary_fg)
+    (pal.foreground, pal.background)
+}
+
+/// `button_colors` wrapped in `ControlColors` for the motion tween path;
+/// `ring` is the focus-ring progress (1 = ring fully drawn).
+pub fn button_paint(
+    pal: &Palette,
+    variant: ButtonVariant,
+    v: ControlVisual,
+) -> crate::motion::ControlColors {
+    let (fill, fg) = button_colors(pal, variant, v);
+    crate::motion::ControlColors {
+        fill,
+        fg,
+        ring: if v.focus_visible { 1.0 } else { 0.0 },
+    }
+}
+
+/// `icon_button_colors` wrapped in `ControlColors`.
+pub fn icon_button_paint(
+    pal: &Palette,
+    kind: IconButtonKind,
+    v: ControlVisual,
+) -> crate::motion::ControlColors {
+    let (fill, fg) = icon_button_colors(pal, kind, v);
+    crate::motion::ControlColors {
+        fill,
+        fg,
+        ring: if v.focus_visible { 1.0 } else { 0.0 },
+    }
 }
 
 #[cfg(test)]
@@ -368,6 +397,7 @@ mod tests {
     #[test]
     fn icon_button_and_badge_colors_known_values() {
         let l = crate::theme::Theme::Light.palette();
+        let d = crate::theme::Theme::Dark.palette();
         let idle = ControlVisual::default();
         let (f, g) = icon_button_colors(&l, IconButtonKind::Primary, idle);
         assert_eq!(rgb(f), "#171717");
@@ -384,8 +414,10 @@ mod tests {
         let (f, _, b) = badge_colors(&l, BadgeVariant::Outline);
         assert_eq!(f[3], 0.0);
         assert_eq!(b.map(rgb).as_deref(), Some("#E5E5E5"));
-        // tooltip = primary on primary_fg
+        // tooltip = shadcn bg-foreground / text-background
         let (f, g) = tooltip_colors(&l);
-        assert_eq!((rgb(f), rgb(g)), ("#171717".into(), "#FAFAFA".into()));
+        assert_eq!((rgb(f), rgb(g)), ("#0A0A0A".into(), "#FFFFFF".into()));
+        let (f, g) = tooltip_colors(&d);
+        assert_eq!((rgb(f), rgb(g)), ("#FAFAFA".into(), "#0A0A0A".into()));
     }
 }

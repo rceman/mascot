@@ -155,8 +155,16 @@ pub fn run() -> Result<(), String> {
 
 pub(crate) fn git_dirty() -> bool {
     let repo = repo_root();
+    // benchmark/results is evidence output, not code: capturing evidence must
+    // not flip the next step's code_dirty to true.
     std::process::Command::new("git")
-        .args(["status", "--porcelain"])
+        .args([
+            "status",
+            "--porcelain",
+            "--",
+            ".",
+            ":(exclude)benchmark/results",
+        ])
         .current_dir(&repo)
         .output()
         .map(|o| !o.stdout.is_empty())
@@ -171,6 +179,48 @@ pub(crate) fn repo_root() -> PathBuf {
         .and_then(|o| String::from_utf8(o.stdout).ok())
         .map(|s| PathBuf::from(s.trim()))
         .unwrap_or_else(|| PathBuf::from("."))
+}
+
+/// One batched `git hash-object --stdin-paths` for `paths` -> git blob ids
+/// (per-file SHA-1; verifiable with `git ls-tree` at evidence_head). Empty
+/// string for a path git could not hash.
+pub(crate) fn git_blobs(paths: &[PathBuf]) -> Vec<String> {
+    if paths.is_empty() {
+        return Vec::new();
+    }
+    let mut child = match std::process::Command::new("git")
+        .args(["hash-object", "--stdin-paths"])
+        .current_dir(repo_root())
+        .stdin(std::process::Stdio::piped())
+        .stdout(std::process::Stdio::piped())
+        .stderr(std::process::Stdio::null())
+        .spawn()
+    {
+        Ok(c) => c,
+        Err(_) => return vec![String::new(); paths.len()],
+    };
+    if let Some(mut stdin) = child.stdin.take() {
+        use std::io::Write;
+        let _ = stdin.write_all(
+            paths
+                .iter()
+                .map(|p| p.to_string_lossy().replace('\\', "/"))
+                .collect::<Vec<_>>()
+                .join("\n")
+                .as_bytes(),
+        );
+    }
+    match child.wait_with_output() {
+        Ok(o) if o.status.success() => {
+            let mut lines: Vec<String> = String::from_utf8_lossy(&o.stdout)
+                .lines()
+                .map(|l| l.trim().to_string())
+                .collect();
+            lines.resize(paths.len(), String::new());
+            lines
+        }
+        _ => vec![String::new(); paths.len()],
+    }
 }
 
 pub(crate) fn git(args: &[&str]) -> String {
@@ -644,10 +694,15 @@ pub fn os_build() -> String {
 
 fn write_receipt(out: &Path, files: &[String], app: &App, dirty: bool) -> Result<(), String> {
     let mut file_objs = Vec::new();
-    for f in files {
-        let p = out.join(f);
-        let len = std::fs::metadata(&p).map(|m| m.len()).unwrap_or(0);
-        file_objs.push(serde_json::json!({"path": f, "bytes": len}));
+    let paths: Vec<PathBuf> = files.iter().map(|f| out.join(f)).collect();
+    let blobs = git_blobs(&paths);
+    for ((f, p), blob) in files.iter().zip(&paths).zip(&blobs) {
+        let len = std::fs::metadata(p).map(|m| m.len()).unwrap_or(0);
+        file_objs.push(serde_json::json!({
+            "path": f,
+            "bytes": len,
+            "git_blob": blob,
+        }));
     }
     let adapter = unsafe {
         windows::core::Interface::cast::<windows::Win32::Graphics::Dxgi::IDXGIDevice>(
@@ -667,8 +722,10 @@ fn write_receipt(out: &Path, files: &[String], app: &App, dirty: bool) -> Result
         .unwrap_or_default()
     };
     let receipt = serde_json::json!({
-        "head": git(&["rev-parse", "HEAD"]),
-        "dirty": dirty,
+        "code_head": git(&["rev-parse", "HEAD"]),
+        "code_dirty": dirty,
+        "evidence_head": serde_json::Value::Null,
+        "evidence_head_rule": "Set by `mascot-ui-lab stamp-evidence` in the commit that follows the evidence commit. evidence_head is the commit that added this evidence; the stamp commit is the final branch head and changes only evidence_head fields.",
         "rig_rev": git(&["rev-parse", "HEAD:assets/mascot/rig-v0.2"]),
         "tool_version": env!("CARGO_PKG_VERSION"),
         "device": "warp",

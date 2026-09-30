@@ -7,8 +7,8 @@
 //! injection; saves/restores clipboard text and cursor position.
 
 use mascot_render_win32::renderer::DeviceKind;
-use mascot_ui::state::{ControlId, Surface};
-use mascot_ui_win32::app::{self, App};
+use mascot_ui::state::{Activity, ControlId, Surface};
+use mascot_ui_win32::app::{self, App, now_ms};
 use serde_json::{Value, json};
 use std::path::PathBuf;
 use windows::Win32::Foundation::*;
@@ -99,7 +99,7 @@ pub fn run() -> Result<(), String> {
     }
 
     let ok = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-        run_checks(app_ptr, hwnd, &out, &mut checks);
+        run_checks(app_ptr, hwnd, backdrop, &out, &mut checks);
     }));
     if let Err(e) = ok {
         checks.push(Check {
@@ -195,7 +195,13 @@ extern "system" fn backdrop_proc(hwnd: HWND, msg: u32, w: WPARAM, l: LPARAM) -> 
     unsafe { DefWindowProcW(hwnd, msg, w, l) }
 }
 
-fn run_checks(app: *mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec<Check>) {
+fn run_checks(
+    app: *mut App,
+    hwnd: HWND,
+    backdrop: HWND,
+    out: &std::path::Path,
+    checks: &mut Vec<Check>,
+) {
     pump_for(200);
 
     macro_rules! check {
@@ -572,6 +578,271 @@ fn run_checks(app: *mut App, hwnd: HWND, out: &std::path::Path, checks: &mut Vec
         pass: out.join("selftest-screen.png").exists(),
         detail: json!({}),
     });
+
+    // --- motion (B4): real pointer injection, presents counted by reason ---
+    motion_checks(app, hwnd, backdrop, checks);
+    cursor_shape_check(app, hwnd, backdrop, checks);
+    send_click_check(app, hwnd, backdrop, checks);
+}
+
+/// How many presents since snapshot `n0` carried a "motion" dirty reason.
+fn motion_presents_since(app: *mut App, n0: usize) -> usize {
+    am(app).present_reasons[n0.min(am(app).present_reasons.len())..]
+        .iter()
+        .filter(|r| r.contains("motion"))
+        .count()
+}
+
+/// Park the real cursor on the lab-owned backdrop but outside the mascot
+/// window — WM_MOUSELEAVE semantics without ever pointing at foreign windows.
+fn park_pointer(hwnd: HWND, backdrop: HWND) {
+    unsafe {
+        let mut br = RECT::default();
+        let mut wr = RECT::default();
+        let _ = GetWindowRect(backdrop, &mut br);
+        let _ = GetWindowRect(hwnd, &mut wr);
+        let inside_win =
+            |x: i32, y: i32| x >= wr.left && x <= wr.right && y >= wr.top && y <= wr.bottom;
+        let mut spot = (br.left + 20, br.top + 20);
+        if inside_win(spot.0, spot.1) {
+            spot = (br.left + 20, br.bottom - 20);
+        }
+        if inside_win(spot.0, spot.1) {
+            spot = (br.right - 20, br.top + 20);
+        }
+        let _ = SetCursorPos(spot.0, spot.1);
+    }
+    pump_for(30);
+}
+
+/// Move the real cursor to the centre of a DIP rect (scale → client px →
+/// screen) so the wndproc sees genuine WM_MOUSEMOVE/WM_MOUSELEAVE.
+fn move_pointer_to(hwnd: HWND, app: *mut App, r: mascot_ui::geom::Rect) {
+    unsafe {
+        let scale = am(app).scale;
+        let mut pt = POINT {
+            x: ((r.x + r.w / 2.0) * scale).round() as i32,
+            y: ((r.y + r.h / 2.0) * scale).round() as i32,
+        };
+        let _ = ClientToScreen(hwnd, &mut pt);
+        let _ = SetCursorPos(pt.x, pt.y);
+    }
+    pump_for(30);
+}
+
+/// Count motion presents during a ~ms window, polling every ~20 ms.
+fn motion_presents_during(app: *mut App, ms: u64) -> usize {
+    let n0 = am(app).present_reasons.len();
+    let start = std::time::Instant::now();
+    while start.elapsed().as_millis() < ms as u128 {
+        pump_for(20);
+    }
+    motion_presents_since(app, n0)
+}
+
+fn motion_checks(app: *mut App, hwnd: HWND, backdrop: HWND, checks: &mut Vec<Check>) {
+    // A response may have re-opened the Response surface — force the
+    // composer back open and wait for the Send rect to exist.
+    am(app).open_composer();
+    pump_until(app, 1000, |a| unsafe {
+        (*a).state.surface == Surface::Composer && (*a).layout.send.is_some()
+    });
+    // Send must be enabled: put text in the composer.
+    let _ = am(app).editor.set_text("m");
+    am(app).state.editor_empty = false;
+    am(app).relayout().ok();
+    pump_for(150);
+    let send = am(app).layout.send.unwrap_or_default();
+    let away = am(app).layout.editor.unwrap_or_default(); // hover away point
+    // ---- motion-hover: hover in -> tween; off -> tween; then quiet ----
+    move_pointer_to(hwnd, app, send);
+    let on_motion = motion_presents_during(app, 400);
+    // off before the 500 ms tooltip delay fires
+    move_pointer_to(hwnd, app, away);
+    let off_motion = motion_presents_during(app, 400);
+    let n2 = am(app).present_reasons.len();
+    pump_for(1000);
+    let quiet = motion_presents_since(app, n2);
+    let settled = !am(app).motion_active() && !am(app).motion_timer_armed;
+    check_or(
+        checks,
+        "motion-hover",
+        (4..=20).contains(&on_motion) && (4..=20).contains(&off_motion) && quiet == 0 && settled,
+        json!({
+            "on": on_motion, "off": off_motion, "quiet_1s": quiet,
+            "motion_active": am(app).motion_active(),
+            "timer_armed": am(app).motion_timer_armed,
+            "attempts": 1,
+        }),
+    );
+    // ---- motion-tooltip: open on hover >= 700 ms, close on leave ----
+    move_pointer_to(hwnd, app, send);
+    pump_until(app, 1500, |a| unsafe { (*a).state.tooltip.is_some() });
+    let tip_open = am(app).state.tooltip.is_some();
+    // count the open animation only: snapshot once the pill has appeared
+    // record the TooltipFrame opacities sync_motion produced while opening
+    let n3 = am(app).present_reasons.len();
+    let mut open_ops = Vec::new();
+    for _ in 0..30 {
+        pump_for(15);
+        if let Some(f) = am(app).motion.tooltip_frame(now_ms()) {
+            open_ops.push(f.opacity);
+        }
+    }
+    let open_motion = motion_presents_since(app, n3);
+    pump_for(200); // let the open anim fully settle
+    // leave the window: WM_MOUSELEAVE -> Closing anim at last rect
+    let n4 = am(app).present_reasons.len();
+    park_pointer(hwnd, backdrop);
+    let mut close_motion = 0usize;
+    let mut tip_during_close = false;
+    let mut close_ops = Vec::new();
+    for _ in 0..20 {
+        pump_for(20);
+        if let Some(f) = am(app).motion.tooltip_frame(now_ms()) {
+            close_ops.push(f.opacity);
+        }
+        let c = motion_presents_since(app, n4);
+        if c > close_motion && am(app).motion.tooltip.is_some() {
+            tip_during_close = true;
+        }
+        close_motion = c;
+    }
+    let n5 = am(app).present_reasons.len();
+    pump_for(1000);
+    let quiet2 = motion_presents_since(app, n5);
+    let settled2 = !am(app).motion_active() && !am(app).motion_timer_armed;
+    // >= 3 sampled frames strictly between 0 and 1 in each direction —
+    // proves the opacity layer actually ramps (the R1 empty-frame bug would
+    // fail this)
+    let mid_open = open_ops
+        .iter()
+        .filter(|o| **o > 0.001 && **o < 0.999)
+        .count();
+    let mid_close = close_ops
+        .iter()
+        .filter(|o| **o > 0.001 && **o < 0.999)
+        .count();
+    check_or(
+        checks,
+        "motion-tooltip",
+        tip_open
+            && (4..=20).contains(&open_motion)
+            && (4..=20).contains(&close_motion)
+            && tip_during_close
+            && mid_open >= 3
+            && mid_close >= 3
+            && quiet2 == 0
+            && settled2,
+        json!({
+            "open_presents": open_motion, "close_presents": close_motion,
+            "tooltip_opened": tip_open, "drawn_during_close": tip_during_close,
+            "open_opacities": open_ops, "close_opacities": close_ops,
+            "quiet_1s": quiet2, "timer_armed": am(app).motion_timer_armed,
+            "attempts": 1,
+        }),
+    );
+
+    // ---- motion-reduced: same gestures, zero motion presents ----
+    am(app).reduced_motion = true;
+    let n6 = am(app).present_reasons.len();
+    move_pointer_to(hwnd, app, send);
+    pump_for(750); // let the tooltip open
+    move_pointer_to(hwnd, app, away);
+    park_pointer(hwnd, backdrop);
+    pump_for(200);
+    let reduced_motion_presents = motion_presents_since(app, n6);
+    // state frames still presented (hover/tooltip reasons, not "motion")
+    let any_frames = am(app).present_reasons.len() > n6;
+    am(app).reduced_motion = false;
+    let _ = am(app).editor.set_text("");
+    am(app).state.editor_empty = true;
+    pump_for(80);
+    check_or(
+        checks,
+        "motion-reduced",
+        reduced_motion_presents == 0 && any_frames,
+        json!({
+            "motion_presents": reduced_motion_presents,
+            "state_frames": any_frames,
+            "attempts": 1,
+        }),
+    );
+}
+
+/// C2 — the window must answer WM_SETCURSOR itself: arrow over controls and
+/// mascot, I-beam over the editor (RichEdit forward, host fallback).
+fn cursor_shape_check(app: *mut App, hwnd: HWND, backdrop: HWND, checks: &mut Vec<Check>) {
+    let arrow = unsafe { LoadCursorW(None, IDC_ARROW).unwrap_or_default() };
+    let ibeam = unsafe { LoadCursorW(None, IDC_IBEAM).unwrap_or_default() };
+    let send = am(app).layout.send.unwrap_or_default();
+    let editor = am(app).layout.editor.unwrap_or_default();
+    let mascot = am(app).layout.mascot;
+    move_pointer_to(hwnd, app, send);
+    let over_send = unsafe { GetCursor() } == arrow;
+    move_pointer_to(hwnd, app, editor);
+    let over_editor = unsafe { GetCursor() } == ibeam;
+    move_pointer_to(hwnd, app, mascot);
+    let over_mascot = unsafe { GetCursor() } == arrow;
+    park_pointer(hwnd, backdrop);
+    check_or(
+        checks,
+        "cursor-shape",
+        over_send && over_editor && over_mascot,
+        json!({
+            "send_arrow": over_send,
+            "editor_ibeam": over_editor,
+            "mascot_arrow": over_mascot,
+            "attempts": 1,
+        }),
+    );
+}
+
+/// C3 — a real pointer click on Send submits; a click on Stop cancels per
+/// the product's Stop semantics (Idle, editable composer, text preserved).
+fn send_click_check(app: *mut App, hwnd: HWND, backdrop: HWND, checks: &mut Vec<Check>) {
+    // hold the mock response so Submitting stays observable
+    let saved_delay = am(app).response_delay_ms;
+    am(app).response_delay_ms = 60_000;
+    let _ = am(app).editor.set_text("click submit");
+    am(app).state.editor_empty = false;
+    am(app).relayout().ok();
+    pump_for(120);
+
+    let send = am(app).layout.send.unwrap_or_default();
+    move_pointer_to(hwnd, app, send);
+    click_left();
+    drain_input();
+    pump_for(120);
+    let submitted_ok = am(app).state.activity == Activity::Submitting
+        && am(app).state.action_control() == ControlId::Stop
+        && am(app).last_submitted == "click submit";
+
+    // click Stop (the action slot is now the Stop button)
+    let stop = am(app).layout.send.unwrap_or_default();
+    move_pointer_to(hwnd, app, stop);
+    click_left();
+    drain_input();
+    pump_for(120);
+    // Stop handler: activity -> Idle, editor writable again, text preserved
+    let stopped_ok = am(app).state.activity == Activity::Idle
+        && am(app).state.surface == Surface::Composer
+        && am(app).editor.text() == "click submit";
+    am(app).response_delay_ms = saved_delay;
+    let _ = am(app).editor.set_text("");
+    am(app).state.editor_empty = true;
+    park_pointer(hwnd, backdrop);
+    check_or(
+        checks,
+        "send-click-submits",
+        submitted_ok && stopped_ok,
+        json!({
+            "submitting": submitted_ok,
+            "stop_restored": stopped_ok,
+            "last_submitted": am(app).last_submitted,
+            "attempts": 1,
+        }),
+    );
 }
 
 fn check_or(checks: &mut Vec<Check>, name: &str, pass: bool, detail: Value) {
@@ -656,6 +927,24 @@ fn pump_until(app: *mut App, ms: u64, mut cond: impl FnMut(*const App) -> bool) 
 
 static GUARD_HWND: std::sync::atomic::AtomicIsize = std::sync::atomic::AtomicIsize::new(0);
 static FG_VIOLATIONS: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+
+/// Left mouse down+up at the current cursor position.
+fn click_left() {
+    let mi = |flags| INPUT {
+        r#type: INPUT_MOUSE,
+        Anonymous: INPUT_0 {
+            mi: MOUSEINPUT {
+                dx: 0,
+                dy: 0,
+                mouseData: 0,
+                dwFlags: flags,
+                time: 0,
+                dwExtraInfo: 0,
+            },
+        },
+    };
+    send_input(&[mi(MOUSEEVENTF_LEFTDOWN), mi(MOUSEEVENTF_LEFTUP)]);
+}
 
 fn send_input(inputs: &[INPUT]) {
     unsafe {

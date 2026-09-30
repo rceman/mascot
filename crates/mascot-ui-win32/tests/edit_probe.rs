@@ -456,18 +456,58 @@ fn hover_tooltip_and_leave() {
         rc.left + (e.x + e.w / 2.0) as i32,
         rc.top + (e.y + e.h / 2.0) as i32,
     );
-    move_cursor(sx, sy);
-    pump_ms(200);
-    assert_eq!(
-        am(app).state.interaction.hover,
-        Some(mascot_ui::ControlId::Copy),
-        "cursor over Copy must set hover"
-    );
-    assert_eq!(
-        am(app).state.tooltip,
-        None,
-        "tooltip must wait for the hover delay"
-    );
+    // step-pump and anchor "hover began" at the app-observed hover (the
+    // moment the app arms TIMER_TOOLTIP — a foreign cursor move by a
+    // parallel test can't skew our own injection anchor otherwise).
+    let motion0 = am(app)
+        .present_reasons
+        .iter()
+        .filter(|r| r.as_str() == "motion")
+        .count();
+    let mut hover_observed = false;
+    for _ in 0..30 {
+        move_cursor(sx, sy);
+        pump_ms(10);
+        if am(app).state.interaction.hover == Some(mascot_ui::ControlId::Copy) {
+            hover_observed = true;
+            break;
+        }
+    }
+    // keep hovering ~250 ms real time, watching whether the tooltip shows
+    let mut elapsed_ms = 0u128;
+    let t_hover = std::time::Instant::now();
+    loop {
+        pump_ms(25);
+        move_cursor(sx, sy);
+        elapsed_ms = t_hover.elapsed().as_millis();
+        if am(app).state.tooltip.is_some() || elapsed_ms >= 250 {
+            break;
+        }
+    }
+    let motion_n = am(app)
+        .present_reasons
+        .iter()
+        .filter(|r| r.as_str() == "motion")
+        .count()
+        - motion0;
+    assert!(hover_observed, "cursor over Copy must set hover");
+    // invariant on the app's own clock: a visible tooltip must have been
+    // armed >= TOOLTIP_DELAY_MS earlier, within one USER timer tick
+    // (SetTimer is quantised to the ~15.6 ms system tick and may fire
+    // up to one tick early relative to a QPC-based Instant)
+    const TIMER_TICK_MS: u128 = 16;
+    if am(app).state.tooltip.is_some() {
+        let (armed, shown) = (am(app).tooltip_armed_at, am(app).tooltip_shown_at);
+        let arm_to_show = match (armed, shown) {
+            (Some(a), Some(sh)) => (sh - a).as_millis(),
+            _ => 0,
+        };
+        assert!(
+            arm_to_show + TIMER_TICK_MS >= mascot_ui::theme::tokens::TOOLTIP_DELAY_MS as u128,
+            "tooltip shown {arm_to_show} ms after arming < TOOLTIP_DELAY_MS \
+             (elapsed_since_inject={elapsed_ms} ms, motion_frames={motion_n})"
+        );
+    }
     // past the delay: tooltip up, and its rect is laid out
     pump_ms(500);
     assert_eq!(

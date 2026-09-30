@@ -259,7 +259,13 @@ fn git(args: &[&str]) -> String {
 
 fn git_dirty() -> bool {
     std::process::Command::new("git")
-        .args(["status", "--porcelain"])
+        .args([
+            "status",
+            "--porcelain",
+            "--",
+            ".",
+            ":(exclude)benchmark/results",
+        ])
         .output()
         .map(|o| !o.stdout.is_empty())
         .unwrap_or(true)

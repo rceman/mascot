@@ -97,7 +97,7 @@ These are likely useful for M1C/M2/settings/provider selection, but should stay 
 - RadioGroup
 - Dialog / lightweight modal
 - Settings row
-- Progress / activity indicator if mascot animation alone is insufficient
+- Progress / activity indicator if mascot animation alone is insufficient (when implemented, it must follow the busy/loading visual rule in `MASCOT_NATIVE_UI_DESIGN_SYSTEM_V0.1.md` §2)
 
 The preview/gallery should list these as **planned / not implemented**, not silently create them.
 

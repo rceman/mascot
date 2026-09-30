@@ -55,7 +55,9 @@ pub struct Palette {
     pub surface: [f32; 4],
     /// Primary text/icon colour on `surface`.
     pub foreground: [f32; 4],
-    /// Primary action fill (Send/Stop button, tooltip).
+    /// Page background (shadcn `background`); text colour on `foreground` fills (tooltip).
+    pub background: [f32; 4],
+    /// Primary action fill (Send/Stop button).
     pub primary: [f32; 4],
     /// Text/icon colour on `primary`.
     pub primary_fg: [f32; 4],
@@ -88,6 +90,7 @@ impl Palette {
     pub const LIGHT: Palette = Palette {
         surface: rgb(0xffffff),
         foreground: rgb(0x0a0a0a),
+        background: rgb(0xffffff),
         primary: rgb(0x171717),
         primary_fg: rgb(0xfafafa),
         secondary: rgb(0xf5f5f5),
@@ -114,6 +117,7 @@ impl Palette {
     pub const DARK: Palette = Palette {
         surface: rgb(0x171717),
         foreground: rgb(0xfafafa),
+        background: rgb(0x0a0a0a),
         primary: rgb(0xe5e5e5),
         primary_fg: rgb(0x171717),
         secondary: rgb(0x262626),

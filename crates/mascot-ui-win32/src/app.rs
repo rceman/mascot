@@ -13,6 +13,7 @@ use mascot_animation::Rig;
 use mascot_render_win32::renderer::{DeviceKind, Renderer};
 use mascot_ui::geom::Point;
 use mascot_ui::layout::{Hit, Layout, MascotMetrics, Measured, hit_test, layout};
+use mascot_ui::motion::{ControlColors, TOOLTIP_IDENTITY, TooltipFrame, TooltipPhase, Tween};
 use mascot_ui::state::{Activity, ControlId, Surface, UiState};
 use mascot_ui::theme::{Theme, tokens};
 use windows::Win32::Foundation::*;
@@ -23,7 +24,7 @@ use windows::Win32::UI::WindowsAndMessaging::*;
 use windows::core::*;
 
 use crate::edit::{EDIT_TIMER_BASE, Editor, EditorConfig, HostEvent};
-use crate::paint::Painter;
+use crate::paint::{MotionFrame, Painter};
 use crate::sprite::Sprite;
 use crate::text::Fonts;
 use crate::window::{CompSurface, register_class};
@@ -32,6 +33,81 @@ const TIMER_RESPONSE: usize = 0x5200;
 const TIMER_CARET_BLINK: usize = 0x5201;
 const TIMER_COPY_REVERT: usize = 0x5202;
 const TIMER_TOOLTIP: usize = 0x5203;
+const TIMER_MOTION: usize = 0x5204;
+
+/// Live control-motion state: one 150 ms tween per animated control slot
+/// (Send and Stop share `action`) plus the tooltip phase machine. Driven by
+/// `sync_motion` from `UiState`; holds the last shown tooltip so the close
+/// animation can still draw after `state.tooltip` clears.
+pub struct Motion {
+    pub action: Tween,
+    pub copy: Tween,
+    /// (phase, control, label, rect) — kept while Closing even after the
+    /// layout slot and `state.tooltip` are gone.
+    pub tooltip: Option<(TooltipPhase, ControlId, String, mascot_ui::geom::Rect)>,
+    seen_theme: Theme,
+    seen_surface: Surface,
+    inited: bool,
+}
+
+impl Motion {
+    fn new() -> Self {
+        let blank = ControlColors {
+            fill: [0.0; 4],
+            fg: [0.0; 4],
+            ring: 0.0,
+        };
+        Motion {
+            action: Tween::settled(blank),
+            copy: Tween::settled(blank),
+            tooltip: None,
+            seen_theme: Theme::Light,
+            seen_surface: Surface::Hidden,
+            inited: false,
+        }
+    }
+
+    pub fn tooltip_frame(&self, now_ms: f64) -> Option<TooltipFrame> {
+        self.tooltip.as_ref().map(|t| match t.0 {
+            TooltipPhase::Opening { start_ms } => tooltip_open(now_ms - start_ms),
+            TooltipPhase::Open => TOOLTIP_IDENTITY,
+            TooltipPhase::Closing { start_ms, from } => tooltip_close(from, now_ms - start_ms),
+        })
+    }
+}
+
+fn tooltip_open(elapsed: f64) -> TooltipFrame {
+    mascot_ui::motion::tooltip_open_frame(elapsed)
+}
+fn tooltip_close(from: TooltipFrame, elapsed: f64) -> TooltipFrame {
+    mascot_ui::motion::tooltip_close_frame(from, elapsed)
+}
+
+/// OS animation preference: SPI_GETCLIENTAREAANIMATION FALSE => reduced.
+fn read_reduced_motion() -> bool {
+    let mut on = BOOL(1);
+    unsafe {
+        let ok = SystemParametersInfoW(
+            SPI_GETCLIENTAREAANIMATION,
+            0,
+            Some(&mut on as *mut _ as *mut std::ffi::c_void),
+            SYSTEM_PARAMETERS_INFO_UPDATE_FLAGS(0),
+        );
+        if ok.is_err() {
+            return false; // query failed: honour motion (default)
+        }
+    }
+    !on.as_bool()
+}
+
+/// Monotonic milliseconds (app lifetime).
+pub fn now_ms() -> f64 {
+    static T0: std::sync::OnceLock<std::time::Instant> = std::sync::OnceLock::new();
+    T0.get_or_init(std::time::Instant::now)
+        .elapsed()
+        .as_secs_f64()
+        * 1000.0
+}
 
 /// The whole Mascot UI (mascot + bubble) in one transparent window.
 pub struct App {
@@ -91,6 +167,19 @@ pub struct App {
     pub present_reasons: Vec<String>,
     /// Dirty-reason buffer: filled by `mark_dirty`, consumed at present.
     pub dirty_reasons: Vec<&'static str>,
+    /// Live motion state (control tweens + tooltip phase machine).
+    pub motion: Motion,
+    /// OS "Animation effects" off => tweens/tooltip snap in one frame.
+    pub reduced_motion: bool,
+    /// TIMER_MOTION is armed (readable by selftest/perf).
+    pub motion_timer_armed: bool,
+    /// test probes: real timestamps of the last tooltip arm/show (the arm is
+    /// recorded just before SetTimer so `shown - armed >= DELAY` is exact).
+    pub tooltip_armed_at: Option<std::time::Instant>,
+    pub tooltip_shown_at: Option<std::time::Instant>,
+    /// System cursors, loaded once: WM_SETCURSOR picks one per hit region.
+    cursor_arrow: HCURSOR,
+    cursor_ibeam: HCURSOR,
 }
 
 impl App {
@@ -173,6 +262,13 @@ impl App {
             last_submitted: String::new(),
             char_trace: Vec::new(),
             present_reasons: Vec::new(),
+            motion: Motion::new(),
+            reduced_motion: read_reduced_motion(),
+            motion_timer_armed: false,
+            tooltip_armed_at: None,
+            tooltip_shown_at: None,
+            cursor_arrow: unsafe { LoadCursorW(None, IDC_ARROW).unwrap_or_default() },
+            cursor_ibeam: unsafe { LoadCursorW(None, IDC_IBEAM).unwrap_or_default() },
             dirty_reasons: Vec::new(),
         };
         app.rebuild_sprite()?;
@@ -291,6 +387,161 @@ impl App {
         Ok(())
     }
 
+    /// Resolves motion targets from state and returns this frame's values.
+    /// Called inside `present_if_dirty` right before painting; offscreen
+    /// captures bypass it entirely (`MotionFrame::settled`).
+    pub fn sync_motion(&mut self, now: f64) -> MotionFrame {
+        use mascot_ui::component::{ControlVisual, IconButtonKind, icon_button_paint};
+        let pal = self.state.theme.palette();
+        let reduced = self.reduced_motion;
+
+        let tgt_a = icon_button_paint(
+            &pal,
+            IconButtonKind::Primary,
+            ControlVisual::of(&self.state, self.state.action_control()),
+        );
+        let tgt_c = icon_button_paint(
+            &pal,
+            IconButtonKind::Ghost,
+            ControlVisual::of(&self.state, ControlId::Copy),
+        );
+
+        // theme/surface change or first sync or hidden: settle everything,
+        // drop any closing tooltip
+        if !self.motion.inited
+            || self.motion.seen_theme != self.state.theme
+            || self.motion.seen_surface != self.state.surface
+            || self.state.surface == Surface::Hidden
+        {
+            self.motion.action = Tween::settled(tgt_a);
+            self.motion.copy = Tween::settled(tgt_c);
+            self.motion.seen_theme = self.state.theme;
+            self.motion.seen_surface = self.state.surface;
+            self.motion.inited = true;
+            self.motion.tooltip = None;
+        } else {
+            self.motion.action.retarget(tgt_a, now, reduced);
+            self.motion.copy.retarget(tgt_c, now, reduced);
+        }
+
+        // current shown tooltip (rect from layout, label as paint_frame)
+        let shown = match (self.layout.tooltip, self.state.tooltip) {
+            (Some(r), Some(id)) => {
+                let label = match id {
+                    ControlId::Copy if self.state.copied => "Copied".to_string(),
+                    c => c.icon().label().to_string(),
+                };
+                Some((r, id, label))
+            }
+            _ => None,
+        };
+
+        match shown {
+            Some((rect, id, label)) => {
+                match &mut self.motion.tooltip {
+                    // same tooltip still open: update label/rect instantly
+                    Some(t) if t.1 == id => {
+                        t.2 = label;
+                        t.3 = rect;
+                    }
+                    // None->Some or id change: open the new tooltip (a live
+                    // Closing is simply replaced — only one slot is drawn)
+                    _ => {
+                        let phase = if reduced {
+                            TooltipPhase::Open
+                        } else {
+                            TooltipPhase::Opening { start_ms: now }
+                        };
+                        self.motion.tooltip = Some((phase, id, label, rect));
+                    }
+                }
+            }
+            None => {
+                // Some->None: start Closing from the current frame, drawn at
+                // the last rect/label
+                if let Some(t) = &mut self.motion.tooltip
+                    && !matches!(t.0, TooltipPhase::Closing { .. })
+                {
+                    let from = match t.0 {
+                        TooltipPhase::Opening { start_ms } => tooltip_open(now - start_ms),
+                        TooltipPhase::Open => TOOLTIP_IDENTITY,
+                        TooltipPhase::Closing { from, .. } => from,
+                    };
+                    // reduced motion: close completes on this same frame
+                    let start_ms = if reduced {
+                        now - mascot_ui::motion::TOOLTIP_ANIM_MS
+                    } else {
+                        now
+                    };
+                    t.0 = TooltipPhase::Closing { start_ms, from };
+                }
+            }
+        }
+        // settle the tooltip phase machine
+        if let Some(t) = &mut self.motion.tooltip {
+            let elapsed = match t.0 {
+                TooltipPhase::Opening { start_ms } | TooltipPhase::Closing { start_ms, .. } => {
+                    now - start_ms
+                }
+                TooltipPhase::Open => f64::INFINITY,
+            };
+            match t.0 {
+                TooltipPhase::Opening { .. }
+                    if reduced || elapsed >= mascot_ui::motion::TOOLTIP_ANIM_MS =>
+                {
+                    t.0 = TooltipPhase::Open;
+                }
+                TooltipPhase::Closing { .. }
+                    if reduced || elapsed >= mascot_ui::motion::TOOLTIP_ANIM_MS =>
+                {
+                    self.motion.tooltip = None;
+                }
+                _ => {}
+            }
+        }
+
+        let tooltip = match (&self.motion.tooltip, self.motion.tooltip_frame(now)) {
+            (Some(t), Some(f)) => Some((t.3, t.2.clone(), f)),
+            _ => None,
+        };
+        MotionFrame {
+            action: self.motion.action.value(now, reduced),
+            copy: self.motion.copy.value(now, reduced),
+            tooltip,
+        }
+    }
+
+    /// True while any control tween or the tooltip animation is in flight.
+    pub fn motion_active(&self) -> bool {
+        let now = now_ms();
+        self.motion.action.active(now, self.reduced_motion)
+            || self.motion.copy.active(now, self.reduced_motion)
+            || self.motion.tooltip.as_ref().is_some_and(|t| {
+                matches!(
+                    t.0,
+                    TooltipPhase::Opening { .. } | TooltipPhase::Closing { .. }
+                )
+            })
+    }
+
+    /// Arms/disarms the 16 ms motion ticker so frames exist only while a
+    /// transition is active (zero-idle invariant).
+    fn manage_motion_timer(&mut self) {
+        unsafe {
+            if self.motion_active() && !self.hwnd.is_invalid() {
+                if !self.motion_timer_armed {
+                    if SetTimer(Some(self.hwnd), TIMER_MOTION, 16, None) == 0 {
+                        return;
+                    }
+                    self.motion_timer_armed = true;
+                }
+            } else if self.motion_timer_armed {
+                let _ = KillTimer(Some(self.hwnd), TIMER_MOTION);
+                self.motion_timer_armed = false;
+            }
+        }
+    }
+
     /// Paints + presents when dirty. No-op when idle-clean. Only relayouts
     /// when geometry-affecting state changed (`layout_stale`).
     pub fn present_if_dirty(&mut self) -> Result<()> {
@@ -323,11 +574,13 @@ impl App {
             px,
         )?;
         let lay = self.layout;
+        // motion: resolve animated values for this frame
+        let mframe = self.sync_motion(now_ms());
         // split borrows: take the fields we need
         let (state, ed) = (&self.state, Some(&self.editor));
         let painter = &self.painter;
         self.surf.as_mut().unwrap().present(&self.renderer, |ctx| {
-            painter.paint_frame(ctx, state, &lay, ed)
+            painter.paint_frame(ctx, state, &lay, ed, &mframe)
         })?;
         self.present_count += 1;
         // perf diagnostics: which dirty source produced this frame
@@ -337,6 +590,7 @@ impl App {
             self.present_reasons.push(self.dirty_reasons.join("+"));
         }
         self.dirty_reasons.clear();
+        self.manage_motion_timer();
         Ok(())
     }
 
@@ -365,9 +619,14 @@ impl App {
             ctx.SetTarget(&bmp.cast::<windows::Win32::Graphics::Direct2D::ID2D1Image>()?);
             ctx.SetDpi(96.0 * scale, 96.0 * scale);
             ctx.BeginDraw();
-            let r = self
-                .painter
-                .paint_frame(ctx, &self.state, &self.layout, Some(&self.editor));
+            let mframe = MotionFrame::settled(&self.state, &self.layout);
+            let r = self.painter.paint_frame(
+                ctx,
+                &self.state,
+                &self.layout,
+                Some(&self.editor),
+                &mframe,
+            );
             let e = ctx.EndDraw(None, None);
             ctx.SetTarget(None);
             ctx.SetDpi(dx, dy); // renderer APIs assume a 96-DPI ctx
@@ -837,6 +1096,8 @@ impl App {
                 && !self.state.disabled(id)
                 && !self.state.copied
             {
+                self.tooltip_armed_at = Some(std::time::Instant::now());
+                self.tooltip_shown_at = None;
                 unsafe {
                     let _ = SetTimer(
                         Some(self.hwnd),
@@ -1031,6 +1292,10 @@ impl App {
                     self.present_if_dirty().ok();
                 }
             }
+            TIMER_MOTION => {
+                self.mark_dirty("motion");
+                self.present_if_dirty().ok();
+            }
             TIMER_TOOLTIP => {
                 unsafe {
                     let _ = KillTimer(Some(self.hwnd), TIMER_TOOLTIP);
@@ -1040,6 +1305,7 @@ impl App {
                 if let Some(id) = self.state.interaction.hover
                     && self.state.show_tooltip(id)
                 {
+                    self.tooltip_shown_at = Some(std::time::Instant::now());
                     self.mark_layout();
                     self.present_if_dirty().ok();
                 }
@@ -1217,8 +1483,36 @@ unsafe extern "system" fn wndproc(hwnd: HWND, msg: u32, w: WPARAM, l: LPARAM) ->
                 })
                 .unwrap_or(0),
             ),
-            WM_INPUTLANGCHANGE | WM_SETCURSOR => {
-                LRESULT(with_app(|a| a.editor.send(msg, w.0, l.0)).unwrap_or(0))
+            WM_INPUTLANGCHANGE => LRESULT(with_app(|a| a.editor.send(msg, w.0, l.0)).unwrap_or(0)),
+            WM_SETCURSOR => {
+                // LOWORD(lParam) = hit-test code from WM_NCHITTEST; the
+                // non-client case belongs to DefWindowProc.
+                if (l.0 as usize & 0xFFFF) as u32 != HTCLIENT {
+                    DefWindowProcW(hwnd, msg, w, l)
+                } else {
+                    with_app(|a| {
+                        let mut pt = POINT::default();
+                        let _ = GetCursorPos(&mut pt);
+                        let _ = ScreenToClient(hwnd, &mut pt);
+                        let p = a.dip(pt.x, pt.y);
+                        match hit_test(&a.state, &a.layout, p) {
+                            Hit::Editor => {
+                                // let RichEdit pick (I-beam); if the
+                                // forward didn't set a cursor, force it
+                                let _ = a.editor.send(msg, w.0, l.0);
+                                if GetCursor() != a.cursor_ibeam {
+                                    let _ = SetCursor(Some(a.cursor_ibeam));
+                                }
+                            }
+                            // shadcn buttons keep the default cursor —
+                            // no pointer hand anywhere in v0.1
+                            _ => {
+                                let _ = SetCursor(Some(a.cursor_arrow));
+                            }
+                        }
+                    });
+                    LRESULT(1) // TRUE: cursor was set
+                }
             }
             WM_GETOBJECT => {
                 // UIA root request: answer with the fragment root wrapping
@@ -1242,6 +1536,20 @@ unsafe extern "system" fn wndproc(hwnd: HWND, msg: u32, w: WPARAM, l: LPARAM) ->
             }
             WM_KILLFOCUS => {
                 with_app(|a| a.blur_editor());
+                LRESULT(0)
+            }
+            WM_SETTINGCHANGE => {
+                if w.0 as u32 == SPI_SETCLIENTAREAANIMATION.0 {
+                    with_app(|a| {
+                        let r = read_reduced_motion();
+                        if r != a.reduced_motion {
+                            a.reduced_motion = r;
+                            a.motion.inited = false; // settle on next sync
+                            a.mark_dirty("reduced-motion");
+                            a.present_if_dirty().ok();
+                        }
+                    });
+                }
                 LRESULT(0)
             }
             WM_TIMER => {

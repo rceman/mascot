@@ -16,7 +16,8 @@
 [CmdletBinding()]
 param(
     [string]$OutDir = (Join-Path $PSScriptRoot 'shadcn'),
-    [int]$Port = 9333
+    [int]$Port = 9333,
+    [switch]$Motion
 )
 
 $ErrorActionPreference = 'Stop'
@@ -28,6 +29,7 @@ $Pad = 16         # CSS px of context around the element box (rework r2)
 $Dsf = 2          # device scale factor
 $VpDefault = 1200 # CSS px viewport width — every capture stays >= 800 CSS px
                   # so the page never drops under Tailwind's `md` breakpoint
+$script:events = $null  # CDP event queue; -Motion fills it (Animation.* events)
                   # (a 430-px viewport made textarea render text-base instead
                   # of md:text-sm). To land a ~380 px wide element we set an
                   # inline width on the element instead of shrinking the page.
@@ -117,7 +119,12 @@ function Send-Cdp([string]$Method, $Params) {
         $ms.Dispose()
         $obj = $null
         try { $obj = $text | ConvertFrom-Json } catch { continue }
-        if ($null -eq (Prop $obj 'id')) { continue }              # event
+        if ($null -eq (Prop $obj 'id')) {
+            # event — stash CDP domain events (motion mode reads
+            # Animation.animationStarted off this queue)
+            if ($null -ne $script:events) { [void]$script:events.Add($obj) }
+            continue
+        }
         if ($obj.id -ne $id) { continue }                         # stale
         $err = Prop $obj 'error'
         if ($err) { throw "CDP $Method failed: $(Prop $err 'message')" }
@@ -261,6 +268,182 @@ return [hex('lab(100% 0 0 / .1)'), hex('oklch(1 0 0 / 15%)')];})()
     }
     Write-Output "hex() self-test: $($hexCheck -join ', ')"
 
+    # ------------------------- motion strips (-Motion) ---------------------
+    if ($Motion) {
+        $script:events = New-Object System.Collections.ArrayList
+        $motionDir = Join-Path $OutDir 'motion'
+        New-Item -ItemType Directory -Force $motionDir | Out-Null
+        $mtimes = @(0, 25, 50, 75, 100, 125, 150)
+        $mprov = New-Object System.Collections.ArrayList
+        $merrors = New-Object System.Collections.ArrayList
+
+        # strips: key, example page, element selector, trigger, tooltip?
+        $mStrips = @(
+            @{ key = 'button-default'; example = 'button-default'; sel = '[data-slot="button"]'; trigger = 'hover'; tooltip = $false },
+            @{ key = 'button-ghost';   example = 'button-ghost';   sel = '[data-slot="button"]'; trigger = 'hover'; tooltip = $false },
+            @{ key = 'button-focus';   example = 'button-default'; sel = '[data-slot="button"]'; trigger = 'tab';   tooltip = $false },
+            @{ key = 'tooltip-open';   example = 'tooltip-demo';   sel = 'button'; trigger = 'hover'; tooltip = $true },
+            @{ key = 'tooltip-close';  example = 'tooltip-demo';   sel = 'button'; trigger = 'hover-off'; tooltip = $true }
+        )
+
+        # drain queued CDP events (animationStarted arrives async); a no-op
+        # eval forces a receive round-trip that collects them
+        function Drain-Events {
+            try { Eval 'true' | Out-Null } catch { }
+        }
+
+        # take every animationStarted event since marker, return anim ids
+        function Anim-Ids {
+            Drain-Events
+            $ids = @()
+            foreach ($e in $script:events) {
+                if ((Prop $e 'method') -eq 'Animation.animationStarted') {
+                    $a = Prop (Prop $e 'params') 'animation'
+                    $ids += Prop $a 'id'
+                }
+            }
+            $ids
+        }
+
+        foreach ($st in $mStrips) {
+            foreach ($theme in 'light', 'dark') {
+                try {
+                    Set-Viewport $VpDefault
+                    Send-Cdp 'Emulation.setEmulatedMedia' @{
+                        features = @(@{ name = 'prefers-color-scheme'; value = $theme })
+                    } | Out-Null
+                    Send-Cdp 'Page.navigate' @{ url = "$ViewBase/$($st.example)" } | Out-Null
+                    Wait-For 'document.readyState === "complete"' 10000 'page load'
+                    if ($theme -eq 'dark') {
+                        Eval 'document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark";true' | Out-Null
+                    } else {
+                        Eval 'document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light";true' | Out-Null
+                    }
+                    Eval 'document.documentElement.style.backgroundColor="var(--background)";document.body.style.backgroundColor="var(--background)";true' | Out-Null
+                    Eval 'document.fonts.ready.then(()=>true)' -AwaitPromise | Out-Null
+                    Wait-For "!!document.querySelector('$($st.sel)')" 10000 $st.sel
+                    Wait-Settle
+
+                    # pad the body like the static captures so the clip has
+                    # >= 16 CSS px of context on every side
+                    Eval "(function(){if(!document.getElementById('__cap_pad')){var st=document.createElement('style');st.id='__cap_pad';st.textContent='body{padding:32px !important}';document.head.appendChild(st);}return true;})()" | Out-Null
+
+                    # pause ALL animations/transitions before the trigger so
+                    # the CSS transition/animation is created paused at 0
+                    Send-Cdp 'Animation.enable' $null | Out-Null
+                    Send-Cdp 'Animation.setPlaybackRate' @{ playbackRate = 0 } | Out-Null
+                    $script:events.Clear()
+
+                    # trigger
+                    $r0 = Element-Rect $st.sel
+                    if ($st.trigger -eq 'tab') {
+                        Send-Cdp 'Input.dispatchKeyEvent' @{ type = 'rawKeyDown'; windowsVirtualKeyCode = 9; code = 'Tab'; key = 'Tab' } | Out-Null
+                        Send-Cdp 'Input.dispatchKeyEvent' @{ type = 'keyUp'; windowsVirtualKeyCode = 9; code = 'Tab'; key = 'Tab' } | Out-Null
+                        Wait-For '!!document.activeElement && document.activeElement.tagName === "BUTTON"' 5000 'focus on button'
+                    } else {
+                        $cx = [int]($r0.x + $r0.width / 2); $cy = [int]($r0.y + $r0.height / 2)
+                        Send-Cdp 'Input.dispatchMouseEvent' @{ type = 'mouseMoved'; x = $cx; y = $cy } | Out-Null
+                        if ($st.tooltip) {
+                            Wait-For '!!document.querySelector("[data-slot=\"tooltip-content\"]")' 5000 'tooltip content' 
+                        }
+                    }
+                    $ids = @(Anim-Ids)
+                    $names = @($script:events | ForEach-Object { if ((Prop $_ 'method') -eq 'Animation.animationStarted') { $a = Prop (Prop $_ 'params') 'animation'; "$(Prop $a 'name')/$(Prop $a 'type')" } })
+
+                    if ($st.trigger -eq 'hover-off') {
+                        # tooltip-close: open fully first, then leave -> close anim
+                        if ($ids.Count -eq 0) { throw 'tooltip-open produced no animations' }
+                        Send-Cdp 'Animation.seekAnimations' @{ animations = $ids; currentTime = 200 } | Out-Null
+                        $script:events.Clear()
+                        # Radix's hoverable-content grace keeps `delayed-open`
+                        # alive after pointer-away; Escape is the reliable close
+                        Send-Cdp 'Input.dispatchMouseEvent' @{ type = 'mouseMoved'; x = 5; y = 5 } | Out-Null
+                        Send-Cdp 'Input.dispatchKeyEvent' @{ type = 'rawKeyDown'; windowsVirtualKeyCode = 27; code = 'Escape'; key = 'Escape' } | Out-Null
+                        Send-Cdp 'Input.dispatchKeyEvent' @{ type = 'keyUp'; windowsVirtualKeyCode = 27; code = 'Escape'; key = 'Escape' } | Out-Null
+                        # the exit animation only starts on the `closed` flip
+                        Wait-For "!!document.querySelector('[data-slot=tooltip-content]') && document.querySelector('[data-slot=tooltip-content]').dataset.state === 'closed'" 5000 'tooltip data-state=closed'
+                        $ids = @(Anim-Ids)
+                    $names = @($script:events | ForEach-Object { if ((Prop $_ 'method') -eq 'Animation.animationStarted') { $a = Prop (Prop $_ 'params') 'animation'; "$(Prop $a 'name')/$(Prop $a 'type')" } })
+                    }
+                    if ($ids.Count -eq 0) { throw "$($st.key)-${theme}: no animations captured" }
+
+                    # clip: trigger box (+ tooltip content at its settled box) + $Pad
+                    $clip = Eval @"
+(function(){
+var el=document.querySelector('$($st.sel)');if(!el)return null;
+var r=el.getBoundingClientRect();
+var x0=r.x,y0=r.y,x1=r.right,y1=r.bottom;
+var tip=document.querySelector('[data-slot="tooltip-content"]');
+if(tip){var tr=tip.getBoundingClientRect();x0=Math.min(x0,tr.x);y0=Math.min(y0,tr.y);x1=Math.max(x1,tr.right);y1=Math.max(y1,tr.bottom);}
+x0=Math.max(0,x0-$Pad);y0=Math.max(0,y0-$Pad);x1=x1+$Pad;y1=y1+$Pad;
+return {x:x0,y:y0,width:x1-x0,height:y1-y0};
+})()
+"@
+                    if ($null -eq $clip) { throw "clip eval failed for $($st.sel)" }
+
+                    # live computed style of the animated element — asserted
+                    # against the settled reference values
+                    $styleSel = if ($st.tooltip) { '[data-slot="tooltip-content"]' } else { $st.sel }
+                    $cs = Eval "(function(){var el=document.querySelector('$styleSel');if(!el)return null;var s=getComputedStyle(el);return {transitionProperty:s.transitionProperty,transitionDuration:s.transitionDuration,transitionTimingFunction:s.transitionTimingFunction,animationName:s.animationName,animationDuration:s.animationDuration,animationTimingFunction:s.animationTimingFunction};})()"
+                    if ($null -eq $cs) { throw "style element not found: $styleSel" }
+                    if ($st.tooltip) {
+                        $an = "$($cs.animationName)"; $ad = "$($cs.animationDuration)"; $at = "$($cs.animationTimingFunction)"
+                        if ($an -notmatch 'enter|exit' -or $ad -notmatch '0.15s' -or $at -notmatch 'ease') {
+                            throw "$($st.key)-${theme}: animation $an/$ad/$at != enter|exit 0.15s ease"
+                        }
+                    } else {
+                        $td = "$($cs.transitionDuration)"; $tt = "$($cs.transitionTimingFunction)"
+                        if ($td -notmatch '0.15s' -or $tt -notmatch '0\.4.*0\.2') {
+                            throw "$($st.key)-${theme}: transition $td/$tt != 0.15s/cubic-bezier(0.4,0,0.2,1)"
+                        }
+                    }
+                    [void]$mprov.Add(@{
+                        key           = $st.key
+                        url           = "$ViewBase/$($st.example)"
+                        example       = $st.example
+                        theme         = $theme
+                        trigger       = $st.trigger
+                        times_ms      = $mtimes
+                        computedStyle = $cs
+                        animations    = $ids
+                        animationNames = $names
+                        browser       = "$browserName $browserVersion"
+                        dpr           = $Dsf
+                    })
+
+                    $shots = @{}
+                    foreach ($t in $mtimes) {
+                        Send-Cdp 'Animation.seekAnimations' @{ animations = $ids; currentTime = $t } | Out-Null
+                        $shot = Send-Cdp 'Page.captureScreenshot' @{
+                            format = 'png'
+                            clip   = @{ x = $clip.x; y = $clip.y; width = $clip.width; height = $clip.height; scale = 1 }
+                        }
+                        $shots[$t] = "$($shot.data)"
+                        [IO.File]::WriteAllBytes((Join-Path $motionDir "$($st.key)-$theme-t$t.png"),
+                            [Convert]::FromBase64String($shot.data))
+                    }
+                    # the strip must be visually distinct — an un-animated or
+                    # un-seeked capture would be byte-identical at the ends
+                    if ($shots[0] -eq $shots[150]) {
+                        throw "$($st.key)-${theme}: t=0 and t=150 identical — animation did not progress"
+                    }
+                    if ($shots[75] -eq $shots[0] -or $shots[75] -eq $shots[150]) {
+                        throw "$($st.key)-${theme}: t=75 identical to an endpoint — animation not seeked"
+                    }
+                    Write-Output "  motion $($st.key)-${theme}: $($ids.Count) anim(s), 7 frames"
+                } catch {
+                    [void]$merrors.Add("$($st.key)-$theme : $($_.Exception.Message)")
+                }
+            }
+        }
+        if ($merrors.Count -gt 0) {
+            throw "motion capture failures:`n" + ($merrors -join "`n")
+        }
+        $utf8nb2 = New-Object Text.UTF8Encoding($false)
+        [IO.File]::WriteAllText((Join-Path $OutDir 'motion-provenance.json'),
+            (@{ strips = $mprov } | ConvertTo-Json -Depth 8), $utf8nb2)
+        Write-Output "motion strips -> $motionDir"
+    } else {
     foreach ($t in $Targets) {
         $vp = $VpDefault
         foreach ($theme in 'light', 'dark') {
@@ -510,6 +693,7 @@ return {rect:{width:r.width,height:r.height},style:fields};})()
     if (Test-Path $OutDir) { Remove-Item -Recurse -Force $OutDir }
     Move-Item $tmpOut $OutDir
     Write-Output "captured $($provenance.Count) files -> $OutDir"
+    }
 } finally {
     if ($script:ws -and $script:ws.State -eq 'Open') {
         try { $script:ws.CloseAsync([Net.WebSockets.WebSocketCloseStatus]::NormalClosure, 'done', [Threading.CancellationToken]::None).Wait(2000) } catch { }

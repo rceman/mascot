@@ -65,6 +65,7 @@
 pub mod component;
 pub mod geom;
 pub mod layout;
+pub mod motion;
 pub mod state;
 pub mod theme;
 

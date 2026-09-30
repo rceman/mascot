@@ -56,6 +56,55 @@ pub(crate) fn brush(ctx: &ID2D1DeviceContext, c: [f32; 4]) -> Result<ID2D1Brush>
     unsafe { ctx.CreateSolidColorBrush(&cf(c), None)?.cast() }
 }
 
+/// One frame's resolved motion state: the animated control colours and the
+/// tooltip's current transform. `settled` is the static resolution (what
+/// offscreen captures always paint).
+pub struct MotionFrame {
+    pub action: mascot_ui::motion::ControlColors,
+    pub copy: mascot_ui::motion::ControlColors,
+    /// (rect, label, frame) — present also while a tooltip is closing.
+    pub tooltip: Option<(Rect, String, mascot_ui::motion::TooltipFrame)>,
+}
+
+impl MotionFrame {
+    /// Static resolution of the frame — no motion applied.
+    pub fn settled(state: &UiState, layout: &Layout) -> Self {
+        use mascot_ui::component::{ControlVisual, IconButtonKind, icon_button_paint};
+        let pal = state.theme.palette();
+        let tooltip = match (layout.tooltip, state.tooltip) {
+            (Some(tip), Some(id)) => {
+                let label = match id {
+                    ControlId::Copy if state.copied => "Copied".to_string(),
+                    c => c.icon().label().to_string(),
+                };
+                Some((tip, label, mascot_ui::motion::TOOLTIP_IDENTITY))
+            }
+            _ => None,
+        };
+        MotionFrame {
+            action: action_paint(state, &pal),
+            copy: icon_button_paint(
+                &pal,
+                IconButtonKind::Ghost,
+                ControlVisual::of(state, ControlId::Copy),
+            ),
+            tooltip,
+        }
+    }
+}
+
+fn action_paint(
+    state: &UiState,
+    pal: &mascot_ui::theme::Palette,
+) -> mascot_ui::motion::ControlColors {
+    use mascot_ui::component::{ControlVisual, IconButtonKind, icon_button_paint};
+    icon_button_paint(
+        pal,
+        IconButtonKind::Primary,
+        ControlVisual::of(state, state.action_control()),
+    )
+}
+
 /// Reusable painter resources: fonts, icon geometries, stroke style, sprite.
 pub struct Painter {
     pub fonts: Fonts,
@@ -110,8 +159,9 @@ impl Painter {
         state: &UiState,
         layout: &Layout,
         editor: Option<&Editor>,
+        motion: &MotionFrame,
     ) -> Result<()> {
-        use mascot_ui::component::{ControlVisual, IconButtonKind, TextStyle};
+        use mascot_ui::component::TextStyle;
         use mascot_ui::state::Activity;
         let pal = state.theme.palette();
         unsafe {
@@ -173,14 +223,12 @@ impl Painter {
             }
 
             if let Some(send) = layout.send {
-                let id = state.action_control();
                 self.icon_button(
                     ctx,
                     &pal,
                     send,
-                    id.icon(),
-                    IconButtonKind::Primary,
-                    ControlVisual::of(state, id),
+                    state.action_control().icon(),
+                    motion.action,
                 )?;
             }
             if let Some(c) = layout.copy {
@@ -189,26 +237,15 @@ impl Painter {
                 } else {
                     ControlId::Copy.icon()
                 };
-                self.icon_button(
-                    ctx,
-                    &pal,
-                    c,
-                    icon,
-                    IconButtonKind::Ghost,
-                    ControlVisual::of(state, ControlId::Copy),
-                )?;
+                self.icon_button(ctx, &pal, c, icon, motion.copy)?;
             }
 
             if let Some(sp) = &self.sprite {
                 sp.draw(ctx, layout.mascot);
             }
 
-            if let (Some(tip), Some(id)) = (layout.tooltip, state.tooltip) {
-                let label = match id {
-                    ControlId::Copy if state.copied => "Copied",
-                    c => c.icon().label(),
-                };
-                self.tooltip(ctx, &pal, tip, label)?;
+            if let Some((tip, label, f)) = &motion.tooltip {
+                self.tooltip_with(ctx, &pal, *tip, label, *f)?;
             }
             Ok(())
         }

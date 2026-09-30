@@ -20,8 +20,8 @@ use mascot_render_win32::image::RgbaImage;
 use mascot_render_win32::renderer::{DeviceKind, Renderer};
 use mascot_ui::component::{
     BadgeVariant, ButtonSize, ButtonVariant, ControlVisual, IconButtonKind, TextStyle,
-    badge_colors, badge_size, button_colors, button_size, icon_button_colors, tooltip_colors,
-    tooltip_size,
+    badge_colors, badge_size, button_colors, button_paint, button_size, icon_button_colors,
+    icon_button_paint, tooltip_colors, tooltip_size,
 };
 use mascot_ui::geom::Rect;
 use mascot_ui::layout::composer_height;
@@ -89,6 +89,8 @@ pub fn run() -> Result<(), String> {
             ));
         }
         let (ref1, ref2, ref3, ref4, ref5) = shadcn_sheets(&mut app, &ref_dir, &mut rep)?;
+        let (motion, motion_json) = motion_sheet(&mut app, &ref_dir)?;
+
         for (n, s) in [
             ("component-gallery-light.png", &light),
             ("component-gallery-dark.png", &dark),
@@ -102,6 +104,9 @@ pub fn run() -> Result<(), String> {
         ] {
             rep.sheets.push((n.to_string(), s.width, s.height));
         }
+        for (n, s) in &motion {
+            rep.sheets.push((n.to_string(), s.width, s.height));
+        }
         validate(&rep)?;
         write_capture(
             &dir,
@@ -111,6 +116,8 @@ pub fn run() -> Result<(), String> {
                 dark,
                 sizes,
                 dpi,
+                motion,
+                motion_json,
                 ref1,
                 ref2,
                 ref3,
@@ -132,6 +139,13 @@ pub fn run() -> Result<(), String> {
             ("component-gallery-sizes.png", &sizes),
             ("component-gallery-dpi.png", &dpi),
         ];
+        if let Ok((ms, _)) = motion_sheet(&mut app, &ref_dir) {
+            for (n, m) in &ms {
+                let p = out.join(n);
+                m.save(&p).map_err(|e| e.to_string())?;
+                println!("wrote {}", p.display());
+            }
+        }
         let mut refs = Vec::new();
         if have_refs {
             let (r1, r2, r3, r4, r5) = shadcn_sheets(&mut app, &ref_dir, &mut rep)?;
@@ -709,7 +723,15 @@ fn icon_button_cell(
         e + 2.0 * CELL_PAD,
         e + 2.0 * CELL_PAD,
         scale,
-        |ctx| p.icon_button(ctx, pal, Rect::new(CELL_PAD, CELL_PAD, e, e), icon, kind, v),
+        |ctx| {
+            p.icon_button(
+                ctx,
+                pal,
+                Rect::new(CELL_PAD, CELL_PAD, e, e),
+                icon,
+                icon_button_paint(pal, kind, v),
+            )
+        },
     )
 }
 
@@ -737,8 +759,7 @@ fn button_cell(
                 pal,
                 Rect::new(CELL_PAD, CELL_PAD, s.w, s.h),
                 label,
-                variant,
-                v,
+                button_paint(pal, variant, v),
             )
         },
     )
@@ -1629,9 +1650,9 @@ fn sizes_sheet(app: &mut App, rep: &mut Report) -> Result<RgbaImage, String> {
             if w >= tokens::TOOLTIP_MAX_W {
                 // clamped tooltip must keep its horizontal padding: text ink
                 // starts >= 10 DIP inside the pill on both sides (the pill is
-                // primary fill, the text primary_fg)
-                let pill = rgb8(pal.primary);
-                // pill bbox first (primary fill)
+                // foreground fill, the text background)
+                let pill = rgb8(tooltip_colors(&pal).0);
+                // pill bbox first (foreground fill)
                 let mut px = [u32::MAX, 0u32]; // pill x range
                 let mut py = [u32::MAX, 0u32];
                 for (i, p) in img.data.chunks_exact(4).enumerate() {
@@ -1647,7 +1668,7 @@ fn sizes_sheet(app: &mut App, rep: &mut Report) -> Result<RgbaImage, String> {
                 // text ink = columns inside the pill bbox with >= 3 pixels
                 // matching the text colour closely (glyph strokes; pill-edge
                 // antialias is a mid-tone, not the fg colour)
-                let fg = rgb8(pal.primary_fg);
+                let fg = rgb8(tooltip_colors(&pal).1);
                 let mut ix = [u32::MAX, 0u32];
                 if px[0] != u32::MAX {
                     // only the pill's vertical centre band — the rounded
@@ -2217,16 +2238,14 @@ fn native_ref_cell(
                     &pal,
                     Rect::new(REF_CELL_PAD, REF_CELL_PAD + (p_edge - g) / 2.0, g, g),
                     mascot_icons::Icon::Copy,
-                    IconButtonKind::Ghost,
-                    vv,
+                    icon_button_paint(&pal, IconButtonKind::Ghost, vv),
                 )?;
                 p.icon_button(
                     ctx,
                     &pal,
                     Rect::new(REF_CELL_PAD + g + 12.0, REF_CELL_PAD, p_edge, p_edge),
                     mascot_icons::Icon::ArrowUp,
-                    IconButtonKind::Primary,
-                    vv,
+                    icon_button_paint(&pal, IconButtonKind::Primary, vv),
                 )
             })?;
             // measured per-control values: ghost 28 (Copy) + primary 32 (Send)
@@ -2299,8 +2318,7 @@ fn native_ref_cell(
                         &pal,
                         Rect::new(REF_CELL_PAD, REF_CELL_PAD, w2, h2),
                         ntext,
-                        variant,
-                        vv,
+                        button_paint(&pal, variant, vv),
                     )
                 },
             )?;
@@ -3034,6 +3052,8 @@ struct Sheets {
     dark: RgbaImage,
     sizes: RgbaImage,
     dpi: RgbaImage,
+    motion: Vec<(&'static str, RgbaImage)>,
+    motion_json: serde_json::Value,
     ref1: RgbaImage,
     ref2: RgbaImage,
     ref3: RgbaImage,
@@ -3061,6 +3081,8 @@ fn write_capture(
         dark,
         sizes,
         dpi,
+        motion,
+        motion_json,
         ref1,
         ref2,
         ref3,
@@ -3078,21 +3100,35 @@ fn write_capture(
         ("component-gallery-shadcn-reference-3.png", ref3),
         ("component-gallery-shadcn-reference-4.png", ref4),
         ("component-gallery-shadcn-reference-5.png", ref5),
-    ] {
+    ]
+    .into_iter()
+    .chain(motion.iter().map(|(n, i)| (*n, i.clone())))
+    {
         img.save(&tmp.join(name)).map_err(|e| e.to_string())?;
         files.push(name.to_string());
     }
 
     // reference/ = the full captured set + provenance (dev evidence only)
-    for f in std::fs::read_dir(ref_dir).map_err(|e| e.to_string())? {
-        let f = f.map_err(|e| e.to_string())?.path();
-        let name = f
-            .file_name()
-            .unwrap_or_default()
-            .to_string_lossy()
-            .to_string();
-        std::fs::copy(&f, tmp.join("reference").join(&name)).map_err(|e| e.to_string())?;
-        files.push(format!("reference/{name}"));
+    let mut stack = vec![ref_dir.to_path_buf()];
+    while let Some(d) = stack.pop() {
+        for e in std::fs::read_dir(&d).map_err(|e| e.to_string())? {
+            let f = e.map_err(|e| e.to_string())?.path();
+            if f.is_dir() {
+                stack.push(f);
+                continue;
+            }
+            let rel = f
+                .strip_prefix(ref_dir)
+                .unwrap()
+                .to_string_lossy()
+                .replace('\\', "/");
+            let dst = tmp.join("reference").join(&rel);
+            if let Some(pd) = dst.parent() {
+                std::fs::create_dir_all(pd).map_err(|e| e.to_string())?;
+            }
+            std::fs::copy(&f, &dst).map_err(|e| format!("{}: {e}", dst.display()))?;
+            files.push(format!("reference/{rel}"));
+        }
     }
 
     // component-inventory.json
@@ -3107,11 +3143,25 @@ fn write_capture(
                 "C": "deferred — out of scope",
             },
             "components": entries,
+            "loading": {
+                "status": "deferred",
+                "reason": "No loader exists in the current product: Submitting swaps Send for Stop and dims the submitted text; the mascot is static.",
+                "rule": "docs/MASCOT_NATIVE_UI_DESIGN_SYSTEM_V0.1.md §2 Busy / loading visual rule",
+                "shadcn_reference": "https://github.com/shadcn-ui/ui/blob/db2db460a26fa84fb65c8d903b213925fbdee9ed/apps/v4/registry/new-york-v4/ui/spinner.tsx",
+            },
         }))
         .map_err(|e| e.to_string())?,
     )
     .map_err(|e| e.to_string())?;
     files.push("component-inventory.json".into());
+
+    // motion.json — durations, easings, sampled frame values, provenance
+    std::fs::write(
+        tmp.join("motion.json"),
+        serde_json::to_string_pretty(&motion_json).map_err(|e| e.to_string())?,
+    )
+    .map_err(|e| e.to_string())?;
+    files.push("motion.json".into());
 
     // shadcn-comparison.md (needs provenance.json from ref_dir)
     let prov = load_prov(ref_dir)?;
@@ -3120,9 +3170,15 @@ fn write_capture(
 
     // receipt
     let mut file_objs = Vec::new();
-    for f in &files {
-        let len = std::fs::metadata(tmp.join(f)).map(|m| m.len()).unwrap_or(0);
-        file_objs.push(serde_json::json!({"path": f, "bytes": len}));
+    let paths: Vec<PathBuf> = files.iter().map(|f| tmp.join(f)).collect();
+    let blobs = crate::capture::git_blobs(&paths);
+    for ((f, p), blob) in files.iter().zip(&paths).zip(&blobs) {
+        let len = std::fs::metadata(p).map(|m| m.len()).unwrap_or(0);
+        file_objs.push(serde_json::json!({
+            "path": f,
+            "bytes": len,
+            "git_blob": blob,
+        }));
     }
     let sheets_json: Vec<serde_json::Value> = rep
         .sheets
@@ -3130,8 +3186,10 @@ fn write_capture(
         .map(|(n, w, h)| serde_json::json!({"file": n, "width_px": w, "height_px": h}))
         .collect();
     let receipt = serde_json::json!({
-        "head": crate::capture::git(&["rev-parse", "HEAD"]),
-        "dirty": dirty,
+        "code_head": crate::capture::git(&["rev-parse", "HEAD"]),
+        "code_dirty": dirty,
+        "evidence_head": serde_json::Value::Null,
+        "evidence_head_rule": "Set by `mascot-ui-lab stamp-evidence` in the commit that follows the evidence commit. evidence_head is the commit that added this evidence; the stamp commit is the final branch head and changes only evidence_head fields.",
         "tool": "mascot-ui-lab components",
         "tool_version": env!("CARGO_PKG_VERSION"),
         "device": "warp",
@@ -3171,6 +3229,7 @@ fn inventory_entry_json(e: &Entry) -> serde_json::Value {
         "shadcn_url": e.shadcn.map(|s| format!("https://ui.shadcn.com/docs/components/{s}")),
         "no_analogue_reason": e.no_analogue_reason,
         "deviations": e.deviations,
+        "motion": e.motion,
     })
 }
 
@@ -3269,4 +3328,756 @@ unsafe extern "system" fn preview_wndproc(
             _ => DefWindowProcW(hwnd, msg, w, l),
         }
     }
+}
+
+// ------------------------------------------------------------- motion sheet
+
+/// Strip timestamps (ms) — 7 frames over the 150 ms shadcn transition.
+const MOTION_TIMES_MS: [f64; 7] = [0.0, 25.0, 50.0, 75.0, 100.0, 125.0, 150.0];
+
+/// A motion-strip row: what animates, whether reduced, and the optional
+/// shadcn reference strip key (reference/motion/<key>-<theme>-t<ms>.png).
+#[derive(Clone, Copy)]
+struct MotionRow {
+    label: &'static str,
+    kind: &'static str,
+    reduced: bool,
+    ref_key: Option<&'static str>,
+}
+
+const MOTION_ROWS: &[MotionRow] = &[
+    MotionRow {
+        label: "Button default idle → hover",
+        kind: "button-hover",
+        reduced: false,
+        ref_key: Some("button-default"),
+    },
+    MotionRow {
+        label: "IconButton primary idle → hover (Send)",
+        kind: "iconbutton-primary-hover",
+        reduced: false,
+        ref_key: None,
+    },
+    MotionRow {
+        label: "IconButton ghost idle → hover (Copy)",
+        kind: "iconbutton-ghost-hover",
+        reduced: false,
+        ref_key: Some("button-ghost"),
+    },
+    MotionRow {
+        label: "IconButton focus-visible ring 0→1",
+        kind: "iconbutton-focus-ring",
+        reduced: false,
+        ref_key: Some("button-focus"),
+    },
+    MotionRow {
+        label: "Tooltip open (fade+zoom-in-95+slide-in-from-bottom-2)",
+        kind: "tooltip-open",
+        reduced: false,
+        ref_key: Some("tooltip-open"),
+    },
+    MotionRow {
+        label: "Tooltip close (fade-out-0+zoom-out-95)",
+        kind: "tooltip-close",
+        reduced: false,
+        ref_key: Some("tooltip-close"),
+    },
+    MotionRow {
+        label: "Reduced motion: IconButton primary idle → hover",
+        kind: "iconbutton-primary-hover",
+        reduced: true,
+        ref_key: None,
+    },
+    MotionRow {
+        label: "Reduced motion: Tooltip open",
+        kind: "tooltip-open",
+        reduced: true,
+        ref_key: None,
+    },
+];
+
+/// What a motion frame cell paints: resolved colours for a control, or a
+/// tooltip transform frame.
+enum MotionDraw {
+    Button(mascot_ui::motion::ControlColors),
+    IconButton(mascot_icons::Icon, mascot_ui::motion::ControlColors),
+    Tooltip(mascot_ui::motion::TooltipFrame),
+}
+
+/// Per-row fixed cell box: `(w, h)` DIP and the control's rect inside it.
+fn motion_cell_box(row_kind: &str, app: &App) -> (f32, f32, Rect) {
+    use mascot_ui::motion::TOOLTIP_SLIDE_DIP;
+    match row_kind {
+        "button-hover" => {
+            let tw = app.painter.text_width("Button", TextStyle::Label);
+            let s = button_size(tw, ButtonSize::Default);
+            (s.w + 24.0, s.h + 24.0, Rect::new(12.0, 12.0, s.w, s.h))
+        }
+        "iconbutton-primary-hover" | "iconbutton-ghost-hover" | "iconbutton-focus-ring" => {
+            let e = tokens::PRIMARY_BUTTON;
+            (e + 24.0, e + 24.0, Rect::new(12.0, 12.0, e, e))
+        }
+        _ => {
+            // tooltip: bottom headroom for the +8 DIP enter slide
+            let tw = app.painter.text_width("Send", TextStyle::Muted);
+            let s = tooltip_size(tw);
+            (
+                s.w + 8.0,
+                s.h + TOOLTIP_SLIDE_DIP + 8.0,
+                Rect::new(4.0, 4.0, s.w, s.h),
+            )
+        }
+    }
+}
+
+/// Resolve what frame `t` draws for a row (and its `ControlColors` — for
+/// tooltip rows `ring` carries the frame opacity so the JSON has one shape).
+fn motion_frame(
+    row: &MotionRow,
+    pal: &Palette,
+    t: f64,
+) -> (MotionDraw, mascot_ui::motion::ControlColors) {
+    use mascot_ui::component::ControlVisual;
+    use mascot_ui::motion::{TOOLTIP_IDENTITY, Tween, tooltip_close_frame, tooltip_open_frame};
+    let idle = ControlVisual::default();
+    let hover = ControlVisual {
+        hover: true,
+        ..Default::default()
+    };
+    let focus = ControlVisual {
+        focus_visible: true,
+        ..Default::default()
+    };
+    let reduced = row.reduced;
+    match row.kind {
+        "button-hover" => {
+            let mut tw = Tween::settled(button_paint(pal, ButtonVariant::Default, idle));
+            tw.retarget(
+                button_paint(pal, ButtonVariant::Default, hover),
+                0.0,
+                reduced,
+            );
+            let c = tw.value(t, reduced);
+            (MotionDraw::Button(c), c)
+        }
+        "iconbutton-primary-hover" | "iconbutton-ghost-hover" | "iconbutton-focus-ring" => {
+            let (kind, to_v) = match row.kind {
+                "iconbutton-primary-hover" => (IconButtonKind::Primary, hover),
+                "iconbutton-ghost-hover" => (IconButtonKind::Ghost, hover),
+                _ => (IconButtonKind::Primary, focus),
+            };
+            let icon = if kind == IconButtonKind::Primary {
+                mascot_icons::Icon::ArrowUp
+            } else {
+                mascot_icons::Icon::Copy
+            };
+            let mut tw = Tween::settled(icon_button_paint(pal, kind, idle));
+            tw.retarget(icon_button_paint(pal, kind, to_v), 0.0, reduced);
+            let c = tw.value(t, reduced);
+            (MotionDraw::IconButton(icon, c), c)
+        }
+        "tooltip-open" | "tooltip-close" => {
+            let f = match (row.kind, reduced) {
+                ("tooltip-open", false) => tooltip_open_frame(t),
+                ("tooltip-open", true) => TOOLTIP_IDENTITY,
+                ("tooltip-close", false) => tooltip_close_frame(TOOLTIP_IDENTITY, t),
+                _ => TooltipFrame {
+                    opacity: 0.0,
+                    scale: mascot_ui::motion::TOOLTIP_SCALE_FROM,
+                    dy: 0.0,
+                },
+            };
+            let (fill, fg) = tooltip_colors(pal);
+            (
+                MotionDraw::Tooltip(f),
+                mascot_ui::motion::ControlColors {
+                    fill,
+                    fg,
+                    ring: f.opacity,
+                },
+            )
+        }
+        _ => unreachable!(),
+    }
+}
+
+use mascot_ui::motion::TooltipFrame;
+
+/// Render one frame cell (flattened over the band surface).
+fn motion_frame_cell(
+    app: &App,
+    pal: &Palette,
+    row: &MotionRow,
+    t: f64,
+) -> Result<RgbaImage, String> {
+    let (w, h, rect) = motion_cell_box(row.kind, app);
+    let (draw, _c) = motion_frame(row, pal, t);
+    cell_img(app, pal, w, h, 2.0, |ctx| match draw {
+        MotionDraw::Button(c) => app.painter.button(ctx, pal, rect, "Button", c),
+        MotionDraw::IconButton(icon, c) => app.painter.icon_button(ctx, pal, rect, icon, c),
+        MotionDraw::Tooltip(f) => app.painter.tooltip_with(ctx, pal, rect, "Send", f),
+    })
+}
+
+/// The static endpoint cell (idle / target) drawn through the same box —
+/// the byte-identity reference for the strip self-checks.
+fn motion_static_cell(
+    app: &App,
+    pal: &Palette,
+    row: &MotionRow,
+    target: bool,
+) -> Result<RgbaImage, String> {
+    use mascot_ui::component::ControlVisual;
+    use mascot_ui::motion::TOOLTIP_IDENTITY;
+    let (w, h, rect) = motion_cell_box(row.kind, app);
+    let idle = ControlVisual::default();
+    let hover = ControlVisual {
+        hover: true,
+        ..Default::default()
+    };
+    let focus = ControlVisual {
+        focus_visible: true,
+        ..Default::default()
+    };
+    cell_img(app, pal, w, h, 2.0, |ctx| match row.kind {
+        "button-hover" => app.painter.button(
+            ctx,
+            pal,
+            rect,
+            "Button",
+            button_paint(
+                pal,
+                ButtonVariant::Default,
+                if target { hover } else { idle },
+            ),
+        ),
+        "tooltip-open" => {
+            if target {
+                app.painter
+                    .tooltip_with(ctx, pal, rect, "Send", TOOLTIP_IDENTITY)
+            } else {
+                Ok(()) // t=0: opacity 0 — empty cell
+            }
+        }
+        "tooltip-close" => {
+            if target {
+                Ok(()) // t=150: opacity 0 — empty cell
+            } else {
+                app.painter
+                    .tooltip_with(ctx, pal, rect, "Send", TOOLTIP_IDENTITY)
+            }
+        }
+        _ => {
+            let (kind, v) = match row.kind {
+                "iconbutton-primary-hover" => {
+                    (IconButtonKind::Primary, if target { hover } else { idle })
+                }
+                "iconbutton-ghost-hover" => {
+                    (IconButtonKind::Ghost, if target { hover } else { idle })
+                }
+                _ => (IconButtonKind::Primary, if target { focus } else { idle }),
+            };
+            let icon = if kind == IconButtonKind::Primary {
+                mascot_icons::Icon::ArrowUp
+            } else {
+                mascot_icons::Icon::Copy
+            };
+            app.painter
+                .icon_button(ctx, pal, rect, icon, icon_button_paint(pal, kind, v))
+        }
+    })
+}
+
+fn hex_rgba(c: [f32; 4]) -> String {
+    format!(
+        "#{:02X}{:02X}{:02X}{:02X}",
+        (c[0] * 255.0).round() as u32,
+        (c[1] * 255.0).round() as u32,
+        (c[2] * 255.0).round() as u32,
+        (c[3] * 255.0).round() as u32
+    )
+}
+
+/// Ink metrics for a strip frame vs the empty and full cells:
+/// (coverage = pixels differing from empty, weight = mean per-pixel
+/// progress toward the full cell across the pixels that the full cell
+/// changes — i.e. opacity progress in the pill region).
+fn strip_ink(frame: &RgbaImage, empty: &RgbaImage, full: &RgbaImage) -> (usize, f64) {
+    let mut cov = 0usize;
+    let (mut num, mut den) = (0.0f64, 0.0f64);
+    for i in (0..frame.data.len()).step_by(4) {
+        let (p, e, f) = (
+            &frame.data[i..i + 4],
+            &empty.data[i..i + 4],
+            &full.data[i..i + 4],
+        );
+        let df: f64 = (0..4).map(|c| (f[c] as f64 - e[c] as f64).abs()).sum();
+        if df > 0.5 {
+            // inside the pill region: coverage = this px carries ink now
+            if p != e {
+                cov += 1;
+            }
+            let dp: f64 = (0..4).map(|c| (p[c] as f64 - e[c] as f64).abs()).sum();
+            num += (dp / df).min(1.0);
+            den += 1.0;
+        }
+    }
+    (cov, if den > 0.0 { num / den } else { 0.0 })
+}
+
+/// One composed strip: row label, optional ref strip, native frames + caps.
+struct MotionStrip {
+    label: &'static str,
+    kind: &'static str,
+    reduced: bool,
+    theme_name: &'static str,
+    ref_key: Option<&'static str>,
+    label_img: RgbaImage,
+    ref_label: Option<RgbaImage>,
+    ref_imgs: Vec<RgbaImage>,
+    native_label: RgbaImage,
+    frames: Vec<RgbaImage>,
+    caps: Vec<RgbaImage>,
+    fjson: Vec<serde_json::Value>,
+    /// placement in the final sheet, filled during composition
+    sheet_px: Option<(u32, u32, u32, u32)>,
+    frames_px: Vec<(u32, u32, u32, u32)>,
+    ref_frames_px: Vec<(u32, u32, u32, u32)>,
+}
+
+/// Build the motion sheets: `component-gallery-motion.png` (rows 1-4) and
+/// `component-gallery-motion-2.png` (rows 5-8); per sheet a light band then a
+/// dark band; per row a 7-frame strip (t = 0..150 ms) with timestamp captions;
+/// when a shadcn motion reference strip exists it is drawn directly above the
+/// native strip with the same captions. Returns the sheets and motion.json.
+fn motion_sheet(
+    app: &mut App,
+    ref_dir: &Path,
+) -> Result<(Vec<(&'static str, RgbaImage)>, serde_json::Value), String> {
+    use mascot_ui::motion::{TOOLTIP_ANIM_MS, TRANSITION_MS};
+    const PAD: u32 = 24;
+    const GAP: u32 = 8;
+    const ROW_GAP: u32 = 18;
+    const CAP_GAP: u32 = 4;
+    const COLS: usize = 2; // strips per visual row
+    const SHEET_FILES: [&str; 2] = [
+        "component-gallery-motion.png",
+        "component-gallery-motion-2.png",
+    ];
+
+    // ---- build strips ----------------------------------------------------
+    // bands: (sheet index, theme, strips)
+    let mut bands: Vec<(usize, Theme, Vec<MotionStrip>)> = Vec::new();
+    for (si, lo) in [(0usize, 0usize), (1usize, 4usize)] {
+        for theme in [Theme::Light, Theme::Dark] {
+            let pal = theme.palette();
+            let theme_name = if theme == Theme::Light {
+                "light"
+            } else {
+                "dark"
+            };
+            let mut strips: Vec<MotionStrip> = Vec::new();
+            for row in &MOTION_ROWS[lo..lo + 4] {
+                let mut frames = Vec::new();
+                let mut fjson = Vec::new();
+                for t in MOTION_TIMES_MS {
+                    let img = motion_frame_cell(app, &pal, row, t)?;
+                    let (draw, c) = motion_frame(row, &pal, t);
+                    let p = match row.kind {
+                        "tooltip-open" | "tooltip-close" => {
+                            mascot_ui::motion::ease_css((t / TOOLTIP_ANIM_MS).clamp(0.0, 1.0) as f32)
+                        }
+                        _ => mascot_ui::motion::ease_standard(
+                            (t / TRANSITION_MS).clamp(0.0, 1.0) as f32
+                        ),
+                    };
+                    let mut fj = serde_json::json!({
+                        "t_ms": t,
+                        "eased_p": p,
+                        "fill": hex_rgba(c.fill),
+                        "fg": hex_rgba(c.fg),
+                        "ring": c.ring,
+                    });
+                    if let MotionDraw::Tooltip(f) = draw {
+                        fj["opacity"] = serde_json::json!(f.opacity);
+                        fj["scale"] = serde_json::json!(f.scale);
+                        fj["dy"] = serde_json::json!(f.dy);
+                    }
+                    fjson.push(fj);
+                    frames.push(img);
+                }
+                // ---- self-checks (fail the capture) ----------------------
+                let idle_cell = motion_static_cell(app, &pal, row, false)?;
+                let target_cell = motion_static_cell(app, &pal, row, true)?;
+                if !row.reduced && frames[0].data != idle_cell.data {
+                    return Err(format!(
+                        "motion strip '{}': t=0 frame not byte-identical to the static idle cell",
+                        row.label
+                    ));
+                }
+                if frames[6].data != target_cell.data {
+                    return Err(format!(
+                        "motion strip '{}': t=150 frame not byte-identical to the static target cell",
+                        row.label
+                    ));
+                }
+                if row.reduced {
+                    for (i, f) in frames.iter().enumerate() {
+                        if f.data != frames[6].data {
+                            return Err(format!(
+                                "reduced-motion strip '{}': frame {i} differs from the final frame",
+                                row.label
+                            ));
+                        }
+                    }
+                }
+                // tooltip strips must ACTUALLY draw: coverage and
+                // alpha-weighted ink progress in the right direction (the
+                // R1 layer bug drew nothing for every non-identity frame)
+                if matches!(row.kind, "tooltip-open" | "tooltip-close") && !row.reduced {
+                    // (no-ink cell, full-ink cell): for open the idle cell is
+                    // empty; for close the TARGET cell is empty
+                    let (empty, full) = if row.kind == "tooltip-open" {
+                        (&idle_cell, &target_cell)
+                    } else {
+                        (&target_cell, &idle_cell)
+                    };
+                    let mut inks = Vec::new();
+                    for f in &frames {
+                        inks.push(strip_ink(f, empty, full));
+                    }
+                    let (dir, dir_name) = if row.kind == "tooltip-open" {
+                        (1.0f64, "increasing")
+                    } else {
+                        (-1.0f64, "decreasing")
+                    };
+                    for (i, (cov, w)) in inks.iter().enumerate() {
+                        let t = MOTION_TIMES_MS[i];
+                        let need_ink = if row.kind == "tooltip-open" {
+                            t >= 25.0
+                        } else {
+                            t <= 125.0
+                        };
+                        if need_ink && *cov == 0 {
+                            return Err(format!(
+                                "motion strip '{}': t={t} has zero ink (animation invisible)",
+                                row.label
+                            ));
+                        }
+                        if i > 0 {
+                            let (pc, pw) = inks[i - 1];
+                            // coverage must not move against the direction
+                            if dir > 0.0 && *cov < pc || dir < 0.0 && *cov > pc {
+                                return Err(format!(
+                                    "motion strip '{}': coverage not {dir_name} at t={t}",
+                                    row.label
+                                ));
+                            }
+                            // alpha-weighted ink strictly progresses while
+                            // opacity is between 0 and 1 (t=25..125)
+                            if (25.0..=125.0).contains(&t) {
+                                let dw = (*w - pw) * dir;
+                                if dw <= 0.0 {
+                                    return Err(format!(
+                                        "motion strip '{}': ink weight not strictly {dir_name} at t={t} ({pw:.3}->{w:.3})",
+                                        row.label
+                                    ));
+                                }
+                            }
+                        }
+                    }
+                }
+                // monotonic: per channel the series must never reverse
+                // direction (idle -> target for hover/focus rows)
+                if !row.reduced && !matches!(row.kind, "tooltip-open" | "tooltip-close") {
+                    let (_, to_c) = motion_frame(row, &pal, MOTION_TIMES_MS[6]);
+                    let (_, fr_c) = motion_frame(row, &pal, MOTION_TIMES_MS[0]);
+                    for t in &MOTION_TIMES_MS[1..6] {
+                        let (_, c) = motion_frame(row, &pal, *t);
+                        for k in 0..4 {
+                            let lo = fr_c.fill[k].min(to_c.fill[k]);
+                            let hi = fr_c.fill[k].max(to_c.fill[k]);
+                            if c.fill[k] < lo - 1e-4 || c.fill[k] > hi + 1e-4 {
+                                return Err(format!(
+                                    "motion strip '{}': fill[{k}] at t={t} outside idle..target",
+                                    row.label
+                                ));
+                            }
+                        }
+                    }
+                }
+                let label_img = text_img_alpha(
+                    app,
+                    row.label,
+                    &app.painter.fonts.label,
+                    pal.foreground,
+                    1.0,
+                )?;
+                let caps: Vec<RgbaImage> = MOTION_TIMES_MS
+                    .iter()
+                    .map(|t| {
+                        text_img_alpha(
+                            app,
+                            &format!("t={} ms", *t as i32),
+                            &app.painter.fonts.caption,
+                            pal.muted_fg,
+                            1.0,
+                        )
+                    })
+                    .collect::<Result<_, String>>()?;
+                let (ref_label, ref_imgs) = match row.ref_key {
+                    Some(key) => {
+                        let mut imgs = Vec::new();
+                        for t in MOTION_TIMES_MS {
+                            let p = ref_dir
+                                .join("motion")
+                                .join(format!("{key}-{theme_name}-t{}.png", t as i32));
+                            if p.exists() {
+                                imgs.push(RgbaImage::load(&p)?);
+                            }
+                        }
+                        if imgs.len() == MOTION_TIMES_MS.len() {
+                            (
+                                Some(text_img_alpha(
+                                    app,
+                                    "shadcn reference (200%)",
+                                    &app.painter.fonts.caption,
+                                    pal.muted_fg,
+                                    1.0,
+                                )?),
+                                imgs,
+                            )
+                        } else {
+                            (None, Vec::new())
+                        }
+                    }
+                    None => (None, Vec::new()),
+                };
+                strips.push(MotionStrip {
+                    label: row.label,
+                    kind: row.kind,
+                    reduced: row.reduced,
+                    theme_name,
+                    ref_key: row.ref_key,
+                    label_img,
+                    ref_label,
+                    ref_imgs,
+                    native_label: text_img_alpha(
+                        app,
+                        "native (200%)",
+                        &app.painter.fonts.caption,
+                        pal.muted_fg,
+                        1.0,
+                    )?,
+                    frames,
+                    caps,
+                    fjson,
+                    sheet_px: None,
+                    frames_px: Vec::new(),
+                    ref_frames_px: Vec::new(),
+                });
+            }
+            bands.push((si, theme, strips));
+        }
+    }
+
+    // ---- compose ---------------------------------------------------------
+    // wrapped width of a line of `n` cells (4 per line)
+    let line_w = |cell: u32, n: usize| {
+        cell * (n.min(4) as u32) + GAP * ((n.min(4) as u32).saturating_sub(1))
+    };
+    let cap_h = |s: &MotionStrip| s.caps.first().map(|c| c.height).unwrap_or(0);
+    let strip_h = |s: &MotionStrip| -> u32 {
+        let mut h = s.label_img.height + 6;
+        if let Some(rl) = &s.ref_label {
+            let rlines = s.ref_imgs.len().div_ceil(4) as u32;
+            h += rl.height
+                + 4
+                + rlines * (s.ref_imgs[0].height + CAP_GAP + cap_h(s))
+                + (rlines - 1) * CAP_GAP
+                + 8;
+        }
+        let lines = s.frames.len().div_ceil(4) as u32;
+        h + s.native_label.height
+            + 4
+            + lines * (s.frames.first().map(|f| f.height).unwrap_or(0) + CAP_GAP + cap_h(s))
+            + (lines - 1) * CAP_GAP
+    };
+    let strip_w = |s: &MotionStrip| -> u32 {
+        let native = s
+            .frames
+            .first()
+            .map(|f| line_w(f.width, s.frames.len()))
+            .unwrap_or(0);
+        let refs = s
+            .ref_imgs
+            .first()
+            .map(|r| line_w(r.width, s.ref_imgs.len()))
+            .unwrap_or(0);
+        native.max(refs).max(s.label_img.width)
+    };
+
+    const COL_GAP: u32 = 48;
+    let has_ink = |img: &RgbaImage| -> bool {
+        // "blank" = uniform (every px equal to the first px)
+        let first = &img.data[..4];
+        img.data.chunks(4).skip(1).any(|p| p != first)
+    };
+
+    let mut sheets_out: Vec<(&'static str, RgbaImage)> = Vec::new();
+    let mut rows_json = Vec::new();
+    for si in 0..SHEET_FILES.len() {
+        let max_strip_w = bands
+            .iter()
+            .filter(|(i, _, _)| *i == si)
+            .flat_map(|(_, _, ss)| ss.iter().map(strip_w))
+            .max()
+            .unwrap_or(0);
+        let band_w = 2 * PAD + max_strip_w * COLS as u32 + COL_GAP;
+        // compose light band then dark band; sheet_y offsets band-local
+        // coords into the stacked sheet
+        let mut sheet_y = 0u32;
+        let mut band_imgs: Vec<RgbaImage> = Vec::new();
+        for (_, theme, strips) in bands.iter_mut().filter(|(i, _, _)| *i == si) {
+            let pal = theme.palette();
+            let bg = rgb8(pal.surface);
+            let row_hs: Vec<u32> = strips
+                .chunks(COLS)
+                .map(|pair| pair.iter().map(strip_h).max().unwrap_or(0))
+                .collect();
+            let band_h: u32 = PAD + row_hs.iter().map(|h| h + ROW_GAP).sum::<u32>();
+            let mut band = RgbaImage::new(band_w, band_h);
+            band.fill_rect(0, 0, band_w, band_h, [bg[0], bg[1], bg[2], 255]);
+            let mut y = PAD;
+            for pair in strips.chunks_mut(COLS) {
+                let mut pair_h = 0;
+                for (i, s) in pair.iter_mut().enumerate() {
+                    let x0 = PAD + i as u32 * (max_strip_w + COL_GAP);
+                    let strip_top = y;
+                    let mut sy = y;
+                    band.blend_over(&s.label_img, x0, sy);
+                    sy += s.label_img.height + 6;
+                    if let Some(rl) = &s.ref_label {
+                        band.blend_over(rl, x0, sy);
+                        sy += rl.height + 4;
+                        let rcell_w = s.ref_imgs[0].width;
+                        let rline_h = s.ref_imgs[0].height + CAP_GAP + cap_h(s);
+                        for (li, r) in s.ref_imgs.iter().enumerate() {
+                            let x = x0 + (li % 4) as u32 * (rcell_w + GAP);
+                            let ly = sy + (li / 4) as u32 * (rline_h + CAP_GAP);
+                            band.blend_over(r, x, ly);
+                            band.blend_over(&s.caps[li], x, ly + r.height + CAP_GAP);
+                            s.ref_frames_px.push((x, sheet_y + ly, r.width, r.height));
+                        }
+                        let rlines = s.ref_imgs.len().div_ceil(4) as u32;
+                        sy += rlines * rline_h + (rlines - 1) * CAP_GAP + 8;
+                    }
+                    band.blend_over(&s.native_label, x0, sy);
+                    sy += s.native_label.height + 4;
+                    let cell_w = s.frames[0].width;
+                    let line_h = s.frames[0].height + CAP_GAP + cap_h(s);
+                    for (li, (f, c)) in s.frames.iter().zip(&s.caps).enumerate() {
+                        let x = x0 + (li % 4) as u32 * (cell_w + GAP);
+                        let ly = sy + (li / 4) as u32 * (line_h + CAP_GAP);
+                        band.blend_over(f, x, ly);
+                        band.blend_over(c, x, ly + f.height + CAP_GAP);
+                        s.frames_px.push((x, sheet_y + ly, f.width, f.height));
+                    }
+                    let lines = s.frames.len().div_ceil(4) as u32;
+                    sy += lines * line_h + (lines - 1) * CAP_GAP;
+                    let strip_h_here = sy - strip_top;
+                    s.sheet_px = Some((x0, sheet_y + strip_top, strip_w(s), strip_h_here));
+                    pair_h = pair_h.max(strip_h_here);
+
+                    // not blank: at least one frame or ref frame carries ink
+                    if !s.frames.iter().chain(s.ref_imgs.iter()).any(&has_ink) {
+                        return Err(format!(
+                            "motion strip '{}' ({}) placed on {} but is entirely blank",
+                            s.label, s.theme_name, SHEET_FILES[si]
+                        ));
+                    }
+                }
+                y += pair_h + ROW_GAP;
+            }
+            band_imgs.push(band);
+            sheet_y += band_h;
+        }
+        let w = band_w;
+        let h: u32 = band_imgs.iter().map(|b| b.height).sum();
+        if w > MAX_SHEET_W || h > MAX_SHEET_H {
+            return Err(format!(
+                "motion sheet {w}x{h} over {MAX_SHEET_W}x{MAX_SHEET_H}"
+            ));
+        }
+        let mut sheet = RgbaImage::new(w, h);
+        let mut yy = 0u32;
+        for b in &band_imgs {
+            sheet.blend_over(b, 0, yy);
+            yy += b.height;
+        }
+        // placement self-check: every recorded rect inside the sheet bounds
+        for (_, _, strips) in bands.iter().filter(|(i, _, _)| *i == si) {
+            for s in strips {
+                let (rx, ry, rw, rh) = s.sheet_px.unwrap_or((0, 0, 0, 0));
+                if rx + rw > w || ry + rh > h {
+                    return Err(format!(
+                        "motion strip '{}' rect {:?} escapes sheet {} ({}x{})",
+                        s.label, s.sheet_px, SHEET_FILES[si], w, h
+                    ));
+                }
+                for fr in s.frames_px.iter().chain(s.ref_frames_px.iter()) {
+                    if fr.0 + fr.2 > w || fr.1 + fr.3 > h {
+                        return Err(format!(
+                            "motion strip '{}' frame rect {:?} escapes sheet {}",
+                            s.label, fr, SHEET_FILES[si]
+                        ));
+                    }
+                }
+                rows_json.push(serde_json::json!({
+                    "label": s.label,
+                    "kind": s.kind,
+                    "theme": s.theme_name,
+                    "reduced": s.reduced,
+                    "sheet": SHEET_FILES[si],
+                    "rect_px": s.sheet_px.map(|r| [r.0, r.1, r.2, r.3]),
+                    "frames_px": s.frames_px.iter().map(|r| [r.0, r.1, r.2, r.3]).collect::<Vec<_>>(),
+                    "ref_frames_px": s.ref_frames_px.iter().map(|r| [r.0, r.1, r.2, r.3]).collect::<Vec<_>>(),
+                    "reference_strip": s.ref_key,
+                    "frames": s.fjson,
+                }));
+            }
+        }
+        sheets_out.push((SHEET_FILES[si], sheet));
+    }
+
+    // ---- motion.json -----------------------------------------------------
+    let mut provenance = serde_json::json!({
+        "shadcn_commit": "db2db460a26fa84fb65c8d903b213925fbdee9ed",
+        "button": "https://github.com/shadcn-ui/ui/blob/db2db460a26fa84fb65c8d903b213925fbdee9ed/apps/v4/registry/new-york-v4/ui/button.tsx",
+        "textarea": "https://github.com/shadcn-ui/ui/blob/db2db460a26fa84fb65c8d903b213925fbdee9ed/apps/v4/registry/new-york-v4/ui/textarea.tsx",
+        "tooltip": "https://github.com/shadcn-ui/ui/blob/db2db460a26fa84fb65c8d903b213925fbdee9ed/apps/v4/registry/new-york-v4/ui/tooltip.tsx",
+        "tw_animate_css": "1.4.0",
+        "tailwind": "v4 (--default-transition-duration 150ms, --default-transition-timing-function cubic-bezier(0.4,0,0.2,1))",
+    });
+    let mprov = ref_dir.join("motion-provenance.json");
+    if mprov.exists() {
+        provenance["reference_computed_styles"] =
+            serde_json::from_str(&std::fs::read_to_string(&mprov).map_err(|e| e.to_string())?)
+                .unwrap_or(serde_json::Value::Null);
+    }
+    let doc = serde_json::json!({
+        "durations_ms": { "transition": TRANSITION_MS, "tooltip": TOOLTIP_ANIM_MS },
+        "easing": {
+            "transition": { "name": "ease_standard", "bezier": [0.4, 0.0, 0.2, 1.0] },
+            "tooltip": { "name": "ease_css (tw-animate-css)", "bezier": [0.25, 0.1, 0.25, 1.0] },
+        },
+        "tooltip": {
+            "scale_from": mascot_ui::motion::TOOLTIP_SCALE_FROM,
+            "slide_dip": mascot_ui::motion::TOOLTIP_SLIDE_DIP,
+            "transform_origin": "bottom centre of the pill",
+        },
+        "rows": rows_json,
+        "provenance": provenance,
+    });
+    Ok((sheets_out, doc))
 }

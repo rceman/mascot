@@ -55,3 +55,22 @@ reference evidence — never shipped or read at runtime.
 | typography-muted-dark.png | Typography | typography-muted | / | default | dark | component-gallery-shadcn-reference*.png |
 | typography-small-light.png | Typography | typography-small | / | default | light | component-gallery-shadcn-reference*.png |
 | typography-small-dark.png | Typography | typography-small | / | default | dark | component-gallery-shadcn-reference*.png |
+
+## Motion strips (`motion/`)
+
+Captured with `capture-shadcn.ps1 -Motion` (Chrome over CDP, DPR 2). The script pauses page animations
+(`Animation.setPlaybackRate 0`), triggers the state change, then seeks the started animations to
+t = 0/25/50/75/100/125/150 ms and screenshots the same padded clip at each step. The tooltip close is
+triggered with Escape, because Radix keeps `data-state=delayed-open` while the pointer is in the
+hover grace area. Each strip must differ between t=0 and t=150, and t=75 must differ from both, or
+the capture fails.
+
+| Strip | Example | Trigger | Animation(s) | Used by |
+|---|---|---|---|---|
+| `button-default-{light,dark}-t*.png` | button-default | hover | background-color transition 150 ms `cubic-bezier(0.4,0,0.2,1)` | `component-gallery-motion.png` |
+| `button-ghost-{light,dark}-t*.png` | button-ghost | hover | background-color transition | `component-gallery-motion.png` |
+| `button-focus-{light,dark}-t*.png` | button-default | Tab (keyboard focus) | box-shadow/border transition | `component-gallery-motion.png` |
+| `tooltip-open-{light,dark}-t*.png` | tooltip-demo | hover | tw-animate-css `enter` 150 ms `ease` (fade-in-0, zoom-in-95, slide-in-from-bottom-2) | `component-gallery-motion-2.png` |
+| `tooltip-close-{light,dark}-t*.png` | tooltip-demo | pointer off + Escape (recorded as `hover-off`) | tw-animate-css `exit` 150 ms `ease` (fade-out-0, zoom-out-95) | `component-gallery-motion-2.png` |
+
+Per-strip URL, browser, animation names and computed styles are in `motion-provenance.json`.

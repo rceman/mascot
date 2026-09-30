@@ -5,7 +5,7 @@
 //! lab component gallery calls the same functions for its cells — one code
 //! path, no lookalike painters. All coordinates are DIP.
 
-use mascot_ui::component::{BadgeVariant, ButtonVariant, ControlVisual, IconButtonKind, TextStyle};
+use mascot_ui::component::{BadgeVariant, TextStyle};
 use mascot_ui::geom::Rect;
 use mascot_ui::theme::Palette;
 use mascot_ui::theme::tokens::*;
@@ -17,7 +17,7 @@ use windows_numerics::Vector2;
 
 use crate::icons::draw_icon;
 use crate::paint::{Painter, ShadowCache, ShadowKey, brush, cf, dr, rr};
-use mascot_ui::component::{badge_colors, button_colors, icon_button_colors, tooltip_colors};
+use mascot_ui::component::{badge_colors, tooltip_colors};
 
 impl Painter {
     /// Measures `text` in `style`; returns the natural width in DIP.
@@ -187,28 +187,34 @@ impl Painter {
     }
 
     /// The two-stroke keyboard focus ring (ring colour at 50 % alpha + a 1px
-    /// ring-coloured border).
+    /// ring-coloured border). `ring` is the animation progress 0..=1: the
+    /// halo's inner edge stays fixed at 1 DIP out while the stroke width and
+    /// alphas ramp in (like a growing box-shadow spread); at `ring == 1` the
+    /// output is byte-identical to the settled ring.
     pub fn focus_ring(
         &self,
         ctx: &ID2D1DeviceContext,
         pal: &Palette,
         rect: Rect,
         radius: f32,
+        ring: f32,
     ) -> Result<()> {
+        if ring <= 0.0 {
+            return Ok(());
+        }
         unsafe {
-            let ring_a = [pal.ring[0], pal.ring[1], pal.ring[2], 0.5];
+            let w = FOCUS_RING_W * ring;
+            let ring_a = [pal.ring[0], pal.ring[1], pal.ring[2], 0.5 * ring];
             ctx.DrawRoundedRectangle(
-                &rr(
-                    rect.grow(FOCUS_RING_W / 2.0 + 1.0),
-                    radius + FOCUS_RING_W / 2.0 + 1.0,
-                ),
+                &rr(rect.grow(w / 2.0 + 1.0), radius + w / 2.0 + 1.0),
                 &brush(ctx, ring_a)?,
-                FOCUS_RING_W,
+                w,
                 None,
             );
+            let border_a = [pal.ring[0], pal.ring[1], pal.ring[2], pal.ring[3] * ring];
             ctx.DrawRoundedRectangle(
                 &rr(rect.grow(0.5), radius + 0.5),
-                &brush(ctx, pal.ring)?,
+                &brush(ctx, border_a)?,
                 1.0,
                 None,
             );
@@ -231,53 +237,48 @@ impl Painter {
         Ok(())
     }
 
-    /// Fixed-size icon button (`PRIMARY_BUTTON`/`GHOST_BUTTON` edge).
-    /// Primary: muted/muted_fg when disabled, hover mix 0.10, pressed mix
-    /// 0.20; ghost: transparent / hover accent / pressed fill.
+    /// Fixed-size icon button (`PRIMARY_BUTTON`/`GHOST_BUTTON` edge) painted
+    /// with resolved colours `c` (see `component::icon_button_paint` — the
+    /// single colour source; motion tweens interpolate it).
     pub fn icon_button(
         &self,
         ctx: &ID2D1DeviceContext,
         pal: &Palette,
         rect: Rect,
         icon: mascot_icons::Icon,
-        kind: IconButtonKind,
-        v: ControlVisual,
+        c: mascot_ui::motion::ControlColors,
     ) -> Result<()> {
-        let (bg, fg_c) = icon_button_colors(pal, kind, v);
         unsafe {
-            if bg[3] > 0.0 {
-                ctx.FillRoundedRectangle(&rr(rect, RADIUS_MD), &brush(ctx, bg)?);
+            if c.fill[3] > 0.0 {
+                ctx.FillRoundedRectangle(&rr(rect, RADIUS_MD), &brush(ctx, c.fill)?);
             }
-            if v.focus_visible {
-                self.focus_ring(ctx, pal, rect, RADIUS_MD)?;
+            if c.ring > 0.0 {
+                self.focus_ring(ctx, pal, rect, RADIUS_MD, c.ring)?;
             }
-            self.icon(ctx, icon, rect, fg_c)?;
+            self.icon(ctx, icon, rect, c.fg)?;
             Ok(())
         }
     }
 
-    /// Content-sized text button (shadcn Button, compact sizes only).
-    /// Disabled uses the same one-rule treatment as the icon button: filled
-    /// variants muted/muted_fg, ghost no fill + muted_fg (documented
-    /// deviation from shadcn `disabled:opacity-50`). No `shadow-xs`.
+    /// Content-sized text button (shadcn Button, compact sizes only) painted
+    /// with resolved colours `c` (see `component::button_paint`). No
+    /// `shadow-xs`.
     pub fn button(
         &self,
         ctx: &ID2D1DeviceContext,
         pal: &Palette,
         rect: Rect,
         label: &str,
-        variant: ButtonVariant,
-        v: ControlVisual,
+        c: mascot_ui::motion::ControlColors,
     ) -> Result<()> {
-        let (bg, fg_c) = button_colors(pal, variant, v);
         unsafe {
-            if bg[3] > 0.0 {
-                ctx.FillRoundedRectangle(&rr(rect, RADIUS_MD), &brush(ctx, bg)?);
+            if c.fill[3] > 0.0 {
+                ctx.FillRoundedRectangle(&rr(rect, RADIUS_MD), &brush(ctx, c.fill)?);
             }
-            if v.focus_visible {
-                self.focus_ring(ctx, pal, rect, RADIUS_MD)?;
+            if c.ring > 0.0 {
+                self.focus_ring(ctx, pal, rect, RADIUS_MD, c.ring)?;
             }
-            self.text_centred(ctx, rect, label, TextStyle::Label, fg_c)?;
+            self.text_centred(ctx, rect, label, TextStyle::Label, c.fg)?;
             Ok(())
         }
     }
@@ -324,8 +325,9 @@ impl Painter {
         }
     }
 
-    /// Single-line tooltip bubble: `primary` fill, `primary_fg` text,
-    /// centred; long labels ellipsis-trim to the rect (word-wrap off).
+    /// Single-line tooltip bubble: `foreground` fill, `background` text
+    /// (shadcn `bg-foreground text-background`), centred; long labels
+    /// ellipsis-trim to the rect (word-wrap off).
     pub fn tooltip(
         &self,
         ctx: &ID2D1DeviceContext,
@@ -353,6 +355,57 @@ impl Painter {
             TextStyle::Muted, /* 12/400 = small */
             fg,
         )
+    }
+
+    /// `tooltip` with an animated frame (shadcn tooltip.tsx animate-in/out:
+    /// opacity + scale about the pill's bottom centre + enter slide). At
+    /// `f == TOOLTIP_IDENTITY` this calls `tooltip()` unchanged
+    /// (byte-identical); opacity <= 0 draws nothing.
+    pub fn tooltip_with(
+        &self,
+        ctx: &ID2D1DeviceContext,
+        pal: &Palette,
+        rect: Rect,
+        label: &str,
+        f: mascot_ui::motion::TooltipFrame,
+    ) -> Result<()> {
+        if f == mascot_ui::motion::TOOLTIP_IDENTITY {
+            return self.tooltip(ctx, pal, rect, label);
+        }
+        if f.opacity <= 0.0 {
+            return Ok(());
+        }
+        unsafe {
+            use windows_numerics::Matrix3x2;
+            let mut old = Matrix3x2::default();
+            ctx.GetTransform(&mut old);
+            // scale about the pill's bottom centre, then slide down dy DIP
+            let (ox, oy) = (rect.x + rect.w / 2.0, rect.bottom());
+            let m = Matrix3x2::translation(-ox, -oy)
+                * Matrix3x2::scale(f.scale, f.scale)
+                * Matrix3x2::translation(ox, oy)
+                * Matrix3x2::translation(0.0, f.dy);
+            ctx.SetTransform(&(m * old));
+            // NB: contentBounds must be a VALID finite rect — Default's
+            // {0,0,0,0} is an empty clip and ±3.4e38 overflows D2D's extent
+            // math to NaN; both produce an invisible layer.
+            let params = D2D1_LAYER_PARAMETERS1 {
+                contentBounds: D2D_RECT_F {
+                    left: -1.0e6,
+                    top: -1.0e6,
+                    right: 1.0e6,
+                    bottom: 1.0e6,
+                },
+                maskTransform: Matrix3x2::identity(),
+                opacity: f.opacity,
+                ..Default::default()
+            };
+            ctx.PushLayer(&params, None::<&ID2D1Layer>);
+            self.tooltip(ctx, pal, rect, label)?;
+            ctx.PopLayer();
+            ctx.SetTransform(&old);
+            Ok(())
+        }
     }
 
     /// Hairline separator (horizontal or vertical by rect shape).

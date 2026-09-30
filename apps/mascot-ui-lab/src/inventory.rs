@@ -62,6 +62,8 @@ pub struct Entry {
     pub no_analogue_reason: &'static str,
     /// Intentional deviations, one item per string (visual-review text).
     pub deviations: &'static [&'static str],
+    /// Motion contract line (see design-system §2 shadcn-first motion rule).
+    pub motion: &'static str,
 }
 
 /// The complete inventory: Tier A in doc order, then B (planned) and C
@@ -82,6 +84,7 @@ pub const COMPONENTS: &[Entry] = &[
             "Bare container: no CardHeader/CardContent/CardFooter slots and no 24 px card padding; Composer and Response own their insets.",
             "Radius 14 DIP, 1 DIP border (border token) and card fill match card (14 px, 1 px, #E5E5E5 / #FFFFFF; dark #171717, white 10 %).",
         ],
+        motion: "none (no shadcn motion for this use)",
     },
     Entry {
         key: "typography",
@@ -98,6 +101,7 @@ pub const COMPONENTS: &[Entry] = &[
             "Muted is 12/400 vs shadcn muted 14/20: Mascot's muted is the caption size (text-xs, as Badge/Tooltip). Colour matches muted-foreground (#737373 / #A1A1A1).",
             "Label 14/500 matches shadcn small (14/500); line height is DirectWrite natural rather than leading-none.",
         ],
+        motion: "none (no shadcn motion for this use)",
     },
     Entry {
         key: "icon",
@@ -113,6 +117,7 @@ pub const COMPONENTS: &[Entry] = &[
             "Upstream Lucide 0.544.0 geometry converted at build time to Direct2D paths (no SVG parser or icon font at runtime).",
             "16 DIP viewport, stroke-width 2 in the 24-unit art box, round caps/joins, current foreground colour — same as lucide-react at size-4.",
         ],
+        motion: "none (no shadcn motion for this use)",
     },
     Entry {
         key: "icon-button",
@@ -128,7 +133,9 @@ pub const COMPONENTS: &[Entry] = &[
             "Disabled uses explicit muted fill + muted-foreground icon instead of disabled:opacity-50 (one flat colour pair, no Direct2D opacity layer).",
             "Pressed is an extra state (stronger accent mix); shadcn defines no pressed treatment.",
             "Focus-visible matches shadcn: 3 DIP ring at 50 % alpha + 1 DIP ring-coloured border.",
+            "Pressed (an extra native state) uses the same 150 ms transition.",
         ],
+        motion: "transition-all: fill, foreground, focus ring 150 ms cubic-bezier(0.4, 0, 0.2, 1), both directions (shadcn button.tsx)",
     },
     Entry {
         key: "button",
@@ -152,8 +159,10 @@ pub const COMPONENTS: &[Entry] = &[
             "Compact sizes only: sm (32) and default (36); no lg or icon sizes, no outline/link/destructive variants (no product surface needs them).",
             "Disabled uses explicit muted fill + muted-foreground text instead of disabled:opacity-50.",
             "Pressed is an extra state; focus-visible ring matches shadcn (3 DIP ring/50 + 1 DIP ring border).",
+            "Pressed (an extra native state) uses the same 150 ms transition.",
             "Width differs from the reference only by glyph metrics (Segoe UI Variable vs Geist), e.g. \"Secondary\" 98 vs 102 px; height, padding and radius match.",
         ],
+        motion: "transition-all: fill, foreground, focus ring 150 ms cubic-bezier(0.4, 0, 0.2, 1), both directions (shadcn button.tsx)",
     },
     Entry {
         key: "tooltip",
@@ -165,11 +174,14 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("tooltip"),
         no_analogue_reason: "",
         deviations: &[
-            "Size matches (28 DIP high, 6/12 padding, 8 DIP radius, 12/400), but colours use primary/primary-foreground (#171717/#FAFAFA, dark #E5E5E5/#171717) instead of shadcn's foreground/background (#0A0A0A/#FFFFFF, dark #FAFAFA/#0A0A0A). No product reason — follow-up candidate, left unchanged here to keep foundation pixels identical.",
+            "Size matches (28 DIP high, 6/12 padding, 8 DIP radius, 12/400); colours match shadcn foreground/background (#0A0A0A/#FFFFFF, dark #FAFAFA/#0A0A0A).",
             "No arrow.",
             "Single line, bounded at 240 DIP with an end ellipsis; the shadcn tooltip wraps.",
-            "Opens after a 500 ms hover (native timer).",
+            "Open delay 500 ms (Windows hover-tooltip convention) vs shadcn TooltipProvider delayDuration 0 — intentional interaction deviation; the open/close animation matches shadcn.",
+            "Hover only: no keyboard-focus tooltip (Radix also opens on focus); unchanged in this pass.",
+            "Transform origin is the pill's bottom centre; shadcn's is its arrow tip (no arrow here).",
         ],
+        motion: "open: fade 0→1, scale 0.95→1, slide 8 DIP; close: fade→0, scale→0.95; 150 ms ease (shadcn tooltip.tsx / tw-animate-css)",
     },
     Entry {
         key: "composer",
@@ -195,6 +207,7 @@ pub const COMPONENTS: &[Entry] = &[
             "No disabled state; the nearest state is submitting: editor read-only with dimmed text and Send replaced by Stop.",
             "Text 14/400 with a 20 DIP line matches textarea md:text-sm; Enter submits, Shift+Enter inserts a newline.",
         ],
+        motion: "none — focus border colour changes instantly, as shadcn transition-[color,box-shadow] excludes border-color",
     },
     Entry {
         key: "separator",
@@ -208,6 +221,7 @@ pub const COMPONENTS: &[Entry] = &[
         deviations: &[
             "Horizontal only; 1 DIP hairline in the border token (#E5E5E5 / white 10 %), snapped to one device pixel at every DPI — matches shadcn separator.",
         ],
+        motion: "none (no shadcn motion for this use)",
     },
     Entry {
         key: "response",
@@ -222,6 +236,7 @@ pub const COMPONENTS: &[Entry] = &[
         deviations: &[
             "No shadcn analogue: plain text only (no Markdown), a ghost Copy icon button with a Copied state, then a separator and the follow-up composer inside one bubble.",
         ],
+        motion: "none (no shadcn motion for this use)",
     },
     Entry {
         key: "badge",
@@ -237,6 +252,7 @@ pub const COMPONENTS: &[Entry] = &[
             "Neutral variants only (default/secondary/outline); no destructive variant — status is carried by text, never by colour alone.",
             "Width differs from the reference only by glyph metrics (Segoe UI Variable vs Geist).",
         ],
+        motion: "none (no shadcn motion for this use)",
     },
     // ---- Tier B (planned, NOT implemented) ----------------------------
     Entry {
@@ -249,6 +265,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("scroll-area"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "popover",
@@ -260,6 +277,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("popover"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "dropdown-menu",
@@ -271,6 +289,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("dropdown-menu"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "select",
@@ -282,6 +301,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("select"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "switch",
@@ -293,6 +313,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("switch"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "checkbox",
@@ -304,6 +325,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("checkbox"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "radio-group",
@@ -315,6 +337,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("radio-group"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "dialog",
@@ -326,6 +349,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("dialog"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "settings-row",
@@ -337,6 +361,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: None,
         no_analogue_reason: "Mascot settings composition — planned, no product surface yet",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "progress",
@@ -348,6 +373,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("progress"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     // ---- Tier C (deferred) --------------------------------------------
     Entry {
@@ -360,6 +386,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("accordion"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "alert",
@@ -371,6 +398,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("alert"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "alert-dialog",
@@ -382,6 +410,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("alert-dialog"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "aspect-ratio",
@@ -393,6 +422,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("aspect-ratio"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "avatar",
@@ -404,6 +434,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("avatar"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "breadcrumb",
@@ -415,6 +446,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("breadcrumb"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "calendar",
@@ -426,6 +458,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("calendar"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "carousel",
@@ -437,6 +470,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("carousel"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "chart",
@@ -448,6 +482,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: None,
         no_analogue_reason: "charting is out of the Mascot UI vocabulary",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "collapsible",
@@ -459,6 +494,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("collapsible"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "command",
@@ -470,6 +506,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("command"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "context-menu",
@@ -481,6 +518,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("context-menu"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "data-table",
@@ -492,6 +530,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("data-table"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "drawer",
@@ -503,6 +542,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("drawer"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "hover-card",
@@ -514,6 +554,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("hover-card"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "input-otp",
@@ -525,6 +566,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("input-otp"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "menubar",
@@ -536,6 +578,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("menubar"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "navigation-menu",
@@ -547,6 +590,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("navigation-menu"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "pagination",
@@ -558,6 +602,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("pagination"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "resizable",
@@ -569,6 +614,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("resizable"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "skeleton",
@@ -580,6 +626,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("skeleton"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "slider",
@@ -591,6 +638,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("slider"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "sonner",
@@ -602,6 +650,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("sonner"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "tabs",
@@ -613,6 +662,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("tabs"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "toggle-group",
@@ -624,6 +674,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("toggle-group"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "form",
@@ -635,6 +686,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("form"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "date-picker",
@@ -646,6 +698,7 @@ pub const COMPONENTS: &[Entry] = &[
         shadcn: Some("date-picker"),
         no_analogue_reason: "",
         deviations: &[],
+        motion: "n/a",
     },
     Entry {
         key: "card",
@@ -658,6 +711,7 @@ pub const COMPONENTS: &[Entry] = &[
         no_analogue_reason: "generic card library deferred — Mascot Surface covers the \
                              one real product need",
         deviations: &[],
+        motion: "n/a",
     },
 ];
 
