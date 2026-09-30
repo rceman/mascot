@@ -203,13 +203,13 @@ The pose is a relaxed, right-facing 3/4 A-pose. All segment angles below are fro
 - **Head:** faces +x in 3/4. Head and body share the same view, with the face front at `x ≈ 0.69`.
 - **Torso:** upright. The trunk (neck base → pelvis) leans about 2°.
 - **Arms:** hang in an A-pose.
-  - The upper arms make about 33–35° with vertical, abducted outward.
-  - The elbows are relaxed with about 13–15° of flexion: forearms at about 20° from vertical.
-  - Arm-to-torso clearance is at least 0.04 at elbow height (≈0.056 near / ≈0.064 far, from the §4.4 envelope).
+  - The upper arms make 45° with vertical, abducted outward (profile revision 1).
+  - The elbows are relaxed with about 15° of flexion: forearms at about 30° from vertical; hands continue at about 25°.
+  - Arm-to-torso clearance is at least 0.04 at elbow height (measured on the rendered revision-1 dummy: ≈0.044 near / ≈0.049 far).
 - **Legs:** a slight A-stance.
   - The thigh-to-shin knee bend is about 8°, with the knee **forward** (toward +x) of the hip–ankle line.
   - Feet point toward +x and lie flat on the ground lines.
-  - Leg-to-leg clearance is at least 0.08 at knee height.
+  - Leg-to-leg clearance is at least 0.08 at knee height (measured on the rendered revision-1 dummy: ≈0.092).
 - **Hands:** open, neutral, clear of the torso and thighs. There is no grip pose.
 - **Visibility:**
   - all 20 core joints are visible;
@@ -312,9 +312,9 @@ All sizes are normalized.
 
 | Constraint | Dummy value | Tolerance |
 |---|---|---|
-| Upper arm angle from vertical, abducted outward | near 35° / far 33° | ±12° |
-| Forearm angle | 20° | ±12° |
-| Elbow flexion | 13–15° | 0–35°, bend backward |
+| Upper arm angle from vertical, abducted outward | 45° (near and far) | ±12° |
+| Forearm angle | about 30° | ±12° |
+| Elbow flexion | about 15° | 0–35°, bend backward |
 | Thigh angle | near 6° / far 16° (outward) | ±10° |
 | Knee flexion | about 8° | 0–25°, knee forward |
 | Trunk lean (neck-base → pelvis) | about 2° | ±8° |
