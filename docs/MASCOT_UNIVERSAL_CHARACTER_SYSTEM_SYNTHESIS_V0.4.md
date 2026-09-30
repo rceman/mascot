@@ -870,3 +870,93 @@ It must include:
 After review, STOP.
 
 Do not implement the final architecture yet.
+
+
+---
+
+## 29. Additional pre-review finding: A-pose vs T-pose and the existing generated neutral reference
+
+Before this final review, the user asked Opus specifically whether the existing generated neutral mascot reference had been used and whether T-pose or A-pose is preferable for the real rig.
+
+Relevant current facts:
+
+- The generated neutral mascot reference at:
+
+      assets/research/neutral-bind-pose/mascot-neutral-tpose-1x1-generated-v0.1.png
+
+  is byte-identical to the user's Downloads copy previously checked by Opus.
+- MASCOT-CHAR-PIPE-005 did **not** use it to define `biped-3q-v1`.
+- The current profile dummy was generated from the profile's own 41-landmark geometry.
+- The generated neutral mascot has:
+  - horizontal T-pose arms;
+  - a more frontal torso;
+  - a 3/4 head;
+  - character-specific anatomy/style.
+- The current `biped-3q-v1` dummy is a relaxed A-pose-like right-facing 3/4 pose.
+
+Opus' preliminary technical recommendation was:
+
+> Prefer the relaxed A-pose over a T-pose for this 2D weighted-mesh system.
+
+The reasons given were:
+
+1. **Smaller expected deformation from bind.**  
+   The target mascot spends most time with arms down/front rather than held horizontally. A T-pose can require roughly 90-degree shoulder motion to reach common poses, increasing mesh distortion.
+
+2. **2D makes deformation artifacts more visible.**  
+   There is no 3D volume/lighting to mask poor skinning; the deformed pixels are the final image.
+
+3. **Better square-canvas utilization.**  
+   Horizontal T-pose arms consume width and reduce effective character scale.
+
+4. **Bend direction is already indicated.**  
+   Slightly bent elbows/knees help future IK/constraint setup.
+
+5. **Limbs remain separated enough for analysis.**  
+   A-pose preserves the main T-pose benefit needed by the authoring pipeline: visible, non-overlapping limb regions.
+
+The preliminary recommendation also emphasized that **view consistency matters more than T vs A alone**:
+
+- head and torso should share the same right-facing 3/4 view;
+- arms/legs should remain non-overlapping;
+- no prop should occlude anatomy;
+- no baked directional light should constrain deformation.
+
+### Planner interpretation for final review
+
+Treat the A-pose preference as a strong candidate, not yet an immutable frozen profile decision.
+
+The final review MUST distinguish:
+
+    "same profile pose family / same topology / same orientation"
+
+from:
+
+    "every character must pixel-perfectly overlay the dummy landmarks"
+
+The Planner currently prefers:
+
+- the **profile** to define topology, orientation, pose family, envelopes, landmark semantics and validation;
+- each **CharacterSource** to have explicit approved per-character landmark fitting;
+- semantic clips to retarget across proportion differences;
+- the dummy to be a strong authoring/conditioning guide, not a universal visual proportion template.
+
+Therefore, challenge this preliminary statement from the earlier discussion:
+
+> "the character must be exactly on top of the dummy or retargeting breaks"
+
+Review whether exact landmark equality is truly required, or whether bounded per-character landmark fitting plus semantic normalized retargeting is the better universal contract.
+
+### Seated-pose caution
+
+The preliminary discussion also suggested that the mostly seated/laptop mascot might require a separate art set.
+
+Do NOT treat that as decided.
+
+The preferred architecture remains:
+
+- one neutral production CharacterSource/rig first;
+- try to reach seated/laptop identity pose through the normal rig/mesh/constraint system;
+- introduce pose-specific substitutions/alternate art only if measured sweeps prove the neutral representation cannot reach the pose cleanly.
+
+This must remain evidence-driven, not assumed in advance.
