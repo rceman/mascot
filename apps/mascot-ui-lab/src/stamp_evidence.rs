@@ -26,19 +26,29 @@ fn rel_to_repo(root: &Path, p: &Path) -> Result<String, String> {
     let abs = abs
         .canonicalize()
         .map_err(|e| format!("{}: {e}", abs.display()))?;
-    abs.strip_prefix(root)
+    // canonicalize both sides: git prints `W:/…`, canonicalize `\\?\W:\…`
+    let root = root
+        .canonicalize()
+        .map_err(|e| format!("{}: {e}", root.display()))?;
+    abs.strip_prefix(&root)
         .map(|r| r.to_string_lossy().replace('\\', "/"))
         .map_err(|_| format!("{}: outside the repository", abs.display()))
 }
 
 fn stamp_json(path: &Path, head: &str) -> Result<(), String> {
+    // byte-exact text substitution: a serde round-trip would re-print floats
+    // and the stamp commit must change only the evidence_head field
     let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
-    let mut doc: Value =
-        serde_json::from_str(&text).map_err(|e| format!("{}: {e}", path.display()))?;
-    doc["evidence_head"] = Value::String(head.to_string());
-    std::fs::write(path, serde_json::to_string_pretty(&doc).unwrap())
-        .map_err(|e| format!("{}: {e}", path.display()))?;
-    Ok(())
+    const UNSTAMPED: &str = "\"evidence_head\": null";
+    if text.matches(UNSTAMPED).count() != 1 {
+        return Err(format!(
+            "{}: expected exactly one unstamped `{UNSTAMPED}`",
+            path.display()
+        ));
+    }
+    let stamped = text.replacen(UNSTAMPED, &format!("\"evidence_head\": \"{head}\""), 1);
+    serde_json::from_str::<Value>(&stamped).map_err(|e| format!("{}: {e}", path.display()))?;
+    std::fs::write(path, stamped).map_err(|e| format!("{}: {e}", path.display()))
 }
 
 pub fn run() -> Result<(), String> {
