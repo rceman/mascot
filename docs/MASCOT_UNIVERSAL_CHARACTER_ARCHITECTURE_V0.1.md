@@ -223,7 +223,7 @@ The pose is a relaxed, right-facing 3/4 A-pose. All segment angles below are fro
   - Outline `#404040`, 0.006 wide.
   - Background: uniform `#FFFFFF`.
   - No shading and no gradients.
-  - The facing direction is shown by shape, not colour alone: a small wedge "nose" on the head at `head.face`, and foot capsules pointing +x.
+  - The facing direction is shown by generic body cues, not by face geometry: the head sits forward (+x) of the neck, near/far limb tones and overlap follow the view contract, and the foot capsules point +x. The head is a plain ellipse with no protruding nose, snout or beak shape, so the guide stays species-neutral; `head.face` is marked only in the annotated guide.
   - Joints are drawn as slightly larger circles (1.15× the capsule width) so they read as articulation points without labels.
 - **`guide/dummy-annotated.png`**: the same mannequin plus landmark dots, ids, socket markers, appendage zones and clearance guides. Used for human/agent annotation and review, **never** as generation input.
 - **`guide/dummy-mask.png`**: a per-role colour-index mask, for automatic segmentation priors (§13, step 5).

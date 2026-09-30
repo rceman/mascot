@@ -190,8 +190,7 @@
         {"capsule": ["foot.right.heel", "foot.right.toe"], "w": 0.040, "offset": [0.0, -0.02]}
       ]},
       {"name": "head", "fill": "#B4B4B4", "shapes": [
-        {"ellipse": [0.555, 0.190], "rx": 0.135, "ry": 0.120},
-        {"poly": [[0.675, 0.195], [0.715, 0.215], [0.675, 0.235]]}
+        {"ellipse": [0.555, 0.190], "rx": 0.135, "ry": 0.120}
       ]},
       {"name": "arm.right", "fill": "#C4C4C4", "shapes": [
         {"capsule": ["upper_arm.right", "lower_arm.right"], "w": 0.050},

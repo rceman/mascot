@@ -13,18 +13,18 @@ profile biped-3q-v1
   chains:      10
   sockets:     9
 check: OK
-exit=0 wall=0.10s
+exit=0 wall=0.08s
 
 $ mascotctl profile guide assets/character-templates/biped-3q-v1/profile.json
-dummy-annotated.png: 2048x2048 sha256 eb99b3817485d8b0…
-dummy-generation.png: 1024x1024 sha256 8fc955db2040b4e4…
+dummy-annotated.png: 2048x2048 sha256 21282c101aaaa1ed…
+dummy-generation.png: 1024x1024 sha256 a1d3c14623f5b149…
 guide OK -> assets/character-templates/biped-3q-v1\guide
-exit=0 wall=0.43s
+exit=0 wall=0.48s
 
 $ mascotctl character board --profile assets/character-templates/biped-3q-v1/profile.json --style assets/mascot.png --out evidence/character-pipeline-v0.1/board --brief Create a compact friendly white service robot.
-board 2048x1024 sha256 5b430395d4ef3343
+board 2048x1024 sha256 f08b7d837b517828
 board OK -> evidence/character-pipeline-v0.1/board
-exit=0 wall=0.45s
+exit=0 wall=0.53s
 
 $ mascotctl character validate crates/mascot-character/fixtures/biped-3q-v1\mascot-like\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-aspect\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-crossed-arm\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-facing\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-fused-arm\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-missing-landmark\source.json crates/mascot-character/fixtures/biped-3q-v1\neg-provenance\source.json crates/mascot-character/fixtures/biped-3q-v1\robot\source.json --report-dir evidence/character-pipeline-v0.1/validation
 PASS mascot-like: 0 fail, 0 warn
@@ -98,4 +98,4 @@ FAIL neg-missing-landmark: 1 fail, 0 warn
 FAIL neg-provenance: 1 fail, 0 warn
   FAIL manifest.missing_field generation: kind=generated requires generation{board,prompt}
 PASS robot: 0 fail, 0 warn
-exit=1 wall=0.23s
+exit=1 wall=0.29s

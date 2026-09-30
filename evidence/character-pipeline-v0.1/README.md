@@ -29,11 +29,11 @@ machine/toolchain recorded there). Profile revision **1**.
 
 ## Hashes (SHA-256, first 16 hex digits)
 
-    9455f332ac38376a  profile.json                      (revision 1)
-    8fc955db2040b4e4  guide/dummy-generation.png        (1024x1024, 49 KB)
-    eb99b3817485d8b0  guide/dummy-annotated.png         (2048x2048, 166 KB)
+    ee3e748b551199f7  profile.json                      (revision 1)
+    a1d3c14623f5b149  guide/dummy-generation.png        (1024x1024, 48 KB)
+    21282c101aaaa1ed  guide/dummy-annotated.png         (2048x2048, 165 KB)
     2c6e6e90aea8d328  assets/mascot.png                 (1254x1254, 650 KB)
-    5b430395d4ef3343  board/board.png                   (2048x1024, 518 KB)
+    f08b7d837b517828  board/board.png                   (2048x1024, 518 KB)
     89108715e8fae195  board/prompt.txt
 
 `board.png` is ~0.5 MB — well under the 1.5 MB threshold.
