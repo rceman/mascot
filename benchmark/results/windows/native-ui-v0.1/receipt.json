@@ -7,7 +7,7 @@
   "code_dirty": false,
   "code_head": "241c4878beaf0c3cc4554632097f7b7d6b53a236",
   "device": "warp",
-  "evidence_head": null,
+  "evidence_head": "7701f8fcf30659e26dd6fe4b599aa39aca10bd52",
   "evidence_head_rule": "Set by `mascot-ui-lab stamp-evidence` in the commit that follows the evidence commit. evidence_head is the commit that added this evidence; the stamp commit is the final branch head and changes only evidence_head fields.",
   "files": [
     {

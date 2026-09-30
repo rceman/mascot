@@ -15,7 +15,7 @@
     "profile": "release",
     "scale": 1.0
   },
-  "evidence_head": null,
+  "evidence_head": "7701f8fcf30659e26dd6fe4b599aa39aca10bd52",
   "growth_plateau_all": true,
   "kind": "alternating-ab",
   "metrics": {
