@@ -281,3 +281,23 @@ End with exactly:
 or:
 
     MASCOT_CHAR_REVIEW_007_BLOCKED: <reason>
+
+
+## Additional mandatory review: A-pose / source-fit question
+
+The user and Opus had a focused pre-review discussion after the Planner synthesis was written.
+
+Read Section 29 of:
+
+    docs/MASCOT_UNIVERSAL_CHARACTER_SYSTEM_SYNTHESIS_V0.4.md
+
+You MUST explicitly review:
+
+1. relaxed A-pose vs T-pose for the first 2D weighted-mesh biped profile;
+2. why the existing generated T-pose reference is not currently a production bind/source;
+3. whether profile/view consistency matters more than the exact T-vs-A label;
+4. whether a CharacterSource must exactly overlay dummy landmarks, or whether per-character landmark fitting within profile envelopes is the correct universal model;
+5. whether the current mascot really needs a separate seated art set, or whether that should remain evidence-driven after neutral-rig sweeps.
+
+Do not silently accept the preliminary Opus answer from the conversation.
+Re-evaluate it against the actual code, retargeting goals, and universality requirement.
