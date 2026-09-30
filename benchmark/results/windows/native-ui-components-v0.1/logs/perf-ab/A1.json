@@ -2,40 +2,40 @@
   "env": {
     "cpu": "Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz",
     "device": "hardware",
-    "dirty": false,
+    "dirty": true,
     "font": "Segoe UI Variable Text",
     "gpu": "NVIDIA GeForce RTX 4070",
-    "head": "",
+    "head": "4ab080d818d41b855b77590ff65a900c1ec3dc65",
     "os_build": "10.0.26200.9457",
     "profile": "release",
     "scale": 1.0
   },
   "medians": {
-    "first_show_ms": 621.995,
+    "first_show_ms": 583.7038,
     "focused_blink_presents": 4.0,
     "focused_quiet_presents_10s": 0.0,
-    "growth_private_first_mean": 88496128.0,
-    "growth_private_last_mean": 89423872.0,
-    "idle_cpu_pct": 0.009761258886512652,
+    "growth_private_first_mean": 88473600.0,
+    "growth_private_last_mean": 89833472.0,
+    "idle_cpu_pct": 0.01952487278605062,
     "idle_paint_msgs_10s": 1.0,
     "idle_presents_10s": 0.0,
-    "open_warm_ms_p50": 3.7207,
-    "open_warm_ms_p95": 4.913200000000001,
-    "rig_load_ms": 0.6055,
-    "submit_response_ms_p50": 6.152699999999999,
-    "submit_response_ms_p95": 7.294700000000001,
-    "theme_switch_ms_p50": 0.7694000000000001,
-    "theme_switch_ms_p95": 3.0325
+    "open_warm_ms_p50": 3.6002,
+    "open_warm_ms_p95": 4.2825,
+    "rig_load_ms": 0.5597,
+    "submit_response_ms_p50": 5.850099999999999,
+    "submit_response_ms_p95": 8.0962,
+    "theme_switch_ms_p50": 0.7779,
+    "theme_switch_ms_p95": 3.0809
   },
   "raw_runs": [
     {
       "env": {
         "cpu": "Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz",
         "device": "hardware",
-        "dirty": false,
+        "dirty": true,
         "font": "Segoe UI Variable Text",
         "gpu": "NVIDIA GeForce RTX 4070",
-        "head": "",
+        "head": "4ab080d818d41b855b77590ff65a900c1ec3dc65",
         "os_build": "10.0.26200.9457",
         "profile": "release",
         "scale": 1.0
@@ -44,96 +44,96 @@
         {
           "cycle": 100,
           "gdi": 11,
-          "handles": 454,
-          "private_bytes": 88911872,
+          "handles": 462,
+          "private_bytes": 88494080,
           "threads": 37,
           "user": 16,
-          "working_set": 55066624
+          "working_set": 56172544
         },
         {
           "cycle": 200,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88080384,
+          "handles": 463,
+          "private_bytes": 88453120,
           "threads": 37,
           "user": 16,
-          "working_set": 54702080
+          "working_set": 56180736
         },
         {
           "cycle": 300,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89604096,
+          "handles": 463,
+          "private_bytes": 89972736,
           "threads": 37,
           "user": 16,
-          "working_set": 55074816
+          "working_set": 56553472
         },
         {
           "cycle": 400,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88317952,
+          "handles": 463,
+          "private_bytes": 90001408,
           "threads": 37,
           "user": 16,
-          "working_set": 54841344
+          "working_set": 56561664
         },
         {
           "cycle": 500,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89595904,
+          "handles": 463,
+          "private_bytes": 90046464,
           "threads": 37,
           "user": 16,
-          "working_set": 55083008
+          "working_set": 56561664
         },
         {
           "cycle": 600,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89165824,
+          "handles": 463,
+          "private_bytes": 88600576,
           "threads": 37,
           "user": 16,
-          "working_set": 55242752
+          "working_set": 56340480
         },
         {
           "cycle": 700,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89616384,
+          "handles": 463,
+          "private_bytes": 89923584,
           "threads": 37,
           "user": 16,
-          "working_set": 55103488
+          "working_set": 56582144
         },
         {
           "cycle": 800,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88559616,
+          "handles": 463,
+          "private_bytes": 88903680,
           "threads": 37,
           "user": 16,
-          "working_set": 55103488
+          "working_set": 56582144
         },
         {
           "cycle": 900,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89505792,
+          "handles": 463,
+          "private_bytes": 89890816,
           "threads": 37,
           "user": 16,
-          "working_set": 54992896
+          "working_set": 56590336
         },
         {
           "cycle": 1000,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89341952,
+          "handles": 463,
+          "private_bytes": 89985024,
           "threads": 37,
           "user": 16,
-          "working_set": 54861824
+          "working_set": 56590336
         }
       ],
       "metrics": {
-        "first_show_ms": 775.0404,
+        "first_show_ms": 593.4852,
         "focused_blink_presents": 4,
         "focused_blink_reasons": [
           "caret-blink",
@@ -144,550 +144,108 @@
         "focused_quiet_presents_10s": 0,
         "focused_quiet_reasons": [],
         "growth_plateau_after_1000": true,
-        "growth_private_first_mean": 88496128.0,
-        "growth_private_last_mean": 89423872.0,
-        "idle_cpu_pct": 0.05857358955621064,
-        "idle_paint_msgs_10s": 1,
-        "idle_present_reasons": [],
-        "idle_presents_10s": 0,
-        "open_warm_ms_p50": 3.7207,
-        "open_warm_ms_p95": 4.913200000000001,
-        "rig_load_ms": 0.6700999999999999,
-        "submit_response_ms_p50": 6.569,
-        "submit_response_ms_p95": 8.458200000000001,
-        "theme_switch_ms_p50": 0.6906,
-        "theme_switch_ms_p95": 2.467
-      },
-      "open_close_100": {
-        "after": {
-          "gdi": 11,
-          "handles": 452,
-          "private_bytes": 88342528,
-          "threads": 36,
-          "user": 16,
-          "working_set": 54894592
-        },
-        "before": {
-          "gdi": 11,
-          "handles": 453,
-          "private_bytes": 88178688,
-          "threads": 36,
-          "user": 16,
-          "working_set": 55570432
-        }
-      },
-      "stages": [
-        {
-          "gdi": 0,
-          "handles": 345,
-          "private_bytes": 53563392,
-          "stage": "renderer",
-          "t_ms": 283.8594,
-          "threads": 18,
-          "user": 2,
-          "working_set": 38137856
-        },
-        {
-          "gdi": 0,
-          "handles": 345,
-          "private_bytes": 81477632,
-          "stage": "rig",
-          "t_ms": 534.7369,
-          "threads": 18,
-          "user": 2,
-          "working_set": 47370240
-        },
-        {
-          "gdi": 0,
-          "handles": 345,
-          "private_bytes": 81489920,
-          "stage": "fonts+painter",
-          "t_ms": 589.037,
-          "threads": 18,
-          "user": 2,
-          "working_set": 47456256
-        },
-        {
-          "gdi": 11,
-          "handles": 368,
-          "private_bytes": 81711104,
-          "stage": "richedit",
-          "t_ms": 658.8136999999999,
-          "threads": 18,
-          "user": 10,
-          "working_set": 50589696
-        },
-        {
-          "gdi": 11,
-          "handles": 418,
-          "private_bytes": 141316096,
-          "stage": "sprite",
-          "t_ms": 740.8209,
-          "threads": 34,
-          "user": 11,
-          "working_set": 62365696
-        },
-        {
-          "gdi": 11,
-          "handles": 444,
-          "private_bytes": 146903040,
-          "stage": "first_show",
-          "t_ms": 810.8715,
-          "threads": 35,
-          "user": 14,
-          "working_set": 68562944
-        },
-        {
-          "gdi": 11,
-          "handles": 444,
-          "private_bytes": 84377600,
-          "stage": "after_gpu_trim",
-          "t_ms": 885.5072,
-          "threads": 35,
-          "user": 14,
-          "working_set": 52658176
-        }
-      ]
-    },
-    {
-      "env": {
-        "cpu": "Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz",
-        "device": "hardware",
-        "dirty": false,
-        "font": "Segoe UI Variable Text",
-        "gpu": "NVIDIA GeForce RTX 4070",
-        "head": "",
-        "os_build": "10.0.26200.9457",
-        "profile": "release",
-        "scale": 1.0
-      },
-      "growth_samples": [
-        {
-          "cycle": 100,
-          "gdi": 11,
-          "handles": 454,
-          "private_bytes": 89071616,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54788096
-        },
-        {
-          "cycle": 200,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88965120,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54792192
-        },
-        {
-          "cycle": 300,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88854528,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54681600
-        },
-        {
-          "cycle": 400,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88854528,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54685696
-        },
-        {
-          "cycle": 500,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89202688,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54927360
-        },
-        {
-          "cycle": 600,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89104384,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54710272
-        },
-        {
-          "cycle": 700,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89239552,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54947840
-        },
-        {
-          "cycle": 800,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 90284032,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54951936
-        },
-        {
-          "cycle": 900,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 90447872,
-          "threads": 37,
-          "user": 16,
-          "working_set": 55013376
-        },
-        {
-          "cycle": 1000,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89157632,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54779904
-        }
-      ],
-      "metrics": {
-        "first_show_ms": 564.8754,
-        "focused_blink_presents": 4,
-        "focused_blink_reasons": [
-          "caret-blink",
-          "caret-blink",
-          "caret-blink",
-          "caret-blink"
-        ],
-        "focused_quiet_presents_10s": 0,
-        "focused_quiet_reasons": [],
-        "growth_plateau_after_1000": true,
-        "growth_private_first_mean": 89018368.0,
-        "growth_private_last_mean": 89802752.0,
-        "idle_cpu_pct": 0.00976124239738842,
-        "idle_paint_msgs_10s": 1,
-        "idle_present_reasons": [],
-        "idle_presents_10s": 0,
-        "open_warm_ms_p50": 3.8484,
-        "open_warm_ms_p95": 5.004,
-        "rig_load_ms": 0.5904,
-        "submit_response_ms_p50": 6.0863000000000005,
-        "submit_response_ms_p95": 6.7119,
-        "theme_switch_ms_p50": 0.7694000000000001,
-        "theme_switch_ms_p95": 3.6625
-      },
-      "open_close_100": {
-        "after": {
-          "gdi": 11,
-          "handles": 452,
-          "private_bytes": 89296896,
-          "threads": 36,
-          "user": 16,
-          "working_set": 55128064
-        },
-        "before": {
-          "gdi": 11,
-          "handles": 453,
-          "private_bytes": 88739840,
-          "threads": 36,
-          "user": 16,
-          "working_set": 55300096
-        }
-      },
-      "stages": [
-        {
-          "gdi": 0,
-          "handles": 345,
-          "private_bytes": 54091776,
-          "stage": "renderer",
-          "t_ms": 262.1461,
-          "threads": 18,
-          "user": 2,
-          "working_set": 38187008
-        },
-        {
-          "gdi": 0,
-          "handles": 345,
-          "private_bytes": 82571264,
-          "stage": "rig",
-          "t_ms": 350.76030000000003,
-          "threads": 18,
-          "user": 2,
-          "working_set": 47517696
-        },
-        {
-          "gdi": 0,
-          "handles": 345,
-          "private_bytes": 82583552,
-          "stage": "fonts+painter",
-          "t_ms": 399.7224,
-          "threads": 18,
-          "user": 2,
-          "working_set": 47603712
-        },
-        {
-          "gdi": 11,
-          "handles": 368,
-          "private_bytes": 82800640,
-          "stage": "richedit",
-          "t_ms": 453.8331,
-          "threads": 18,
-          "user": 10,
-          "working_set": 50753536
-        },
-        {
-          "gdi": 11,
-          "handles": 418,
-          "private_bytes": 143491072,
-          "stage": "sprite",
-          "t_ms": 530.6826,
-          "threads": 34,
-          "user": 11,
-          "working_set": 62664704
-        },
-        {
-          "gdi": 11,
-          "handles": 444,
-          "private_bytes": 148643840,
-          "stage": "first_show",
-          "t_ms": 598.9882,
-          "threads": 35,
-          "user": 14,
-          "working_set": 68812800
-        },
-        {
-          "gdi": 11,
-          "handles": 444,
-          "private_bytes": 85594112,
-          "stage": "after_gpu_trim",
-          "t_ms": 657.3134,
-          "threads": 35,
-          "user": 14,
-          "working_set": 52908032
-        }
-      ]
-    },
-    {
-      "env": {
-        "cpu": "Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz",
-        "device": "hardware",
-        "dirty": false,
-        "font": "Segoe UI Variable Text",
-        "gpu": "NVIDIA GeForce RTX 4070",
-        "head": "",
-        "os_build": "10.0.26200.9457",
-        "profile": "release",
-        "scale": 1.0
-      },
-      "growth_samples": [
-        {
-          "cycle": 100,
-          "gdi": 11,
-          "handles": 454,
-          "private_bytes": 88416256,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54910976
-        },
-        {
-          "cycle": 200,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88416256,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54947840
-        },
-        {
-          "cycle": 300,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88281088,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54706176
-        },
-        {
-          "cycle": 400,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89067520,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54947840
-        },
-        {
-          "cycle": 500,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88944640,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54947840
-        },
-        {
-          "cycle": 600,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89563136,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54976512
-        },
-        {
-          "cycle": 700,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88555520,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54972416
-        },
-        {
-          "cycle": 800,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88211456,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54730752
-        },
-        {
-          "cycle": 900,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88436736,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54976512
-        },
-        {
-          "cycle": 1000,
-          "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88145920,
-          "threads": 37,
-          "user": 16,
-          "working_set": 54734848
-        }
-      ],
-      "metrics": {
-        "first_show_ms": 628.3785,
-        "focused_blink_presents": 4,
-        "focused_blink_reasons": [
-          "caret-blink",
-          "caret-blink",
-          "caret-blink",
-          "caret-blink"
-        ],
-        "focused_quiet_presents_10s": 0,
-        "focused_quiet_reasons": [],
-        "growth_plateau_after_1000": true,
-        "growth_private_first_mean": 88416256.0,
-        "growth_private_last_mean": 88291328.0,
+        "growth_private_first_mean": 88473600.0,
+        "growth_private_last_mean": 89937920.0,
         "idle_cpu_pct": 0.0,
         "idle_paint_msgs_10s": 1,
         "idle_present_reasons": [],
         "idle_presents_10s": 0,
-        "open_warm_ms_p50": 3.6627,
-        "open_warm_ms_p95": 4.5719,
-        "rig_load_ms": 0.5643999999999999,
-        "submit_response_ms_p50": 6.152699999999999,
-        "submit_response_ms_p95": 7.1579,
-        "theme_switch_ms_p50": 0.9717,
-        "theme_switch_ms_p95": 4.081300000000001
+        "open_warm_ms_p50": 3.5402,
+        "open_warm_ms_p95": 4.1744,
+        "rig_load_ms": 0.6072,
+        "submit_response_ms_p50": 6.0947,
+        "submit_response_ms_p95": 8.9085,
+        "theme_switch_ms_p50": 0.7779,
+        "theme_switch_ms_p95": 2.7194
       },
       "open_close_100": {
         "after": {
           "gdi": 11,
-          "handles": 452,
-          "private_bytes": 88924160,
+          "handles": 460,
+          "private_bytes": 88977408,
           "threads": 36,
           "user": 16,
-          "working_set": 54882304
+          "working_set": 56635392
         },
         "before": {
           "gdi": 11,
-          "handles": 454,
-          "private_bytes": 88240128,
+          "handles": 461,
+          "private_bytes": 88522752,
           "threads": 36,
           "user": 16,
-          "working_set": 55496704
+          "working_set": 57081856
         }
       },
       "stages": [
         {
           "gdi": 0,
-          "handles": 345,
-          "private_bytes": 52670464,
+          "handles": 353,
+          "private_bytes": 54345728,
           "stage": "renderer",
-          "t_ms": 281.47499999999997,
+          "t_ms": 266.9063,
           "threads": 18,
           "user": 2,
-          "working_set": 38211584
+          "working_set": 39952384
         },
         {
           "gdi": 0,
-          "handles": 345,
-          "private_bytes": 81764352,
+          "handles": 353,
+          "private_bytes": 82141184,
           "stage": "rig",
-          "t_ms": 385.4501,
+          "t_ms": 355.3234,
           "threads": 18,
           "user": 2,
-          "working_set": 47427584
+          "working_set": 49180672
         },
         {
           "gdi": 0,
-          "handles": 345,
-          "private_bytes": 81776640,
+          "handles": 353,
+          "private_bytes": 82153472,
           "stage": "fonts+painter",
-          "t_ms": 446.5346,
+          "t_ms": 402.024,
           "threads": 18,
           "user": 2,
-          "working_set": 47513600
+          "working_set": 49266688
         },
         {
           "gdi": 11,
-          "handles": 368,
-          "private_bytes": 81989632,
+          "handles": 376,
+          "private_bytes": 82370560,
           "stage": "richedit",
-          "t_ms": 506.7573,
+          "t_ms": 469.3833,
           "threads": 18,
           "user": 10,
-          "working_set": 50630656
+          "working_set": 52387840
         },
         {
           "gdi": 11,
-          "handles": 418,
-          "private_bytes": 140890112,
+          "handles": 426,
+          "private_bytes": 141819904,
           "stage": "sprite",
-          "t_ms": 594.1355000000001,
+          "t_ms": 554.2382,
           "threads": 34,
           "user": 11,
-          "working_set": 62697472
+          "working_set": 64167936
         },
         {
           "gdi": 11,
-          "handles": 444,
-          "private_bytes": 146698240,
+          "handles": 452,
+          "private_bytes": 147431424,
           "stage": "first_show",
-          "t_ms": 662.0,
+          "t_ms": 621.0015,
           "threads": 35,
           "user": 14,
-          "working_set": 68661248
+          "working_set": 70250496
         },
         {
           "gdi": 11,
-          "handles": 444,
-          "private_bytes": 84877312,
+          "handles": 452,
+          "private_bytes": 85037056,
           "stage": "after_gpu_trim",
-          "t_ms": 720.3018,
+          "t_ms": 692.1995,
           "threads": 35,
           "user": 14,
-          "working_set": 52756480
+          "working_set": 54345728
         }
       ]
     },
@@ -695,10 +253,10 @@
       "env": {
         "cpu": "Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz",
         "device": "hardware",
-        "dirty": false,
+        "dirty": true,
         "font": "Segoe UI Variable Text",
         "gpu": "NVIDIA GeForce RTX 4070",
-        "head": "",
+        "head": "4ab080d818d41b855b77590ff65a900c1ec3dc65",
         "os_build": "10.0.26200.9457",
         "profile": "release",
         "scale": 1.0
@@ -707,96 +265,96 @@
         {
           "cycle": 100,
           "gdi": 11,
-          "handles": 454,
-          "private_bytes": 86577152,
+          "handles": 462,
+          "private_bytes": 87986176,
           "threads": 37,
           "user": 16,
-          "working_set": 54456320
+          "working_set": 56561664
         },
         {
           "cycle": 200,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 86757376,
+          "handles": 463,
+          "private_bytes": 87986176,
           "threads": 37,
           "user": 16,
-          "working_set": 54706176
+          "working_set": 56565760
         },
         {
           "cycle": 300,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 86712320,
+          "handles": 464,
+          "private_bytes": 87969792,
           "threads": 37,
           "user": 16,
-          "working_set": 54530048
+          "working_set": 56565760
         },
         {
           "cycle": 400,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 87998464,
+          "handles": 463,
+          "private_bytes": 87969792,
           "threads": 37,
           "user": 16,
-          "working_set": 54784000
+          "working_set": 56565760
         },
         {
           "cycle": 500,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 86650880,
+          "handles": 463,
+          "private_bytes": 87986176,
           "threads": 37,
           "user": 16,
-          "working_set": 54542336
+          "working_set": 56569856
         },
         {
           "cycle": 600,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88023040,
+          "handles": 463,
+          "private_bytes": 87781376,
           "threads": 37,
           "user": 16,
-          "working_set": 54816768
+          "working_set": 56352768
         },
         {
           "cycle": 700,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 87789568,
+          "handles": 463,
+          "private_bytes": 87781376,
           "threads": 37,
           "user": 16,
-          "working_set": 54566912
+          "working_set": 56352768
         },
         {
           "cycle": 800,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 86974464,
+          "handles": 463,
+          "private_bytes": 87781376,
           "threads": 37,
           "user": 16,
-          "working_set": 54808576
+          "working_set": 56352768
         },
         {
           "cycle": 900,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 87093248,
+          "handles": 463,
+          "private_bytes": 88014848,
           "threads": 37,
           "user": 16,
-          "working_set": 54857728
+          "working_set": 56496128
         },
         {
           "cycle": 1000,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 87076864,
+          "handles": 463,
+          "private_bytes": 87883776,
           "threads": 37,
           "user": 16,
-          "working_set": 54857728
+          "working_set": 56365056
         }
       ],
       "metrics": {
-        "first_show_ms": 621.995,
+        "first_show_ms": 581.6112,
         "focused_blink_presents": 4,
         "focused_blink_reasons": [
           "caret-blink",
@@ -807,108 +365,108 @@
         "focused_quiet_presents_10s": 0,
         "focused_quiet_reasons": [],
         "growth_plateau_after_1000": true,
-        "growth_private_first_mean": 86667264.0,
-        "growth_private_last_mean": 87085056.0,
-        "idle_cpu_pct": 0.01953004870670405,
+        "growth_private_first_mean": 87986176.0,
+        "growth_private_last_mean": 87949312.0,
+        "idle_cpu_pct": 0.04880731307363227,
         "idle_paint_msgs_10s": 1,
         "idle_present_reasons": [],
         "idle_presents_10s": 0,
-        "open_warm_ms_p50": 3.6963,
-        "open_warm_ms_p95": 5.0979,
-        "rig_load_ms": 0.6055,
-        "submit_response_ms_p50": 6.2997000000000005,
-        "submit_response_ms_p95": 8.0249,
-        "theme_switch_ms_p50": 0.7555,
-        "theme_switch_ms_p95": 2.6311
+        "open_warm_ms_p50": 3.5669999999999997,
+        "open_warm_ms_p95": 4.2825,
+        "rig_load_ms": 0.5597,
+        "submit_response_ms_p50": 5.6754,
+        "submit_response_ms_p95": 23.0285,
+        "theme_switch_ms_p50": 0.6547999999999999,
+        "theme_switch_ms_p95": 3.0809
       },
       "open_close_100": {
         "after": {
           "gdi": 11,
-          "handles": 452,
-          "private_bytes": 86999040,
+          "handles": 460,
+          "private_bytes": 87965696,
           "threads": 36,
           "user": 16,
-          "working_set": 54906880
+          "working_set": 56516608
         },
         "before": {
           "gdi": 11,
-          "handles": 453,
-          "private_bytes": 86863872,
+          "handles": 461,
+          "private_bytes": 87699456,
           "threads": 36,
           "user": 16,
-          "working_set": 55513088
+          "working_set": 57135104
         }
       },
       "stages": [
         {
           "gdi": 0,
-          "handles": 345,
-          "private_bytes": 52695040,
+          "handles": 353,
+          "private_bytes": 52748288,
           "stage": "renderer",
-          "t_ms": 288.32730000000004,
+          "t_ms": 264.0591,
           "threads": 18,
           "user": 2,
-          "working_set": 38236160
+          "working_set": 39976960
         },
         {
           "gdi": 0,
-          "handles": 345,
-          "private_bytes": 80420864,
+          "handles": 353,
+          "private_bytes": 81514496,
           "stage": "rig",
-          "t_ms": 386.2578,
+          "t_ms": 352.54249999999996,
           "threads": 18,
           "user": 2,
-          "working_set": 47439872
+          "working_set": 49274880
         },
         {
           "gdi": 0,
-          "handles": 345,
-          "private_bytes": 80433152,
+          "handles": 353,
+          "private_bytes": 81526784,
           "stage": "fonts+painter",
-          "t_ms": 433.9848,
+          "t_ms": 398.8981,
           "threads": 18,
           "user": 2,
-          "working_set": 47525888
+          "working_set": 49360896
         },
         {
           "gdi": 11,
-          "handles": 368,
-          "private_bytes": 80650240,
+          "handles": 376,
+          "private_bytes": 81739776,
           "stage": "richedit",
-          "t_ms": 501.38950000000006,
+          "t_ms": 460.669,
           "threads": 18,
           "user": 10,
-          "working_set": 50651136
+          "working_set": 52490240
         },
         {
           "gdi": 11,
-          "handles": 418,
-          "private_bytes": 139988992,
+          "handles": 426,
+          "private_bytes": 142041088,
           "stage": "sprite",
-          "t_ms": 587.8077000000001,
+          "t_ms": 542.3711,
           "threads": 34,
           "user": 11,
-          "working_set": 62472192
+          "working_set": 64200704
         },
         {
           "gdi": 11,
-          "handles": 444,
-          "private_bytes": 145526784,
+          "handles": 452,
+          "private_bytes": 147378176,
           "stage": "first_show",
-          "t_ms": 655.4656,
+          "t_ms": 608.0494,
           "threads": 35,
           "user": 14,
-          "working_set": 68554752
+          "working_set": 70180864
         },
         {
           "gdi": 11,
-          "handles": 444,
-          "private_bytes": 83197952,
+          "handles": 452,
+          "private_bytes": 84127744,
           "stage": "after_gpu_trim",
-          "t_ms": 727.7549,
+          "t_ms": 672.3776,
           "threads": 35,
           "user": 14,
-          "working_set": 52649984
+          "working_set": 54276096
         }
       ]
     },
@@ -916,10 +474,10 @@
       "env": {
         "cpu": "Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz",
         "device": "hardware",
-        "dirty": false,
+        "dirty": true,
         "font": "Segoe UI Variable Text",
         "gpu": "NVIDIA GeForce RTX 4070",
-        "head": "",
+        "head": "4ab080d818d41b855b77590ff65a900c1ec3dc65",
         "os_build": "10.0.26200.9457",
         "profile": "release",
         "scale": 1.0
@@ -928,96 +486,96 @@
         {
           "cycle": 100,
           "gdi": 11,
-          "handles": 454,
-          "private_bytes": 89862144,
+          "handles": 462,
+          "private_bytes": 90869760,
           "threads": 37,
           "user": 16,
-          "working_set": 54661120
+          "working_set": 56549376
         },
         {
           "cycle": 200,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89890816,
+          "handles": 463,
+          "private_bytes": 89939968,
           "threads": 37,
           "user": 16,
-          "working_set": 54661120
+          "working_set": 56553472
         },
         {
           "cycle": 300,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 90349568,
+          "handles": 463,
+          "private_bytes": 89833472,
           "threads": 37,
           "user": 16,
-          "working_set": 54665216
+          "working_set": 56438784
         },
         {
           "cycle": 400,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89001984,
+          "handles": 463,
+          "private_bytes": 89833472,
           "threads": 37,
           "user": 16,
-          "working_set": 54419456
+          "working_set": 56438784
         },
         {
           "cycle": 500,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89214976,
+          "handles": 463,
+          "private_bytes": 89772032,
           "threads": 37,
           "user": 16,
-          "working_set": 54546432
+          "working_set": 56438784
         },
         {
           "cycle": 600,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 88993792,
+          "handles": 464,
+          "private_bytes": 90431488,
           "threads": 37,
           "user": 16,
-          "working_set": 54435840
+          "working_set": 56717312
         },
         {
           "cycle": 700,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 90267648,
+          "handles": 463,
+          "private_bytes": 91017216,
           "threads": 37,
           "user": 16,
-          "working_set": 54677504
+          "working_set": 56717312
         },
         {
           "cycle": 800,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 90021888,
+          "handles": 463,
+          "private_bytes": 89972736,
           "threads": 37,
           "user": 16,
-          "working_set": 54435840
+          "working_set": 56713216
         },
         {
           "cycle": 900,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 89092096,
+          "handles": 463,
+          "private_bytes": 89833472,
           "threads": 37,
           "user": 16,
-          "working_set": 54521856
+          "working_set": 56479744
         },
         {
           "cycle": 1000,
           "gdi": 11,
-          "handles": 455,
-          "private_bytes": 90202112,
+          "handles": 463,
+          "private_bytes": 89833472,
           "threads": 37,
           "user": 16,
-          "working_set": 54521856
+          "working_set": 56475648
         }
       ],
       "metrics": {
-        "first_show_ms": 590.128,
+        "first_show_ms": 583.7038,
         "focused_blink_presents": 4,
         "focused_blink_reasons": [
           "caret-blink",
@@ -1028,108 +586,550 @@
         "focused_quiet_presents_10s": 0,
         "focused_quiet_reasons": [],
         "growth_plateau_after_1000": true,
-        "growth_private_first_mean": 89876480.0,
-        "growth_private_last_mean": 89647104.0,
-        "idle_cpu_pct": 0.009761258886512652,
+        "growth_private_first_mean": 90404864.0,
+        "growth_private_last_mean": 89833472.0,
+        "idle_cpu_pct": 0.009762896563297456,
         "idle_paint_msgs_10s": 1,
         "idle_present_reasons": [],
         "idle_presents_10s": 0,
-        "open_warm_ms_p50": 3.7505,
-        "open_warm_ms_p95": 4.599200000000001,
-        "rig_load_ms": 0.6101,
-        "submit_response_ms_p50": 5.9718,
-        "submit_response_ms_p95": 7.294700000000001,
-        "theme_switch_ms_p50": 1.2372,
-        "theme_switch_ms_p95": 3.0325
+        "open_warm_ms_p50": 3.7118,
+        "open_warm_ms_p95": 4.2389,
+        "rig_load_ms": 0.5474,
+        "submit_response_ms_p50": 6.766699999999999,
+        "submit_response_ms_p95": 8.0962,
+        "theme_switch_ms_p50": 0.9815,
+        "theme_switch_ms_p95": 7.2833
       },
       "open_close_100": {
         "after": {
           "gdi": 11,
-          "handles": 452,
-          "private_bytes": 90083328,
+          "handles": 460,
+          "private_bytes": 91152384,
           "threads": 36,
           "user": 16,
-          "working_set": 54874112
+          "working_set": 56766464
         },
         "before": {
           "gdi": 11,
-          "handles": 453,
+          "handles": 462,
+          "private_bytes": 89812992,
+          "threads": 36,
+          "user": 16,
+          "working_set": 57311232
+        }
+      },
+      "stages": [
+        {
+          "gdi": 0,
+          "handles": 353,
+          "private_bytes": 53743616,
+          "stage": "renderer",
+          "t_ms": 278.8413,
+          "threads": 18,
+          "user": 2,
+          "working_set": 39956480
+        },
+        {
+          "gdi": 0,
+          "handles": 353,
+          "private_bytes": 83496960,
+          "stage": "rig",
+          "t_ms": 369.4924,
+          "threads": 18,
+          "user": 2,
+          "working_set": 49246208
+        },
+        {
+          "gdi": 0,
+          "handles": 353,
+          "private_bytes": 83509248,
+          "stage": "fonts+painter",
+          "t_ms": 418.7177999999999,
+          "threads": 18,
+          "user": 2,
+          "working_set": 49332224
+        },
+        {
+          "gdi": 11,
+          "handles": 376,
+          "private_bytes": 83726336,
+          "stage": "richedit",
+          "t_ms": 472.5312,
+          "threads": 18,
+          "user": 10,
+          "working_set": 52461568
+        },
+        {
+          "gdi": 11,
+          "handles": 426,
+          "private_bytes": 143396864,
+          "stage": "sprite",
+          "t_ms": 543.1256,
+          "threads": 34,
+          "user": 11,
+          "working_set": 64495616
+        },
+        {
+          "gdi": 11,
+          "handles": 452,
+          "private_bytes": 148664320,
+          "stage": "first_show",
+          "t_ms": 608.7124,
+          "threads": 35,
+          "user": 14,
+          "working_set": 70336512
+        },
+        {
+          "gdi": 11,
+          "handles": 452,
+          "private_bytes": 86323200,
+          "stage": "after_gpu_trim",
+          "t_ms": 681.2865,
+          "threads": 35,
+          "user": 14,
+          "working_set": 54431744
+        }
+      ]
+    },
+    {
+      "env": {
+        "cpu": "Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz",
+        "device": "hardware",
+        "dirty": true,
+        "font": "Segoe UI Variable Text",
+        "gpu": "NVIDIA GeForce RTX 4070",
+        "head": "4ab080d818d41b855b77590ff65a900c1ec3dc65",
+        "os_build": "10.0.26200.9457",
+        "profile": "release",
+        "scale": 1.0
+      },
+      "growth_samples": [
+        {
+          "cycle": 100,
+          "gdi": 11,
+          "handles": 462,
           "private_bytes": 88895488,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56553472
+        },
+        {
+          "cycle": 200,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 87531520,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56197120
+        },
+        {
+          "cycle": 300,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 88969216,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56569856
+        },
+        {
+          "cycle": 400,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 87793664,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56328192
+        },
+        {
+          "cycle": 500,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 87961600,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56569856
+        },
+        {
+          "cycle": 600,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 88289280,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56492032
+        },
+        {
+          "cycle": 700,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 88698880,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56352768
+        },
+        {
+          "cycle": 800,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 87896064,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56594432
+        },
+        {
+          "cycle": 900,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 88227840,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56487936
+        },
+        {
+          "cycle": 1000,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 88485888,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56602624
+        }
+      ],
+      "metrics": {
+        "first_show_ms": 617.3493,
+        "focused_blink_presents": 4,
+        "focused_blink_reasons": [
+          "caret-blink",
+          "caret-blink",
+          "caret-blink",
+          "caret-blink"
+        ],
+        "focused_quiet_presents_10s": 0,
+        "focused_quiet_reasons": [],
+        "growth_plateau_after_1000": true,
+        "growth_private_first_mean": 88213504.0,
+        "growth_private_last_mean": 88356864.0,
+        "idle_cpu_pct": 0.02929079686674218,
+        "idle_paint_msgs_10s": 1,
+        "idle_present_reasons": [],
+        "idle_presents_10s": 0,
+        "open_warm_ms_p50": 3.7987,
+        "open_warm_ms_p95": 5.1716,
+        "rig_load_ms": 0.537,
+        "submit_response_ms_p50": 5.850099999999999,
+        "submit_response_ms_p95": 6.5995,
+        "theme_switch_ms_p50": 0.8387,
+        "theme_switch_ms_p95": 2.5526
+      },
+      "open_close_100": {
+        "after": {
+          "gdi": 11,
+          "handles": 460,
+          "private_bytes": 87707648,
           "threads": 36,
           "user": 16,
-          "working_set": 55242752
+          "working_set": 56369152
+        },
+        "before": {
+          "gdi": 11,
+          "handles": 462,
+          "private_bytes": 87650304,
+          "threads": 36,
+          "user": 16,
+          "working_set": 57044992
         }
       },
       "stages": [
         {
           "gdi": 0,
-          "handles": 345,
-          "private_bytes": 54427648,
+          "handles": 353,
+          "private_bytes": 53223424,
           "stage": "renderer",
-          "t_ms": 266.78619999999995,
+          "t_ms": 279.3827,
           "threads": 18,
           "user": 2,
-          "working_set": 38248448
+          "working_set": 39968768
         },
         {
           "gdi": 0,
-          "handles": 345,
-          "private_bytes": 82796544,
+          "handles": 353,
+          "private_bytes": 81539072,
           "stage": "rig",
-          "t_ms": 354.33340000000004,
+          "t_ms": 378.3127,
           "threads": 18,
           "user": 2,
-          "working_set": 47435776
+          "working_set": 49254400
         },
         {
           "gdi": 0,
-          "handles": 345,
-          "private_bytes": 82808832,
+          "handles": 353,
+          "private_bytes": 81551360,
           "stage": "fonts+painter",
-          "t_ms": 401.6619,
+          "t_ms": 441.6751,
           "threads": 18,
           "user": 2,
-          "working_set": 47521792
+          "working_set": 49340416
         },
         {
           "gdi": 11,
-          "handles": 368,
-          "private_bytes": 83025920,
+          "handles": 376,
+          "private_bytes": 81768448,
           "stage": "richedit",
-          "t_ms": 468.6827,
+          "t_ms": 493.1788,
           "threads": 18,
           "user": 10,
-          "working_set": 50655232
+          "working_set": 52477952
         },
         {
           "gdi": 11,
-          "handles": 418,
-          "private_bytes": 143470592,
+          "handles": 426,
+          "private_bytes": 141565952,
           "stage": "sprite",
-          "t_ms": 556.8489,
+          "t_ms": 576.0848,
           "threads": 34,
           "user": 11,
-          "working_set": 62672896
+          "working_set": 64110592
         },
         {
           "gdi": 11,
-          "handles": 444,
-          "private_bytes": 148705280,
+          "handles": 452,
+          "private_bytes": 147075072,
           "stage": "first_show",
-          "t_ms": 624.1224,
+          "t_ms": 642.9524,
           "threads": 35,
           "user": 14,
-          "working_set": 68632576
+          "working_set": 70311936
         },
         {
           "gdi": 11,
-          "handles": 444,
-          "private_bytes": 85721088,
+          "handles": 452,
+          "private_bytes": 84287488,
           "stage": "after_gpu_trim",
-          "t_ms": 696.9162,
+          "t_ms": 699.4091999999999,
           "threads": 35,
           "user": 14,
-          "working_set": 52727808
+          "working_set": 54407168
+        }
+      ]
+    },
+    {
+      "env": {
+        "cpu": "Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz",
+        "device": "hardware",
+        "dirty": true,
+        "font": "Segoe UI Variable Text",
+        "gpu": "NVIDIA GeForce RTX 4070",
+        "head": "4ab080d818d41b855b77590ff65a900c1ec3dc65",
+        "os_build": "10.0.26200.9457",
+        "profile": "release",
+        "scale": 1.0
+      },
+      "growth_samples": [
+        {
+          "cycle": 100,
+          "gdi": 11,
+          "handles": 462,
+          "private_bytes": 89149440,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56705024
+        },
+        {
+          "cycle": 200,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 89149440,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56717312
+        },
+        {
+          "cycle": 300,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 89280512,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56864768
+        },
+        {
+          "cycle": 400,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 89280512,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56991744
+        },
+        {
+          "cycle": 500,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 89157632,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56868864
+        },
+        {
+          "cycle": 600,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 88969216,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56643584
+        },
+        {
+          "cycle": 700,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 89206784,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56774656
+        },
+        {
+          "cycle": 800,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 89985024,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56643584
+        },
+        {
+          "cycle": 900,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 90357760,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56832000
+        },
+        {
+          "cycle": 1000,
+          "gdi": 11,
+          "handles": 463,
+          "private_bytes": 90341376,
+          "threads": 37,
+          "user": 16,
+          "working_set": 56721408
+        }
+      ],
+      "metrics": {
+        "first_show_ms": 570.6286,
+        "focused_blink_presents": 4,
+        "focused_blink_reasons": [
+          "caret-blink",
+          "caret-blink",
+          "caret-blink",
+          "caret-blink"
+        ],
+        "focused_quiet_presents_10s": 0,
+        "focused_quiet_reasons": [],
+        "growth_plateau_after_1000": true,
+        "growth_private_first_mean": 89149440.0,
+        "growth_private_last_mean": 90349568.0,
+        "idle_cpu_pct": 0.01952487278605062,
+        "idle_paint_msgs_10s": 1,
+        "idle_present_reasons": [],
+        "idle_presents_10s": 0,
+        "open_warm_ms_p50": 3.6002,
+        "open_warm_ms_p95": 4.4127,
+        "rig_load_ms": 0.7828,
+        "submit_response_ms_p50": 5.7604,
+        "submit_response_ms_p95": 6.6746,
+        "theme_switch_ms_p50": 0.6481,
+        "theme_switch_ms_p95": 5.250900000000001
+      },
+      "open_close_100": {
+        "after": {
+          "gdi": 11,
+          "handles": 460,
+          "private_bytes": 89067520,
+          "threads": 36,
+          "user": 16,
+          "working_set": 56655872
+        },
+        "before": {
+          "gdi": 11,
+          "handles": 462,
+          "private_bytes": 89079808,
+          "threads": 36,
+          "user": 16,
+          "working_set": 57466880
+        }
+      },
+      "stages": [
+        {
+          "gdi": 0,
+          "handles": 353,
+          "private_bytes": 53956608,
+          "stage": "renderer",
+          "t_ms": 270.7887,
+          "threads": 18,
+          "user": 2,
+          "working_set": 39968768
+        },
+        {
+          "gdi": 0,
+          "handles": 353,
+          "private_bytes": 82530304,
+          "stage": "rig",
+          "t_ms": 362.4683,
+          "threads": 18,
+          "user": 2,
+          "working_set": 49258496
+        },
+        {
+          "gdi": 0,
+          "handles": 353,
+          "private_bytes": 82542592,
+          "stage": "fonts+painter",
+          "t_ms": 408.7641,
+          "threads": 18,
+          "user": 2,
+          "working_set": 49344512
+        },
+        {
+          "gdi": 11,
+          "handles": 376,
+          "private_bytes": 82759680,
+          "stage": "richedit",
+          "t_ms": 460.7618,
+          "threads": 18,
+          "user": 10,
+          "working_set": 52482048
+        },
+        {
+          "gdi": 11,
+          "handles": 426,
+          "private_bytes": 142798848,
+          "stage": "sprite",
+          "t_ms": 530.2818,
+          "threads": 34,
+          "user": 11,
+          "working_set": 64241664
+        },
+        {
+          "gdi": 11,
+          "handles": 452,
+          "private_bytes": 148467712,
+          "stage": "first_show",
+          "t_ms": 594.4859,
+          "threads": 35,
+          "user": 14,
+          "working_set": 70348800
+        },
+        {
+          "gdi": 11,
+          "handles": 452,
+          "private_bytes": 85417984,
+          "stage": "after_gpu_trim",
+          "t_ms": 664.2057,
+          "threads": 35,
+          "user": 14,
+          "working_set": 54460416
         }
       ]
     }
@@ -1138,73 +1138,73 @@
   "stages_last_run": [
     {
       "gdi": 0,
-      "handles": 345,
-      "private_bytes": 54427648,
+      "handles": 353,
+      "private_bytes": 53956608,
       "stage": "renderer",
-      "t_ms": 266.78619999999995,
+      "t_ms": 270.7887,
       "threads": 18,
       "user": 2,
-      "working_set": 38248448
+      "working_set": 39968768
     },
     {
       "gdi": 0,
-      "handles": 345,
-      "private_bytes": 82796544,
+      "handles": 353,
+      "private_bytes": 82530304,
       "stage": "rig",
-      "t_ms": 354.33340000000004,
+      "t_ms": 362.4683,
       "threads": 18,
       "user": 2,
-      "working_set": 47435776
+      "working_set": 49258496
     },
     {
       "gdi": 0,
-      "handles": 345,
-      "private_bytes": 82808832,
+      "handles": 353,
+      "private_bytes": 82542592,
       "stage": "fonts+painter",
-      "t_ms": 401.6619,
+      "t_ms": 408.7641,
       "threads": 18,
       "user": 2,
-      "working_set": 47521792
+      "working_set": 49344512
     },
     {
       "gdi": 11,
-      "handles": 368,
-      "private_bytes": 83025920,
+      "handles": 376,
+      "private_bytes": 82759680,
       "stage": "richedit",
-      "t_ms": 468.6827,
+      "t_ms": 460.7618,
       "threads": 18,
       "user": 10,
-      "working_set": 50655232
+      "working_set": 52482048
     },
     {
       "gdi": 11,
-      "handles": 418,
-      "private_bytes": 143470592,
+      "handles": 426,
+      "private_bytes": 142798848,
       "stage": "sprite",
-      "t_ms": 556.8489,
+      "t_ms": 530.2818,
       "threads": 34,
       "user": 11,
-      "working_set": 62672896
+      "working_set": 64241664
     },
     {
       "gdi": 11,
-      "handles": 444,
-      "private_bytes": 148705280,
+      "handles": 452,
+      "private_bytes": 148467712,
       "stage": "first_show",
-      "t_ms": 624.1224,
+      "t_ms": 594.4859,
       "threads": 35,
       "user": 14,
-      "working_set": 68632576
+      "working_set": 70348800
     },
     {
       "gdi": 11,
-      "handles": 444,
-      "private_bytes": 85721088,
+      "handles": 452,
+      "private_bytes": 85417984,
       "stage": "after_gpu_trim",
-      "t_ms": 696.9162,
+      "t_ms": 664.2057,
       "threads": 35,
       "user": 14,
-      "working_set": 52727808
+      "working_set": 54460416
     }
   ]
 }

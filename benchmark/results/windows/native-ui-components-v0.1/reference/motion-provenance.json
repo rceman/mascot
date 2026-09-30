@@ -1,0 +1,364 @@
+{
+    "strips":  [
+                   {
+                       "url":  "https://ui.shadcn.com/view/new-york-v4/button-default",
+                       "example":  "button-default",
+                       "browser":  "chrome.exe 154.0.8037.58",
+                       "trigger":  "hover",
+                       "dpr":  2,
+                       "times_ms":  [
+                                        0,
+                                        25,
+                                        50,
+                                        75,
+                                        100,
+                                        125,
+                                        150
+                                    ],
+                       "animationNames":  [
+                                              "background-color/CSSTransition"
+                                          ],
+                       "theme":  "light",
+                       "computedStyle":  {
+                                             "transitionProperty":  "all",
+                                             "transitionDuration":  "0.15s",
+                                             "transitionTimingFunction":  "cubic-bezier(0.4, 0, 0.2, 1)",
+                                             "animationName":  "none",
+                                             "animationDuration":  "0s",
+                                             "animationTimingFunction":  "ease"
+                                         },
+                       "animations":  [
+                                          "1"
+                                      ],
+                       "key":  "button-default"
+                   },
+                   {
+                       "url":  "https://ui.shadcn.com/view/new-york-v4/button-default",
+                       "example":  "button-default",
+                       "browser":  "chrome.exe 154.0.8037.58",
+                       "trigger":  "hover",
+                       "dpr":  2,
+                       "times_ms":  [
+                                        0,
+                                        25,
+                                        50,
+                                        75,
+                                        100,
+                                        125,
+                                        150
+                                    ],
+                       "animationNames":  [
+                                              "background-color/CSSTransition"
+                                          ],
+                       "theme":  "dark",
+                       "computedStyle":  {
+                                             "transitionProperty":  "all",
+                                             "transitionDuration":  "0.15s",
+                                             "transitionTimingFunction":  "cubic-bezier(0.4, 0, 0.2, 1)",
+                                             "animationName":  "none",
+                                             "animationDuration":  "0s",
+                                             "animationTimingFunction":  "ease"
+                                         },
+                       "animations":  [
+                                          "2"
+                                      ],
+                       "key":  "button-default"
+                   },
+                   {
+                       "url":  "https://ui.shadcn.com/view/new-york-v4/button-ghost",
+                       "example":  "button-ghost",
+                       "browser":  "chrome.exe 154.0.8037.58",
+                       "trigger":  "hover",
+                       "dpr":  2,
+                       "times_ms":  [
+                                        0,
+                                        25,
+                                        50,
+                                        75,
+                                        100,
+                                        125,
+                                        150
+                                    ],
+                       "animationNames":  [
+                                              "color/CSSTransition",
+                                              "background-color/CSSTransition"
+                                          ],
+                       "theme":  "light",
+                       "computedStyle":  {
+                                             "transitionProperty":  "all",
+                                             "transitionDuration":  "0.15s",
+                                             "transitionTimingFunction":  "cubic-bezier(0.4, 0, 0.2, 1)",
+                                             "animationName":  "none",
+                                             "animationDuration":  "0s",
+                                             "animationTimingFunction":  "ease"
+                                         },
+                       "animations":  [
+                                          "3",
+                                          "4"
+                                      ],
+                       "key":  "button-ghost"
+                   },
+                   {
+                       "url":  "https://ui.shadcn.com/view/new-york-v4/button-ghost",
+                       "example":  "button-ghost",
+                       "browser":  "chrome.exe 154.0.8037.58",
+                       "trigger":  "hover",
+                       "dpr":  2,
+                       "times_ms":  [
+                                        0,
+                                        25,
+                                        50,
+                                        75,
+                                        100,
+                                        125,
+                                        150
+                                    ],
+                       "animationNames":  [
+                                              "color/CSSTransition",
+                                              "background-color/CSSTransition"
+                                          ],
+                       "theme":  "dark",
+                       "computedStyle":  {
+                                             "transitionProperty":  "all",
+                                             "transitionDuration":  "0.15s",
+                                             "transitionTimingFunction":  "cubic-bezier(0.4, 0, 0.2, 1)",
+                                             "animationName":  "none",
+                                             "animationDuration":  "0s",
+                                             "animationTimingFunction":  "ease"
+                                         },
+                       "animations":  [
+                                          "5",
+                                          "6"
+                                      ],
+                       "key":  "button-ghost"
+                   },
+                   {
+                       "url":  "https://ui.shadcn.com/view/new-york-v4/button-default",
+                       "example":  "button-default",
+                       "browser":  "chrome.exe 154.0.8037.58",
+                       "trigger":  "tab",
+                       "dpr":  2,
+                       "times_ms":  [
+                                        0,
+                                        25,
+                                        50,
+                                        75,
+                                        100,
+                                        125,
+                                        150
+                                    ],
+                       "animationNames":  [
+                                              "outline-width/CSSTransition",
+                                              "border-bottom-color/CSSTransition",
+                                              "border-left-color/CSSTransition",
+                                              "box-shadow/CSSTransition",
+                                              "border-right-color/CSSTransition",
+                                              "border-top-color/CSSTransition"
+                                          ],
+                       "theme":  "light",
+                       "computedStyle":  {
+                                             "transitionProperty":  "all",
+                                             "transitionDuration":  "0.15s",
+                                             "transitionTimingFunction":  "cubic-bezier(0.4, 0, 0.2, 1)",
+                                             "animationName":  "none",
+                                             "animationDuration":  "0s",
+                                             "animationTimingFunction":  "ease"
+                                         },
+                       "animations":  [
+                                          "7",
+                                          "8",
+                                          "9",
+                                          "10",
+                                          "11",
+                                          "12"
+                                      ],
+                       "key":  "button-focus"
+                   },
+                   {
+                       "url":  "https://ui.shadcn.com/view/new-york-v4/button-default",
+                       "example":  "button-default",
+                       "browser":  "chrome.exe 154.0.8037.58",
+                       "trigger":  "tab",
+                       "dpr":  2,
+                       "times_ms":  [
+                                        0,
+                                        25,
+                                        50,
+                                        75,
+                                        100,
+                                        125,
+                                        150
+                                    ],
+                       "animationNames":  [
+                                              "outline-width/CSSTransition",
+                                              "border-bottom-color/CSSTransition",
+                                              "border-left-color/CSSTransition",
+                                              "box-shadow/CSSTransition",
+                                              "border-right-color/CSSTransition",
+                                              "border-top-color/CSSTransition"
+                                          ],
+                       "theme":  "dark",
+                       "computedStyle":  {
+                                             "transitionProperty":  "all",
+                                             "transitionDuration":  "0.15s",
+                                             "transitionTimingFunction":  "cubic-bezier(0.4, 0, 0.2, 1)",
+                                             "animationName":  "none",
+                                             "animationDuration":  "0s",
+                                             "animationTimingFunction":  "ease"
+                                         },
+                       "animations":  [
+                                          "13",
+                                          "14",
+                                          "15",
+                                          "16",
+                                          "17",
+                                          "18"
+                                      ],
+                       "key":  "button-focus"
+                   },
+                   {
+                       "url":  "https://ui.shadcn.com/view/new-york-v4/tooltip-demo",
+                       "example":  "tooltip-demo",
+                       "browser":  "chrome.exe 154.0.8037.58",
+                       "trigger":  "hover",
+                       "dpr":  2,
+                       "times_ms":  [
+                                        0,
+                                        25,
+                                        50,
+                                        75,
+                                        100,
+                                        125,
+                                        150
+                                    ],
+                       "animationNames":  [
+                                              "color/CSSTransition",
+                                              "background-color/CSSTransition",
+                                              "enter/CSSAnimation"
+                                          ],
+                       "theme":  "light",
+                       "computedStyle":  {
+                                             "transitionProperty":  "all",
+                                             "transitionDuration":  "0s",
+                                             "transitionTimingFunction":  "ease",
+                                             "animationName":  "enter",
+                                             "animationDuration":  "0.15s",
+                                             "animationTimingFunction":  "ease"
+                                         },
+                       "animations":  [
+                                          "19",
+                                          "20",
+                                          "21"
+                                      ],
+                       "key":  "tooltip-open"
+                   },
+                   {
+                       "url":  "https://ui.shadcn.com/view/new-york-v4/tooltip-demo",
+                       "example":  "tooltip-demo",
+                       "browser":  "chrome.exe 154.0.8037.58",
+                       "trigger":  "hover",
+                       "dpr":  2,
+                       "times_ms":  [
+                                        0,
+                                        25,
+                                        50,
+                                        75,
+                                        100,
+                                        125,
+                                        150
+                                    ],
+                       "animationNames":  [
+                                              "color/CSSTransition",
+                                              "background-color/CSSTransition",
+                                              "enter/CSSAnimation"
+                                          ],
+                       "theme":  "dark",
+                       "computedStyle":  {
+                                             "transitionProperty":  "all",
+                                             "transitionDuration":  "0s",
+                                             "transitionTimingFunction":  "ease",
+                                             "animationName":  "enter",
+                                             "animationDuration":  "0.15s",
+                                             "animationTimingFunction":  "ease"
+                                         },
+                       "animations":  [
+                                          "22",
+                                          "23",
+                                          "24"
+                                      ],
+                       "key":  "tooltip-open"
+                   },
+                   {
+                       "url":  "https://ui.shadcn.com/view/new-york-v4/tooltip-demo",
+                       "example":  "tooltip-demo",
+                       "browser":  "chrome.exe 154.0.8037.58",
+                       "trigger":  "hover-off",
+                       "dpr":  2,
+                       "times_ms":  [
+                                        0,
+                                        25,
+                                        50,
+                                        75,
+                                        100,
+                                        125,
+                                        150
+                                    ],
+                       "animationNames":  [
+                                              "color/CSSTransition",
+                                              "background-color/CSSTransition",
+                                              "exit/CSSAnimation"
+                                          ],
+                       "theme":  "light",
+                       "computedStyle":  {
+                                             "transitionProperty":  "all",
+                                             "transitionDuration":  "0s",
+                                             "transitionTimingFunction":  "ease",
+                                             "animationName":  "exit",
+                                             "animationDuration":  "0.15s",
+                                             "animationTimingFunction":  "ease"
+                                         },
+                       "animations":  [
+                                          "28",
+                                          "29",
+                                          "30"
+                                      ],
+                       "key":  "tooltip-close"
+                   },
+                   {
+                       "url":  "https://ui.shadcn.com/view/new-york-v4/tooltip-demo",
+                       "example":  "tooltip-demo",
+                       "browser":  "chrome.exe 154.0.8037.58",
+                       "trigger":  "hover-off",
+                       "dpr":  2,
+                       "times_ms":  [
+                                        0,
+                                        25,
+                                        50,
+                                        75,
+                                        100,
+                                        125,
+                                        150
+                                    ],
+                       "animationNames":  [
+                                              "color/CSSTransition",
+                                              "background-color/CSSTransition",
+                                              "exit/CSSAnimation"
+                                          ],
+                       "theme":  "dark",
+                       "computedStyle":  {
+                                             "transitionProperty":  "all",
+                                             "transitionDuration":  "0s",
+                                             "transitionTimingFunction":  "ease",
+                                             "animationName":  "exit",
+                                             "animationDuration":  "0.15s",
+                                             "animationTimingFunction":  "ease"
+                                         },
+                       "animations":  [
+                                          "34",
+                                          "35",
+                                          "36"
+                                      ],
+                       "key":  "tooltip-close"
+                   }
+               ]
+}

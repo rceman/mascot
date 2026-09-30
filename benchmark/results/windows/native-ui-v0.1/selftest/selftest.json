@@ -2,7 +2,7 @@
   "checks": [
     {
       "detail": {
-        "hwnd": 6161840
+        "hwnd": 5312110
       },
       "name": "foreground",
       "pass": true
@@ -121,7 +121,7 @@
     },
     {
       "detail": {
-        "press_to_submit_ms": 51
+        "press_to_submit_ms": 52
       },
       "name": "enter-submit-latency",
       "pass": true
@@ -132,7 +132,7 @@
         "char_trace": "[50332296, 50332296, 104, 101, 108, 108, 111, 32, 220, 26085, 26412, 35486, 55357, 56395, 1, 3, 22, 1, 13, 13]",
         "editor_empty": false,
         "focus": "Some(Stop)",
-        "press_to_submit_ms": 51,
+        "press_to_submit_ms": 52,
         "submitted": "l1\rl2\rl3\rl4\rl5\rl6\rl7",
         "surface": "Composer"
       },
@@ -172,7 +172,7 @@
         "attempts": 1,
         "ctrl": 1,
         "dead_vk": 222,
-        "shift": 0,
+        "shift": 1,
         "text": "\tā",
         "trace_tail": "[1, d, d, d, 9, 9, 9, 3000282, 3000282, 101]"
       },
@@ -184,7 +184,7 @@
         "composing": true,
         "ctrl": 1,
         "open": "open=false cmode=0 smode=0",
-        "trace": "[3000282, 3000282, 3000282, 3000282, 3000282, 3000288, 3000288, 300010d, 300010f, 3000282, 3000288, 3000288, 3000282, 3000288, 3000288, 300010f, 3000288, 300010f, 3000288, 300010f, 3000288, 300010f, 3000288, 300010f]"
+        "trace": "[3000282, 3000282, 101, 3000282, 3000282, 3000288, 3000288, 300010d, 300010f, 3000282, 3000288, 3000288, 3000282, 3000288, 3000288, 300010f, 3000288, 300010f, 3000288, 300010f, 3000288, 300010f, 3000288, 300010f]"
       },
       "name": "ime-ja-preedit",
       "pass": true
@@ -237,10 +237,104 @@
       "detail": {},
       "name": "capture-live",
       "pass": true
+    },
+    {
+      "detail": {
+        "attempts": 1,
+        "motion_active": false,
+        "off": 7,
+        "on": 6,
+        "quiet_1s": 0,
+        "timer_armed": false
+      },
+      "name": "motion-hover",
+      "pass": true
+    },
+    {
+      "detail": {
+        "attempts": 1,
+        "close_opacities": [
+          0.5023045539855957,
+          0.2687634229660034,
+          0.1259027123451233,
+          0.04873192310333252,
+          0.0103951096534729,
+          0.0
+        ],
+        "close_presents": 6,
+        "drawn_during_close": true,
+        "open_opacities": [
+          0.11591292172670364,
+          0.36040374636650085,
+          0.5868688225746155,
+          0.7439466714859009,
+          0.856311023235321,
+          0.9272942543029785,
+          0.9706722497940063,
+          0.9934458136558533,
+          0.9999958872795105,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "open_presents": 6,
+        "quiet_1s": 0,
+        "timer_armed": false,
+        "tooltip_opened": true
+      },
+      "name": "motion-tooltip",
+      "pass": true
+    },
+    {
+      "detail": {
+        "attempts": 1,
+        "motion_presents": 0,
+        "state_frames": true
+      },
+      "name": "motion-reduced",
+      "pass": true
+    },
+    {
+      "detail": {
+        "attempts": 1,
+        "editor_ibeam": true,
+        "mascot_arrow": true,
+        "send_arrow": true
+      },
+      "name": "cursor-shape",
+      "pass": true
+    },
+    {
+      "detail": {
+        "attempts": 1,
+        "last_submitted": "click submit",
+        "stop_restored": true,
+        "submitting": true
+      },
+      "name": "send-click-submits",
+      "pass": true
     }
   ],
   "foreground_guard_blocked_injections": 0,
-  "passed": 28,
+  "passed": 33,
   "retried": {},
-  "total": 28
+  "total": 33
 }

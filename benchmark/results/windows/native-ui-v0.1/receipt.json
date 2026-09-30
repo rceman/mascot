@@ -4,316 +4,394 @@
     "dark": "#1F1F1F",
     "light": "#EDEDED"
   },
+  "code_dirty": false,
+  "code_head": "241c4878beaf0c3cc4554632097f7b7d6b53a236",
   "device": "warp",
-  "dirty": false,
+  "evidence_head": null,
+  "evidence_head_rule": "Set by `mascot-ui-lab stamp-evidence` in the commit that follows the evidence commit. evidence_head is the commit that added this evidence; the stamp commit is the final branch head and changes only evidence_head fields.",
   "files": [
     {
       "bytes": 16268,
+      "git_blob": "46f8aa71402cb7fb5ae364b2609212b8b87c383d",
       "path": "states/light-mascot-only.png"
     },
     {
       "bytes": 22009,
+      "git_blob": "f5a08157adf859ebb7ee0a7f499c28e3b6992e74",
       "path": "zoomed/light-mascot-only-3x.png"
     },
     {
       "bytes": 20954,
+      "git_blob": "28670ed8d2396d65fda35b8b502abc838dbcda17",
       "path": "states/light-composer-empty.png"
     },
     {
       "bytes": 29549,
+      "git_blob": "526d5779af3b05d01d802ff967d563e8caf01f6a",
       "path": "zoomed/light-composer-empty-3x.png"
     },
     {
       "bytes": 21117,
+      "git_blob": "fb6eece20e7619eea2eafeafa093ff0b3dd5cddc",
       "path": "states/light-composer-focused.png"
     },
     {
       "bytes": 29682,
+      "git_blob": "a6b2cb58b88ed96904dd2ee157dfb8f6e5c3b28b",
       "path": "zoomed/light-composer-focused-3x.png"
     },
     {
       "bytes": 21416,
+      "git_blob": "caf9c1409e24cb393be6297a2b9691c5250750e9",
       "path": "states/light-composer-text.png"
     },
     {
       "bytes": 30048,
+      "git_blob": "4226082511088022c42be2e928226985da31b536",
       "path": "zoomed/light-composer-text-3x.png"
     },
     {
       "bytes": 21567,
+      "git_blob": "87168fa6f8fb93f5003d3af8499b145db4a31bb3",
       "path": "states/light-composer-text-right.png"
     },
     {
       "bytes": 30618,
+      "git_blob": "bc5d4ef1071100d8916e799f9fd5e466858f04fd",
       "path": "zoomed/light-composer-text-right-3x.png"
     },
     {
       "bytes": 24039,
+      "git_blob": "0189758edf6fdfd0cb15a700df6e203e1bdca602",
       "path": "states/light-composer-multiline.png"
     },
     {
       "bytes": 34808,
+      "git_blob": "afddbed0647c1a330ddebf9adc1faced9fd6c17a",
       "path": "zoomed/light-composer-multiline-3x.png"
     },
     {
       "bytes": 21631,
+      "git_blob": "8d4a0d1be493ea6cf1a5a4ea1609ee9f105c1b6c",
       "path": "states/light-composer-selection.png"
     },
     {
       "bytes": 30397,
+      "git_blob": "8019e2057dc6de4c18a64c65ff3f935196210975",
       "path": "zoomed/light-composer-selection-3x.png"
     },
     {
       "bytes": 21360,
+      "git_blob": "e2054bbc196adddf3ec8e4236029d37afcd931fa",
       "path": "states/light-submitting.png"
     },
     {
       "bytes": 29983,
+      "git_blob": "5a7ccac03634bb1d829cfc3df494e2c736b8d029",
       "path": "zoomed/light-submitting-3x.png"
     },
     {
       "bytes": 29682,
+      "git_blob": "baee6fbb9b52b4da09ef6c30105e1b3f20f48824",
       "path": "states/light-response.png"
     },
     {
       "bytes": 45138,
+      "git_blob": "8244c77acf1c24b055180955b2d35970ba054931",
       "path": "zoomed/light-response-3x.png"
     },
     {
       "bytes": 29827,
+      "git_blob": "6c8dffc799c5829f4fcdf0cb145d5323a0323479",
       "path": "states/light-response-right.png"
     },
     {
       "bytes": 45703,
+      "git_blob": "c8df82482dc0f7052eb133e5a86afdf88f5ab3f6",
       "path": "zoomed/light-response-right-3x.png"
     },
     {
       "bytes": 30212,
+      "git_blob": "a5accf2afa2a1cef5fcb00a0b9320ad2187d0333",
       "path": "states/light-response-followup.png"
     },
     {
       "bytes": 45750,
+      "git_blob": "742c95e45fb4274982b54def8944ac366c305fad",
       "path": "zoomed/light-response-followup-3x.png"
     },
     {
       "bytes": 21283,
+      "git_blob": "8c6395ad22a857ca148c2b2504a70a216feda2ac",
       "path": "states/light-send-hover.png"
     },
     {
       "bytes": 29930,
+      "git_blob": "949c0e677e9174a179c113e8ec5a1a55939616ff",
       "path": "zoomed/light-send-hover-3x.png"
     },
     {
       "bytes": 21424,
+      "git_blob": "74f5be8243c9f2aa9387b85548d5fc33053fbadf",
       "path": "states/light-send-hover-right.png"
     },
     {
       "bytes": 30509,
+      "git_blob": "960cde9a069504b04d5fffeb1c504e56beaf522d",
       "path": "zoomed/light-send-hover-right-3x.png"
     },
     {
       "bytes": 21282,
+      "git_blob": "da7d733f91da6d9c9f68a808296a390e326d38a3",
       "path": "states/light-send-pressed.png"
     },
     {
       "bytes": 29928,
+      "git_blob": "6432922d2096e069650c47a609c9b7e526037979",
       "path": "zoomed/light-send-pressed-3x.png"
     },
     {
       "bytes": 21754,
+      "git_blob": "d0487b7be12eeb0bd18dadba5c665f89f8f27f56",
       "path": "states/light-send-focus-visible.png"
     },
     {
       "bytes": 30611,
+      "git_blob": "7e91fb3d6a7588d16ff0536d01a9159b824ee394",
       "path": "zoomed/light-send-focus-visible-3x.png"
     },
     {
       "bytes": 21342,
+      "git_blob": "bd833142e292de2f9b1629b9b1c0f990004e7650",
       "path": "states/light-stop-hover.png"
     },
     {
       "bytes": 29972,
+      "git_blob": "a25e05b29594a32c8cc54116b71d79755e1fc1e7",
       "path": "zoomed/light-stop-hover-3x.png"
     },
     {
-      "bytes": 30554,
+      "bytes": 30570,
+      "git_blob": "0667030f547fa0bdf24185fec1ef6f19797ba293",
       "path": "states/light-copy-hover-tooltip.png"
     },
     {
-      "bytes": 46357,
+      "bytes": 46392,
+      "git_blob": "ea0f9095a4fc219896f2d229fe64c7dd9b656fd5",
       "path": "zoomed/light-copy-hover-tooltip-3x.png"
     },
     {
-      "bytes": 30341,
+      "bytes": 30346,
+      "git_blob": "38db0bb2fb98905d6c1578e419c4e6083c8ed414",
       "path": "states/light-copy-copied.png"
     },
     {
-      "bytes": 46134,
+      "bytes": 46107,
+      "git_blob": "6c9a61cb7fd0b400f564fa18691ccecf37b6a9ab",
       "path": "zoomed/light-copy-copied-3x.png"
     },
     {
       "bytes": 15525,
+      "git_blob": "29abd37e056c59a4007bc649a9ced31a998c05a0",
       "path": "states/dark-mascot-only.png"
     },
     {
       "bytes": 22009,
+      "git_blob": "f5a08157adf859ebb7ee0a7f499c28e3b6992e74",
       "path": "zoomed/dark-mascot-only-3x.png"
     },
     {
       "bytes": 19672,
+      "git_blob": "8f0e7f41d35264dd66f81ee416c7b7ab2086486c",
       "path": "states/dark-composer-empty.png"
     },
     {
       "bytes": 29799,
+      "git_blob": "721d7e20461d7063218129a379c7551b0a3a9836",
       "path": "zoomed/dark-composer-empty-3x.png"
     },
     {
       "bytes": 19838,
+      "git_blob": "2173f3c8c76a8a4f95089a1d9de6d3a40ab5ac32",
       "path": "states/dark-composer-focused.png"
     },
     {
       "bytes": 29941,
+      "git_blob": "123ffb4e75a6beaff15143bedbec923fccbf7138",
       "path": "zoomed/dark-composer-focused-3x.png"
     },
     {
       "bytes": 20102,
+      "git_blob": "9436d17ff472ce6177007d8304d87589de5e0912",
       "path": "states/dark-composer-text.png"
     },
     {
       "bytes": 30231,
+      "git_blob": "89ad30f474eca0d8ba226b1aa6c2261320ae4b53",
       "path": "zoomed/dark-composer-text-3x.png"
     },
     {
       "bytes": 20287,
+      "git_blob": "b464db538e9498d0564e1dc06c083b302b98c4fd",
       "path": "states/dark-composer-text-right.png"
     },
     {
       "bytes": 30784,
+      "git_blob": "9460699a22f875fa8c3ebb1e6867b406628d6e30",
       "path": "zoomed/dark-composer-text-right-3x.png"
     },
     {
       "bytes": 22694,
+      "git_blob": "8a47c6ecbe15acc627d4f436a769dba389b70367",
       "path": "states/dark-composer-multiline.png"
     },
     {
       "bytes": 34959,
+      "git_blob": "931674600b21b66ba181d62e5b52d2b587b9cc75",
       "path": "zoomed/dark-composer-multiline-3x.png"
     },
     {
       "bytes": 20306,
+      "git_blob": "9475519abae74ae9bb860bac1578ed3d25a6fa1a",
       "path": "states/dark-composer-selection.png"
     },
     {
       "bytes": 30603,
+      "git_blob": "dc9cf14e19c22a989dcadafd265e9710097038b8",
       "path": "zoomed/dark-composer-selection-3x.png"
     },
     {
       "bytes": 20037,
+      "git_blob": "58ff42cca957c4a472dc351d8a74826cab949c30",
       "path": "states/dark-submitting.png"
     },
     {
       "bytes": 30140,
+      "git_blob": "2295e97325dc3cfdafb9f18763c54114721b1708",
       "path": "zoomed/dark-submitting-3x.png"
     },
     {
       "bytes": 28413,
+      "git_blob": "e4eaee852bb1172802bcb661cc51139e69ff6b1a",
       "path": "states/dark-response.png"
     },
     {
       "bytes": 45093,
+      "git_blob": "82aea4be98b9255998d18355b66a3f4e23eda2a8",
       "path": "zoomed/dark-response-3x.png"
     },
     {
       "bytes": 28593,
+      "git_blob": "fb0f684a17e01f0f8fb9eb7d260d3b992f15225c",
       "path": "states/dark-response-right.png"
     },
     {
       "bytes": 45627,
+      "git_blob": "9c4b7166e96d6d3266ee0454cabddd69754e25a1",
       "path": "zoomed/dark-response-right-3x.png"
     },
     {
       "bytes": 28974,
+      "git_blob": "981f008de657dc4a2c40fc584ef94c9c1b0a8d27",
       "path": "states/dark-response-followup.png"
     },
     {
       "bytes": 45637,
+      "git_blob": "122c919fbbd9edc3de5016a9e596983f81d33d17",
       "path": "zoomed/dark-response-followup-3x.png"
     },
     {
       "bytes": 19971,
+      "git_blob": "5500a9f7476b84ae2667f21f77ba92b46c428897",
       "path": "states/dark-send-hover.png"
     },
     {
       "bytes": 30080,
+      "git_blob": "67147fecebe4ee999604ba0425442732e3d0acb8",
       "path": "zoomed/dark-send-hover-3x.png"
     },
     {
       "bytes": 20155,
+      "git_blob": "566af79f191e41074758eb27417c26caac41ebf9",
       "path": "states/dark-send-hover-right.png"
     },
     {
       "bytes": 30627,
+      "git_blob": "1364a4c79acdbb896460cadbe8abb7ad1163a577",
       "path": "zoomed/dark-send-hover-right-3x.png"
     },
     {
       "bytes": 19965,
+      "git_blob": "2df8dc0d91e964cdc09c7e508e8d037f5bfdaae9",
       "path": "states/dark-send-pressed.png"
     },
     {
       "bytes": 30090,
+      "git_blob": "d876e82eaa3085383c14a43700a77d742a95213e",
       "path": "zoomed/dark-send-pressed-3x.png"
     },
     {
       "bytes": 20404,
+      "git_blob": "01206140c32b346013fd8dbe39972c1ed13c4858",
       "path": "states/dark-send-focus-visible.png"
     },
     {
       "bytes": 30764,
+      "git_blob": "6fdb83061eab4cea0089b3f20b919a64c17f5fcd",
       "path": "zoomed/dark-send-focus-visible-3x.png"
     },
     {
       "bytes": 20020,
+      "git_blob": "c14523b4b5f82b4df3e4b9fc45b2b4741c53a6c5",
       "path": "states/dark-stop-hover.png"
     },
     {
       "bytes": 30118,
+      "git_blob": "e15c3767075832fba9e8bfffc811c5cd30b73aa1",
       "path": "zoomed/dark-stop-hover-3x.png"
     },
     {
-      "bytes": 29378,
+      "bytes": 29375,
+      "git_blob": "af1305613fb446c7a61b10e809a6ae4c187557f0",
       "path": "states/dark-copy-hover-tooltip.png"
     },
     {
-      "bytes": 46372,
+      "bytes": 46364,
+      "git_blob": "ca663fc3c2d689472b456dfc8a2492bf587e6fc9",
       "path": "zoomed/dark-copy-hover-tooltip-3x.png"
     },
     {
-      "bytes": 29091,
+      "bytes": 29061,
+      "git_blob": "c24510366f2d05ccaf8a266d9f48914169ed5c7f",
       "path": "states/dark-copy-copied.png"
     },
     {
-      "bytes": 46119,
+      "bytes": 46098,
+      "git_blob": "ce6f1d704df0f241ee1058ff172ba66f097e7273",
       "path": "zoomed/dark-copy-copied-3x.png"
     },
     {
-      "bytes": 303181,
+      "bytes": 303220,
+      "git_blob": "a392a6ef3ab9f9e20118e064501832925b9b402a",
       "path": "contact-sheet-light.png"
     },
     {
-      "bytes": 289700,
+      "bytes": 289641,
+      "git_blob": "767e4b88d65c48907733ef75639233cd3bd10e15",
       "path": "contact-sheet-dark.png"
     },
     {
       "bytes": 735791,
+      "git_blob": "eb8c89d3fa095481af2bfca506beb19abc313a5f",
       "path": "dpi-contact-sheet.png"
     },
     {
       "bytes": 59649,
+      "git_blob": "8e0c05ac4e8555e39bb2b1ed58c47017571b506a",
       "path": "icon-sheet.png"
     }
   ],
   "font_family": "Segoe UI Variable Text",
-  "head": "b285fd086f0090a901598a3966703956e704b6b6",
   "os_build": "10.0.26200.9457",
   "rig_rev": "2b8b52b649af4c0e8293a7a644e70f04052b3d76",
   "scales": [

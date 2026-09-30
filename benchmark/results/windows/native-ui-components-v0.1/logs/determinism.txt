@@ -1,0 +1,2 @@
+diff-images W:/devin_folder/scratch/mascot-ui-v01/final-evidence/components-A3 vs W:/devin_folder/scratch/mascot-ui-v01/final-evidence/components-B3
+identical: 127/127

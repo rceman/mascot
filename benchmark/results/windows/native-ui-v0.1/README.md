@@ -6,8 +6,14 @@ premultiplied-alpha flip swap chain (no `WS_EX_LAYERED`), windowless
 RichEdit text path, Direct2D painter, Lucide icon set, light/dark
 shadcn-style theme, left/right placement.
 
-HEAD: `b285fd0` (`b285fd0` full hash in `receipt.json`/`perf.json`), branch
-`agent/native-ui-foundation-v0.1-swe2`, dirty = false.
+Captures, states, zoomed crops and selftest were regenerated at `code_head` `241c487`
+(`code_dirty=false`, full hashes in `receipt.json`) on branch
+`agent/native-ui-component-gallery-v0.1-swe2` after the tooltip colour correction
+(shadcn `bg-foreground text-background`). Only tooltip pills changed
+(`logs/foundation-diff.txt`). `evidence_head` is stamped by `mascot-ui-lab stamp-evidence`
+as described in `receipt.json`. The canonical current perf artifact is
+`../native-ui-components-v0.1/perf.json`. The perf, cargo-test, clippy and rustfmt results
+below are the original foundation (`b285fd0`) measurements, kept under `logs/history/`.
 
 ## Environment
 
@@ -79,8 +85,12 @@ Prerequisites:
 Writes `selftest.json` (per-check pass + injection retry counts) and
 checkpoint PNGs.
 
-This run: **28 checks, all pass, first attempt on every check**
-(`retried: {}`). `enter-submits` injects a plain Enter against a
+This run (`241c487`): **33 checks, all pass, first attempt on every check**
+(`retried: {}`, 0 blocked injections). The five checks added since the
+foundation are `cursor-shape` (arrow over Send and mascot, I-beam over the
+editor), `send-click-submits` (a real click on Send submits, a click on
+Stop returns to Idle with the text kept), `motion-hover`, `motion-tooltip`
+and `motion-reduced`. The foundation run (`b285fd0`) had 28 checks. `enter-submits` injects a plain Enter against a
 non-empty composer and observes `activity == Submitting`;
 `enter-submit-latency` is a dedicated regression assertion that fails if
 `press_to_submit_ms >= 250` — measured **51 ms** this run.
@@ -114,7 +124,7 @@ Regenerates `crates/mascot-icons/src/generated.rs` from
 `mod generated;` is `#[rustfmt::skip]` — the generator owns the layout and
 the `generated_is_in_sync_with_sources` test guards drift.
 
-## Verification (this run)
+## Verification (foundation run, `b285fd0`; logs in `logs/history/`)
 
 `cargo test --release --workspace`: **61 passed, 0 failed**
 (`logs/cargo-test.txt`). `cargo clippy --release` on the four new
@@ -131,14 +141,14 @@ except `generated.rs` (`#[rustfmt::skip]`): clean (`logs/rustfmt.txt`).
 | `dpi-contact-sheet.png` | 3 states × 2 themes × scales 100–200% |
 | `icon-sheet.png` | the 12-icon Lucide set in both themes |
 | `states/` | 36 per-state PNGs |
-| `zoom/` | 12 curated 3× crops + 2× DPI cells |
-| `receipt.json` | capture receipt: HEAD, dirty, device, file list |
-| `selftest/` | `selftest.json` + 3 checkpoint PNGs + `selftest-screen.png` |
-| `perf.json` | 3 hardware runs: medians, per-run metrics, stage snapshots |
-| `uia.txt` | UIAutomationClient walk: window → Document → Value/Text |
-| `logs/` | `cargo-test.txt`, `clippy.txt`, `rustfmt.txt` |
+| `zoomed/` | 3× crops of every state + 2× DPI cells (the `capture` command's output) |
+| `receipt.json` | capture receipt: `code_head`, `code_dirty`, `evidence_head`, device, file list with blob hashes |
+| `selftest/` | `selftest.json` + checkpoint PNGs + `selftest-screen.png` |
+| `uia.txt` | UIAutomationClient walk: window → Document → Value/Text (from `b285fd0`; the UIA provider is unchanged since) |
+| `logs/foundation-diff.txt` | `diff-images` of the previous captures against these |
+| `logs/history/` | foundation `perf-b285fd0.json`, `cargo-test-`/`clippy-`/`rustfmt-b285fd0.txt` |
 
-## Perf (hardware D3D11, release, 3 runs)
+## Perf (historical: foundation `b285fd0`, hardware D3D11, release, 3 runs; `logs/history/perf-b285fd0.json`)
 
 ### Headline (medians across runs)
 

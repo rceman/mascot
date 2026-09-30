@@ -1,8 +1,33 @@
 # Visual review — native UI component gallery v0.1
 
-Candidate: `03eae71` (receipt `head=03eae71`, `dirty=false`). All sheets were inspected at full
-resolution (region crops, not downsampled views). The final sheets are byte-identical to the
-last reviewed dev capture (r4), and the r4→r5 cleanup did not change a single sheet pixel.
+Candidate: `241c487` (receipt `code_head=241c487`, `code_dirty=false`). All sheets were inspected at
+full resolution (region crops, not downsampled views). The committed sheets are byte-identical
+(127/127) to the last reviewed dev capture (`gallery4`); the later commits only fixed clippy
+findings and the stamp-evidence tool and changed no pixel.
+
+## Correction pass (tooltip colour, motion, busy-state audit, cursor)
+
+| # | Finding | Severity | Resolution |
+|---|---|---|---|
+| C1 | Tooltip used `primary`/`primary-foreground` instead of shadcn `bg-foreground text-background` | ERROR | `tooltip_colors` = (`foreground`, `background`): light #0A0A0A / #FFFFFF, dark #FAFAFA / #0A0A0A. Inspected in both themes. Foundation pixels change only inside tooltip pills (`../native-ui-v0.1/logs/foundation-diff.txt`) |
+| C2 | Hover/pressed/focus changes and tooltip show/hide snapped; shadcn animates them | ERROR | 150 ms colour/ring transitions with Tailwind `cubic-bezier(0.4,0,0.2,1)`. Tooltip enter: fade-in-0 + zoom-in-95 + slide-in-from-bottom-2; exit: fade-out-0 + zoom-out-95; both 150 ms tw-animate-css `ease` |
+| C3 | First motion build: the tooltip drew nothing on any intermediate frame (D2D layer `contentBounds` defaulted to an empty rect) | ERROR | finite layer bounds + identity mask transform; regression test `tooltip_layer_probe.rs`; gallery ink-ramp self-check; selftest requires ≥ 3 mid-opacity frames each way |
+| C4 | shadcn "tooltip close" reference strip never closed (Radix hover grace kept `delayed-open`) | ERROR | close via Escape, wait for `data-state=closed`; every motion strip must differ at t=0/75/150 or the capture fails |
+| C5 | Busy/loading audit: a blue spinning ring was seen at the Send button during a selftest recording | ERROR | Not a painted loader: it was the Windows system busy cursor. `WM_SETCURSOR` was forwarded to RichEdit and never set a cursor outside the editor, so the last cursor (the busy ring from the terminal window) stayed over Send. The window now sets the arrow over controls, bubble and mascot, and the I-beam over the editor; selftest `cursor-shape` checks all three |
+| C6 | Send was only tested via Enter | WARN | selftest `send-click-submits`: a real pointer click on Send submits (Stop shown), a click on Stop returns to Idle with the text kept |
+
+**Busy/loading audit result.** The Send/submitting path has no spinner, busy glyph, progress
+indicator, animated arc or temporary loading icon. I checked the source, the runtime cursor state and
+rendered frames. Submitting swaps Send for Stop and dims the submitted text; the mascot is static.
+Loading/progress stays deferred (inventory `loading` entry, Tier B Progress unchanged). No loader was
+added.
+
+**Motion review (`component-gallery-motion.png`, `-motion-2.png`).** Each row shows the shadcn strip above
+the native strip, both at 200 %, t = 0…150 ms in 25 ms steps. The hover fills, ghost accent fill and
+focus-ring growth follow the reference ramp in both themes. Tooltip open fades, grows from 95 % and
+rises 8 DIP, matching the reference frame by frame. Close fades and shrinks in place without sliding,
+as in the reference. Reduced-motion rows are constant: the end state from the first frame. There is no
+bounce, overshoot or colour cycling, and the motion timer runs only while a transition is active.
 
 ## Review rounds
 
@@ -58,18 +83,20 @@ in `validate`, so the run fails if it regresses.
 - The live `/view` example site renders `--primary` as #000000 (light) and `--accent` as #404040 (dark).
   Mascot tokens follow the documented neutral theme (ui.shadcn.com/docs/theming: `oklch(0.205 0 0)` =
   #171717, `oklch(0.269 0 0)` = #262626). Recorded as a deviation.
-- The Tooltip uses primary/primary-foreground instead of shadcn's foreground/background. It is an
-  unjustified deviation and a follow-up candidate. It was left unchanged so the foundation pixels
-  stay identical (100/100).
+- The native tooltip fill is #0A0A0A (shadcn documented `--foreground`), while the live example site
+  renders it as #000000. This is the same documented-theme deviation as primary above.
+- Motion reference ghost/focus strips use shadcn text Buttons, and the native rows use the icon buttons
+  that exist in the product. The transition properties (150 ms, same easing, same fill/ring tokens) are
+  the comparison, not the glyph.
 
 ## Limitations
 
 - Reference PNGs are developer evidence from the live site (Chrome 154, upstream commit in
   `reference/provenance.json`). The product never reads them.
-- The in-repo `perf.json` run hit a noisy cold-start window (first show 753–1108 ms). The controlled,
-  strictly interleaved A/B in `logs/perf-ab/` (10 runs each) gives a first-show median of 626 ms at
-  `4ab080d` vs 606 ms for this branch. Warm open is 3.78 vs 3.75 ms and submit→response 6.15 vs 6.16 ms,
-  so there is no regression. Static idle is still 0 presents.
+- `perf.json` is the canonical alternating A/B (10 runs per side): first show 584.0 ms at `4ab080d` vs
+  592.8 ms at `2dcb2ea`, both inside each other's run ranges. Warm open is 3.69 vs 3.74 ms, submit→response
+  5.97 vs 6.23 ms, and static idle is 0 presents in all 20 runs. The earlier noisy 3-run set (753–1108 ms)
+  is kept in `logs/history/`.
 - Gallery pixels come from WARP for determinism. Composer/Response cells render through the real
   `App::render_offscreen` and windowless RichEdit, and primitives through the production `Painter`
   methods. Sheet captions/headings are gallery framing only.

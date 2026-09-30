@@ -1,27 +1,26 @@
-   Compiling mascot-ui-win32 v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-ui-win32)
    Compiling mascot-ui-lab v0.2.0 (W:\devin_folder\mascot-ui-v01\apps\mascot-ui-lab)
-    Finished `release` profile [optimized] target(s) in 11.21s
+    Finished `release` profile [optimized] target(s) in 6.91s
      Running unittests src\lib.rs (target\release\deps\mascot_animation-181d1fc201e3c6fb.exe)
 
 running 18 tests
-test clip::tests::eases_are_anchored ... ok
 test idle::tests::delays_in_range_and_suppression ... ok
-test math::tests::mul_applies_right_operand_first ... ok
-test attachment::tests::mesh_skinning_is_identity_at_bind_pose_and_follows_bones ... ok
-test player::tests::non_looping_clip_must_return_to_rest ... ok
-test idle::tests::deterministic_no_immediate_repeat_and_cooldowns ... ok
-test skeleton::tests::topological_order_is_enforced_for_out_of_order_files ... ok
 test math::tests::inverse_round_trips ... ok
-test clip::tests::track_interpolates_and_clamps ... ok
 test attachment::tests::rigid_sprite_rest_placement_matches_canvas_rect ... ok
+test attachment::tests::mesh_skinning_is_identity_at_bind_pose_and_follows_bones ... ok
+test clip::tests::eases_are_anchored ... ok
+test math::tests::mul_applies_right_operand_first ... ok
+test idle::tests::deterministic_no_immediate_repeat_and_cooldowns ... ok
+test math::tests::positive_rotation_is_clockwise_on_screen ... ok
+test skeleton::tests::topological_order_is_enforced_for_out_of_order_files ... ok
+test skeleton::tests::world_pivots_match_rest_canvas_positions ... ok
+test player::tests::one_shot_clip_completes_and_player_becomes_static_at_rest ... ok
 test player::tests::restart_and_reset ... ok
 test skeleton::tests::child_follows_parent_rotation_about_parent_pivot ... ok
 test skeleton::tests::mirror_reflects_about_root_pivot ... ok
-test skeleton::tests::world_pivots_match_rest_canvas_positions ... ok
-test player::tests::one_shot_clip_completes_and_player_becomes_static_at_rest ... ok
-test math::tests::positive_rotation_is_clockwise_on_screen ... ok
-test tests::draw_list_is_z_ordered_and_honours_opacity ... ok
+test player::tests::non_looping_clip_must_return_to_rest ... ok
+test clip::tests::track_interpolates_and_clamps ... ok
 test tests::rejects_bad_rigs ... ok
+test tests::draw_list_is_z_ordered_and_honours_opacity ... ok
 
 test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
@@ -29,8 +28,8 @@ test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
 
 running 4 tests
 test shipped_rig_has_required_hierarchy ... ok
-test every_clip_completes_and_returns_to_rest ... ok
 test shipped_clips_bind_and_stay_in_safe_ranges ... ok
+test every_clip_completes_and_returns_to_rest ... ok
 test shipped_sprites_exist_with_declared_sizes ... ok
 
 test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
@@ -45,8 +44,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 running 4 tests
 test tests::all_covers_every_variant ... ok
-test tests::names_are_unique_and_nonempty ... ok
 test tests::paths_are_nonempty_and_in_bounds ... ok
+test tests::names_are_unique_and_nonempty ... ok
 test tests::generated_is_in_sync_with_sources ... ok
 
 test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
@@ -72,23 +71,27 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
      Running unittests src\lib.rs (target\release\deps\mascot_ui-3ca86354d981141b.exe)
 
-running 26 tests
-test component::tests::button_colors_known_values ... ok
+running 30 tests
 test component::tests::badge_is_22_tall ... ok
-test component::tests::tooltip_clamps_at_max_width ... ok
-test layout::tests::bubble_width_parameter_scales_stretchables ... ok
 test component::tests::button_sizes_match_shadcn_compact ... ok
-test layout::tests::hidden_surface_only_hits_mascot ... ok
+test component::tests::button_colors_known_values ... ok
 test component::tests::control_visual_suppresses_disabled_states ... ok
-test layout::tests::response_layout_is_bounded_and_window_has_shadow_margin ... ok
-test layout::tests::send_centred_in_single_line_composer ... ok
-test layout::tests::snap_lands_on_device_pixels ... ok
-test layout::tests::editor_inside_bubble_with_insets ... ok
-test layout::tests::hit_test_orders_controls_mascot_bubble ... ok
-test layout::tests::perch_overlaps_bubble_top ... ok
 test component::tests::icon_button_and_badge_colors_known_values ... ok
+test layout::tests::editor_inside_bubble_with_insets ... ok
+test component::tests::tooltip_clamps_at_max_width ... ok
 test layout::tests::right_placement_mirrors_only_the_mascot ... ok
 test layout::tests::composer_height_clamps ... ok
+test layout::tests::hidden_surface_only_hits_mascot ... ok
+test layout::tests::perch_overlaps_bubble_top ... ok
+test layout::tests::bubble_width_parameter_scales_stretchables ... ok
+test layout::tests::send_centred_in_single_line_composer ... ok
+test layout::tests::snap_lands_on_device_pixels ... ok
+test layout::tests::response_layout_is_bounded_and_window_has_shadow_margin ... ok
+test motion::tests::mix_premul_from_transparent ... ok
+test motion::tests::easing_endpoints_and_monotonic ... ok
+test layout::tests::hit_test_orders_controls_mascot_bubble ... ok
+test motion::tests::tooltip_frames ... ok
+test motion::tests::tween_lifecycle ... ok
 test state::tests::copy_only_on_response ... ok
 test state::tests::disabled_send_has_no_hover_or_focus ... ok
 test state::tests::escape_hides_and_open_shows ... ok
@@ -100,7 +103,7 @@ test state::tests::stop_restores_editable_composer ... ok
 test state::tests::submit_requires_text_and_no_ime ... ok
 test theme::tests::palette_is_complete_and_contrasting ... ok
 
-test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
      Running unittests src\main.rs (target\release\deps\mascot_ui_lab-cca8a08cbc6624a5.exe)
 
@@ -117,8 +120,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
      Running tests\edit_probe.rs (target\release\deps\edit_probe-a2b37ec50d57699f.exe)
 
 running 15 tests
-test natural_size_and_set_text ... ok
 test dpi_notify_probe ... ok
+test natural_size_and_set_text ... ok
 test emptiness_flags ... ok
 test request_resize_units ... ok
 test idle_timer_probe ... ok
@@ -127,13 +130,20 @@ test copy_path ... ok
 test click_editor_reentry ... ok
 test editor_draw_fresh_ctx ... ok
 test app_scale_switch ... ok
-test caret_blink_presents ... ok
 test app_multiline_scale2 ... ok
+test caret_blink_presents ... ok
 test hover_tooltip_and_leave ... ok
 test first_raster_memory ... ok
 test dpi_sheet_replay ... ok
 
-test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.18s
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.11s
+
+     Running tests\tooltip_layer_probe.rs (target\release\deps\tooltip_layer_probe-059316e8e7564289.exe)
+
+running 1 test
+test tooltip_mid_frame_has_ink ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
 
    Doc-tests mascot_animation
 

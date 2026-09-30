@@ -1,5 +1,3 @@
-    Checking mascot-icons v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-icons)
-    Checking mascot-animation v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-animation)
 warning: method `mul` can be confused for the standard trait method `std::ops::Mul::mul`
   --> crates\mascot-animation\src\math.rs:45:5
    |
@@ -47,10 +45,8 @@ help: replace the manual implementation with a derive attribute
 69 | pub struct RootPlacement {
    |
 
-warning: `mascot-animation` (lib test) generated 3 warnings (run `cargo clippy --fix --lib -p mascot-animation --tests` to apply 1 suggestion)
-    Checking mascot-ui v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-ui)
-warning: `mascot-animation` (lib) generated 3 warnings (3 duplicates)
-    Checking mascot-render-win32 v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-render-win32)
+warning: `mascot-animation` (lib) generated 3 warnings (run `cargo clippy --fix --lib -p mascot-animation` to apply 1 suggestion)
+warning: `mascot-animation` (lib test) generated 3 warnings (3 duplicates)
 warning: the loop variable `c` is used to index `acc`
    --> crates\mascot-render-win32\src\image.rs:132:34
     |
@@ -80,21 +76,8 @@ warning: this function has too many arguments (8/7)
     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#too_many_arguments
     = note: `#[warn(clippy::too_many_arguments)]` on by default
 
-warning: `mascot-render-win32` (lib test) generated 2 warnings
-warning: `mascot-render-win32` (lib) generated 2 warnings (2 duplicates)
-    Checking mascot-ui-win32 v0.2.0 (W:\devin_folder\mascot-ui-v01\crates\mascot-ui-win32)
-    Checking mascot-animation-lab v0.2.0 (W:\devin_folder\mascot-ui-v01\apps\mascot-animation-lab)
-warning: writing `&PathBuf` instead of `&Path` involves a new object where a slice will do
-   --> crates\mascot-render-win32\src\bin\stress.rs:219:53
-    |
-219 | fn probe(rig_dir: &PathBuf, kind: DeviceKind, path: &PathBuf, crop: &[u32], spec: &[String]) {
-    |                                                     ^^^^^^^^ help: change this to: `&Path`
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#ptr_arg
-    = note: `#[warn(clippy::ptr_arg)]` on by default
-
-warning: `mascot-render-win32` (bin "mascot-rig-stress") generated 1 warning
-warning: `mascot-render-win32` (bin "mascot-rig-stress" test) generated 1 warning (1 duplicate)
+warning: `mascot-render-win32` (lib) generated 2 warnings
+warning: `mascot-render-win32` (lib test) generated 2 warnings (2 duplicates)
 warning: this `if` statement can be collapsed
    --> apps\mascot-animation-lab\src\main.rs:143:9
     |
@@ -231,7 +214,18 @@ warning: casting to the same type is unnecessary (`u32` -> `u32`)
     |
     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#unnecessary_cast
 
-warning: `mascot-animation-lab` (bin "mascot-animation-lab") generated 9 warnings (9 duplicates)
-warning: `mascot-animation-lab` (bin "mascot-animation-lab" test) generated 9 warnings (run `cargo clippy --fix --bin "mascot-animation-lab" -p mascot-animation-lab --tests` to apply 9 suggestions)
+warning: writing `&PathBuf` instead of `&Path` involves a new object where a slice will do
+   --> crates\mascot-render-win32\src\bin\stress.rs:219:53
+    |
+219 | fn probe(rig_dir: &PathBuf, kind: DeviceKind, path: &PathBuf, crop: &[u32], spec: &[String]) {
+    |                                                     ^^^^^^^^ help: change this to: `&Path`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.94.0/index.html#ptr_arg
+    = note: `#[warn(clippy::ptr_arg)]` on by default
+
+warning: `mascot-animation-lab` (bin "mascot-animation-lab") generated 9 warnings (run `cargo clippy --fix --bin "mascot-animation-lab" -p mascot-animation-lab` to apply 9 suggestions)
+warning: `mascot-render-win32` (bin "mascot-rig-stress") generated 1 warning
+warning: `mascot-render-win32` (bin "mascot-rig-stress" test) generated 1 warning (1 duplicate)
+warning: `mascot-animation-lab` (bin "mascot-animation-lab" test) generated 9 warnings (9 duplicates)
     Checking mascot-ui-lab v0.2.0 (W:\devin_folder\mascot-ui-v01\apps\mascot-ui-lab)
-    Finished `release` profile [optimized] target(s) in 3.55s
+    Finished `release` profile [optimized] target(s) in 1.60s

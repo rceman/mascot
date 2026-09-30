@@ -1,7 +1,16 @@
 # Native UI v0.1 — visual review notes and known limitations
 
-Candidate: `b285fd0` (all evidence in this directory was generated from the
-clean tree at this HEAD; see `receipt.json` and `perf.json` `env`).
+Original candidate: `b285fd0`. The notes below are the foundation review.
+
+**Regenerated at `241c487` (component-gallery correction pass).** The tooltip
+now uses shadcn `bg-foreground text-background`: light #0A0A0A fill with
+#FFFFFF text, dark #FAFAFA fill with #0A0A0A text. `logs/foundation-diff.txt`
+shows that only the two contact sheets and the four `copy-*` states changed,
+and every changed pixel is inside the tooltip pill. I inspected those cells in
+both themes. `zoom/` is replaced by the capture tool's own `zoomed/` output,
+and the selftest is now 33/33. Perf moved to
+`../native-ui-components-v0.1/perf.json`, and the `b285fd0` perf is kept in
+`logs/history/`.
 
 ## Review method
 

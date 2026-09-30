@@ -7,6 +7,7 @@
         "Radius 14 DIP, 1 DIP border (border token) and card fill match card (14 px, 1 px, #E5E5E5 / #FFFFFF; dark #171717, white 10 %)."
       ],
       "key": "surface",
+      "motion": "none (no shadcn motion for this use)",
       "name": "Surface / Bubble",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/card",
@@ -30,6 +31,7 @@
         "Label 14/500 matches shadcn small (14/500); line height is DirectWrite natural rather than leading-none."
       ],
       "key": "typography",
+      "motion": "none (no shadcn motion for this use)",
       "name": "Typography / Label",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/typography",
@@ -54,6 +56,7 @@
         "16 DIP viewport, stroke-width 2 in the 24-unit art box, round caps/joins, current foreground colour — same as lucide-react at size-4."
       ],
       "key": "icon",
+      "motion": "none (no shadcn motion for this use)",
       "name": "Icon",
       "no_analogue_reason": "shadcn has no icon component; the canonical reference is the upstream Lucide set (mascot-icons/source/ provenance)",
       "shadcn_url": null,
@@ -73,9 +76,11 @@
         "No outline icon button: Mascot uses primary 32 DIP (Send/Stop) and ghost 28 DIP (Copy) instead of shadcn's 36 px size-icon (outline in the example) — compact sizes that fit the 52 DIP single-line composer.",
         "Disabled uses explicit muted fill + muted-foreground icon instead of disabled:opacity-50 (one flat colour pair, no Direct2D opacity layer).",
         "Pressed is an extra state (stronger accent mix); shadcn defines no pressed treatment.",
-        "Focus-visible matches shadcn: 3 DIP ring at 50 % alpha + 1 DIP ring-coloured border."
+        "Focus-visible matches shadcn: 3 DIP ring at 50 % alpha + 1 DIP ring-coloured border.",
+        "Pressed (an extra native state) uses the same 150 ms transition."
       ],
       "key": "icon-button",
+      "motion": "transition-all: fill, foreground, focus ring 150 ms cubic-bezier(0.4, 0, 0.2, 1), both directions (shadcn button.tsx)",
       "name": "IconButton",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/button",
@@ -100,9 +105,11 @@
         "Compact sizes only: sm (32) and default (36); no lg or icon sizes, no outline/link/destructive variants (no product surface needs them).",
         "Disabled uses explicit muted fill + muted-foreground text instead of disabled:opacity-50.",
         "Pressed is an extra state; focus-visible ring matches shadcn (3 DIP ring/50 + 1 DIP ring border).",
+        "Pressed (an extra native state) uses the same 150 ms transition.",
         "Width differs from the reference only by glyph metrics (Segoe UI Variable vs Geist), e.g. \"Secondary\" 98 vs 102 px; height, padding and radius match."
       ],
       "key": "button",
+      "motion": "transition-all: fill, foreground, focus ring 150 ms cubic-bezier(0.4, 0, 0.2, 1), both directions (shadcn button.tsx)",
       "name": "Button",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/button",
@@ -125,12 +132,15 @@
     },
     {
       "deviations": [
-        "Size matches (28 DIP high, 6/12 padding, 8 DIP radius, 12/400), but colours use primary/primary-foreground (#171717/#FAFAFA, dark #E5E5E5/#171717) instead of shadcn's foreground/background (#0A0A0A/#FFFFFF, dark #FAFAFA/#0A0A0A). No product reason — follow-up candidate, left unchanged here to keep foundation pixels identical.",
+        "Size matches (28 DIP high, 6/12 padding, 8 DIP radius, 12/400); colours match shadcn foreground/background (#0A0A0A/#FFFFFF, dark #FAFAFA/#0A0A0A).",
         "No arrow.",
         "Single line, bounded at 240 DIP with an end ellipsis; the shadcn tooltip wraps.",
-        "Opens after a 500 ms hover (native timer)."
+        "Open delay 500 ms (Windows hover-tooltip convention) vs shadcn TooltipProvider delayDuration 0 — intentional interaction deviation; the open/close animation matches shadcn.",
+        "Hover only: no keyboard-focus tooltip (Radix also opens on focus); unchanged in this pass.",
+        "Transform origin is the pill's bottom centre; shadcn's is its arrow tip (no arrow here)."
       ],
       "key": "tooltip",
+      "motion": "open: fade 0→1, scale 0.95→1, slide 8 DIP; close: fade→0, scale→0.95; 150 ms ease (shadcn tooltip.tsx / tw-animate-css)",
       "name": "Tooltip",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/tooltip",
@@ -154,6 +164,7 @@
         "Text 14/400 with a 20 DIP line matches textarea md:text-sm; Enter submits, Shift+Enter inserts a newline."
       ],
       "key": "composer",
+      "motion": "none — focus border colour changes instantly, as shadcn transition-[color,box-shadow] excludes border-color",
       "name": "Native Text Input / Composer",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/textarea",
@@ -179,6 +190,7 @@
         "Horizontal only; 1 DIP hairline in the border token (#E5E5E5 / white 10 %), snapped to one device pixel at every DPI — matches shadcn separator."
       ],
       "key": "separator",
+      "motion": "none (no shadcn motion for this use)",
       "name": "Separator",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/separator",
@@ -198,6 +210,7 @@
         "No shadcn analogue: plain text only (no Markdown), a ghost Copy icon button with a Copied state, then a separator and the follow-up composer inside one bubble."
       ],
       "key": "response",
+      "motion": "none (no shadcn motion for this use)",
       "name": "Response / Content Surface",
       "no_analogue_reason": "Mascot response composition (plain text + copy action + separator + follow-up composer) has no single shadcn analogue",
       "shadcn_url": null,
@@ -221,6 +234,7 @@
         "Width differs from the reference only by glyph metrics (Segoe UI Variable vs Geist)."
       ],
       "key": "badge",
+      "motion": "none (no shadcn motion for this use)",
       "name": "Badge / Status Pill",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/badge",
@@ -240,6 +254,7 @@
     {
       "deviations": [],
       "key": "scroll-area",
+      "motion": "n/a",
       "name": "ScrollArea",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/scroll-area",
@@ -255,6 +270,7 @@
     {
       "deviations": [],
       "key": "popover",
+      "motion": "n/a",
       "name": "Popover",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/popover",
@@ -270,6 +286,7 @@
     {
       "deviations": [],
       "key": "dropdown-menu",
+      "motion": "n/a",
       "name": "DropdownMenu / MenuItem",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/dropdown-menu",
@@ -285,6 +302,7 @@
     {
       "deviations": [],
       "key": "select",
+      "motion": "n/a",
       "name": "Select",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/select",
@@ -300,6 +318,7 @@
     {
       "deviations": [],
       "key": "switch",
+      "motion": "n/a",
       "name": "Switch",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/switch",
@@ -315,6 +334,7 @@
     {
       "deviations": [],
       "key": "checkbox",
+      "motion": "n/a",
       "name": "Checkbox",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/checkbox",
@@ -330,6 +350,7 @@
     {
       "deviations": [],
       "key": "radio-group",
+      "motion": "n/a",
       "name": "RadioGroup",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/radio-group",
@@ -345,6 +366,7 @@
     {
       "deviations": [],
       "key": "dialog",
+      "motion": "n/a",
       "name": "Dialog / lightweight modal",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/dialog",
@@ -360,6 +382,7 @@
     {
       "deviations": [],
       "key": "settings-row",
+      "motion": "n/a",
       "name": "Settings row",
       "no_analogue_reason": "Mascot settings composition — planned, no product surface yet",
       "shadcn_url": null,
@@ -375,6 +398,7 @@
     {
       "deviations": [],
       "key": "progress",
+      "motion": "n/a",
       "name": "Progress / activity indicator",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/progress",
@@ -390,6 +414,7 @@
     {
       "deviations": [],
       "key": "accordion",
+      "motion": "n/a",
       "name": "Accordion",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/accordion",
@@ -405,6 +430,7 @@
     {
       "deviations": [],
       "key": "alert",
+      "motion": "n/a",
       "name": "Alert",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/alert",
@@ -420,6 +446,7 @@
     {
       "deviations": [],
       "key": "alert-dialog",
+      "motion": "n/a",
       "name": "AlertDialog",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/alert-dialog",
@@ -435,6 +462,7 @@
     {
       "deviations": [],
       "key": "aspect-ratio",
+      "motion": "n/a",
       "name": "AspectRatio",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/aspect-ratio",
@@ -450,6 +478,7 @@
     {
       "deviations": [],
       "key": "avatar",
+      "motion": "n/a",
       "name": "Avatar",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/avatar",
@@ -465,6 +494,7 @@
     {
       "deviations": [],
       "key": "breadcrumb",
+      "motion": "n/a",
       "name": "Breadcrumb",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/breadcrumb",
@@ -480,6 +510,7 @@
     {
       "deviations": [],
       "key": "calendar",
+      "motion": "n/a",
       "name": "Calendar",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/calendar",
@@ -495,6 +526,7 @@
     {
       "deviations": [],
       "key": "carousel",
+      "motion": "n/a",
       "name": "Carousel",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/carousel",
@@ -510,6 +542,7 @@
     {
       "deviations": [],
       "key": "chart",
+      "motion": "n/a",
       "name": "Chart",
       "no_analogue_reason": "charting is out of the Mascot UI vocabulary",
       "shadcn_url": null,
@@ -525,6 +558,7 @@
     {
       "deviations": [],
       "key": "collapsible",
+      "motion": "n/a",
       "name": "Collapsible",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/collapsible",
@@ -540,6 +574,7 @@
     {
       "deviations": [],
       "key": "command",
+      "motion": "n/a",
       "name": "Command palette",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/command",
@@ -555,6 +590,7 @@
     {
       "deviations": [],
       "key": "context-menu",
+      "motion": "n/a",
       "name": "ContextMenu",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/context-menu",
@@ -570,6 +606,7 @@
     {
       "deviations": [],
       "key": "data-table",
+      "motion": "n/a",
       "name": "DataTable / Table",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/data-table",
@@ -585,6 +622,7 @@
     {
       "deviations": [],
       "key": "drawer",
+      "motion": "n/a",
       "name": "Drawer",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/drawer",
@@ -600,6 +638,7 @@
     {
       "deviations": [],
       "key": "hover-card",
+      "motion": "n/a",
       "name": "HoverCard",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/hover-card",
@@ -615,6 +654,7 @@
     {
       "deviations": [],
       "key": "input-otp",
+      "motion": "n/a",
       "name": "InputOTP",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/input-otp",
@@ -630,6 +670,7 @@
     {
       "deviations": [],
       "key": "menubar",
+      "motion": "n/a",
       "name": "Menubar",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/menubar",
@@ -645,6 +686,7 @@
     {
       "deviations": [],
       "key": "navigation-menu",
+      "motion": "n/a",
       "name": "NavigationMenu",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/navigation-menu",
@@ -660,6 +702,7 @@
     {
       "deviations": [],
       "key": "pagination",
+      "motion": "n/a",
       "name": "Pagination",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/pagination",
@@ -675,6 +718,7 @@
     {
       "deviations": [],
       "key": "resizable",
+      "motion": "n/a",
       "name": "Resizable panels",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/resizable",
@@ -690,6 +734,7 @@
     {
       "deviations": [],
       "key": "skeleton",
+      "motion": "n/a",
       "name": "Skeleton",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/skeleton",
@@ -705,6 +750,7 @@
     {
       "deviations": [],
       "key": "slider",
+      "motion": "n/a",
       "name": "Slider",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/slider",
@@ -720,6 +766,7 @@
     {
       "deviations": [],
       "key": "sonner",
+      "motion": "n/a",
       "name": "Sonner/toast system",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/sonner",
@@ -735,6 +782,7 @@
     {
       "deviations": [],
       "key": "tabs",
+      "motion": "n/a",
       "name": "Tabs",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/tabs",
@@ -750,6 +798,7 @@
     {
       "deviations": [],
       "key": "toggle-group",
+      "motion": "n/a",
       "name": "ToggleGroup",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/toggle-group",
@@ -765,6 +814,7 @@
     {
       "deviations": [],
       "key": "form",
+      "motion": "n/a",
       "name": "full Form framework",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/form",
@@ -780,6 +830,7 @@
     {
       "deviations": [],
       "key": "date-picker",
+      "motion": "n/a",
       "name": "date/time picker",
       "no_analogue_reason": "",
       "shadcn_url": "https://ui.shadcn.com/docs/components/date-picker",
@@ -795,6 +846,7 @@
     {
       "deviations": [],
       "key": "card",
+      "motion": "n/a",
       "name": "generic card library",
       "no_analogue_reason": "generic card library deferred — Mascot Surface covers the one real product need",
       "shadcn_url": "https://ui.shadcn.com/docs/components/card",
@@ -808,6 +860,12 @@
       "tier": "C"
     }
   ],
+  "loading": {
+    "reason": "No loader exists in the current product: Submitting swaps Send for Stop and dims the submitted text; the mascot is static.",
+    "rule": "docs/MASCOT_NATIVE_UI_DESIGN_SYSTEM_V0.1.md §2 Busy / loading visual rule",
+    "shadcn_reference": "https://github.com/shadcn-ui/ui/blob/db2db460a26fa84fb65c8d903b213925fbdee9ed/apps/v4/registry/new-york-v4/ui/spinner.tsx",
+    "status": "deferred"
+  },
   "spec": "docs/MASCOT_UI_COMPONENT_INVENTORY_V0.1.md",
   "tiers": {
     "A": "implemented — shown on the sheets",

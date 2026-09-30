@@ -1,246 +1,677 @@
 {
+  "code_dirty": false,
+  "code_head": "241c4878beaf0c3cc4554632097f7b7d6b53a236",
   "device": "warp",
-  "dirty": false,
+  "evidence_head": null,
+  "evidence_head_rule": "Set by `mascot-ui-lab stamp-evidence` in the commit that follows the evidence commit. evidence_head is the commit that added this evidence; the stamp commit is the final branch head and changes only evidence_head fields.",
   "files": [
     {
-      "bytes": 158819,
+      "bytes": 158812,
+      "git_blob": "e4ad3ac75330f00e8db605d05601f09c63d4f38b",
       "path": "component-gallery-light.png"
     },
     {
-      "bytes": 158303,
+      "bytes": 158339,
+      "git_blob": "fbf85b4fa121fab15db00c66a9448b541ef32fcb",
       "path": "component-gallery-dark.png"
     },
     {
-      "bytes": 107210,
+      "bytes": 107208,
+      "git_blob": "8d6f3f875d47cfd23661c8f9f1c408548ee48df6",
       "path": "component-gallery-sizes.png"
     },
     {
-      "bytes": 117080,
+      "bytes": 116979,
+      "git_blob": "9e68f6263b2fa41cd2c63b6862da92e12a0403f0",
       "path": "component-gallery-dpi.png"
     },
     {
-      "bytes": 195108,
+      "bytes": 202906,
+      "git_blob": "a7eb297d53a66c4f9183f9d1d0599159cc9f4f9d",
       "path": "component-gallery-shadcn-reference.png"
     },
     {
-      "bytes": 147044,
+      "bytes": 150153,
+      "git_blob": "feef7cbf724fdbe2166d48e1ddb0c4e2ab4579b6",
       "path": "component-gallery-shadcn-reference-2.png"
     },
     {
       "bytes": 183260,
+      "git_blob": "1023ad07c1c32a98bf0decfdb0b28f937919148e",
       "path": "component-gallery-shadcn-reference-3.png"
     },
     {
       "bytes": 299159,
+      "git_blob": "67563ac3e30b3388a319af24c28e70510bb854d7",
       "path": "component-gallery-shadcn-reference-4.png"
     },
     {
       "bytes": 104269,
+      "git_blob": "99fba58b0a913177e57c7290f99d86ac71f69497",
       "path": "component-gallery-shadcn-reference-5.png"
     },
     {
+      "bytes": 219414,
+      "git_blob": "a5320de4ce894726c5e6066b934b73b70129b940",
+      "path": "component-gallery-motion.png"
+    },
+    {
+      "bytes": 245074,
+      "git_blob": "5a9ab3fe0f624c2b3fca42a15260368f3a9eddbc",
+      "path": "component-gallery-motion-2.png"
+    },
+    {
       "bytes": 2722,
+      "git_blob": "16c609df52c57b00a89778ae91c623e39fdf9961",
       "path": "reference/badge-default-dark.png"
     },
     {
       "bytes": 2591,
+      "git_blob": "84b5a9589ed5be8c0adf36cfe10a4e7d4cb7b84e",
       "path": "reference/badge-default-light.png"
     },
     {
       "bytes": 2608,
+      "git_blob": "5d179451a772e3ba78d4264ab10c770d13014d5a",
       "path": "reference/badge-outline-dark.png"
     },
     {
       "bytes": 2483,
+      "git_blob": "8a27957c830e0bd9e6b14491055f55b91bf20d7a",
       "path": "reference/badge-outline-light.png"
     },
     {
       "bytes": 3632,
+      "git_blob": "548bf71b5595620758447c70ea7b4b3577b0f6a6",
       "path": "reference/badge-secondary-dark.png"
     },
     {
       "bytes": 3311,
+      "git_blob": "5b91ee7c01d7f23ee752fadc5d9ba3476939b8ca",
       "path": "reference/badge-secondary-light.png"
     },
     {
       "bytes": 2549,
+      "git_blob": "f942dd15a1063ba56bad811691d9efe388fe9164",
       "path": "reference/button-default-dark.png"
     },
     {
       "bytes": 2467,
+      "git_blob": "f07e67ee3a751143f115a5e20eb0061654c597aa",
       "path": "reference/button-default-light.png"
     },
     {
       "bytes": 2361,
+      "git_blob": "23d9a8d88f558e58ea67ccb72cd59dab2186c692",
       "path": "reference/button-disabled-dark.png"
     },
     {
       "bytes": 2349,
+      "git_blob": "4858e9d53e6c6b355b56b3a1f4b5a34bb85015ed",
       "path": "reference/button-disabled-light.png"
     },
     {
       "bytes": 2549,
+      "git_blob": "f942dd15a1063ba56bad811691d9efe388fe9164",
       "path": "reference/button-focus-visible-dark.png"
     },
     {
       "bytes": 2467,
+      "git_blob": "f07e67ee3a751143f115a5e20eb0061654c597aa",
       "path": "reference/button-focus-visible-light.png"
     },
     {
       "bytes": 2347,
+      "git_blob": "21e871349b7458df5eb778e1d712ba32e68db424",
       "path": "reference/button-ghost-dark.png"
     },
     {
       "bytes": 2642,
+      "git_blob": "9f185f6176cc56b6a42517acd6baba07fc34bb70",
       "path": "reference/button-ghost-hover-dark.png"
     },
     {
       "bytes": 2403,
+      "git_blob": "0c802bf26502af89c1931411995d053346f468ae",
       "path": "reference/button-ghost-hover-light.png"
     },
     {
       "bytes": 2210,
+      "git_blob": "0444247a25c3037bc60aba4c7a5a32af6ddd1c72",
       "path": "reference/button-ghost-light.png"
     },
     {
       "bytes": 2533,
+      "git_blob": "d13e433902a30fe5b6004e0c86ec1be7fa8400c8",
       "path": "reference/button-hover-dark.png"
     },
     {
       "bytes": 2506,
+      "git_blob": "a687ee5ea5f9865a57355dcc1a2d576ff910fd91",
       "path": "reference/button-hover-light.png"
     },
     {
       "bytes": 1818,
+      "git_blob": "284d4ce0611243d2daaa86f423ff956402a846ec",
       "path": "reference/button-icon-dark.png"
     },
     {
       "bytes": 1818,
+      "git_blob": "284d4ce0611243d2daaa86f423ff956402a846ec",
       "path": "reference/button-icon-focus-visible-dark.png"
     },
     {
       "bytes": 1801,
+      "git_blob": "12e78376d43ad380c941fc1d4091b08d3f13491b",
       "path": "reference/button-icon-focus-visible-light.png"
     },
     {
       "bytes": 1876,
+      "git_blob": "d09d2285510d5d99627d699372fbb430e19b3608",
       "path": "reference/button-icon-hover-dark.png"
     },
     {
       "bytes": 1822,
+      "git_blob": "b275ae18f5e8b6fd280898afd4586b4ac85e0c26",
       "path": "reference/button-icon-hover-light.png"
     },
     {
       "bytes": 1801,
+      "git_blob": "12e78376d43ad380c941fc1d4091b08d3f13491b",
       "path": "reference/button-icon-light.png"
     },
     {
       "bytes": 4297,
+      "git_blob": "0be0622bf70072a04c130300e75c72f9e5e7d0a5",
       "path": "reference/button-secondary-dark.png"
     },
     {
       "bytes": 4335,
+      "git_blob": "686b12cb1ec4430921fc18ba75e178b1c6aa3a62",
       "path": "reference/button-secondary-hover-dark.png"
     },
     {
       "bytes": 3922,
+      "git_blob": "d1067c59832f32caa31d2d2245cbf81a384c92d4",
       "path": "reference/button-secondary-hover-light.png"
     },
     {
       "bytes": 3904,
+      "git_blob": "0839979e158fa98bd8589af09fae69da9252a831",
       "path": "reference/button-secondary-light.png"
     },
     {
       "bytes": 43983,
+      "git_blob": "8adeaa94068772c9278c4d7d62d842dc333edaa8",
       "path": "reference/card-dark.png"
     },
     {
       "bytes": 43820,
+      "git_blob": "110cefdeb14c6d50041c11cdbef7aeb5b7e528de",
       "path": "reference/card-light.png"
     },
     {
+      "bytes": 19355,
+      "git_blob": "c39c717fd22e1a5419e1e244cd6e0aa7a5a87e34",
+      "path": "reference/motion-provenance.json"
+    },
+    {
       "bytes": 137618,
+      "git_blob": "ff5f28ee637d5fb35fbecf93826ad41d60942832",
       "path": "reference/provenance.json"
     },
     {
-      "bytes": 6474,
+      "bytes": 7956,
+      "git_blob": "1810afd5f1e6070873fdd3bfefc29f082045ee9b",
       "path": "reference/PROVENANCE.md"
     },
     {
       "bytes": 425,
+      "git_blob": "d8f5ef542c1bb988ae987c77b96f8ddada3e3328",
       "path": "reference/separator-dark.png"
     },
     {
       "bytes": 423,
+      "git_blob": "018f77c22233d395b2084a6814767e8a9d157f47",
       "path": "reference/separator-light.png"
     },
     {
       "bytes": 8091,
+      "git_blob": "1d1585f7cb9b93c257f618c553fefdc51f8b9869",
       "path": "reference/textarea-default-dark.png"
     },
     {
       "bytes": 8067,
+      "git_blob": "8b55fdba739e400626c3f4eb6f7778abb5f3cfe4",
       "path": "reference/textarea-default-light.png"
     },
     {
       "bytes": 6728,
+      "git_blob": "62ea3d91d91fa314cea214a2c7a7bbc9f3f1c239",
       "path": "reference/textarea-disabled-dark.png"
     },
     {
       "bytes": 6504,
+      "git_blob": "7ff7531f3753148d9a314402f0af0d642bac4b7f",
       "path": "reference/textarea-disabled-light.png"
     },
     {
       "bytes": 8091,
+      "git_blob": "1d1585f7cb9b93c257f618c553fefdc51f8b9869",
       "path": "reference/textarea-focus-visible-dark.png"
     },
     {
       "bytes": 8067,
+      "git_blob": "8b55fdba739e400626c3f4eb6f7778abb5f3cfe4",
       "path": "reference/textarea-focus-visible-light.png"
     },
     {
       "bytes": 6210,
+      "git_blob": "fbcdad84108355655976cea719b8e06c430b934f",
       "path": "reference/tooltip-open-dark.png"
     },
     {
       "bytes": 6175,
+      "git_blob": "265e773f6ac62242cd8e8697bb98a8dbf1f0d382",
       "path": "reference/tooltip-open-light.png"
     },
     {
       "bytes": 5812,
+      "git_blob": "433eb44e442d794e53034d3fcd6b3444c01c39fd",
       "path": "reference/typography-muted-dark.png"
     },
     {
       "bytes": 5760,
+      "git_blob": "5378b198fb164b7f9e075dbf1c4cbc0e15979669",
       "path": "reference/typography-muted-light.png"
     },
     {
       "bytes": 21852,
+      "git_blob": "8345367e929675e195dcff2ab82df0929c8f068c",
       "path": "reference/typography-p-dark.png"
     },
     {
       "bytes": 21070,
+      "git_blob": "bc9ae475e3274ae7f452412c08fd69880c416e48",
       "path": "reference/typography-p-light.png"
     },
     {
       "bytes": 3581,
+      "git_blob": "5773285af90f5bcaf385641148f6f41fa444bc56",
       "path": "reference/typography-small-dark.png"
     },
     {
       "bytes": 3388,
+      "git_blob": "7cd95ca7aa2acfa03cee269e22647ff0f48ec879",
       "path": "reference/typography-small-light.png"
     },
     {
-      "bytes": 23193,
+      "bytes": 2549,
+      "git_blob": "f942dd15a1063ba56bad811691d9efe388fe9164",
+      "path": "reference/motion/button-default-dark-t0.png"
+    },
+    {
+      "bytes": 2511,
+      "git_blob": "df08ac0b697c83da646aa6df0d5dce335fa31354",
+      "path": "reference/motion/button-default-dark-t100.png"
+    },
+    {
+      "bytes": 2569,
+      "git_blob": "49bde86e3dd2dd29f2e57f409467448ff5559eee",
+      "path": "reference/motion/button-default-dark-t125.png"
+    },
+    {
+      "bytes": 2536,
+      "git_blob": "28aa7475a2a56d010320266d87423243a140eff5",
+      "path": "reference/motion/button-default-dark-t150.png"
+    },
+    {
+      "bytes": 2533,
+      "git_blob": "bf14f07802d5d596bc3a187b48d6408af37e63ee",
+      "path": "reference/motion/button-default-dark-t25.png"
+    },
+    {
+      "bytes": 2539,
+      "git_blob": "32837f84cdc48c0e5f3ca6273214b4d76abb89b9",
+      "path": "reference/motion/button-default-dark-t50.png"
+    },
+    {
+      "bytes": 2533,
+      "git_blob": "c1538e749c9ef97ee85033bd8bce0097654a2c61",
+      "path": "reference/motion/button-default-dark-t75.png"
+    },
+    {
+      "bytes": 2467,
+      "git_blob": "f07e67ee3a751143f115a5e20eb0061654c597aa",
+      "path": "reference/motion/button-default-light-t0.png"
+    },
+    {
+      "bytes": 2478,
+      "git_blob": "1a42ffd6ebc431b035eb7bb96ef6c7166f93b7bb",
+      "path": "reference/motion/button-default-light-t100.png"
+    },
+    {
+      "bytes": 2499,
+      "git_blob": "105db10feeebbab651696313d074746cf6c7d5ee",
+      "path": "reference/motion/button-default-light-t125.png"
+    },
+    {
+      "bytes": 2499,
+      "git_blob": "105db10feeebbab651696313d074746cf6c7d5ee",
+      "path": "reference/motion/button-default-light-t150.png"
+    },
+    {
+      "bytes": 2442,
+      "git_blob": "122d25eef5f57a549adf7dcdc1234d24829725a9",
+      "path": "reference/motion/button-default-light-t25.png"
+    },
+    {
+      "bytes": 2499,
+      "git_blob": "1fb0de1b074fbd180317fae71abcbd31271b73a5",
+      "path": "reference/motion/button-default-light-t50.png"
+    },
+    {
+      "bytes": 2507,
+      "git_blob": "089bb124ac8ab384a2b72bb67c3203aec59e007e",
+      "path": "reference/motion/button-default-light-t75.png"
+    },
+    {
+      "bytes": 2549,
+      "git_blob": "f942dd15a1063ba56bad811691d9efe388fe9164",
+      "path": "reference/motion/button-focus-dark-t0.png"
+    },
+    {
+      "bytes": 3197,
+      "git_blob": "2103e974a3d3e7977ed68b59601d58c057680007",
+      "path": "reference/motion/button-focus-dark-t100.png"
+    },
+    {
+      "bytes": 3201,
+      "git_blob": "0841fc9191c29a6c16861fc2cc4f76263141c566",
+      "path": "reference/motion/button-focus-dark-t125.png"
+    },
+    {
+      "bytes": 3198,
+      "git_blob": "90eed7b900b99684b838f95155a9aa160616c2aa",
+      "path": "reference/motion/button-focus-dark-t150.png"
+    },
+    {
+      "bytes": 2637,
+      "git_blob": "329d24064f982c3fba6ae558bde574eda69e42a3",
+      "path": "reference/motion/button-focus-dark-t25.png"
+    },
+    {
+      "bytes": 3026,
+      "git_blob": "48bf34e9fb8001a252c204ae5e1d5c248a8665f8",
+      "path": "reference/motion/button-focus-dark-t50.png"
+    },
+    {
+      "bytes": 3085,
+      "git_blob": "2e14d3bc6ef0d1cafe59f5d66c8129f2186ee3c1",
+      "path": "reference/motion/button-focus-dark-t75.png"
+    },
+    {
+      "bytes": 2467,
+      "git_blob": "f07e67ee3a751143f115a5e20eb0061654c597aa",
+      "path": "reference/motion/button-focus-light-t0.png"
+    },
+    {
+      "bytes": 3086,
+      "git_blob": "ae584345cd8064851a79cb3898d00f7b42ae11fb",
+      "path": "reference/motion/button-focus-light-t100.png"
+    },
+    {
+      "bytes": 3064,
+      "git_blob": "0b02f4a36da292222d8d573516341fa6b37ad862",
+      "path": "reference/motion/button-focus-light-t125.png"
+    },
+    {
+      "bytes": 3087,
+      "git_blob": "e7ffde4b6db11a53b598d70f9afe20995074eb97",
+      "path": "reference/motion/button-focus-light-t150.png"
+    },
+    {
+      "bytes": 2596,
+      "git_blob": "5a76b378dec983a361d0fc252a77d6295a764557",
+      "path": "reference/motion/button-focus-light-t25.png"
+    },
+    {
+      "bytes": 2907,
+      "git_blob": "615e25b72a189411b0e966d820133474ddded2e0",
+      "path": "reference/motion/button-focus-light-t50.png"
+    },
+    {
+      "bytes": 3047,
+      "git_blob": "9ff82760cbb273ad15681cfdbe95a3f142718e67",
+      "path": "reference/motion/button-focus-light-t75.png"
+    },
+    {
+      "bytes": 2347,
+      "git_blob": "21e871349b7458df5eb778e1d712ba32e68db424",
+      "path": "reference/motion/button-ghost-dark-t0.png"
+    },
+    {
+      "bytes": 2783,
+      "git_blob": "3c9612b2a338d5b28e2ef815012c8e30507af7d9",
+      "path": "reference/motion/button-ghost-dark-t100.png"
+    },
+    {
+      "bytes": 2784,
+      "git_blob": "5ad2ba8bcf32306df266be6936310dcebe537a3c",
+      "path": "reference/motion/button-ghost-dark-t125.png"
+    },
+    {
+      "bytes": 2798,
+      "git_blob": "7d955c5d52dea8631ecdd66056496f4396bc17c0",
+      "path": "reference/motion/button-ghost-dark-t150.png"
+    },
+    {
+      "bytes": 2607,
+      "git_blob": "3202755bf4436e21a3a46fec4881c5947274cc2b",
+      "path": "reference/motion/button-ghost-dark-t25.png"
+    },
+    {
+      "bytes": 2757,
+      "git_blob": "8b3a90a36ca1e690a58602c2d42d57f4b78b807b",
+      "path": "reference/motion/button-ghost-dark-t50.png"
+    },
+    {
+      "bytes": 2774,
+      "git_blob": "70511c23fef00270f5c278dcc9054e17cb1a1053",
+      "path": "reference/motion/button-ghost-dark-t75.png"
+    },
+    {
+      "bytes": 2210,
+      "git_blob": "0444247a25c3037bc60aba4c7a5a32af6ddd1c72",
+      "path": "reference/motion/button-ghost-light-t0.png"
+    },
+    {
+      "bytes": 2591,
+      "git_blob": "51c3e14d7c6eb2d1d08a2d44bdd34745eef9765b",
+      "path": "reference/motion/button-ghost-light-t100.png"
+    },
+    {
+      "bytes": 2559,
+      "git_blob": "43750a97a85addf0afd5bd54f40b1ea93465b1c9",
+      "path": "reference/motion/button-ghost-light-t125.png"
+    },
+    {
+      "bytes": 2574,
+      "git_blob": "f5f9587ec61bb85e992a139e4b157e4b5dbdc666",
+      "path": "reference/motion/button-ghost-light-t150.png"
+    },
+    {
+      "bytes": 2394,
+      "git_blob": "4ed5e67e1b2d2f4e7b5120809091d77a93398e24",
+      "path": "reference/motion/button-ghost-light-t25.png"
+    },
+    {
+      "bytes": 2504,
+      "git_blob": "14641a6f68e5d0f6fe019bf3184e771fc3764f90",
+      "path": "reference/motion/button-ghost-light-t50.png"
+    },
+    {
+      "bytes": 2551,
+      "git_blob": "5b660b341a78a1179f22674ecba2beda209ff006",
+      "path": "reference/motion/button-ghost-light-t75.png"
+    },
+    {
+      "bytes": 6216,
+      "git_blob": "5386cf951061fcbdfa9df5fa88e7c8a6703bfb34",
+      "path": "reference/motion/tooltip-close-dark-t0.png"
+    },
+    {
+      "bytes": 4953,
+      "git_blob": "da767e4a206048f0d25181803fd99b29ea1428dc",
+      "path": "reference/motion/tooltip-close-dark-t100.png"
+    },
+    {
+      "bytes": 4150,
+      "git_blob": "58960a6b637b2e76f12647d52183c09f9ca9aebd",
+      "path": "reference/motion/tooltip-close-dark-t125.png"
+    },
+    {
+      "bytes": 2962,
+      "git_blob": "fe2dc4dae2b8839430379d006656c720a1766bec",
+      "path": "reference/motion/tooltip-close-dark-t150.png"
+    },
+    {
+      "bytes": 6214,
+      "git_blob": "2840d0d5fea7f15cc50db1afd1998b55bd1ca91f",
+      "path": "reference/motion/tooltip-close-dark-t25.png"
+    },
+    {
+      "bytes": 5949,
+      "git_blob": "0927733ffaa9fdf57ea554e4d15fa9b18b3f367f",
+      "path": "reference/motion/tooltip-close-dark-t50.png"
+    },
+    {
+      "bytes": 5579,
+      "git_blob": "5b6ffb591b1ea6fff414bedbc1fb63abba95422f",
+      "path": "reference/motion/tooltip-close-dark-t75.png"
+    },
+    {
+      "bytes": 6151,
+      "git_blob": "155050abb2445f97e10c577347383e71d6927a29",
+      "path": "reference/motion/tooltip-close-light-t0.png"
+    },
+    {
+      "bytes": 4926,
+      "git_blob": "d8b7ef37d87c2ade07fbb00dbbf8975f1df1d725",
+      "path": "reference/motion/tooltip-close-light-t100.png"
+    },
+    {
+      "bytes": 4136,
+      "git_blob": "19fabc4834ef3fb781d72583103439037f125ec4",
+      "path": "reference/motion/tooltip-close-light-t125.png"
+    },
+    {
+      "bytes": 3026,
+      "git_blob": "77b45142e9275c7d2f97ff695a756ced2c847f15",
+      "path": "reference/motion/tooltip-close-light-t150.png"
+    },
+    {
+      "bytes": 6113,
+      "git_blob": "b6fb10b97ebd968b423283bca70f2a0ee92a2501",
+      "path": "reference/motion/tooltip-close-light-t25.png"
+    },
+    {
+      "bytes": 6021,
+      "git_blob": "66426408db4050f1241db2eb851a565b0bd354ce",
+      "path": "reference/motion/tooltip-close-light-t50.png"
+    },
+    {
+      "bytes": 5640,
+      "git_blob": "5a34879a1b72a005c58582f49f5f8243cc2eed9b",
+      "path": "reference/motion/tooltip-close-light-t75.png"
+    },
+    {
+      "bytes": 2954,
+      "git_blob": "a125850a709e087ed8e2b86c7762ade8098cab79",
+      "path": "reference/motion/tooltip-open-dark-t0.png"
+    },
+    {
+      "bytes": 6201,
+      "git_blob": "0fe259b8c13542fbfa5e5228b21af5e4326c2a55",
+      "path": "reference/motion/tooltip-open-dark-t100.png"
+    },
+    {
+      "bytes": 6152,
+      "git_blob": "8721ce8c8ae5c0a91fdb5131683bf566f25f8e7e",
+      "path": "reference/motion/tooltip-open-dark-t125.png"
+    },
+    {
+      "bytes": 6137,
+      "git_blob": "298d27936c2c23508bdf2c9c13c1a7a037e33f08",
+      "path": "reference/motion/tooltip-open-dark-t150.png"
+    },
+    {
+      "bytes": 5490,
+      "git_blob": "23158302249ea7cdf987b463c1423a0a4afed6d0",
+      "path": "reference/motion/tooltip-open-dark-t25.png"
+    },
+    {
+      "bytes": 6223,
+      "git_blob": "234f0368706da58e33bf48de650423be0bd40677",
+      "path": "reference/motion/tooltip-open-dark-t50.png"
+    },
+    {
+      "bytes": 6281,
+      "git_blob": "34f545833931a7acc84537299a7d20b4bf9450b2",
+      "path": "reference/motion/tooltip-open-dark-t75.png"
+    },
+    {
+      "bytes": 3015,
+      "git_blob": "21ee8da41fe29d159522a46d9f2ef2b27fc448e4",
+      "path": "reference/motion/tooltip-open-light-t0.png"
+    },
+    {
+      "bytes": 6053,
+      "git_blob": "1bfe4a85d1deea24530b3a459196d40618c5fe77",
+      "path": "reference/motion/tooltip-open-light-t100.png"
+    },
+    {
+      "bytes": 6052,
+      "git_blob": "7a99b9a3baee9bfa7a0aafa8665863bd86b9392a",
+      "path": "reference/motion/tooltip-open-light-t125.png"
+    },
+    {
+      "bytes": 6076,
+      "git_blob": "728376f47c8244015492485617776d8f55709ee5",
+      "path": "reference/motion/tooltip-open-light-t150.png"
+    },
+    {
+      "bytes": 5554,
+      "git_blob": "42d6c775df7f08ce308f2f4dcaf9ddfd9daffabc",
+      "path": "reference/motion/tooltip-open-light-t25.png"
+    },
+    {
+      "bytes": 6094,
+      "git_blob": "98d23ae59b2da30824ccb568e1a15b38e5dadb61",
+      "path": "reference/motion/tooltip-open-light-t50.png"
+    },
+    {
+      "bytes": 6177,
+      "git_blob": "e57e71dbfcbb20b65e92cb978ffd9ad2795c6656",
+      "path": "reference/motion/tooltip-open-light-t75.png"
+    },
+    {
+      "bytes": 25681,
+      "git_blob": "aab1ca8bf53f20c900c1b92b834523655a35c1ef",
       "path": "component-inventory.json"
     },
     {
+      "bytes": 55049,
+      "git_blob": "6866fe743731c05fd7fd354b24922a8b24bded5a",
+      "path": "motion.json"
+    },
+    {
       "bytes": 42091,
+      "git_blob": "40d5e89cd02d9fa719e02df415d848e090efea2a",
       "path": "shadcn-comparison.md"
     }
   ],
   "font_family": "Segoe UI Variable Text",
-  "head": "03eae71c30b1399d540cf3d354a5e53f021b375d",
   "os_build": "10.0.26200.9457",
   "painters": "mascot_ui_win32::components (production) + App::render_offscreen",
   "reference_files_used": [
@@ -316,12 +747,12 @@
     },
     {
       "file": "component-gallery-shadcn-reference.png",
-      "height_px": 3816,
+      "height_px": 3922,
       "width_px": 1166
     },
     {
       "file": "component-gallery-shadcn-reference-2.png",
-      "height_px": 3184,
+      "height_px": 3230,
       "width_px": 1156
     },
     {
@@ -338,6 +769,16 @@
       "file": "component-gallery-shadcn-reference-5.png",
       "height_px": 2066,
       "width_px": 2002
+    },
+    {
+      "file": "component-gallery-motion.png",
+      "height_px": 2892,
+      "width_px": 1856
+    },
+    {
+      "file": "component-gallery-motion-2.png",
+      "height_px": 2356,
+      "width_px": 2208
     }
   ],
   "tool": "mascot-ui-lab components",

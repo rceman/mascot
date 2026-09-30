@@ -610,8 +610,8 @@ ref rect: 98 x 28 CSS px (element `[data-slot="tooltip-content"]`)
 | borderRadius | `8px` | `8 DIP` |
 | borderWidth | `0px` | `—` |
 | borderColor | `lab(90.952 0 -0.0000119209) #E5E5E5` | `—` |
-| backgroundColor | `lab(0 0 0) #000000` | `#171717` |
-| color | `lab(100 0 0) #FFFFFF` | `#FAFAFA` |
+| backgroundColor | `lab(0 0 0) #000000` | `#0A0A0A` |
+| color | `lab(100 0 0) #FFFFFF` | `#FFFFFF` |
 | fontFamily | `Geist, "Geist Fallback"` | `Segoe UI Variable Text` |
 | fontSize | `12px` | `12 DIP` |
 | fontWeight | `400` | `400` |
@@ -630,8 +630,8 @@ ref rect: 98 x 28 CSS px (element `[data-slot="tooltip-content"]`)
 | borderRadius | `8px` | `8 DIP` |
 | borderWidth | `0px` | `—` |
 | borderColor | `lab(100 0 0 / 0.1) #FFFFFF1A` | `—` |
-| backgroundColor | `lab(98.26 0 0) #FAFAFA` | `#E5E5E5` |
-| color | `lab(2.75381 0 0) #0A0A0A` | `#171717` |
+| backgroundColor | `lab(98.26 0 0) #FAFAFA` | `#FAFAFA` |
+| color | `lab(2.75381 0 0) #0A0A0A` | `#0A0A0A` |
 | fontFamily | `Geist, "Geist Fallback"` | `Segoe UI Variable Text` |
 | fontSize | `12px` | `12 DIP` |
 | fontWeight | `400` | `400` |
